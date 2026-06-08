@@ -1,0 +1,3 @@
+import type { DifferOptions } from '../differ';
+declare const isEqual: (a: any, b: any, options: DifferOptions) => boolean;
+export default isEqual;

@@ -1,0 +1,3 @@
+import type { DifferOptions, DiffResult } from '../differ';
+declare const diffArrayLCS: (arrLeft: any[], arrRight: any[], keyLeft: string, keyRight: string, level: number, options: DifferOptions, linesLeft?: DiffResult[], linesRight?: DiffResult[]) => [DiffResult[], DiffResult[]];
+export default diffArrayLCS;

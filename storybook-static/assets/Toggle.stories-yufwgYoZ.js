@@ -1,0 +1,8 @@
+import{j as e,r as c}from"./iframe-CGUFCU7f.js";import{T as a}from"./index-Bb8GhCtW.js";import{S as i}from"./index-CJSDoaqF.js";/* empty css              */import"./preload-helper-PPVm8Dsz.js";import"./apply-display-name-BLkmUqWr.js";import"./clsx-B-dksMZM.js";import"./index-Cs1eQhj0.js";import"./index-cNOLf2x0.js";import"./attributes-BsWGnux6.js";import"./form-field-context-BW9QsZp8.js";import"./index-KL8ugYfO.js";import"./index-DqesKSp7.js";import"./internal-Dsnmrf4x.js";import"./index-Msco8KEF.js";import"./index-ChVYcNbT.js";const B={title:"Cloudscape Reference/Toggle",component:a,tags:["cloudscape-real"],parameters:{layout:"centered",docs:{description:{component:"Real Cloudscape Toggle rendered with RiskSmart theme. 1:1 with live app."}}}},o=s=>{const[n,l]=c.useState(!1);return e.jsx(a,{checked:n,onChange:({detail:d})=>l(d.checked),disabled:s.disabled,children:s.children})},r={render:()=>e.jsx(o,{children:"Toggle me"})},t={render:()=>e.jsxs(i,{size:"xs",children:[e.jsx(o,{children:"Default"}),e.jsx(o,{disabled:!0,children:"Disabled"})]})};r.parameters={...r.parameters,docs:{...r.parameters?.docs,source:{originalSource:`{
+  render: () => <Controlled>Toggle me</Controlled>
+}`,...r.parameters?.docs?.source}}};t.parameters={...t.parameters,docs:{...t.parameters?.docs,source:{originalSource:`{
+  render: () => <SpaceBetween size={'xs'}>
+      <Controlled>Default</Controlled>
+      <Controlled disabled>Disabled</Controlled>
+    </SpaceBetween>
+}`,...t.parameters?.docs?.source}}};const E=["Default","States"];export{r as Default,t as States,E as __namedExportsOrder,B as default};

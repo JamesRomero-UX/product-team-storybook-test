@@ -1,0 +1,2 @@
+declare const getType: (value: any) => "string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function" | "null" | "array";
+export default getType;

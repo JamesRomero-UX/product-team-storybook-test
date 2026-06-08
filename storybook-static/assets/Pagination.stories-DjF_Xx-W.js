@@ -1,0 +1,7 @@
+import{j as t,r as i}from"./iframe-CGUFCU7f.js";import{P as s}from"./index-CW61Sy0p.js";/* empty css              */import"./preload-helper-PPVm8Dsz.js";import"./apply-display-name-BLkmUqWr.js";import"./clsx-B-dksMZM.js";import"./context-D8tPZRIA.js";import"./internal-D4iCGoaF.js";import"./index-ChVYcNbT.js";import"./logging-Do9SP7zB.js";import"./table-component-context-CqLQemvA.js";import"./index-KL8ugYfO.js";import"./attributes-BsWGnux6.js";const y={title:"Cloudscape Reference/Pagination",component:s,tags:["cloudscape-real"],parameters:{layout:"centered",docs:{description:{component:"Real Cloudscape Pagination rendered with RiskSmart theme. 1:1 with live app."}}}},n=a=>{const[p,d]=i.useState(1);return t.jsx(s,{currentPageIndex:p,onChange:({detail:c})=>d(c.currentPageIndex),pagesCount:a.pagesCount??10,openEnd:a.openEnd,disabled:a.disabled})},e={render:()=>t.jsx(n,{})},r={render:()=>t.jsx(n,{pagesCount:42})},o={render:()=>t.jsx(n,{openEnd:!0})};e.parameters={...e.parameters,docs:{...e.parameters?.docs,source:{originalSource:`{
+  render: () => <Controlled />
+}`,...e.parameters?.docs?.source}}};r.parameters={...r.parameters,docs:{...r.parameters?.docs,source:{originalSource:`{
+  render: () => <Controlled pagesCount={42} />
+}`,...r.parameters?.docs?.source}}};o.parameters={...o.parameters,docs:{...o.parameters?.docs,source:{originalSource:`{
+  render: () => <Controlled openEnd />
+}`,...o.parameters?.docs?.source}}};const O=["Default","ManyPages","OpenEnd"];export{e as Default,r as ManyPages,o as OpenEnd,O as __namedExportsOrder,y as default};

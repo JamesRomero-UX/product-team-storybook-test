@@ -1,0 +1,1 @@
+import{r as e}from"./iframe-CGUFCU7f.js";import{u as c}from"./use-resize-observer-3Gfl0AxN.js";function i(r,s=[]){const t=e.useRef(null),[n,u]=e.useState(null),o=e.useCallback(()=>t.current,s);return c(o,a=>u(l=>r(a,l))),[n,t]}export{i as u};

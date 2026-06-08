@@ -1,1 +1,0 @@
-import{b as e}from"./iframe-BUnym78j.js";import{c as r}from"./clsx-B-dksMZM.js";const s={root:"awsui_root_xttbq_1rjuy_145"};function c(t){return e.createElement("span",Object.assign({},t,{className:r(s.root,t.className)}))}export{c as S};

@@ -1,1 +1,0 @@
-import{r as e}from"./iframe-BUnym78j.js";import{d as a}from"./debounce-6Bmtvcts.js";function s(c,t){const r=e.useRef();return r.current=c,e.useCallback(a(((...u)=>{r.current&&r.current(...u)}),t),[])}export{s as u};

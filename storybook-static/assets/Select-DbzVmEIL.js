@@ -1,1 +1,0 @@
-import{r as c,j as e}from"./iframe-BUnym78j.js";import{S as o}from"./index-BNRppH51.js";const l="_select_1vr5r_1",a={select:l},s=c.forwardRef((t,r)=>e.jsx("div",{className:a.select,children:e.jsx(o,{...t,ref:r})}));s.displayName="Select";s.__docgenInfo={description:"",methods:[],displayName:"Select"};export{s as S};

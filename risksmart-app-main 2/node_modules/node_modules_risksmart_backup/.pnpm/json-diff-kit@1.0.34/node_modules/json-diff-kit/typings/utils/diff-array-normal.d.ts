@@ -1,0 +1,3 @@
+import type { DiffResult, DifferOptions } from '../differ';
+declare const diffArrayNormal: (arrLeft: any[], arrRight: any[], keyLeft: string, keyRight: string, level: number, options: DifferOptions, linesLeft?: DiffResult[], linesRight?: DiffResult[]) => [DiffResult[], DiffResult[]];
+export default diffArrayNormal;

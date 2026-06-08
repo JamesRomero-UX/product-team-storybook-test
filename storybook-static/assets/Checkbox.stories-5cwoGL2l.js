@@ -1,0 +1,9 @@
+import{j as e,r as c}from"./iframe-CGUFCU7f.js";import{C as a}from"./index-BwUeWT1c.js";import{S as m}from"./index-CJSDoaqF.js";/* empty css              */import"./preload-helper-PPVm8Dsz.js";import"./apply-display-name-BLkmUqWr.js";import"./internal-BFDSNP_n.js";import"./clsx-B-dksMZM.js";import"./index-Cs1eQhj0.js";import"./index-cNOLf2x0.js";import"./attributes-BsWGnux6.js";import"./index-BwTZiLDq.js";import"./form-field-context-BW9QsZp8.js";import"./single-tab-stop-navigation-context-DKkbNJRw.js";import"./node-belongs-WtzSDwnj.js";import"./find-up-until-BRKS-4M1.js";import"./index-KL8ugYfO.js";import"./index-DqesKSp7.js";import"./internal-Dsnmrf4x.js";import"./index-Msco8KEF.js";import"./index-ChVYcNbT.js";const y={title:"Cloudscape Reference/Checkbox",component:a,tags:["cloudscape-real"],parameters:{layout:"centered",docs:{description:{component:"Real Cloudscape Checkbox rendered with RiskSmart theme. 1:1 with live app."}}}},o=n=>{const[s,i]=c.useState(!1);return e.jsx(a,{checked:s,onChange:({detail:d})=>i(d.checked),disabled:n.disabled,children:n.children})},r={render:()=>e.jsx(o,{children:"I agree"})},t={render:()=>e.jsxs(m,{size:"xs",children:[e.jsx(o,{children:"Default"}),e.jsx(a,{checked:!0,indeterminate:!0,onChange:()=>{},children:"Indeterminate"}),e.jsx(o,{disabled:!0,children:"Disabled"})]})};r.parameters={...r.parameters,docs:{...r.parameters?.docs,source:{originalSource:`{
+  render: () => <Controlled>I agree</Controlled>
+}`,...r.parameters?.docs?.source}}};t.parameters={...t.parameters,docs:{...t.parameters?.docs,source:{originalSource:`{
+  render: () => <SpaceBetween size={'xs'}>
+      <Controlled>Default</Controlled>
+      <Checkbox checked indeterminate onChange={() => {}}>Indeterminate</Checkbox>
+      <Controlled disabled>Disabled</Controlled>
+    </SpaceBetween>
+}`,...t.parameters?.docs?.source}}};const O=["Default","States"];export{r as Default,t as States,O as __namedExportsOrder,y as default};

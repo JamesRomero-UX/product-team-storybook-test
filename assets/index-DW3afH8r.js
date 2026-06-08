@@ -1,0 +1,1 @@
+import{c as t}from"./clsx-B-dksMZM.js";import{u as i}from"./index-D_H7yXwx.js";import{u as r,b as u}from"./index-Czpqf29M.js";function n(s){const a=r(s),e=u(s),o=i(s);return t({"awsui-polaris-dark-mode awsui-dark-mode":a==="dark","awsui-polaris-compact-mode awsui-compact-mode":e==="compact","awsui-visual-refresh":!1,[`awsui-context-${o}`]:o})}export{n as u};

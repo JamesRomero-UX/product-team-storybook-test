@@ -1,0 +1,2 @@
+declare const shallowSimilarity: (left: any, right: any) => number;
+export default shallowSimilarity;

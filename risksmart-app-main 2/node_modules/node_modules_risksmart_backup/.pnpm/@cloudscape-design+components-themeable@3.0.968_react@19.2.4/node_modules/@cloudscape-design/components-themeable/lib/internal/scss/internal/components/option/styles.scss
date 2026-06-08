@@ -1,0 +1,126 @@
+/*
+ Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '../../styles' as styles;
+@use '../../styles/tokens' as awsui;
+@use './constants' as constants;
+
+.option {
+  @include styles.styles-reset;
+
+  display: flex;
+  align-items: flex-start;
+  inline-size: 100%;
+  // Hack to truncate flex boxes
+  min-inline-size: 0;
+  box-sizing: border-box;
+  color: inherit;
+
+  &:not(.disabled) {
+    cursor: inherit;
+  }
+  &.parent {
+    font-weight: bold;
+    &:not(.disabled):not(.highlighted) {
+      color: awsui.$color-text-dropdown-group-label;
+    }
+  }
+}
+
+.content {
+  inline-size: 100%;
+  display: flex;
+  flex-direction: column;
+  // Hack to truncate flex boxes
+  min-inline-size: 0;
+}
+
+.label-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.label,
+.tag,
+.label-tag {
+  @include styles.text-wrapping;
+}
+
+.label,
+.tag {
+  flex-wrap: wrap;
+}
+
+.label-prefix {
+  font-weight: styles.$font-weight-bold;
+}
+
+.label-tag {
+  padding-inline-start: awsui.$space-s;
+  flex: auto;
+  text-align: end;
+
+  &:empty {
+    display: none;
+  }
+}
+
+.tags,
+.description {
+  @include styles.font-body-s;
+  color: constants.$tags-description-color;
+  flex-wrap: wrap;
+
+  &.highlighted {
+    color: constants.$tags-description-color-hover;
+  }
+
+  &.selected {
+    color: constants.$tags-description-color;
+  }
+}
+
+.tags {
+  display: flex;
+  align-items: stretch;
+}
+
+.tag:not(:last-child) {
+  padding-inline-end: awsui.$space-m;
+}
+
+.icon {
+  padding-inline-end: awsui.$space-xs;
+  align-content: center;
+  display: flex;
+  flex-shrink: 0;
+}
+
+.icon-size-big {
+  padding-block-start: awsui.$space-option-icon-big-top;
+}
+
+.filtering-match-highlight {
+  background-color: awsui.$color-background-dropdown-item-filter-match;
+  color: awsui.$color-text-dropdown-item-filter-match;
+  font-weight: bold;
+}
+
+.disabled {
+  color: awsui.$color-text-dropdown-item-disabled;
+  pointer-events: none;
+
+  > .content {
+    > .tags,
+    > .description {
+      color: currentColor;
+    }
+  }
+}
+
+.trigger-variant {
+  @include styles.text-overflow-ellipsis;
+}

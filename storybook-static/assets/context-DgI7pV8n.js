@@ -1,1 +1,0 @@
-import{r as a,b as s}from"./iframe-BUnym78j.js";const r=s.createContext({locale:null,format:(t,n,o,e)=>e});function l(){return a.useContext(r).locale}function m(t){const{format:n}=a.useContext(r);return(o,e,c)=>n("@cloudscape-design/components",t,o,e,c)}export{l as a,m as u};

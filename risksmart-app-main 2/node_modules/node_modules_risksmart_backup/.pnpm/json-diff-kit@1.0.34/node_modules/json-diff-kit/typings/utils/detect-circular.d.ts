@@ -1,0 +1,2 @@
+declare const detectCircular: (value: any, map?: Map<any, boolean>) => boolean;
+export default detectCircular;

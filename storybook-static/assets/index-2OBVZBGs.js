@@ -1,1 +1,0 @@
-import{b as e,r as n}from"./iframe-BUnym78j.js";var t;let u=0;const a=()=>{const r=n.useRef(null);return r.current||(r.current=`${u++}-${Date.now()}-${Math.round(Math.random()*1e4)}`),r.current},o=(t=e.useId)!==null&&t!==void 0?t:a;function c(r){return`${r||""}`+o()}export{a,c as u};

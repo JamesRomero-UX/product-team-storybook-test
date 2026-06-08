@@ -1,7 +1,0 @@
-import{b as l,j as e}from"./iframe-BUnym78j.js";import{_ as m,u as p,h as d,a as x}from"./apply-display-name-CKHUfYBo.js";import{c as h}from"./clsx-B-dksMZM.js";/* empty css              */import"./preload-helper-PPVm8Dsz.js";const u={"text-content":"awsui_text-content_6absk_nztmk_146"};function n(s){var{children:a}=s,o=m(s,["children"]);const{__internalRootRef:c}=p("TextContent"),r=d(o),i=h(r.className,u["text-content"]);return l.createElement("div",Object.assign({},r,{className:i,ref:c}),a)}x(n,"TextContent");const R={title:"Cloudscape Reference/TextContent",component:n,tags:["cloudscape-real"],parameters:{layout:"centered",docs:{description:{component:"Real Cloudscape TextContent rendered with RiskSmart theme. 1:1 with live app."}}}},t={render:()=>e.jsxs(n,{children:[e.jsx("h1",{children:"Heading 1"}),e.jsxs("p",{children:["Paragraph with ",e.jsx("strong",{children:"bold"})," and ",e.jsx("em",{children:"italic"}),"."]}),e.jsxs("ul",{children:[e.jsx("li",{children:"Item 1"}),e.jsx("li",{children:"Item 2"})]})]})};t.parameters={...t.parameters,docs:{...t.parameters?.docs,source:{originalSource:`{
-  render: () => <TextContent>
-      <h1>Heading 1</h1>
-      <p>Paragraph with <strong>bold</strong> and <em>italic</em>.</p>
-      <ul><li>Item 1</li><li>Item 2</li></ul>
-    </TextContent>
-}`,...t.parameters?.docs?.source}}};const T=["Default"];export{t as Default,T as __namedExportsOrder,R as default};

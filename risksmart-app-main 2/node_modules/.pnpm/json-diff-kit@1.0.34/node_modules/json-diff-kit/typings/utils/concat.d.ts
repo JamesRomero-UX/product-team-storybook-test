@@ -1,0 +1,6 @@
+/**
+ * If we use `a.push(...b)`, it will result in `Maximum call stack size exceeded` error.
+ * The reason is unclear, it may be a bug of V8, so we should implement a push method by ourselves.
+ */
+declare const concat: <T, U>(a: T[], b: U[], prependEach?: boolean) => (T | U)[];
+export default concat;
