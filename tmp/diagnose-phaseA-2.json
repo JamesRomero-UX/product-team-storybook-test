@@ -1,0 +1,66 @@
+[
+  {
+    "id": "app-shell-authenticated-layout--default",
+    "url": "http://localhost:6007/iframe.html?id=app-shell-authenticated-layout--default&viewMode=story",
+    "screenshot": "tmp/diagnose/app-shell-authenticated-layout--default.png",
+    "nav": "ok",
+    "consoleMsgs": [
+      "[error] Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep)",
+      "[error] TypeError: Failed to fetch dynamically imported module: http://localhost:6007/src/app-shell/AppShell.stories.tsx",
+      "[error] Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep)",
+      "[error] Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep)",
+      "[error] Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep)",
+      "[error] Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep)",
+      "[error] Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep)",
+      "[error] Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep)",
+      "[error] Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep)",
+      "[error] Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep)",
+      "[error] Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep)",
+      "[error] Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep)"
+    ],
+    "pageErrors": [],
+    "requestFailed": [
+      "GET http://localhost:6007/node_modules/.cache/storybook/10.2.15/1c3385a5d25e538d10b518b310c74d3ca2690b6aaffeadccd74da79736171f86/sb-vite/deps/@apollo_client.js?v=22ce9b5a — net::ERR_ABORTED",
+      "GET http://localhost:6007/node_modules/.cache/storybook/10.2.15/1c3385a5d25e538d10b518b310c74d3ca2690b6aaffeadccd74da79736171f86/sb-vite/deps/@risk-smart_themed-cloudscape-components_alert.js?v=828f6662 — net::ERR_ABORTED",
+      "GET http://localhost:6007/node_modules/.cache/storybook/10.2.15/1c3385a5d25e538d10b518b310c74d3ca2690b6aaffeadccd74da79736171f86/sb-vite/deps/@risk-smart_themed-cloudscape-components_content-layout.js?v=66f75ac6 — net::ERR_ABORTED",
+      "GET http://localhost:6007/node_modules/.cache/storybook/10.2.15/1c3385a5d25e538d10b518b310c74d3ca2690b6aaffeadccd74da79736171f86/sb-vite/deps/@risk-smart_themed-cloudscape-components_space-between.js?v=022ceaaa — net::ERR_ABORTED",
+      "GET http://localhost:6007/node_modules/.cache/storybook/10.2.15/1c3385a5d25e538d10b518b310c74d3ca2690b6aaffeadccd74da79736171f86/sb-vite/deps/@sentry_react.js?v=f77dd579 — net::ERR_ABORTED",
+      "GET http://localhost:6007/node_modules/.cache/storybook/10.2.15/1c3385a5d25e538d10b518b310c74d3ca2690b6aaffeadccd74da79736171f86/sb-vite/deps/react-helmet-async.js?v=38fcf3ef — net::ERR_ABORTED",
+      "GET http://localhost:6007/node_modules/.cache/storybook/10.2.15/1c3385a5d25e538d10b518b310c74d3ca2690b6aaffeadccd74da79736171f86/sb-vite/deps/react-i18next.js?v=0720ff7d — net::ERR_ABORTED",
+      "GET http://localhost:6007/node_modules/.cache/storybook/10.2.15/1c3385a5d25e538d10b518b310c74d3ca2690b6aaffeadccd74da79736171f86/sb-vite/deps/@apollo_client_testing.js?v=7c492524 — net::ERR_ABORTED",
+      "GET http://localhost:6007/node_modules/.cache/storybook/10.2.15/1c3385a5d25e538d10b518b310c74d3ca2690b6aaffeadccd74da79736171f86/sb-vite/deps/@auth0_auth0-react.js?v=44b9850f — net::ERR_ABORTED",
+      "GET http://localhost:6007/node_modules/.cache/storybook/10.2.15/1c3385a5d25e538d10b518b310c74d3ca2690b6aaffeadccd74da79736171f86/sb-vite/deps/i18next.js?v=2e3e9d02 — net::ERR_ABORTED",
+      "GET http://localhost:6007/node_modules/.cache/storybook/10.2.15/1c3385a5d25e538d10b518b310c74d3ca2690b6aaffeadccd74da79736171f86/sb-vite/deps/react-router.js?v=16609c9a — net::ERR_ABORTED"
+    ]
+  },
+  {
+    "id": "components-button--default",
+    "url": "http://localhost:6007/iframe.html?id=components-button--default&viewMode=story",
+    "screenshot": "tmp/diagnose/components-button--default.png",
+    "nav": "ok",
+    "consoleMsgs": [
+      "[error] Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep)",
+      "[error] TypeError: Failed to fetch dynamically imported module: http://localhost:6007/@fs/Users/jamesromero/Documents/risksmart-app-main%202/packages/atomic-ui/src/components/button/Button.stories.tsx",
+      "[error] Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep)"
+    ],
+    "pageErrors": [],
+    "requestFailed": [
+      "GET http://localhost:6007/node_modules/.cache/storybook/10.2.15/1c3385a5d25e538d10b518b310c74d3ca2690b6aaffeadccd74da79736171f86/sb-vite/deps/chroma-js.js?v=84e9516c — net::ERR_ABORTED",
+      "GET http://localhost:6007/node_modules/.cache/storybook/10.2.15/1c3385a5d25e538d10b518b310c74d3ca2690b6aaffeadccd74da79736171f86/sb-vite/deps/clsx.js?v=85646d2b — net::ERR_ABORTED"
+    ]
+  },
+  {
+    "id": "cloudscape-reference-button--variants",
+    "url": "http://localhost:6007/iframe.html?id=cloudscape-reference-button--variants&viewMode=story",
+    "screenshot": "tmp/diagnose/cloudscape-reference-button--variants.png",
+    "nav": "ok",
+    "consoleMsgs": [
+      "[error] Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep)",
+      "[error] TypeError: Failed to fetch dynamically imported module: http://localhost:6007/src/cloudscape-reference/Button/Button.stories.tsx"
+    ],
+    "pageErrors": [],
+    "requestFailed": [
+      "GET http://localhost:6007/node_modules/.cache/storybook/10.2.15/1c3385a5d25e538d10b518b310c74d3ca2690b6aaffeadccd74da79736171f86/sb-vite/deps/@risk-smart_themed-cloudscape-components_button.js?v=2bd8a757 — net::ERR_ABORTED"
+    ]
+  }
+]
