@@ -1,0 +1,6 @@
+query getComments {
+  comment {
+    Id
+    Content
+  }
+}

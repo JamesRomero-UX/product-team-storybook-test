@@ -1,0 +1,17 @@
+query getScimConfig {
+  getScimConfig {
+    domains {
+      domain
+      createdOn
+    }
+    tokens {
+      keyId
+      orgKey
+      token
+      createdOn
+      expiresOn
+      status
+    }
+    legacyTokens
+  }
+}

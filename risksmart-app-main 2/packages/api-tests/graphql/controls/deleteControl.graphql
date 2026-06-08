@@ -1,0 +1,5 @@
+mutation deleteControl($Id: uuid!) {
+  deleteControlsById(Ids: [$Id]) {
+    affected_rows
+  }
+}

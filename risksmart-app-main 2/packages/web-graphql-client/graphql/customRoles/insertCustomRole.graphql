@@ -1,0 +1,5 @@
+mutation insertCustomRole($input: CustomRoleInsertInputData) {
+  customRoleInsert(Input: $input) {
+    Id
+  }
+}

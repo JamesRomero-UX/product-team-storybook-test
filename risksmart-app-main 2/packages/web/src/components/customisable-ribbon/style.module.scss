@@ -1,0 +1,13 @@
+.customisableRibbonForm {
+  // Customisable Ribbon: Text Field
+  [class*='awsui_search-field'],
+    // Customisable Ribbon: Search field
+  [class*='awsui_grid-column'],
+  [class*='awsui_colspan'] {
+    width: 100% !important;
+    flex: 1 !important;
+  }
+  [class*='awsui_input-wrapper'] {
+    max-inline-size: 100% !important;
+  }
+}

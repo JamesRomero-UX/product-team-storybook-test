@@ -1,0 +1,41 @@
+mutation insertObligation(
+  $Id: uuid!
+  $Type: obligation_type_enum!
+  $Title: String!
+  $Adherence: String!
+  $Description: String!
+  $Interpretation: String
+  $ParentId: uuid
+  $Tags: [tag_insert_input!]!
+  $Departments: [department_insert_input!]!
+  $CustomAttributeData: jsonb
+  $Owners: [owner_insert_input!]!
+  $OwnerGroups: [owner_group_insert_input!]!
+  $Contributors: [contributor_insert_input!]!
+  $ContributorGroups: [contributor_group_insert_input!]!
+  $schedule: schedule_insert_input!
+) {
+  insert_obligation_one(
+    object: {
+      Id: $Id
+      Type: $Type
+      Title: $Title
+      ParentId: $ParentId
+      Interpretation: $Interpretation
+      Description: $Description
+      Adherence: $Adherence
+      CustomAttributeData: $CustomAttributeData
+      tags: { data: $Tags }
+      departments: { data: $Departments }
+      contributors: { data: $Contributors }
+      owners: { data: $Owners }
+      contributorGroups: { data: $ContributorGroups }
+      ownerGroups: { data: $OwnerGroups }
+    }
+  ) {
+    Id
+  }
+  insert_schedule_one(object: $schedule) {
+    Id
+  }
+}

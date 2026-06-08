@@ -1,0 +1,24 @@
+{
+  "dr-risksmartApp-CDKVpcStack": {
+    "drrisksmartAppsharedVpcId": "vpc-0ef29e7027a4c5512",
+    "ExportsOutputRefdrrisksmartAppVPCisolatedsubnetSubnet2Subnet3AD256E812F25D89": "subnet-0ee2cd819206007af",
+    "ExportsOutputRefdrrisksmartAppVPCCB080D89C0DA4B77": "vpc-0ef29e7027a4c5512",
+    "drrisksmartAppnoInboundAllOutboundSecurityGroupId": "sg-049adea45af34bef3",
+    "ExportsOutputRefdrrisksmartAppVPCpublicsubnetSubnet1SubnetAF8A4DEDB9F990C5": "subnet-0c2825928d7725135",
+    "ExportsOutputRefdrrisksmartAppVPCisolatedsubnetSubnet3SubnetB8AFBD2F45DCB4D4": "subnet-003b96f06edad1aa1",
+    "ExportsOutputRefdrrisksmartAppVPCpublicsubnetSubnet2Subnet3DF403DA7DD4918D": "subnet-00fdb6b23f4a7619c",
+    "ExportsOutputRefdrrisksmartAppVPCisolatedsubnetSubnet1Subnet014CA84510E222D9": "subnet-01c5bb5e91a08133c",
+    "ExportsOutputRefdrrisksmartAppVPCpublicsubnetSubnet3Subnet01D1520FC519BD81": "subnet-073e5db473385aba2"
+  },
+  "dr-risksmartApp-api-CDKDomainStack": {
+    "ExportsOutputRefdrrisksmartAppHostedZone9014468591C94A74": "Z079927022EL73DWP0CN7"
+  },
+  "dr-risksmartApp-api-CDKCertStack": {
+    "ExportsOutputRefdrrisksmartAppCertificateB9CBF78B4C9CE5E3": "arn:aws:acm:eu-west-2:134258997950:certificate/5fd1477c-efaf-4fba-abc3-fcddf96c3a98"
+  },
+  "dr-risksmartApp-CDKApiStack": {
+    "drrisksmartAppApplicationLoadBalancedFargateServiceLoadBalancerDNS831C6B2E": "dr-ri-drris-10B7V56N2X6IM-1979954411.eu-west-2.elb.amazonaws.com",
+    "RDSEndpoint": "dr-risksmartapp-cdkapista-drrisksmartappdatabasecl-1fuj19lktdu2.cbca5qvsdfg2.eu-west-2.rds.amazonaws.com",
+    "drrisksmartAppApplicationLoadBalancedFargateServiceServiceURLFFEA2092": "https://dr-risksmartapp-api.134258997950.risksmart.link"
+  }
+}

@@ -1,0 +1,17 @@
+query getObligationAuditById($Id: uuid!) {
+  obligation_audit(where: { Id: { _eq: $Id } }) {
+    Adherence
+    Description
+    Id
+    Interpretation
+    ParentId
+    Title
+    Type
+    CustomAttributeData
+    SequentialId
+    CreatedAtTimestamp
+    CreatedByUser
+    ModifiedAtTimestamp
+    ModifiedByUser
+  }
+}

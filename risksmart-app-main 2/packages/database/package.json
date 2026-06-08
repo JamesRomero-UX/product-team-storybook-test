@@ -1,0 +1,13 @@
+{
+  "name": "@risksmart-app/database",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "db:lint": "tsc && schemalint"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "extract-pg-schema": "catalog:",
+    "schemalint": "catalog:"
+  }
+}

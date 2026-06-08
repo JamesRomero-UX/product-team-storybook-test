@@ -1,0 +1,27 @@
+.paletteItem,
+.boardItem {
+  div[class*='awsui_container'] {
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.15) !important;
+    page-break-inside: avoid !important;
+    -moz-page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    -moz-break-inside: avoid !important;
+  }
+  h5 {
+    margin: 0 !important;
+  }
+
+  button[class*='awsui_handle'] {
+    color: #8b8ba0 !important;
+  }
+
+  // Uncomment to hide the drag handle
+  // [class*='awsui_header'] button[class*='awsui_handle_'] {
+  //   display: none;
+  // }
+
+  [class*='awsui_header'] {
+    padding-bottom: 0 !important;
+    min-width: 0 !important;
+  }
+}

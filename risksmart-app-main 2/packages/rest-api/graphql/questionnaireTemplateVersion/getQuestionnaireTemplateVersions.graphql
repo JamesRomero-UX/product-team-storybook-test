@@ -1,0 +1,5 @@
+query getQuestionnaireTemplateVersions($where: questionnaire_template_version_bool_exp, $limit: Int, $orderBy: [questionnaire_template_version_order_by!]) {
+  questionnaire_template_version(where: $where, limit: $limit, order_by: $orderBy) {
+    ...QuestionnaireTemplateVersionParts
+  }
+}

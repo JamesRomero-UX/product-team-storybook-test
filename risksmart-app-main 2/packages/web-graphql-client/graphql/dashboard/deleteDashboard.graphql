@@ -1,0 +1,5 @@
+mutation deleteDashboard($Id: uuid!) {
+  delete_dashboard_by_pk(Id: $Id) {
+    Id
+  }
+}

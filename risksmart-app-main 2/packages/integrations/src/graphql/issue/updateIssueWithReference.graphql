@@ -1,0 +1,5 @@
+mutation updateIssueWithReference($Id: uuid!, $Meta: json) {
+  update_issue(where: { Id: { _eq: $Id } }, _set: { Meta: $Meta }) {
+    affected_rows
+  }
+}

@@ -1,0 +1,17 @@
+query getAssessmentRCSAActivitiesByParentId($AssessmentId: uuid!) {
+  assessment_activity(
+    where: { ParentId: { _eq: $AssessmentId }, IsRCSA: { _eq: true } }
+  ) {
+    ...AssessmentActivityParts
+    parentRisk {
+      Title
+      SequentialId
+    }
+    assignedUser {
+      FriendlyName
+    }
+    files {
+      ...RelationFileParts
+    }
+  }
+}

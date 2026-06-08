@@ -1,0 +1,116 @@
+name: Template / ECR Environment Tag
+
+# Adds timestamped environment tags (e.g., dev-cloud-2026-03-04T1423Z, staging-2026-03-04T0900Z)
+# to existing ECR images. This enables lifecycle policies to protect deployed
+# images while expiring unused commit-SHA-only images.
+#
+# Uses timestamped tags (not moving tags) so lifecycle policies can identify
+# previously-deployed images even after a newer deploy overwrites the "current"
+# deployment. ECR lifecycle rules evaluate each image once by priority, so a
+# single moving tag would leave previously-deployed images unprotected.
+#
+# Requires ECR repos to use IMMUTABLE_WITH_EXCLUSION with environment tag
+# prefixes listed as exclusions.
+
+permissions:
+  contents: read
+  id-token: write
+
+on:
+  workflow_call:
+    inputs:
+      environment_tag:
+        description: 'Environment tag prefix (dev-cloud, staging, prod). A UTC timestamp suffix (YYYY-MM-DDTHH:MMZ) is appended automatically.'
+        required: true
+        type: string
+      ecr_repos:
+        description: 'Space-separated list of ECR repo names to tag'
+        required: true
+        type: string
+      image_tag:
+        description: 'Source image tag. Use "commit-sha" to auto-detect from git HEAD'
+        required: true
+        type: string
+
+jobs:
+  TagImages:
+    name: Tag ECR Images (${{ inputs.environment_tag }})
+    runs-on:
+      - sprinters:aws:ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        region: [eu-west-2, us-east-1, ca-central-1]
+    steps:
+      - name: Checkout repository
+        if: inputs.image_tag == 'commit-sha'
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+
+      - name: Resolve image tag
+        id: resolve
+        run: |
+          if [ "${{ inputs.image_tag }}" = "commit-sha" ]; then
+            TAG=$(git rev-parse --short HEAD)
+          else
+            TAG="${{ inputs.image_tag }}"
+          fi
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
+          # Timestamped environment tag for lifecycle policy protection
+          ENV_TAG="${{ inputs.environment_tag }}-$(date -u +%Y-%m-%dT%H%MZ)"
+          echo "env_tag=$ENV_TAG" >> "$GITHUB_OUTPUT"
+          echo "Resolved: source=$TAG environment=$ENV_TAG"
+
+      - name: Setup Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.14.2'
+
+      - name: Install AWS CLI
+        run: |
+          pip install awscli
+          aws --version
+
+      - name: Configure AWS credentials (CI account)
+        uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4.3.1
+        with:
+          role-to-assume: ${{ vars.CI_AWS_DEPLOY_ROLE }}
+          aws-region: ${{ matrix.region }}
+
+      - name: Tag images with environment
+        env:
+          IMAGE_TAG: ${{ steps.resolve.outputs.tag }}
+          ENV_TAG: ${{ steps.resolve.outputs.env_tag }}
+        run: |
+          for REPO in ${{ inputs.ecr_repos }}; do
+            echo "=== ${REPO} in ${{ matrix.region }} ==="
+
+            # Get the manifest for the source tag
+            MANIFEST=$(aws ecr batch-get-image \
+              --repository-name "$REPO" \
+              --image-ids imageTag="$IMAGE_TAG" \
+              --region "${{ matrix.region }}" \
+              --query 'images[0].imageManifest' \
+              --output text)
+
+            if [[ -z "$MANIFEST" || "$MANIFEST" == "None" ]]; then
+              echo "Image ${REPO}:${IMAGE_TAG} not found in ${{ matrix.region }}, skipping"
+              continue
+            fi
+
+            # Add timestamped environment tag to the image
+            # If the same environment deploys twice on the same day, the tag already
+            # points to this digest so put-image returns ImageAlreadyExistsException (safe to ignore)
+            if PUT_OUTPUT=$(aws ecr put-image \
+              --repository-name "$REPO" \
+              --image-tag "$ENV_TAG" \
+              --image-manifest "$MANIFEST" \
+              --region "${{ matrix.region }}" 2>&1); then
+              echo "Tagged ${REPO}:${ENV_TAG} in ${{ matrix.region }}"
+            elif echo "$PUT_OUTPUT" | grep -q "ImageAlreadyExistsException"; then
+              echo "Tag ${REPO}:${ENV_TAG} already exists in ${{ matrix.region }} (same digest)"
+            else
+              echo "::error::Failed to tag ${REPO}:${ENV_TAG} in ${{ matrix.region }}: ${PUT_OUTPUT}"
+              exit 1
+            fi
+          done

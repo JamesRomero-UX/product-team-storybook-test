@@ -1,0 +1,24 @@
+table:
+  name: approval_level_audit
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: approval_level_audit
+  custom_root_fields: {}
+select_permissions:
+  - role: read:audit
+    permission:
+      columns:
+        - CreatedByUser
+        - ModifiedByUser
+        - CreatedAtTimestamp
+        - ModifiedAtTimestamp
+        - Id
+        - Description
+        - SequenceOrder
+        - ApprovalId
+        - ApprovalRuleType
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id

@@ -1,0 +1,5 @@
+bucket         = "${var.environment}-${var.region}-risksmart-terraform-state"
+key            = "terraform/${var.environment}/${var.region}/terraform.tfstate"
+region         = var.region
+encrypt        = true
+dynamodb_table = "${var.environment}-${var.region}-risksmart-terraform-lock"

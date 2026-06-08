@@ -1,0 +1,29 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.1.1/schema.json",
+  "changelog": "@changesets/cli/changelog",
+  "commit": false,
+  "fixed": [],
+  "linked": [],
+  "access": "restricted",
+  "baseBranch": "main",
+  "updateInternalDependencies": "minor",
+  "ignore": [
+    "@risksmart-app/shared",
+    "@risksmart-app/web",
+    "@risksmart-app/components",
+    "@risksmart-app/rest-api",
+    "@risksmart-app/scim-api",
+    "@risksmart-app/third-party-portal",
+    "@risksmart-app/i18n",
+    "@risksmart-app/data-import",
+    "@risksmart-app/auth0-stack",
+    "@risksmart-app/api-tests",
+    "@risksmart-app/e2e",
+    "@risksmart-app/database",
+    "@risksmart-app/dlq-replay",
+    "@risksmart-app/knock",
+    "@risksmart-app/web-graphql-client",
+    "cdk-stack",
+    "@risksmart-app/trpc-api-tests"
+  ]
+}

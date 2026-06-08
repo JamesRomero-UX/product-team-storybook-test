@@ -1,0 +1,5 @@
+mutation insertCustomRoleUser($input: custom_role_user_insert_input!) {
+  insert_custom_role_user_one(object: $input) {
+    Id
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "@risksmart-app/events",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "tsc": "tsc --noEmit",
+    "build": "tsup",
+    "lint": "eslint src --ext .ts,.tsx --max-warnings 0",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix"
+  },
+  "devDependencies": {
+    "@risksmart-app/eslint-config": "workspace:*",
+    "@tsconfig/node22": "catalog:",
+    "esbuild-plugin-file-path-extensions": "catalog:",
+    "eslint": "catalog:",
+    "eslint-plugin-unicorn": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:"
+  },
+  "dependencies": {
+    "@risksmart-app/domain": "workspace:*",
+    "zod": "catalog:"
+  }
+}

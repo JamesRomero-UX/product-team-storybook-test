@@ -1,0 +1,8 @@
+query getDocumentInternalAuditResultsByParentId($Id: uuid) {
+  document_internal_audit_result(
+    where: { parents: { ParentId: { _eq: $Id } } }
+  ) {
+    Id
+    TestDate
+  }
+}

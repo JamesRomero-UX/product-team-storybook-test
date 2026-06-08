@@ -1,0 +1,1 @@
+{"version":3,"file":"performance-plugin.d.ts","sourceRoot":"","sources":["../../src/performance-plugin.ts"],"names":[],"mappings":"AACA,OAAO,EACL,aAAa,EACb,aAAa,EACb,gBAAgB,EAChB,0BAA0B,EAE3B,MAAM,2BAA2B,CAAC;AAInC,KAAK,uBAAuB,GAAG,gBAAgB,CAAC,aAAa,EAAE,aAAa,CAAC,CAAC;AAI9E,eAAO,MAAM,iBAAiB,aAAa,0BAA0B,KAAQ,uBAmD5E,CAAC"}

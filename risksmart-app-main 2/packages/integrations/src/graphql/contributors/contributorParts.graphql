@@ -1,0 +1,7 @@
+fragment ContributorParts on contributor {
+  UserId
+  user {
+    UserName
+    Id
+  }
+}

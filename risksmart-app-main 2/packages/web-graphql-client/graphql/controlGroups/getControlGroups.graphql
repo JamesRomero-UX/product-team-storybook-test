@@ -1,0 +1,5 @@
+query getControlGroups {
+  control_group(order_by: { Title: asc }) {
+    ...ControlGroupParts
+  }
+}

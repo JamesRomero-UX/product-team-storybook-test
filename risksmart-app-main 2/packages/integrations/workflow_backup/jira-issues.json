@@ -1,0 +1,1179 @@
+{
+  "name": "Jira to RiskSmart - Create Issue",
+  "nodes": [
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "2526b8f9-06d1-47f9-bfdd-26150f241f53",
+              "leftValue": "={{ $('Reduce Fields').item.json.risksmartRef }}",
+              "rightValue": "=",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "ignoreCase": true
+        }
+      },
+      "id": "673002ce-24e7-423d-928b-c7d337f381e3",
+      "name": "If RiskSmart Ref Present",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [-500, 1320]
+    },
+    {
+      "parameters": {
+        "issueId": "={{ $('Reduce Fields').item.json.risksmartRef }}",
+        "title": "={{ $('Reduce Fields').item.json.summary }}",
+        "details": "={{ $('Reduce Fields').item.json.description }}",
+        "dateOccurred": "={{ $('Reduce Fields').item.json.detectionTime }}",
+        "dateIdentified": "={{ $('Reduce Fields').item.json.detectionTime }}",
+        "OriginalTimestamp": "={{ $json.ModifiedAtTimestamp }}",
+        "owners": "={{ $('Merge Owner and Contributor').item.json.OwnerId }}",
+        "reporter": "={{ $('Merge Owner and Contributor').item.json.ContributorId }}"
+      },
+      "id": "67530c0a-2f44-4cbf-8fbd-a5bc6d6d42aa",
+      "name": "Update Issue",
+      "type": "CUSTOM.updateIssue",
+      "typeVersion": 1,
+      "position": [260, 1200],
+      "retryOnFail": false,
+      "credentials": {
+        "riskSmartAuthApi": {
+          "id": "fdlR2vCuVe3tTMhk",
+          "name": "RiskSmart Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "issueId": "={{ $json.newRiskSmartID }}",
+        "title": "={{ $('Reduce Fields').item.json.summary }}",
+        "details": "={{ $('Reduce Fields').item.json.description }}",
+        "dateOccurred": "={{ $('Reduce Fields').item.json.detectionTime }}",
+        "dateIdentified": "={{ $('Reduce Fields').item.json.detectionTime }}",
+        "jiraReference": "=https://risksmart.atlassian.net/browse/{{ $('Reduce Fields').item.json.jiraKey }}",
+        "jiraReferenceCustomFieldName": "1710373169400_link",
+        "owners": "={{ $json.OwnerId }}",
+        "reporter": "={{ $json.ContributorId }}"
+      },
+      "id": "6c4fa83c-fa0c-4a9a-ba4d-b4dcfa4cd175",
+      "name": "Insert Issue",
+      "type": "CUSTOM.insertIssue",
+      "typeVersion": 1,
+      "position": [40, 1500],
+      "credentials": {
+        "riskSmartAuthApi": {
+          "id": "fdlR2vCuVe3tTMhk",
+          "name": "RiskSmart Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "issueKey": "={{ $('Reduce Fields').item.json.jiraKey }}",
+        "updateFields": {
+          "customFieldsUi": {
+            "customFieldsValues": [
+              {
+                "fieldId": {
+                  "__rl": true,
+                  "value": "customfield_10045",
+                  "mode": "list",
+                  "cachedResultName": "RiskSmart Ref"
+                },
+                "fieldValue": "={{ $json.data.insertChildIssueAssessment.Id }}"
+              }
+            ]
+          }
+        }
+      },
+      "id": "d8d03868-6509-496f-a2d4-b383a7222e2e",
+      "name": "Update Jira Issue with Ref",
+      "type": "n8n-nodes-base.jira",
+      "typeVersion": 1,
+      "position": [440, 1500],
+      "credentials": {
+        "jiraSoftwareCloudApi": {
+          "id": "43qSdpxstMn0L3iT",
+          "name": "Jira SW Cloud account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9ec1d9ab-f2c7-48d2-b6c8-0a1da93b5c16",
+              "name": "status",
+              "value": "={{ $json.body.fields.status.name }}",
+              "type": "string"
+            },
+            {
+              "id": "ff8ff2c8-6c38-49fd-89e5-118aca76818b",
+              "name": "description",
+              "value": "={{ $json.body.fields.description || 'No description found in Jira item'}}",
+              "type": "string"
+            },
+            {
+              "id": "71fcb7c0-574c-4ad8-a043-e32d0a0f3b13",
+              "name": "summary",
+              "value": "={{ $json.body.fields.summary || 'No summary found in Jira item'}}",
+              "type": "string"
+            },
+            {
+              "id": "8dd83209-c9d7-4142-a19d-acc3250773bf",
+              "name": "reporterAccountId",
+              "value": "={{ $json.body.fields.reporter.accountId }}",
+              "type": "string"
+            },
+            {
+              "id": "c50267d9-a072-48fb-9e24-352db1ead4cd",
+              "name": "assigneeAccountId",
+              "value": "={{ $json.body.fields.assignee.accountId }}",
+              "type": "string"
+            },
+            {
+              "id": "795f4723-7002-46e8-b038-7566b06c3052",
+              "name": "risksmartRef",
+              "value": "={{ $json.body.fields.customfield_10045 }}",
+              "type": "string"
+            },
+            {
+              "id": "59676373-1305-4514-8a84-2198ab9dc6a8",
+              "name": "detectionTime",
+              "value": "={{ $json.body.fields.customfield_10047 }}",
+              "type": "string"
+            },
+            {
+              "id": "838a9f40-1d40-4294-ae8b-f9275ecfbe8c",
+              "name": "jiraKey",
+              "value": "={{ $json.body.key }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b83a4668-c99c-449e-a8c0-b9f49952eda9",
+      "name": "Reduce Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [-2840, 1300]
+    },
+    {
+      "parameters": {
+        "action": "generate",
+        "dataPropertyName": "newRiskSmartID"
+      },
+      "id": "52101a18-388b-4a5c-b10e-4bdfbc6c4d13",
+      "name": "Crypto",
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [-140, 1500]
+    },
+    {
+      "parameters": {
+        "issueId": "={{ $('Reduce Fields').item.json.risksmartRef }}"
+      },
+      "id": "83ddbd50-43e0-4b80-9ddb-cf013e2b8336",
+      "name": "Get Issue",
+      "type": "CUSTOM.getIssue",
+      "typeVersion": 1,
+      "position": [-140, 1200],
+      "credentials": {
+        "riskSmartAuthApi": {
+          "id": "fdlR2vCuVe3tTMhk",
+          "name": "RiskSmart Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b3111f95-14a4-488b-b948-65ec42c535b4",
+              "name": "ModifiedAtTimestamp",
+              "value": "={{ $json.data.issue[0].ModifiedAtTimestamp }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "823493db-6062-4f17-b0e1-45a9a7cd4399",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [60, 1200]
+    },
+    {
+      "parameters": {
+        "issueId": "={{ $json.data.insertChildIssue.Id }}",
+        "status": "open"
+      },
+      "id": "75ddc0cf-91fb-4ffe-a7d5-f6f704d0568c",
+      "name": "Insert Issue Assessment",
+      "type": "CUSTOM.insertIssueAssessment",
+      "typeVersion": 1,
+      "position": [240, 1500],
+      "credentials": {
+        "riskSmartAuthApi": {
+          "id": "fdlR2vCuVe3tTMhk",
+          "name": "RiskSmart Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "issueId": "={{ $('Reduce Fields').item.json.risksmartRef }}"
+      },
+      "id": "87c553fc-14b3-4c03-90f9-43b80cef300f",
+      "name": "Get Issue Assessment",
+      "type": "CUSTOM.getIssueAssessment",
+      "typeVersion": 1,
+      "position": [800, 1200],
+      "credentials": {
+        "riskSmartAuthApi": {
+          "id": "fdlR2vCuVe3tTMhk",
+          "name": "RiskSmart Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "02afd5ae-02ad-4dca-a513-cefea8e8d985",
+              "leftValue": "={{ $json.data.issue_assessment[0].Id }}",
+              "rightValue": "=",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "e71d9705-019f-4cf8-b061-340cddd5daa8",
+              "leftValue": "={{ $json.data.issue_assessment[0].Id }}",
+              "rightValue": "=",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "ac1ffe97-b497-41b7-b151-ebeca15c6918",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1000, 1200]
+    },
+    {
+      "parameters": {
+        "issueAssessmentId": "={{ $json.data.issue_assessment[0].Id }}",
+        "status": "open",
+        "timestamp": "={{ $json.data.issue_assessment[0].ModifiedAtTimestamp }}"
+      },
+      "id": "08039c8e-aa1b-48f5-95c6-e9e366b691e9",
+      "name": "Update Issue Assessment",
+      "type": "CUSTOM.updateIssueAssessment",
+      "typeVersion": 1,
+      "position": [1220, 1180],
+      "retryOnFail": true,
+      "credentials": {
+        "riskSmartAuthApi": {
+          "id": "fdlR2vCuVe3tTMhk",
+          "name": "RiskSmart Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "bcbaf78b-0061-4597-92ec-7654b52e26e1",
+      "name": "Wait",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [540, 1200],
+      "webhookId": "a24b8bd2-ab93-4e5f-8d90-37187a099e39"
+    },
+    {
+      "parameters": {
+        "issueId": "={{ $('Reduce Fields').item.json.risksmartRef }}",
+        "title": "Jira Issue Integration",
+        "description": "Successfully Updated Issue"
+      },
+      "id": "3c67db9e-a9ef-474e-958d-117907597e59",
+      "name": "Insert Issue Update1",
+      "type": "CUSTOM.insertIssueUpdate",
+      "typeVersion": 1,
+      "position": [540, 980],
+      "credentials": {
+        "riskSmartAuthApi": {
+          "id": "fdlR2vCuVe3tTMhk",
+          "name": "RiskSmart Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "78a34a0f-e717-4f48-9a2f-75e8994da3ec",
+        "authentication": "headerAuth",
+        "options": {}
+      },
+      "id": "7abc19a9-5144-417f-87d1-c1b111629809",
+      "name": "Jira Issue Transitioned / Updated",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [-3080, 1300],
+      "webhookId": "78a34a0f-e717-4f48-9a2f-75e8994da3ec",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "kmxBfCsNSfQL6L0m",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "a1b26d31-ba02-4ac4-9f8f-f4596a942953",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "=Open",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "e97726df-9bc8-4d1f-9428-4746cf70398c",
+      "name": "Filter Open Issues",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2,
+      "position": [-2600, 1300]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "=mergeByPosition",
+        "mergeByFields": {
+          "values": [{}]
+        },
+        "options": {}
+      },
+      "id": "ba249808-ebfc-4dda-9518-cc5a41f9e3b3",
+      "name": "Merge Owner and Contributor",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [-740, 1320]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0641a530-6373-4ffe-8375-a4f6fed11bb7",
+              "name": "OwnerId",
+              "value": "={{ $json.data.insertReferenceUser.Id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5f65be5b-fc9b-49db-b3b7-cdb7c9732333",
+      "name": "Reduce Insert Owner Output",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [-1060, 1040]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0641a530-6373-4ffe-8375-a4f6fed11bb7",
+              "name": "ContributorId",
+              "value": "={{ $json.data.insertReferenceUser.Id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b60d19ee-4f6f-4adb-8011-fdb3d8f746ec",
+      "name": "Reduce Insert Contributor Output",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [-1060, 1720]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0641a530-6373-4ffe-8375-a4f6fed11bb7",
+              "name": "OwnerId",
+              "value": "={{ $json.data.auth_user[0].Id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4fd56aef-db87-4d6b-93af-24471295b00e",
+      "name": "Reduce Owner Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [-1060, 860]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "16196891-6206-42b4-a0fb-0497ff292692",
+              "leftValue": "={{ $json.data.auth_user[0].Id }}",
+              "rightValue": "=",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "9db72254-ddc1-495d-8e47-cdce7e78de8f",
+              "leftValue": "={{ $json.data.auth_user[0].Id }}",
+              "rightValue": "=",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "b4902af6-1929-44de-82a0-f76942df71ce",
+      "name": "If Assignee Exists",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [-1560, 1500]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "16196891-6206-42b4-a0fb-0497ff292692",
+              "leftValue": "={{ $json.data.auth_user[0].Id }}",
+              "rightValue": "=",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "9db72254-ddc1-495d-8e47-cdce7e78de8f",
+              "leftValue": "={{ $json.data.auth_user[0].Id }}",
+              "rightValue": "=",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "7105a5b1-48cc-4acb-a390-e07760122353",
+      "name": "If Reporter Exists",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [-1480, 880]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "16196891-6206-42b4-a0fb-0497ff292692",
+              "leftValue": "={{ $json.assigneeAccountId }}",
+              "rightValue": "=",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "9db72254-ddc1-495d-8e47-cdce7e78de8f",
+              "leftValue": "={{ $json.assigneeAccountId }}",
+              "rightValue": "=",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "fc3d0f37-e078-408e-85f3-13ce8fdc8b07",
+      "name": "If there's an assignee",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [-2260, 1320]
+    },
+    {
+      "parameters": {
+        "userName": "={{ $('Get Jira Reporter').item.json.displayName }}",
+        "email": "={{ $('Get Jira Reporter').item.json.emailAddress }}"
+      },
+      "id": "bdb06e5d-9794-43a0-aa51-f9ec77924eba",
+      "name": "Insert Reference User (reporter)",
+      "type": "CUSTOM.insertReferenceUser",
+      "typeVersion": 1,
+      "position": [-1240, 1040],
+      "credentials": {
+        "riskSmartAuthApi": {
+          "id": "fdlR2vCuVe3tTMhk",
+          "name": "RiskSmart Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "userName": "={{ $('Get Jira Assignee').item.json.displayName }}",
+        "email": "={{ $('Get Jira Assignee').item.json.emailAddress }}"
+      },
+      "id": "9a78fb06-29c5-448a-a043-b7a39b9454f1",
+      "name": "Insert Reference User (assignee)",
+      "type": "CUSTOM.insertReferenceUser",
+      "typeVersion": 1,
+      "position": [-1280, 1720],
+      "credentials": {
+        "riskSmartAuthApi": {
+          "id": "fdlR2vCuVe3tTMhk",
+          "name": "RiskSmart Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0641a530-6373-4ffe-8375-a4f6fed11bb7",
+              "name": "ContributorId",
+              "value": "={{ $json.data.auth_user[0].Id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1702c231-6e97-4342-880d-3246401f56a9",
+      "name": "Reduce Contributor Fileds",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [-1060, 1480]
+    },
+    {
+      "parameters": {
+        "lookupType": "emailType",
+        "email": "={{ $json.emailAddress }}"
+      },
+      "id": "c86a533c-0757-49ad-975b-664a653a8c96",
+      "name": "Get User Reporter",
+      "type": "CUSTOM.GetUser",
+      "typeVersion": 1,
+      "position": [-1660, 880],
+      "credentials": {
+        "riskSmartAuthApi": {
+          "id": "fdlR2vCuVe3tTMhk",
+          "name": "RiskSmart Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "lookupType": "emailType",
+        "email": "={{ $json.emailAddress }}"
+      },
+      "id": "8aa35e09-decb-41b7-b276-909c3a73c1fd",
+      "name": "Get User Assignee",
+      "type": "CUSTOM.GetUser",
+      "typeVersion": 1,
+      "position": [-1720, 1500],
+      "credentials": {
+        "riskSmartAuthApi": {
+          "id": "fdlR2vCuVe3tTMhk",
+          "name": "RiskSmart Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "user",
+        "operation": "get",
+        "accountId": "={{ $json.assigneeAccountId }}",
+        "additionalFields": {
+          "expand": []
+        }
+      },
+      "id": "a5a16579-0960-46c0-a1ff-e5d964059300",
+      "name": "Get Jira Assignee",
+      "type": "n8n-nodes-base.jira",
+      "typeVersion": 1,
+      "position": [-2100, 1640],
+      "credentials": {
+        "jiraSoftwareCloudApi": {
+          "id": "43qSdpxstMn0L3iT",
+          "name": "Jira SW Cloud account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "user",
+        "operation": "get",
+        "accountId": "={{ $('Reduce Fields').item.json.reporterAccountId }}",
+        "additionalFields": {
+          "expand": []
+        }
+      },
+      "id": "818d40b1-9de5-412a-aedf-e21287f202f4",
+      "name": "Get Jira Reporter",
+      "type": "n8n-nodes-base.jira",
+      "typeVersion": 1,
+      "position": [-2100, 1000],
+      "credentials": {
+        "jiraSoftwareCloudApi": {
+          "id": "43qSdpxstMn0L3iT",
+          "name": "Jira SW Cloud account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "dcc61b1c-0d08-415e-ab44-51d38437457a",
+              "leftValue": "={{ $json.emailAddress }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "9b14f246-e200-45d8-8b5f-1e0338bb3bf0",
+      "name": "Email check - assignee",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [-1920, 1640]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "dcc61b1c-0d08-415e-ab44-51d38437457a",
+              "leftValue": "={{ $json.emailAddress }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "51703f99-abff-462c-8355-f52ac3100f5f",
+      "name": "Email check - reporter",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [-1920, 1000]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "If RiskSmart Ref Present": {
+      "main": [
+        [
+          {
+            "node": "Get Issue",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Crypto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert Issue": {
+      "main": [
+        [
+          {
+            "node": "Insert Issue Assessment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reduce Fields": {
+      "main": [
+        [
+          {
+            "node": "Filter Open Issues",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crypto": {
+      "main": [
+        [
+          {
+            "node": "Insert Issue",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Issue": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Update Issue",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Issue": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Insert Issue Update1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Issue Assessment": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Update Issue Assessment",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Get Issue Assessment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert Issue Assessment": {
+      "main": [
+        [
+          {
+            "node": "Update Jira Issue with Ref",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Jira Issue Transitioned / Updated": {
+      "main": [
+        [
+          {
+            "node": "Reduce Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Open Issues": {
+      "main": [
+        [
+          {
+            "node": "If there's an assignee",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get Jira Reporter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Owner and Contributor": {
+      "main": [
+        [
+          {
+            "node": "If RiskSmart Ref Present",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reduce Insert Owner Output": {
+      "main": [
+        [
+          {
+            "node": "Merge Owner and Contributor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reduce Insert Contributor Output": {
+      "main": [
+        [
+          {
+            "node": "Merge Owner and Contributor",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Reduce Owner Fields": {
+      "main": [
+        [
+          {
+            "node": "Merge Owner and Contributor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Reporter Exists": {
+      "main": [
+        [
+          {
+            "node": "Reduce Owner Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Insert Reference User (reporter)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If there's an assignee": {
+      "main": [
+        [
+          {
+            "node": "Get Jira Assignee",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Merge Owner and Contributor",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Insert Reference User (reporter)": {
+      "main": [
+        [
+          {
+            "node": "Reduce Insert Owner Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert Reference User (assignee)": {
+      "main": [
+        [
+          {
+            "node": "Reduce Insert Contributor Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Assignee Exists": {
+      "main": [
+        [
+          {
+            "node": "Reduce Contributor Fileds",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Insert Reference User (assignee)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reduce Contributor Fileds": {
+      "main": [
+        [
+          {
+            "node": "Merge Owner and Contributor",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Get User Reporter": {
+      "main": [
+        [
+          {
+            "node": "If Reporter Exists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get User Assignee": {
+      "main": [
+        [
+          {
+            "node": "If Assignee Exists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Jira Assignee": {
+      "main": [
+        [
+          {
+            "node": "Email check - assignee",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Jira Reporter": {
+      "main": [
+        [
+          {
+            "node": "Email check - reporter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email check - assignee": {
+      "main": [
+        [
+          {
+            "node": "Get User Assignee",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Merge Owner and Contributor",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Email check - reporter": {
+      "main": [
+        [
+          {
+            "node": "Get User Reporter",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Merge Owner and Contributor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "b814082e-58a1-4c6f-80f9-69ffc5e1e94e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4cc803c9c309b90b5b64f9c14ac6f88257f0db4cc12b1012e2d72b6650fdacce"
+  },
+  "id": "pVo0vjSJleEIidj0",
+  "tags": [
+    {
+      "createdAt": "2024-05-23T14:09:40.577Z",
+      "updatedAt": "2024-05-23T14:09:40.577Z",
+      "id": "QCztFuGTl4AoELVt",
+      "name": "Jira"
+    }
+  ]
+}

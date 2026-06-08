@@ -1,0 +1,310 @@
+table:
+  name: third_party_response
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: third_party_response
+  custom_root_fields: {}
+object_relationships:
+  - name: createdByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          CreatedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: modifiedByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          ModifiedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: organisation
+    using:
+      foreign_key_constraint_on: OrgKey
+  - name: thirdParty
+    using:
+      manual_configuration:
+        column_mapping:
+          ParentId: Id
+        insertion_order: null
+        remote_table:
+          name: third_party
+          schema: risksmart
+  - name: questionnaireTemplateVersion
+    using:
+      manual_configuration:
+        column_mapping:
+          QuestionnaireTemplateVersionId: Id
+        insertion_order: null
+        remote_table:
+          name: questionnaire_template_version
+          schema: risksmart
+array_relationships:
+  - name: permissions
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: Id
+        insertion_order: null
+        remote_table:
+          name: permission_view
+          schema: risksmart
+  - name: ancestorContributors
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: Id
+        insertion_order: null
+        remote_table:
+          name: ancestor_contributor_view
+          schema: risksmart
+  - name: contributorGroups
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: contributor_group
+          schema: risksmart
+  - name: contributors
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: contributor
+          schema: risksmart
+  - name: ownerGroups
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: owner_group
+          schema: risksmart
+  - name: owners
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: owner
+          schema: risksmart
+  - name: invitees
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: questionnaire_invite
+          schema: risksmart
+  - name: files
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: relation_file
+          schema: risksmart
+select_permissions:
+  - role: app-user
+    permission:
+      columns:
+        - Id
+        - ParentId
+        - QuestionnaireTemplateVersionId
+        - Status
+        - ResponseData
+        - StartDate
+        - ExpiresAt
+        - CreatedByUser
+        - ModifiedByUser
+        - CreatedAtTimestamp
+        - ModifiedAtTimestamp
+        - RecallReason
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - _or:
+            - invitees:
+                UserId:
+                  _eq: X-Hasura-User-Id
+            - _exists:
+                _table:
+                  name: user_role_access
+                  schema: risksmart
+                _where:
+                  _and:
+                    - AccessType:
+                        _eq: read
+                    - ObjectType:
+                        _eq: third_party_response
+                    - UserId:
+                        _eq: X-Hasura-User-Id
+            - permissions:
+                _and:
+                  - UserId:
+                      _eq: X-Hasura-User-Id
+                  - OrgKey:
+                      _eq: X-Hasura-org-Id
+                  - AccessType:
+                      _eq: read
+insert_permissions:
+  - role: app-user
+    permission:
+      check:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      set:
+        CreatedByUser: x-hasura-user-id
+        ModifiedByUser: x-hasura-user-id
+        OrgKey: x-hasura-org-id
+      columns:
+        - ParentId
+        - QuestionnaireTemplateVersionId
+        - Status
+        - StartDate
+        - ExpiresAt
+        - ResponseData
+        - CreatedByUser
+        - ModifiedByUser
+        - CreatedAtTimestamp
+        - ModifiedAtTimestamp
+        - RecallReason
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - _or:
+              - _exists:
+                  _table:
+                    name: user_role_access
+                    schema: risksmart
+                  _where:
+                    _and:
+                      - AccessType:
+                          _eq: insert
+                      - ObjectType:
+                          _eq: third_party_response
+                      - UserId:
+                          _eq: X-Hasura-User-Id
+              - permissions:
+                  _and:
+                    - UserId:
+                        _eq: X-Hasura-User-Id
+                    - OrgKey:
+                        _eq: X-Hasura-org-Id
+                    - AccessType:
+                        _eq: insert
+update_permissions:
+  - role: app-user
+    permission:
+      check:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      set:
+        ModifiedAtTimestamp: now()
+        ModifiedByUser: x-hasura-user-id
+      columns:
+        - ParentId
+        - QuestionnaireTemplateVersionId
+        - Status
+        - ResponseData
+        - StartDate
+        - ExpiresAt
+        - CreatedByUser
+        - ModifiedByUser
+        - CreatedAtTimestamp
+        - ModifiedAtTimestamp
+        - RecallReason
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - _or:
+              - invitees:
+                  UserId:
+                    _eq: X-Hasura-User-Id
+              - _exists:
+                  _table:
+                    name: user_role_access
+                    schema: risksmart
+                  _where:
+                    _and:
+                      - AccessType:
+                          _eq: update
+                      - ObjectType:
+                          _eq: third_party_response
+                      - UserId:
+                          _eq: X-Hasura-User-Id
+              - permissions:
+                  _and:
+                    - UserId:
+                        _eq: X-Hasura-User-Id
+                    - OrgKey:
+                        _eq: X-Hasura-org-Id
+                    - AccessType:
+                        _eq: update
+delete_permissions:
+  - role: app-user
+    permission:
+      check:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - _or:
+              - _exists:
+                  _table:
+                    name: user_role_access
+                    schema: risksmart
+                  _where:
+                    _and:
+                      - AccessType:
+                          _eq: delete
+                      - ObjectType:
+                          _eq: third_party_response
+                      - UserId:
+                          _eq: X-Hasura-User-Id
+              - permissions:
+                  _and:
+                    - UserId:
+                        _eq: X-Hasura-User-Id
+                    - OrgKey:
+                        _eq: X-Hasura-org-Id
+                    - AccessType:
+                        _eq: delete
+event_triggers:
+  - name: third-party-response
+    definition:
+      delete:
+        columns: '*'
+      enable_manual: true
+      insert:
+        columns: '*'
+      update:
+        columns: '*'
+    retry_conf:
+      interval_sec: 10
+      num_retries: 3
+      timeout_sec: 60
+    webhook: https://{{REST_API_DOMAIN}}/events
+    headers:
+      - name: RestApiKey
+        value_from_env: REST_API_KEY

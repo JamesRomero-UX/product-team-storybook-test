@@ -1,0 +1,5 @@
+mutation deleteCauses($Ids: [uuid!]) {
+  delete_cause(where: { Id: { _in: $Ids } }) {
+    affected_rows
+  }
+}

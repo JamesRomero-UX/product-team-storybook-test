@@ -1,0 +1,17 @@
+mutation deleteAssessments($Ids: [uuid!]!) {
+  # delete_document_assessment_result(where: { AssessmentId: { _in: $Ids } }) {
+  #   affected_rows
+  # }
+
+  # delete_obligation_assessment_result(where: { AssessmentId: { _in: $Ids } }) {
+  #   affected_rows
+  # }
+
+  # delete_risk_assessment_result(where: { AssessmentId: { _in: $Ids } }) {
+  #   affected_rows
+  # }
+
+  delete_assessment(where: { Id: { _in: $Ids } }) {
+    affected_rows
+  }
+}

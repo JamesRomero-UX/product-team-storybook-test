@@ -1,0 +1,17 @@
+mutation deleteDocumentAssessmentResult($Id: uuid!) {
+  delete_document_assessment_result(where: { Id: { _eq: $Id } }) {
+    affected_rows
+  }
+}
+
+mutation deleteObligationAssessmentResult($Id: uuid!) {
+  delete_obligation_assessment_result(where: { Id: { _eq: $Id } }) {
+    affected_rows
+  }
+}
+
+mutation deleteRiskAssessmentResult($Id: uuid!) {
+  delete_risk_assessment_result(where: { Id: { _eq: $Id } }) {
+    affected_rows
+  }
+}

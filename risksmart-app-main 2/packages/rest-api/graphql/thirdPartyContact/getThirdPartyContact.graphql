@@ -1,0 +1,49 @@
+query getThirdPartyContactById($Id: uuid!) {
+  third_party_contact_by_pk(Id: $Id) {
+    Id
+    ThirdPartyId
+    Email
+    Name
+    JobTitle
+    IsRevoked
+    thirdParty {
+      Id
+      CompanyName
+    }
+  }
+}
+
+query getThirdPartyContactsByThirdPartyId($ThirdPartyId: uuid!) {
+  third_party_contact(
+    where: { ThirdPartyId: { _eq: $ThirdPartyId } }
+    order_by: { CreatedAtTimestamp: desc }
+  ) {
+    Id
+    ThirdPartyId
+    Email
+    Name
+    JobTitle
+    IsRevoked
+  }
+}
+
+query getActiveContactsByThirdPartyId($ThirdPartyId: uuid!) {
+  third_party_contact(
+    where: { ThirdPartyId: { _eq: $ThirdPartyId }, IsRevoked: { _eq: false } }
+    order_by: { Name: asc_nulls_last, Email: asc }
+  ) {
+    Id
+    Email
+    Name
+    JobTitle
+  }
+}
+
+query getThirdPartyContactPasswordSetByUserId($UserId: String!) {
+  third_party_contact(
+    where: { UserId: { _eq: $UserId }, PasswordSetAtTimestamp: { _is_null: false } }
+    limit: 1
+  ) {
+    PasswordSetAtTimestamp
+  }
+}

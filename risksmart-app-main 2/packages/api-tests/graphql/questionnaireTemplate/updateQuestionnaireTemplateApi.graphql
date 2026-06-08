@@ -1,0 +1,7 @@
+mutation updateQuestionnaireTemplateApi(
+  $object: UpdateQuestionnaireTemplateInput!
+) {
+  updateQuestionnaireTemplateApi(object: $object) {
+    Id
+  }
+}

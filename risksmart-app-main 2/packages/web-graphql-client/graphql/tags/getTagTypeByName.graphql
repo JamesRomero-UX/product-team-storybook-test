@@ -1,0 +1,6 @@
+query getTagTypesByName($Name: String!) {
+  tag_type(where: { Name: { _eq: $Name } }) {
+    Name
+    TagTypeId
+  }
+}

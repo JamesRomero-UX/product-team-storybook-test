@@ -1,0 +1,15 @@
+mutation insertTagTypeWithOptionalGroupId(
+  $Name: String!
+  $Description: String
+  $TagTypeGroupId: uuid
+) {
+  insert_tag_type_one(
+    object: {
+      Name: $Name
+      Description: $Description
+      TagTypeGroupId: $TagTypeGroupId
+    }
+  ) {
+    TagTypeId
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "AUTH0_DOMAIN": "prod-dh7sj49hs63.us.auth0.com",
+  "AUTH0_CLIENT_ID": "lRBBhaperwqfTOvKrXDPawbFVI8HMbLg",
+  "AUTH0_ALLOW_DELETE": true,
+  "AUTH0_EXCLUDED": [
+  ],
+  "AUTH0_KEYWORD_REPLACE_MAPPINGS": {
+    "APP_CALLBACKS": [
+      "https://us.app.risksmart.link",
+      "https://us.app.risksmart.link/login"
+    ],
+    "THIRD_PARTY_PORTAL_CALLBACKS": [
+      "https://us.third-party-portal.app.risksmart.link",
+      "https://us.third-party-portal.app.risksmart.link/login"
+    ],
+    "API_IDENTIFIER": "https://us.app-app-api.826351825809.risksmart.link",
+    "AWS_API_IDENTIFIER": "https://us.app-app-api-internal.826351825809.risksmart.link",
+    "AWS_INTEGRATIONS_API_IDENTIFIER": "https://us.app-int.826351825809.risksmart.link:8085",
+    "AUTH0_MANAGEMENT_API_IDENTIFIER": "https://prod-dh7sj49hs63.us.auth0.com/api/v2/",
+    "THIRD_PARTY_PORTAL_ALLOWED_LOGOUT": [
+      "https://us.third-party-portal.app.risksmart.link",
+      "https://us.third-party-portal.app.risksmart.link/login"
+    ],
+    "APP_ALLOWED_LOGOUT": [
+      "https://us.app.risksmart.link",
+      "https://us.app.risksmart.link/login"
+    ],
+    "APP_WEB_ORIGINS": [
+      "https://us.app.risksmart.link"
+    ],
+    "THIRD_PARTY_PORTAL_WEB_ORIGINS": [
+      "https://us.third-party-portal.app.risksmart.link"
+    ],
+    "APP_BASE_URL": "https://us.app.risksmart.link",
+    "RISK_SMART_AUTH_LOGO": "https://us.app.risksmart.link/auth_images/risksmart-internal/logo.jpeg",
+    "ENV_NAME": "Production",
+    "APP_LOGIN_URL": "https://us.app.risksmart.link/login",
+    "THIRD_PARTY_PORTAL_LOGIN_URL": "https://us.third-party-portal.app.risksmart.link/login",
+    "AUTH0_DOMAIN": "prod-dh7sj49hs63.us.auth0.com"
+  }
+}

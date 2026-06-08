@@ -1,0 +1,31 @@
+table:
+  name: issue_audit
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: issue_audit
+  custom_root_fields: {}
+select_permissions:
+  - role: read:audit
+    permission:
+      columns:
+        - DateIdentified
+        - DateOccurred
+        - Details
+        - Id
+        - ImpactsCustomer
+        - IsExternalIssue
+        - CreatedAtTimestamp
+        - ModifiedAtTimestamp
+        - Title
+        - CreatedByUser
+        - ModifiedByUser
+        - SequentialId
+        - CustomAttributeData
+        - RaisedAtTimestamp
+        - Meta
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id

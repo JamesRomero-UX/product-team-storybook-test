@@ -1,0 +1,5 @@
+mutation updateComment($Id: uuid!, $Content: String!) {
+  update_comment(where: { Id: { _eq: $Id } }, _set: { Content: $Content }) {
+    affected_rows
+  }
+}

@@ -1,0 +1,2 @@
+import { ControlledGroupAndUserContributorMultiSelect } from './ControlledGroupAndUserContributorMultiSelect';
+export default ControlledGroupAndUserContributorMultiSelect;

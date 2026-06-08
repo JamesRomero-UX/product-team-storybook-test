@@ -1,0 +1,19 @@
+mutation insertObligationSecondLineResult(
+  $Rating: Int
+  $ComplianceMonitoringAssessmentId: uuid!
+  $ObligationIds: [uuid!]!
+  $CustomAttributeData: jsonb
+  $TestDate: timestamptz
+  $Rationale: String
+) {
+  insertChildObligationSecondLineResult(
+    Rating: $Rating
+    ComplianceMonitoringAssessmentId: $ComplianceMonitoringAssessmentId
+    ObligationIds: $ObligationIds
+    CustomAttributeData: $CustomAttributeData
+    TestDate: $TestDate
+    Rationale: $Rationale
+  ) {
+    Ids
+  }
+}

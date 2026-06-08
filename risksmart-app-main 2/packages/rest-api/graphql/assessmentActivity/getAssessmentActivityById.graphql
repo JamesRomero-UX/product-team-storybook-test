@@ -1,0 +1,15 @@
+query getAssessmentActivityById($AssessmentActivityId: uuid!) {
+  assessment_activity(where: { Id: { _eq: $AssessmentActivityId } }) {
+    ...AssessmentActivityParts
+  }
+  linked_item(
+    where: {
+      Source: { _eq: $AssessmentActivityId }
+      RelationshipType: { _neq: "child_parent" }
+    }
+  ) {
+    Id
+    Source
+    Target
+  }
+}

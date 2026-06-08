@@ -1,0 +1,19 @@
+mutation insertDocumentSecondLineResult(
+  $Rating: Int
+  $ComplianceMonitoringAssessmentId: uuid!
+  $DocumentIds: [uuid!]!
+  $CustomAttributeData: jsonb
+  $TestDate: timestamptz
+  $Rationale: String
+) {
+  insertChildDocumentSecondLineResult(
+    Rating: $Rating
+    ComplianceMonitoringAssessmentId: $ComplianceMonitoringAssessmentId
+    DocumentIds: $DocumentIds
+    CustomAttributeData: $CustomAttributeData
+    TestDate: $TestDate
+    Rationale: $Rationale
+  ) {
+    Ids
+  }
+}

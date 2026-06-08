@@ -1,0 +1,83 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  "files.exclude": {
+    "amplify/.config": true,
+    "amplify/**/*-parameters.json": true,
+    "amplify/**/amplify.state": true,
+    "amplify/**/transform.conf.json": true,
+    "amplify/#current-cloud-backend": true,
+    "amplify/backend/amplify-meta.json": true,
+    "amplify/backend/awscloudformation": true,
+    "**/*.js": { "when": "$(basename).ts" },
+    "**/*.js.map": true
+  },
+  "yaml.schemas": {
+    "https://json.schemastore.org/github-workflow.json": "file:///Users/richardpoole/Documents/GitHub/risksmart-app/.github/workflows/auth0-config-deploy.yml"
+  },
+  "cSpell.words": [
+    "Clickthrough",
+    "clsx",
+    "Colour",
+    "colours",
+    "Customisable",
+    "customise",
+    "datetime",
+    "Deleter",
+    "Fargate",
+    "fkey",
+    "Flashbar",
+    "Giga",
+    "Gigawidget",
+    "Hasura",
+    "highcharts",
+    "Kysely",
+    "Novu",
+    "oidc",
+    "organisation",
+    "Organisation",
+    "Organisations",
+    "pkey",
+    "plpgsql",
+    "Requiredish",
+    "Risksmart",
+    "serverside",
+    "signin",
+    "smallint",
+    "testid",
+    "timestamptz",
+    "upsert",
+    "webauthn",
+    "windowslive"
+  ],
+  "[sql]": {
+    "editor.defaultFormatter": "mtxr.sqltools",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "never"
+    }
+  },
+  "sqltools.format": {
+    "linesBetweenQueries": 2
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+
+  "terminal.integrated.env.osx": {
+    "ENABLE_AI_CHAT_AGENT": "true"
+  },
+  "terminal.integrated.env.linux": {
+    "ENABLE_AI_CHAT_AGENT": "false"
+  },
+  "terminal.integrated.env.windows": {
+    "ENABLE_AI_CHAT_AGENT": "false"
+  },
+  "[opentofu]": {
+    "editor.defaultFormatter": "opentofu.vscode-opentofu"
+  },
+  "tailwindCSS.experimental.classRegex": [
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ":\\s*['\"`]([^'\"`]*)['\"`]"
+  ]
+}

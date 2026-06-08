@@ -1,0 +1,23 @@
+table:
+  name: custom_role_assignment_audit
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: custom_role_assignment_audit
+  custom_root_fields: {}
+select_permissions:
+  - role: read:audit
+    permission:
+      columns:
+        - Id
+        - CustomRoleId
+        - RoleTypeKey
+        - CreatedAtTimestamp
+        - ModifiedAtTimestamp
+        - CreatedByUser
+        - ModifiedByUser
+        - Action
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id

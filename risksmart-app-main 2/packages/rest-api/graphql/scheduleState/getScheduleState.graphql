@@ -1,0 +1,12 @@
+query getScheduleState($Id: uuid!) {
+  schedule_state_by_pk(Id: $Id) {
+    Id
+    DueDate
+    OverdueDate
+    LatestDate
+    CreatedByUser
+    ModifiedByUser
+    ModifiedAtTimestamp
+    OrgKey
+  }
+}

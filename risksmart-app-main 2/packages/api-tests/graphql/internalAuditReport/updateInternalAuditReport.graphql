@@ -1,0 +1,8 @@
+mutation updateInternalAuditReport($Id: uuid!, $Summary: String!) {
+  update_internal_audit_report(
+    where: { Id: { _eq: $Id } }
+    _set: { Summary: $Summary }
+  ) {
+    affected_rows
+  }
+}

@@ -1,0 +1,5 @@
+query getIssueAssessmentByParentId($parentIssueId: uuid!) {
+  issue_assessment(where: { ParentIssueId: { _eq: $parentIssueId } }) {
+    ...IssueAssessmentParts
+  }
+}

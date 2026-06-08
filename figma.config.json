@@ -1,0 +1,38 @@
+{
+  "codeConnect": {
+    "parser": "react",
+    "include": [
+      "src/code-connect/**/*.figma.tsx",
+      "src/code-connect/**/*.figma.ts",
+      "risksmart-app-main 2/packages/web/src/components/actions-button/**/*.{ts,tsx}",
+      "risksmart-app-main 2/packages/web/src/components/tab-header/**/*.{ts,tsx}",
+      "risksmart-app-main 2/packages/web/src/components/simple-rating-badge/**/*.{ts,tsx}",
+      "risksmart-app-main 2/packages/web/src/components/tokens/**/*.{ts,tsx}",
+      "risksmart-app-main 2/packages/web/src/components/help-panel/**/*.{ts,tsx}",
+      "risksmart-app-main 2/packages/web/src/components/side-panel/**/*.{ts,tsx}",
+      "risksmart-app-main 2/packages/web/src/components/controlled-tabs/**/*.{ts,tsx}",
+      "risksmart-app-main 2/packages/web/src/components/empty-collection/**/*.{ts,tsx}",
+      "risksmart-app-main 2/packages/web/src/components/confirm-modal/**/*.{ts,tsx}",
+      "risksmart-app-main 2/packages/web/src/components/delete-modal/**/*.{ts,tsx}",
+      "risksmart-app-main 2/packages/web/src/components/loading/**/*.{ts,tsx}",
+      "risksmart-app-main 2/packages/web/src/layouts/**/*.{ts,tsx}",
+      "src/app-shell/Shell.tsx"
+    ],
+    "paths": {
+      "src/components/actions-button": ["risksmart-app-main 2/packages/web/src/components/actions-button/index.tsx"],
+      "src/components/tab-header": ["risksmart-app-main 2/packages/web/src/components/tab-header/index.ts"],
+      "src/components/simple-rating-badge": ["risksmart-app-main 2/packages/web/src/components/simple-rating-badge/index.ts"],
+      "src/components/tokens": ["risksmart-app-main 2/packages/web/src/components/tokens/index.tsx"],
+      "src/components/help-panel/HelpPanel": ["risksmart-app-main 2/packages/web/src/components/help-panel/HelpPanel.tsx"],
+      "src/components/side-panel/SidePanel": ["risksmart-app-main 2/packages/web/src/components/side-panel/SidePanel.tsx"],
+      "src/components/controlled-tabs": ["risksmart-app-main 2/packages/web/src/components/controlled-tabs/index.tsx"],
+      "src/components/empty-collection/EmptyEntityCollection": ["risksmart-app-main 2/packages/web/src/components/empty-collection/EmptyEntityCollection.tsx"],
+      "src/components/empty-collection/EmptyCollection": ["risksmart-app-main 2/packages/web/src/components/empty-collection/EmptyCollection.tsx"],
+      "src/components/empty-collection/NoMatchesCollection": ["risksmart-app-main 2/packages/web/src/components/empty-collection/NoMatchesCollection.tsx"],
+      "src/components/confirm-modal/ConfirmModal": ["risksmart-app-main 2/packages/web/src/components/confirm-modal/ConfirmModal.tsx"],
+      "src/components/delete-modal": ["risksmart-app-main 2/packages/web/src/components/delete-modal/index.tsx"],
+      "src/components/loading": ["risksmart-app-main 2/packages/web/src/components/loading/index.tsx"],
+      "src/app-shell/Shell": ["src/app-shell/Shell.tsx"]
+    }
+  }
+}

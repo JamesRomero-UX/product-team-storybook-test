@@ -1,0 +1,10 @@
+query getAllSchedules {
+  schedule {
+    Id
+    Frequency
+    ManualDueDate
+    StartDate
+    TimeToCompleteValue
+    TimeToCompleteUnit
+  }
+}

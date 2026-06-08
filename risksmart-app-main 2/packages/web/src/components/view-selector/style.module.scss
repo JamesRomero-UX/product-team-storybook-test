@@ -1,0 +1,15 @@
+.viewSelector {
+  [class*='awsui_segment-part'] {
+    button[class*='awsui_segment']:first-child {
+      border-width: 1.5px !important;
+      border-right-width: 1.5px !important;
+    }
+
+    button[class*='awsui_segment']:not(#\9) {
+      @apply bg-white text-navy_light border-grey250  #{!important};
+    }
+    [class*='awsui_segment'][class*='awsui_selected']:not(#\9) {
+      @apply bg-light_blue text-navy_light border-[#41D9CC]  #{!important};
+    }
+  }
+}

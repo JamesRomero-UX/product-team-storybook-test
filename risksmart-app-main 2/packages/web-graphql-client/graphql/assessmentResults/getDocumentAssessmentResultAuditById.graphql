@@ -1,0 +1,15 @@
+query getDocumentAssessmentResultAuditById(
+  $Id: uuid!
+) {
+  document_assessment_result_audit(where: { Id: { _eq: $Id } }, order_by: {ModifiedAtTimestamp: desc}) {
+    Id
+    Rating
+    CustomAttributeData
+    Rationale
+    TestDate
+    CreatedByUser
+    CreatedAtTimestamp
+    ModifiedByUser
+    ModifiedAtTimestamp
+  }
+}

@@ -1,0 +1,23 @@
+mutation updateActionUpdate(
+  $Description: String!
+  $ParentActionId: uuid!
+  $Title: String!
+  $Id: uuid!
+  $OriginalTimestamp: timestamptz!
+  $CustomAttributeData: jsonb
+) {
+  update_action_update(
+    _set: {
+      Description: $Description
+      ParentActionId: $ParentActionId
+      Title: $Title
+      CustomAttributeData: $CustomAttributeData
+    }
+    where: {
+      ModifiedAtTimestamp: { _eq: $OriginalTimestamp }
+      Id: { _eq: $Id }
+    }
+  ) {
+    affected_rows
+  }
+}

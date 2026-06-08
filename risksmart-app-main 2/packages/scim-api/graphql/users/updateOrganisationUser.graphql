@@ -1,0 +1,17 @@
+mutation UpdateOrganisationUser(
+  $User_Id: String!
+  $OrgKey: String!
+  $_set: auth_organisationuser_set_input!
+) {
+  update_auth_organisationuser(
+    where: { OrgKey: { _eq: $OrgKey }, User_Id: { _eq: $User_Id } }
+    _set: $_set
+  ) {
+    returning {
+      OrgKey
+      User_Id
+      External_Id
+      Status
+    }
+  }
+}

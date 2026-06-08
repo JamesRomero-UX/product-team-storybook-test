@@ -1,0 +1,17 @@
+mutation insertLinkedItem(
+  $Source: uuid!
+  $Target: uuid!
+  $RelationshipType: String!
+) {
+  insert_linked_item_one(
+    object: {
+      Source: $Source
+      Target: $Target
+      RelationshipType: $RelationshipType
+    }
+  ) {
+    Source
+    Target
+    RelationshipType
+  }
+}

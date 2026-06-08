@@ -1,0 +1,18 @@
+query getAppetitesGroupedByImpact {
+  impact {
+    Id
+    appetites(
+      order_by: [
+        { EffectiveDate: desc_nulls_last }
+        { CreatedAtTimestamp: desc_nulls_last }
+      ]
+    ) {
+      ...AppetiteParts
+      parents {
+        risk {
+          Id
+        }
+      }
+    }
+  }
+}

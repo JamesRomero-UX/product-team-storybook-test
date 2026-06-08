@@ -1,0 +1,145 @@
+table:
+  name: risk_score
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: risk_score
+  custom_root_fields: {}
+array_relationships:
+  - name: permissions
+    using:
+      manual_configuration:
+        column_mapping:
+          RiskId: Id
+        insertion_order: null
+        remote_table:
+          name: permission_view
+          schema: risksmart
+object_relationships:
+  - name: organisation
+    using:
+      foreign_key_constraint_on: OrgKey
+  - name: risk
+    using:
+      manual_configuration:
+        column_mapping:
+          RiskId: Id
+        insertion_order: null
+        remote_table:
+          name: risk
+          schema: risksmart
+insert_permissions:
+  - role: insert:risk-score
+    permission:
+      check:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - risk:
+              OrgKey:
+                _eq: X-Hasura-org-id
+      backend_only: true
+      set:
+        OrgKey: x-hasura-org-id
+        ModifiedAtTimestamp: now()
+        CreatedByUser: x-hasura-user-id
+        ModifiedByUser: x-hasura-user-id
+      columns:
+        - RiskId
+        - ResidualScore
+        - InherentScore
+        - ResidualRating
+        - InherentRating
+        - ResidualImpact
+        - ResidualLikelihood
+        - InherentImpact
+        - InherentLikelihood
+update_permissions:
+  - role: update:risk-score
+    permission:
+      check:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - risk:
+              OrgKey:
+                _eq: X-Hasura-org-id
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - permissions:
+              _and:
+                - UserId:
+                    _eq: X-Hasura-User-Id
+                - OrgKey:
+                    _eq: X-Hasura-org-Id
+                - AccessType:
+                    _eq: update
+      backend_only: true
+      set:
+        ModifiedAtTimestamp: now()
+        ModifiedByUser: x-hasura-user-id
+      columns:
+        - RiskId
+        - ResidualScore
+        - InherentScore
+        - ResidualRating
+        - InherentRating
+        - ResidualImpact
+        - ResidualLikelihood
+        - InherentImpact
+        - InherentLikelihood
+select_permissions:
+  - role: Standard
+    permission:
+      columns:
+        - RiskId
+        - ResidualScore
+        - InherentScore
+        - ResidualRating
+        - InherentRating
+        - ResidualImpact
+        - ResidualLikelihood
+        - InherentImpact
+        - InherentLikelihood
+        - OrgKey
+        - ModifiedAtTimestamp
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - risk:
+              permissions:
+                _and:
+                  - UserId:
+                      _eq: X-Hasura-User-Id
+                  - OrgKey:
+                      _eq: X-Hasura-org-Id
+                  - AccessType:
+                      _eq: read
+  - role: read:risk-score
+    permission:
+      columns:
+        - RiskId
+        - ResidualScore
+        - InherentScore
+        - ResidualRating
+        - InherentRating
+        - ResidualImpact
+        - ResidualLikelihood
+        - InherentImpact
+        - InherentLikelihood
+        - OrgKey
+        - ModifiedAtTimestamp
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      allow_aggregations: true
+delete_permissions:
+  - role: delete:risk-score
+    permission:
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id

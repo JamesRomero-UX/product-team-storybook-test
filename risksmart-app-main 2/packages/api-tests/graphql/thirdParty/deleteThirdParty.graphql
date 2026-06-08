@@ -1,0 +1,5 @@
+mutation deleteThirdParty($where: third_party_bool_exp!) {
+  delete_third_party(where: $where) {
+    affected_rows
+  }
+}

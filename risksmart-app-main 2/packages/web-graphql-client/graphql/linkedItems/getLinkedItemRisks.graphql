@@ -1,0 +1,10 @@
+query getLinkedItemRisks($Id: uuid!) {
+  linked_item(where: { Source: { _eq: $Id }, TargetType: { _eq: "risk" } }) {
+    Id
+    Source
+    Target
+    target_risk {
+      ...RiskParts
+    }
+  }
+}

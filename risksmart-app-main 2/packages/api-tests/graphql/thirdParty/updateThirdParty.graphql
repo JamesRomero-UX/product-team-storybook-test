@@ -1,0 +1,8 @@
+mutation updateThirdParty(
+  $where: third_party_bool_exp!
+  $set: third_party_set_input
+) {
+  update_third_party(where: $where, _set: $set) {
+    affected_rows
+  }
+}

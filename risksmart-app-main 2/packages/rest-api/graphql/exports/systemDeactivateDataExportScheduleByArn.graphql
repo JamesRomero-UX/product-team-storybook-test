@@ -1,0 +1,15 @@
+mutation systemDeactivateDataExportScheduleByArn(
+  $CronArn: String!
+  $ModifiedAtTimestamp: timestamptz!
+) {
+  update_data_export_schedule(
+    where: { CronArn: { _eq: $CronArn } }
+    _set: {
+      Status: inactive
+      ModifiedAtTimestamp: $ModifiedAtTimestamp
+      ModifiedByUser: "SYSTEM"
+    }
+  ) {
+    affected_rows
+  }
+}

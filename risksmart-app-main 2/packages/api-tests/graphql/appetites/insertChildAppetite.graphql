@@ -1,0 +1,23 @@
+mutation insertChildAppetite(
+  $LowerAppetite: Int
+  $ParentRiskId: uuid!
+  $Statement: String
+  $UpperAppetite: Int
+  $ImpactAppetite: Int
+  $AppetiteType: appetite_type_enum
+  $EffectiveDate: timestamptz
+  $CustomAttributeData: jsonb
+) {
+  insertChildAppetite(
+    AppetiteType: $AppetiteType
+    ImpactAppetite: $ImpactAppetite
+    LowerAppetite: $LowerAppetite
+    ParentIds: [$ParentRiskId]
+    EffectiveDate: $EffectiveDate
+    Statement: $Statement
+    UpperAppetite: $UpperAppetite
+    CustomAttributeData: $CustomAttributeData
+  ) {
+    Id
+  }
+}

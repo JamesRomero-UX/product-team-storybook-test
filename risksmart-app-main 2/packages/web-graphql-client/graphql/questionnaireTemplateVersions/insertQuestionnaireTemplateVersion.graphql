@@ -1,0 +1,5 @@
+mutation insertQuestionnaireTemplateVersion($object: questionnaire_template_version_insert_input!) {
+  insert_questionnaire_template_version_one(object: $object) {
+    Id
+  }
+}

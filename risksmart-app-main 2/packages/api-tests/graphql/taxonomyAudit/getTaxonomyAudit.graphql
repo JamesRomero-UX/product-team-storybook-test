@@ -1,0 +1,11 @@
+query getTaxonomyAudit {
+  taxonomy_audit {
+    Description
+    Id
+    Common
+    Library
+    Rating
+    Taxonomy
+    ModifiedAtTimestamp
+  }
+}

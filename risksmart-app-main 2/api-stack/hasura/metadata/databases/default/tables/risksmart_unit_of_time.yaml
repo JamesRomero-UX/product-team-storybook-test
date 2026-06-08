@@ -1,0 +1,9 @@
+table:
+  name: unit_of_time
+  schema: risksmart
+is_enum: true
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: unit_of_time
+  custom_root_fields: {}

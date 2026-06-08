@@ -1,0 +1,7 @@
+mutation insertComment($Content: String!, $ConversationId: uuid!) {
+  insert_comment_one(
+    object: { Content: $Content, ConversationId: $ConversationId }
+  ) {
+    Id
+  }
+}

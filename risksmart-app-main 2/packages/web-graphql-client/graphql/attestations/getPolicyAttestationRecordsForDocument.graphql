@@ -1,0 +1,45 @@
+query getPolicyAttestationRecordsForDocument($documentFileId: uuid) {
+  attestation_record(
+    where: {
+      node: { ObjectType: { _eq: document_file } }
+      NodeId: { _eq: $documentFileId }
+    }
+    order_by: { Active: desc, NodeId: desc, ExpiresAt: asc }
+  ) {
+    ExpiresAt
+    Active
+    CreatedAtTimestamp
+    AttestationStatus
+    AttestedAt
+    UserId
+    NodeId
+    CycleId
+    attestationRecordStatus {
+      Status
+    }
+    carriedForwardFromRecord {
+      node {
+        Id
+        documentFile {
+          Id
+          Version
+        }
+      }
+    }
+    user {
+      Id
+      FriendlyName
+      Email
+    }
+    node {
+      documentFile {
+        Id
+        Version
+        parent {
+          Id
+          Title
+        }
+      }
+    }
+  }
+}

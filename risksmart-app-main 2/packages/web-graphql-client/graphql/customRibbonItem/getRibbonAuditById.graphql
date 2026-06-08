@@ -1,0 +1,11 @@
+query getCustomRibbonAuditById($Id: uuid!) {
+  custom_ribbon_audit(where: { Id: { _eq: $Id } }, order_by: {ModifiedAtTimestamp: desc}) {
+    ModifiedByUser
+    ModifiedAtTimestamp
+    CreatedByUser
+    CreatedAtTimestamp
+    Id
+    Filters
+    ParentType
+  }
+}

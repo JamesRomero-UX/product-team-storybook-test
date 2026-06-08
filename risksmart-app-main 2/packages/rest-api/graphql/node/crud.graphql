@@ -1,0 +1,19 @@
+query getNodes(
+  $where: node_bool_exp!
+  $limit: Int
+  $orderBy: [node_order_by!]
+) {
+  node(where: $where, limit: $limit, order_by: $orderBy) {
+    Id
+    ObjectType
+    ancestorContributors {
+      ContributorType
+      UserId
+      user {
+        Id
+        UserName
+        Email
+      }
+    }
+  }
+}

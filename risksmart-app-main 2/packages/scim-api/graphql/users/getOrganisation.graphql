@@ -1,0 +1,6 @@
+query GetOrganisation($OrgKey: String!) {
+  auth_organisation_by_pk(OrgKey: $OrgKey) {
+    Name
+    ScimEnabled
+  }
+}

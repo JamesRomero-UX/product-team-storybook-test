@@ -1,0 +1,17 @@
+# $1 = previous HEAD
+# $2 = new HEAD  
+# $3 = flag indicating whether the checkout was a branch checkout (1) or file checkout (0)
+
+# Only run on branch checkouts, not file checkouts
+if [ "$3" = "1" ]; then
+  # Function to check if a file changed between two commits
+  changed() {
+    git diff --name-only "$1" "$2" | grep -Fx "$3" > /dev/null 2>&1
+  }
+
+  if changed "$1" "$2" 'pnpm-lock.yaml'; then
+    echo "📦 pnpm-lock.yaml changed between branches."
+    echo "🔄 Running pnpm install..."
+    pnpm install
+  fi
+fi

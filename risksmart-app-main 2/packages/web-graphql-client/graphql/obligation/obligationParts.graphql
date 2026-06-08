@@ -1,0 +1,23 @@
+fragment ObligationParts on obligation {
+  Adherence
+  Description
+  Id
+  Interpretation
+  ParentId
+  Title
+  Type
+  CustomAttributeData
+  SequentialId
+  CreatedAtTimestamp
+  CreatedByUser
+  ModifiedAtTimestamp
+  ModifiedByUser
+  ExternalId
+  RegulatorySourceId
+  ExternalSyncedAt
+  Reference
+  SourceUrl
+  schedule {
+    ...ScheduleParts
+  }
+}

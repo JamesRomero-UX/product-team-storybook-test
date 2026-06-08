@@ -1,0 +1,3 @@
+table:
+  name: control_action_audit
+  schema: risksmart

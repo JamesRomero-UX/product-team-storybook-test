@@ -1,0 +1,137 @@
+name: Template / Web Test
+
+on:
+  workflow_call:
+    inputs:
+      runner_label:
+        required: false
+        type: string
+        default: 'sprinters:aws:eu-west-2:ubuntu-latest:m7i-flex.large:spot=false'
+      env:
+        required: true
+        type: string
+      aws_region:
+        type: string
+        default: 'eu-west-2'
+
+permissions:
+  actions: write
+  contents: read
+  id-token: write
+  packages: read
+
+jobs:
+  WebTest:
+    name: Web Test
+    runs-on:
+      - ${{ inputs.runner_label }}
+      - ${{ github.run_id }}-${{ github.run_attempt }}-WebTest-${{ inputs.env }}
+    environment:
+      name: ${{ inputs.env }}
+      url: https://github.com
+    permissions:
+      actions: write
+      contents: read
+      id-token: write
+      packages: read
+    steps:
+      - name: Setup Turbo cache
+        uses: rharkor/caching-for-turbo@d124d2921c97c169010f6a7a624a36e9831472e1 # v 1.8
+
+      - name: Checkout repository
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@a3252b78c470c02df07e9d59298aecedc3ccdd6d # v3
+        with:
+          version: 10.28.2
+
+      - name: Setup node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+          registry-url: 'https://npm.pkg.github.com'
+
+      - name: Configure pnpm for GitHub Packages
+        run: |
+          pnpm config set @risk-smart:registry https://npm.pkg.github.com
+          pnpm config set //npm.pkg.github.com/:_authToken ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Install Playwright dependencies
+        run: sudo env "PATH=$PATH" pnpm exec playwright install-deps
+        working-directory: packages/web
+
+      - name: Cache Playwright browsers
+        id: playwright-cache-web
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-web-cache-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('pnpm-lock.yaml') }}
+
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install chromium
+        working-directory: packages/web
+
+      - name: Start API containers
+        run: docker compose up graphql-engine postgres --detach
+        working-directory: api-stack
+
+      - name: Wait for API
+        timeout-minutes: 10
+        run: bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' 127.0.0.1:8080/v1/version)" != "200" ]]; do sleep 1; done'
+
+      - name: Apply Hasura migrations
+        run: pnpm run hasura-migrate:for-type-gen
+
+      - name: Generate GraphQL types
+        run: pnpm run generate-graphql
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4.3.1
+        with:
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE }}
+          aws-region: ${{ inputs.aws_region }}
+
+      - name: Generate SST types
+        env:
+          # Dummy values to keep sst types happy
+          HASURA_ENDPOINT: '-'
+          PDP_ENDPOINT: '-'
+          HASURA_TENANT_ENDPOINT: '-'
+          REST_API_KEY: '-'
+          HASURA_ADMIN_SECRET: '-'
+          KNOCK_SECRET_KEY: '-'
+          SLACK_CLIENT_SECRET: '-'
+          SLACK_CLIENT_ID: '-'
+          AUTH0_DOMAIN: '-'
+          AUTH0_DOMAIN_NONCUSTOM: '-'
+          AUTH0_API_REST_AUDIENCE: '-'
+          AUTH0_API_INTEGRATIONS_AUDIENCE: '-'
+          AUTH0_MANAGEMENT_CLIENT_ID: '-'
+          AUTH0_THIRD_PARTY_CONNECTION_NAME: '-'
+          AUTH0_THIRD_PARTY_CLIENT_ID: '-'
+          SCIM_INTERNAL_API_URL: '-'
+          HYBISCUS_API_KEY: '-'
+          HYBISCUS_API_URL: '-'
+          WEB_APP_URL: '-'
+          BEDROCK_GUARDRAIL_IDENTIFIER: "_"
+          BEDROCK_GUARDRAIL_VERSION: "_"
+          AUTH0_RISK_SMART_REST_API_CLIENT_ID: "-"
+          REACT_APP_AUTH0_CLIENT_ID: "-"
+          AUTH0_RISK_SMART_CIRCLE_CLIENT_ID: "-"
+        run: pnpm exec sst types --stage ${{ vars.STAGE }}
+
+      - name: Run TypeScript checks
+        run: pnpm run tsc
+        env:
+          NODE_OPTIONS: --max-old-space-size=8192
+
+      - name: Run lint checks
+        run: pnpm run lint
+
+      - name: Run unit tests
+        run: pnpm run test:unit

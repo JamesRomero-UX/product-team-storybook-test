@@ -1,0 +1,17 @@
+query getControlTestSecondLineResultsByControlId($_eq: uuid = "") {
+  control_test_second_line_result(where: { ParentControlId: { _eq: $_eq } }) {
+    Title
+    Submitter
+    Description
+    ParentControlId
+    TestType
+    DesignEffectiveness
+    PerformanceEffectiveness
+    OverallEffectiveness
+    TestDate
+    CustomAttributeData
+    submitter {
+      UserName
+    }
+  }
+}

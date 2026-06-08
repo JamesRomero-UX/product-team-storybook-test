@@ -1,0 +1,5 @@
+mutation insertActionParents($actionParents: [action_parent_insert_input!]!) {
+  insert_action_parent(objects: $actionParents) {
+    affected_rows
+  }
+}

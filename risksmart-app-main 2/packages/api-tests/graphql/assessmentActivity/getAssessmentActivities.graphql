@@ -1,0 +1,16 @@
+query getAssessmentActivities {
+  assessment_activity {
+    Title
+    Id
+    ParentId
+    Summary
+    Status
+    ActivityType
+    CompletionDate
+    AssignedUser
+    CreatedByUser
+    CreatedAtTimestamp
+    ModifiedByUser
+    ModifiedAtTimestamp
+  }
+}

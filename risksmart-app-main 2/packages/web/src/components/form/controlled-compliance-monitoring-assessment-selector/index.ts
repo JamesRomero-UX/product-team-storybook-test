@@ -1,0 +1,3 @@
+import ControlledComplianceMonitoringAssessmentSelector from './ControlledComplianceMonitoringAssessmentSelector';
+
+export default ControlledComplianceMonitoringAssessmentSelector;

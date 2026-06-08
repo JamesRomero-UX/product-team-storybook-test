@@ -1,0 +1,73 @@
+query getActions($where: action_bool_exp! = {}) {
+  action(where: $where) {
+    ...ActionParts
+    parents {
+      parent {
+        Id
+        ObjectType
+        SequentialId
+      }
+      obligation {
+        Title
+      }
+      risk {
+        Title
+      }
+      control {
+        Title
+      }
+      issue {
+        Title
+        Type
+      }
+      document {
+        Title
+      }
+      assessment {
+        Title
+      }
+      internalAuditEntity {
+        Title
+      }
+      internalAuditReport {
+        Title
+      }
+      complianceMonitoringAssessment {
+        Title
+      }
+      thirdParty {
+        Title
+      }
+    }
+    actionUpdateSummary {
+      Count
+      LatestDescription
+      LatestTitle
+      LatestCreatedAtTimestamp
+    }
+    owners {
+      ...OwnerParts
+    }
+    ownerGroups {
+      ...OwnerGroupParts
+    }
+    contributors {
+      ...ContributorParts
+    }
+    contributorGroups {
+      ...ContributorGroupParts
+    }
+    modifiedByUser {
+      FriendlyName
+    }
+    createdByUser {
+      FriendlyName
+    }
+    tags {
+      ...TagParts
+    }
+    departments {
+      ...DepartmentParts
+    }
+  }
+}

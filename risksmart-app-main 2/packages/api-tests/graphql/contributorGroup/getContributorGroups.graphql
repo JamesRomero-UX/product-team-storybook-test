@@ -1,0 +1,6 @@
+query getContributorGroups {
+  contributor_group {
+    UserGroupId
+    ParentId
+  }
+}

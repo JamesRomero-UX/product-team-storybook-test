@@ -1,0 +1,5 @@
+mutation dataExportTestSchedule($object: DataExportTestScheduleInput!) {
+  dataExportTestSchedule(object: $object) {
+    message
+  }
+}

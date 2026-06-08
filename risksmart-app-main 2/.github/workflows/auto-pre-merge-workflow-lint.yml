@@ -1,0 +1,27 @@
+name: Auto / Pre-Merge Workflow Lint
+
+permissions:
+  contents: read
+  pull-requests: write
+
+on:
+  pull_request:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/**"
+      - ".github/actionlint.yaml"
+
+jobs:
+  Actionlint:
+    name: Run Actionlint
+    runs-on:
+      - sprinters:aws:ubuntu-24.04-minimal
+      - ${{ github.run_id }}-${{ github.run_attempt }}-Actionlint
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+
+      - name: Run actionlint
+        uses: devops-actions/actionlint@467e2ce19b2310e93c9ffa0b50fe31f86b5a7f23 # v0.1.10
+        with:
+          continue-on-error: false

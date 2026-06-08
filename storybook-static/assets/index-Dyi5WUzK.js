@@ -1,0 +1,1 @@
+import{j as n}from"./iframe-BUnym78j.js";import{c as s}from"./utils-DCYm8U2k.js";function t({children:o,className:r,...e}){return n.jsx("div",{className:s("bg-neutral rounded-xl p-6 shadow-sm border border-muted",r),...e,children:o})}t.__docgenInfo={description:"",methods:[],displayName:"Container"};export{t as C};

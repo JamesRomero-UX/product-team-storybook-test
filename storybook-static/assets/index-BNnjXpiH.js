@@ -1,0 +1,1 @@
+import{_ as n,u as s,a as o}from"./apply-display-name-CKHUfYBo.js";import{b as p}from"./iframe-BUnym78j.js";import{I as i}from"./internal-CWLtv37n.js";function m(a){var{variant:e="h2"}=a,r=n(a,["variant"]);const t=s("Header",{props:{headingTagOverride:r.headingTagOverride,variant:e}});return p.createElement(i,Object.assign({variant:e},r,t))}o(m,"Header");export{m as H};

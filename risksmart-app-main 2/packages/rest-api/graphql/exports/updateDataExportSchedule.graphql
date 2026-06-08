@@ -1,0 +1,22 @@
+mutation updateDataExportSchedule(
+  $Id: uuid!
+  $CronArn: String!
+  $Status: data_export_schedule_status_enum!
+  $Executions: [data_export_schedule_execution_insert_input!]!
+) {
+  update_data_export_schedule(
+    where: { Id: { _eq: $Id } }
+    _set: { CronArn: $CronArn, Status: $Status }
+  ) {
+    affected_rows
+  }
+  insert_data_export_schedule_execution(
+    objects: $Executions
+    on_conflict: {
+      constraint: data_export_schedule_execution_pkey
+      update_columns: [Status, Errors]
+    }
+  ) {
+    affected_rows
+  }
+}

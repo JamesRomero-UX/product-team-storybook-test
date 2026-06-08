@@ -1,0 +1,5 @@
+import{j as e}from"./iframe-BUnym78j.js";import{B as i}from"./index-CBziSGNp.js";import{f as t,e as d,d as l,b as o,a as c,C as m}from"./index-ZDq-Xeuo.js";import{T as u}from"./index-BQ2MBVFQ.js";function p({variant:r,title:a,badgeLabel:s,description:n}){return e.jsxs(t,{variant:r,className:"h-full",children:[e.jsxs(d,{variant:r,children:[e.jsx(l,{children:a}),e.jsx(o,{children:e.jsx(i,{variant:r,border:!0,children:s})})]}),e.jsx(c,{children:e.jsx(u,{children:n})}),e.jsx(m,{})]})}p.__docgenInfo={description:"",methods:[],displayName:"BadgeCard",props:{variant:{required:!1,tsType:{name:"union",raw:`| 'secondary'
+| 'success'
+| 'warning'
+| 'destructive'
+| 'neutral'`,elements:[{name:"literal",value:"'secondary'"},{name:"literal",value:"'success'"},{name:"literal",value:"'warning'"},{name:"literal",value:"'destructive'"},{name:"literal",value:"'neutral'"}]},description:""},title:{required:!1,tsType:{name:"string"},description:""},badgeLabel:{required:!0,tsType:{name:"string"},description:""},description:{required:!1,tsType:{name:"string"},description:""}}};export{p as B};

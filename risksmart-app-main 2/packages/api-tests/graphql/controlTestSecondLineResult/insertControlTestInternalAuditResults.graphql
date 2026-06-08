@@ -1,0 +1,7 @@
+mutation insertControlTestSecondLineResults(
+  $objects: [control_test_second_line_result_insert_input!]!
+) {
+  insert_control_test_second_line_result(objects: $objects) {
+    affected_rows
+  }
+}

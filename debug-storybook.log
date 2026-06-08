@@ -1,0 +1,32 @@
+[08:08:29.852] [INFO] storybook v10.2.15
+[08:08:32.822] [DEBUG] Getting package.json info for /Users/jamesromero/Documents/product-team-storybook/package.json...
+[08:08:33.943] [INFO] Starting...
+[08:08:34.010] [WARN] unable to find package.json for @untitledui/icons
+[08:08:34.655] [DEBUG] Starting preview..
+[08:08:34.671] [WARN] 🚨 Unable to index ./src/page-templates/SettingsPage.stories.tsx:
+  SyntaxError: Identifier 'ModulesTab' has already been declared. (304:13)
+    at constructor (file:///Users/jamesromero/Documents/product-team-storybook/node_modules/.pnpm/storybook@10.2.15_@testing-library+dom@10.4.1_react-dom@19.2.4_react@19.2.4__react@19.2.4/node_modules/storybook/dist/_node-chunks/chunk-XCFMCNNK.js:12175:21)
+    at Parser.raise (file:///Users/jamesromero/Documents/product-team-storybook/node_modules/.pnpm/storybook@10.2.15_@testing-library+dom@10.4.1_react-dom@19.2.4_react@19.2.4__react@19.2.4/node_modules/storybook/dist/_node-chunks/chunk-XCFMCNNK.js:16355:71)
+    at TypeScriptScopeHandler.checkRedeclarationInScope (file:///Users/jamesromero/Documents/product-team-storybook/node_modules/.pnpm/storybook@10.2.15_@testing-library+dom@10.4.1_react-dom@19.2.4_react@19.2.4__react@19.2.4/node_modules/storybook/dist/_node-chunks/chunk-XCFMCNNK.js:13143:75)
+    at TypeScriptScopeHandler.declareName (file:///Users/jamesromero/Documents/product-team-storybook/node_modules/.pnpm/storybook@10.2.15_@testing-library+dom@10.4.1_react-dom@19.2.4_react@19.2.4__react@19.2.4/node_modules/storybook/dist/_node-chunks/chunk-XCFMCNNK.js:13131:16)
+    at TypeScriptScopeHandler.declareName (file:///Users/jamesromero/Documents/product-team-storybook/node_modules/.pnpm/storybook@10.2.15_@testing-library+dom@10.4.1_react-dom@19.2.4_react@19.2.4__react@19.2.4/node_modules/storybook/dist/_node-chunks/chunk-XCFMCNNK.js:15185:15)
+    at Parser.declareNameFromIdentifier (file:///Users/jamesromero/Documents/product-team-storybook/node_modules/.pnpm/storybook@10.2.15_@testing-library+dom@10.4.1_react-dom@19.2.4_react@19.2.4__react@19.2.4/node_modules/storybook/dist/_node-chunks/chunk-XCFMCNNK.js:17009:20)
+    at Parser.checkIdentifier (file:///Users/jamesromero/Documents/product-team-storybook/node_modules/.pnpm/storybook@10.2.15_@testing-library+dom@10.4.1_react-dom@19.2.4_react@19.2.4__react@19.2.4/node_modules/storybook/dist/_node-chunks/chunk-XCFMCNNK.js:17006:126)
+    at Parser.checkLVal (file:///Users/jamesromero/Documents/product-team-storybook/node_modules/.pnpm/storybook@10.2.15_@testing-library+dom@10.4.1_react-dom@19.2.4_react@19.2.4__react@19.2.4/node_modules/storybook/dist/_node-chunks/chunk-XCFMCNNK.js:16973:16)
+    at Parser.parseVarId (file:///Users/jamesromero/Documents/product-team-storybook/node_modules/.pnpm/storybook@10.2.15_@testing-library+dom@10.4.1_react-dom@19.2.4_react@19.2.4__react@19.2.4/node_modules/storybook/dist/_node-chunks/chunk-XCFMCNNK.js:20513:276)
+    at Parser.parseVarId (file:///Users/jamesromero/Documents/product-team-storybook/node_modules/.pnpm/storybook@10.2.15_@testing-library+dom@10.4.1_react-dom@19.2.4_react@19.2.4__react@19.2.4/node_modules/storybook/dist/_node-chunks/chunk-XCFMCNNK.js:18322:15)
+[08:08:34.674] [ERROR] Failed to build the preview
+[08:08:34.675] [ERROR] Error: Unable to index ./src/page-templates/SettingsPage.stories.tsx
+    at _StoryIndexGenerator.getIndexAndStats (file://./node_modules/.pnpm/storybook@10.2.15_@testing-library+dom@10.4.1_react-dom@19.2.4_react@19.2.4__react@19.2.4/node_modules/storybook/dist/core-server/index.js:6085:15)
+    at async _StoryIndexGenerator.getIndex (file://./node_modules/.pnpm/storybook@10.2.15_@testing-library+dom@10.4.1_react-dom@19.2.4_react@19.2.4__react@19.2.4/node_modules/storybook/dist/core-server/index.js:6074:13)
+    at async getOptimizeDeps (file://./node_modules/.pnpm/@storybook+builder-vite@10.2.15_esbuild@0.27.7_rollup@4.60.2_storybook@10.2.15_@testing_7332b08d0eabb82c7c8ba02ec51bb047/node_modules/@storybook/builder-vite/dist/index.js:1861:15)
+    at async createViteServer (file://./node_modules/.pnpm/@storybook+builder-vite@10.2.15_esbuild@0.27.7_rollup@4.60.2_storybook@10.2.15_@testing_7332b08d0eabb82c7c8ba02ec51bb047/node_modules/@storybook/builder-vite/dist/index.js:1887:19)
+    at async Module.start (file://./node_modules/.pnpm/@storybook+builder-vite@10.2.15_esbuild@0.27.7_rollup@4.60.2_storybook@10.2.15_@testing_7332b08d0eabb82c7c8ba02ec51bb047/node_modules/@storybook/builder-vite/dist/index.js:1922:17)
+    at async storybookDevServer (file://./node_modules/.pnpm/storybook@10.2.15_@testing-library+dom@10.4.1_react-dom@19.2.4_react@19.2.4__react@19.2.4/node_modules/storybook/dist/core-server/index.js:7241:83)
+    at async buildOrThrow (file://./node_modules/.pnpm/storybook@10.2.15_@testing-library+dom@10.4.1_react-dom@19.2.4_react@19.2.4__react@19.2.4/node_modules/storybook/dist/core-server/index.js:4504:12)
+    at async buildDevStandalone (file://./node_modules/.pnpm/storybook@10.2.15_@testing-library+dom@10.4.1_react-dom@19.2.4_react@19.2.4__react@19.2.4/node_modules/storybook/dist/core-server/index.js:7611:66)
+    at async withTelemetry (file://./node_modules/.pnpm/storybook@10.2.15_@testing-library+dom@10.4.1_react-dom@19.2.4_react@19.2.4__react@19.2.4/node_modules/storybook/dist/_node-chunks/chunk-JGB33OAY.js:218:12)
+    at async dev (file://./node_modules/.pnpm/storybook@10.2.15_@testing-library+dom@10.4.1_react-dom@19.2.4_react@19.2.4__react@19.2.4/node_modules/storybook/dist/bin/core.js:2734:3)
+[08:08:34.675] [WARN] Broken build, fix the error above.
+You may need to refresh the browser.
+[08:08:40.642] [PROMPT] Would you like to send anonymous crash reports to improve Storybook and fix bugs faster? {"choice":false}

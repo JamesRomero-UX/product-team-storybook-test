@@ -1,0 +1,5 @@
+mutation insertDataImport {
+  insert_data_import_one(object: {}) {
+    Id
+  }
+}

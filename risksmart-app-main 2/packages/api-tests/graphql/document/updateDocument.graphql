@@ -1,0 +1,5 @@
+mutation updateDocument($Id: uuid!, $Title: String!) {
+  update_document(where: { Id: { _eq: $Id } }, _set: { Title: $Title }) {
+    affected_rows
+  }
+}

@@ -1,0 +1,12 @@
+mutation insertAttestationCycle($object: attestation_cycle_insert_input!) {
+  insert_attestation_cycle_one(object: $object) {
+    Id
+    ParentId
+    Status
+    AllowCarryForward
+    CreatedAtTimestamp
+    CreatedByUser
+    ModifiedAtTimestamp
+    ModifiedByUser
+  }
+}

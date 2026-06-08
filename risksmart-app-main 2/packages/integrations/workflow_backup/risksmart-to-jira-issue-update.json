@@ -1,0 +1,444 @@
+{
+  "name": "RiskSmart to Jira - Issue update",
+  "nodes": [
+    {
+      "parameters": {
+        "topic": {
+          "__rl": true,
+          "value": "arn:aws:sns:eu-west-2:046657674620:marcell-risksmart-app-IntegrationSnsTopic",
+          "mode": "list",
+          "cachedResultName": "marcell-risksmart-app-IntegrationSnsTopic",
+          "cachedResultUrl": "https://eu-west-2.console.aws.amazon.com/sns/v3/home?region=eu-west-2#/topic/arn:aws:sns:eu-west-2:046657674620:marcell-risksmart-app-IntegrationSnsTopic"
+        }
+      },
+      "id": "dde1fd1d-9525-4180-9398-39a3cb62872a",
+      "name": "AWS SNS Trigger",
+      "type": "n8n-nodes-base.awsSnsTrigger",
+      "typeVersion": 1,
+      "position": [540, 320],
+      "webhookId": "52741892-1be1-4f9a-9237-562760e82779",
+      "credentials": {
+        "aws": {
+          "id": "frNg9mPmZ3OzNB8U",
+          "name": "AWS account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0d21721b-096f-4b72-b98b-36297fbf66c6",
+              "name": "Message",
+              "value": "={{ $json.Message.parseJson().detail.event.data.new }}",
+              "type": "object"
+            },
+            {
+              "id": "5f7b93e0-71a7-4004-bfb8-3cfd7c03b4b9",
+              "name": "JiraRef",
+              "value": "={{ $json.Message.parseJson().detail.event.data.new.Meta[\"jira\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "464ce50b-24c5-4502-856b-79d61febbb55",
+              "name": "Title",
+              "value": "={{ $json.Message.parseJson().detail.event.data.new.Title }}",
+              "type": "string"
+            },
+            {
+              "id": "50464029-e784-4125-b32c-04fd017bbea3",
+              "name": "Description",
+              "value": "={{ $json.Message.parseJson().detail.event.data.new.Details }}",
+              "type": "string"
+            },
+            {
+              "id": "d42378dd-eb3e-4aa5-9d8f-e7bd942da953",
+              "name": "Status",
+              "value": "={{ $json.Message.parseJson().detail.event.data.new.Status }}",
+              "type": "string"
+            },
+            {
+              "id": "df0e4887-7fac-4466-a2ab-16f4e60b2c22",
+              "name": "DateIdentified",
+              "value": "={{ $json.Message.parseJson().detail.event.data.new.DateIdentified }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "518a0c67-c1f2-437f-b900-133ad1f807f8",
+      "name": "Fields to update",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [860, 320]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "dbbb44f1-274a-489c-a918-9c1a7e74ccb4",
+              "leftValue": "={{ $('Fields to update').item.json.JiraRef }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "e401a4c0-bc3e-4ee2-bfae-41f5ee8596f2",
+              "leftValue": "={{ $('Fields to update').item.json.JiraRef }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "4b2ebfca-3481-4450-8121-1acce60ff6a2",
+      "name": "If there's a JiraRef",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1180, 320]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "issueKey": "={{ $('Fields to update').item.json.JiraRef }}",
+        "updateFields": {
+          "description": "={{ $('Fields to update').item.json.Message.Details }}",
+          "summary": "={{ $('Fields to update').item.json.Message.Title }}"
+        }
+      },
+      "id": "cccbd737-6a88-488d-9f7f-3e2e62640e10",
+      "name": "Update issue",
+      "type": "n8n-nodes-base.jira",
+      "typeVersion": 1,
+      "position": [2500, 40],
+      "credentials": {
+        "jiraSoftwareCloudApi": {
+          "id": "43qSdpxstMn0L3iT",
+          "name": "Jira SW Cloud account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "project": {
+          "__rl": true,
+          "value": "10002",
+          "mode": "list",
+          "cachedResultName": "dev-cloud-mj"
+        },
+        "issueType": {
+          "__rl": true,
+          "value": "10002",
+          "mode": "list",
+          "cachedResultName": "Task"
+        },
+        "summary": "={{ $('Fields to update').item.json.Message.Title }}",
+        "additionalFields": {
+          "description": "={{ $('Fields to update').item.json.Message.Details }}",
+          "customFieldsUi": {
+            "customFieldsValues": [
+              {
+                "fieldId": {
+                  "__rl": true,
+                  "value": "customfield_10047",
+                  "mode": "list",
+                  "cachedResultName": "Detection time"
+                },
+                "fieldValue": "={{ $('Fields to update').item.json.Message.DateIdentified }}"
+              },
+              {
+                "fieldId": {
+                  "__rl": true,
+                  "value": "customfield_10045",
+                  "mode": "list",
+                  "cachedResultName": "RiskSmart Ref"
+                },
+                "fieldValue": "={{ $('Fields to update').item.json.Message.Id }}"
+              }
+            ]
+          }
+        }
+      },
+      "id": "a530748a-4651-4492-ae50-89ffb23ffd0c",
+      "name": "Create issue",
+      "type": "n8n-nodes-base.jira",
+      "typeVersion": 1,
+      "position": [1580, 400],
+      "credentials": {
+        "jiraSoftwareCloudApi": {
+          "id": "43qSdpxstMn0L3iT",
+          "name": "Jira SW Cloud account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "issueId": "={{ $('Fields to update').item.json.Message.Id }}",
+        "referenceId": "={{ $json.key }}"
+      },
+      "id": "43a904df-d85d-426b-a06b-62eb897a8b95",
+      "name": "RiskSmart Update Issue With Third Party Reference",
+      "type": "CUSTOM.updateIssueWithThirdPartyReference",
+      "typeVersion": 1,
+      "position": [1880, 400],
+      "credentials": {
+        "riskSmartAuthApi": {
+          "id": "fdlR2vCuVe3tTMhk",
+          "name": "RiskSmart Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "issueKey": "={{ $('Fields to update').item.json.JiraRef }}",
+        "simplifyOutput": true,
+        "additionalFields": {}
+      },
+      "id": "e80c77dc-bb16-4e66-97ed-786c9abe98d8",
+      "name": "Get issue",
+      "type": "n8n-nodes-base.jira",
+      "typeVersion": 1,
+      "position": [1580, 140],
+      "credentials": {
+        "jiraSoftwareCloudApi": {
+          "id": "43qSdpxstMn0L3iT",
+          "name": "Jira SW Cloud account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9ec1d9ab-f2c7-48d2-b6c8-0a1da93b5c16",
+              "name": "status",
+              "value": "={{ $json.Status.name }}",
+              "type": "string"
+            },
+            {
+              "id": "ff8ff2c8-6c38-49fd-89e5-118aca76818b",
+              "name": "description",
+              "value": "={{ $json.Description }}",
+              "type": "string"
+            },
+            {
+              "id": "71fcb7c0-574c-4ad8-a043-e32d0a0f3b13",
+              "name": "summary",
+              "value": "={{ $json.Summary }}",
+              "type": "string"
+            },
+            {
+              "id": "8dd83209-c9d7-4142-a19d-acc3250773bf",
+              "name": "reporterAccountId",
+              "value": "={{ $json.Reporter.accountId }}",
+              "type": "string"
+            },
+            {
+              "id": "c50267d9-a072-48fb-9e24-352db1ead4cd",
+              "name": "assigneeAccountId",
+              "value": "={{ $json.Assignee.accountId }}",
+              "type": "string"
+            },
+            {
+              "id": "795f4723-7002-46e8-b038-7566b06c3052",
+              "name": "risksmartRef",
+              "value": "={{ $json['RiskSmart Ref'] }}",
+              "type": "string"
+            },
+            {
+              "id": "59676373-1305-4514-8a84-2198ab9dc6a8",
+              "name": "detectionTime",
+              "value": "={{ $json['Detection Time'] }}",
+              "type": "string"
+            },
+            {
+              "id": "838a9f40-1d40-4294-ae8b-f9275ecfbe8c",
+              "name": "jiraKey",
+              "value": "={{ $json.key }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ecef4e46-c981-403b-8ed4-951bc8caef79",
+      "name": "Reduce Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [1880, 140]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "35a9a970-1a19-4a1b-8090-6fd3b21ca964",
+              "leftValue": "={{ $json.summary }}",
+              "rightValue": "={{ $('Fields to update').item.json.Message.Title }}",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            },
+            {
+              "id": "d473dc38-6f5a-46a8-9dc2-7992ae9ac68a",
+              "leftValue": "={{ $json.description }}",
+              "rightValue": "={{ $('Fields to update').item.json.Message.Details }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "57efe87e-f7ba-49a8-a29b-536a40dee212",
+              "leftValue": "={{ $json.detectionTime }}",
+              "rightValue": "={{ $('Fields to update').item.json.Message.DateIdentified }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "5050ca81-37c4-482f-bff8-d64ca8f49069",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [2160, 140]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "AWS SNS Trigger": {
+      "main": [
+        [
+          {
+            "node": "Fields to update",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fields to update": {
+      "main": [
+        [
+          {
+            "node": "If there's a JiraRef",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If there's a JiraRef": {
+      "main": [
+        [
+          {
+            "node": "Get issue",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create issue",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create issue": {
+      "main": [
+        [
+          {
+            "node": "RiskSmart Update Issue With Third Party Reference",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get issue": {
+      "main": [
+        [
+          {
+            "node": "Reduce Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reduce Fields": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Update issue",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "8db444d3-bc12-40e1-a88e-5c3a3df31dfd",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4cc803c9c309b90b5b64f9c14ac6f88257f0db4cc12b1012e2d72b6650fdacce"
+  },
+  "id": "1AvFjzT6ICZDOEM5",
+  "tags": [
+    {
+      "createdAt": "2024-05-23T14:09:40.577Z",
+      "updatedAt": "2024-05-23T14:09:40.577Z",
+      "id": "QCztFuGTl4AoELVt",
+      "name": "Jira"
+    }
+  ]
+}

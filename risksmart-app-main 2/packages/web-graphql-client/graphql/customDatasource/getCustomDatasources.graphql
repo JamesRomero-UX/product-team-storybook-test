@@ -1,0 +1,19 @@
+query getCustomDatasources {
+  custom_datasource {
+    Title
+    Id
+    Filters
+    Datasources
+    Fields
+    CreatedByUser
+    ModifiedByUser
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    modifiedByUser {
+      FriendlyName
+    }
+    createdByUser {
+      FriendlyName
+    }
+  }
+}

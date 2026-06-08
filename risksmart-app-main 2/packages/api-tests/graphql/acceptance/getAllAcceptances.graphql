@@ -1,0 +1,14 @@
+query getAllAcceptances {
+  acceptance(order_by: { Title: asc }) {
+    DateAcceptedFrom
+    DateAcceptedTo
+    Details
+    Id
+    Status
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    Title
+    CreatedByUser
+    ModifiedByUser
+  }
+}

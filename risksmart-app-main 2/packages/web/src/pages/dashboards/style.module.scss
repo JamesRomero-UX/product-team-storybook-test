@@ -1,0 +1,17 @@
+.dashboardSelector {
+  [class*='awsui_trigger'] {
+    color: #7d8998 !important;
+  }
+}
+
+.clearFilterAlert {
+  [class*='awsui_alert'] {
+    @apply py-0 #{!important};
+  }
+}
+
+.stickyHeader {
+  [class*='awsui_header-sticky-enabled'] {
+    z-index: 1 !important;
+  }
+}

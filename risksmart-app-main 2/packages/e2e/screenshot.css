@@ -1,0 +1,4 @@
+/* Hide the notification banner during screenshots as it fades out, making the screenshot extremely time sensitive */
+[data-testid='notification-banner'] {
+  display: none;
+}

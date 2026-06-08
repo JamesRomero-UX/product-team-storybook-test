@@ -1,0 +1,18 @@
+fragment ApprovalLevelParts on approval_level {
+  Id
+  ApprovalRuleType
+  approvers {
+    Id
+    UserId
+    UserGroupId
+    OwnerApprover
+    group {
+      users {
+        UserId
+      }
+    }
+  }
+  approval {
+    InFlightEditRule
+  }
+}

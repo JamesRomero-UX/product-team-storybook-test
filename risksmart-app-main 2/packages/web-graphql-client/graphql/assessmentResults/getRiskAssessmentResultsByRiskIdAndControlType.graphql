@@ -1,0 +1,28 @@
+query getRiskAssessmentResultsByRiskIdAndControlType(
+  $RiskId: uuid!
+  $ControlType: risk_assessment_result_control_type_enum!
+) {
+  risk_assessment_result(
+    where: {
+      parents: { ParentId: { _eq: $RiskId } }
+      ControlType: { _eq: $ControlType }
+      RatingType: { _in: ["assessment", "rating"] }
+    }
+    order_by: [{ CreatedAtTimestamp: desc }]
+  ) {
+    Id
+    Rating
+    Likelihood
+    Impact
+    ControlType
+    CustomAttributeData
+    parents(where: { ParentType: { _eq: assessment } }) {
+      assessment {
+        ...AssessmentParts
+        completedByUser {
+          FriendlyName
+        }
+      }
+    }
+  }
+}

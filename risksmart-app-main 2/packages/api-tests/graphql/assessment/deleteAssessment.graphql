@@ -1,0 +1,5 @@
+mutation deleteAssessment($Id: uuid!) {
+  delete_assessment(where: { Id: { _eq: $Id } }) {
+    affected_rows
+  }
+}

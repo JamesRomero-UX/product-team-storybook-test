@@ -1,0 +1,87 @@
+/*
+ * Risk dashboard card styling — copied verbatim (translated to plain CSS)
+ * from packages/web/src/pages/risk-dashboard/style.module.scss.
+ *
+ * Production scopes these rules to `.tier`. We apply them globally to any
+ * Cards rendered inside a tier-styled wrapper (look for the
+ * data-rs-tier-card="true" attribute on the Cards root container).
+ *
+ * Key behaviour: the radio control is hidden (display: none). The whole
+ * card surface is clickable via Cloudscape's `entireCardClickable` prop,
+ * so the radio is unnecessary visual noise.
+ */
+
+/* Hide the radio button — card click selects */
+[data-rs-tier-card='true'] [class*='awsui_radio-control'] {
+  display: none;
+}
+
+/* Card surface clickable + title fills width */
+[data-rs-tier-card='true'] [class*='awsui_card-inner'] {
+  cursor: pointer;
+}
+[data-rs-tier-card='true'] [class*='awsui_card-inner'] [class*='awsui_title'] {
+  width: 100% !important;
+}
+
+/* Section padding — production removes the default top padding so the
+   title sits closer to the header row. */
+[data-rs-tier-card='true'] [class*='awsui_section_'] {
+  padding-top: 0px !important;
+}
+
+/* Empty card-header still takes display: inherit (e.g. unlinked risk) */
+[data-rs-tier-card='true'] [class*='awsui_card-header-inner'] {
+  display: inherit !important;
+}
+
+/* Card spacing — 10px between cards, 0 on last */
+[data-rs-tier-card='true'] [class*='awsui_card-selectable'] > [class*='awsui_card-inner'] {
+  margin-bottom: 10px !important;
+  border-radius: 10px !important;
+}
+[data-rs-tier-card='true'] [class*='awsui_card-selectable']:last-child > [class*='awsui_card-inner'] {
+  margin-bottom: 0 !important;
+}
+
+/* Card border + soft shadow on hover/active */
+[data-rs-tier-card='true'] [class*='awsui_card-selectable'] > [class*='awsui_card-inner']::before,
+[data-rs-tier-card='true'] [class*='awsui_card-selectable'] > [class*='awsui_card-inner']::after {
+  border-radius: 10px !important;
+}
+[data-rs-tier-card='true'] [class*='awsui_card-selectable'] > [class*='awsui_card-inner']::after {
+  box-shadow:
+    0px 0px 1px 1px #e9ebed,
+    0px 1px 8px 1px rgba(0, 7, 22, 0.05) !important;
+}
+
+/* Header layout — flex, header takes full width, badge aligned to right */
+[data-rs-tier-card='true'] [class*='awsui_card-selectable'] > [class*='awsui_card-inner'] > [class*='awsui_card-header'] {
+  width: 100% !important;
+}
+[data-rs-tier-card='true'] [class*='awsui_card-header-inner'] > [class*='awsui_root'] {
+  flex-wrap: nowrap !important;
+  justify-content: space-between;
+  align-items: center;
+}
+[data-rs-tier-card='true'] [class*='awsui_card-header-inner'] > [class*='awsui_root'] > [class*='awsui_main'] {
+  flex: 1 !important;
+  max-width: calc(100% - 20px) !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Title — vertical-align middle, no extra margin/padding */
+[data-rs-tier-card='true'] [class*='awsui_card-header-inner'] [class*='awsui_title'] {
+  display: flex;
+  gap: 0.5em;
+  justify-content: space-between;
+  align-items: center;
+  vertical-align: middle;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+[data-rs-tier-card='true'] [class*='awsui_card-header-inner'] [class*='awsui_title'] [class*='awsui_heading-text'] {
+  font-size: 16px !important;
+  line-height: 21px;
+}

@@ -1,0 +1,5 @@
+query GetOldestOpenIssueDate($where: issue_bool_exp) {
+  issue(order_by: { CreatedAtTimestamp: asc }, where: $where, limit: 1) {
+    CreatedAtTimestamp
+  }
+}

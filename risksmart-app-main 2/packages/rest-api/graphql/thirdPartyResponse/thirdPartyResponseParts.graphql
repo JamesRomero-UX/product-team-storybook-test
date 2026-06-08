@@ -1,0 +1,11 @@
+fragment ThirdPartyResponseParts on third_party_response {
+  Id
+  QuestionnaireTemplateVersionId
+  ParentId
+  ResponseData
+  Status
+  CreatedAtTimestamp
+  CreatedByUser
+  ModifiedAtTimestamp
+  ModifiedByUser
+}

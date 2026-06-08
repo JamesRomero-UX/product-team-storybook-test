@@ -1,0 +1,5 @@
+mutation insertWizard($object: InsertWizardInput) {
+  insertChildWizard(object: $object) {
+    RiskId
+  }
+}

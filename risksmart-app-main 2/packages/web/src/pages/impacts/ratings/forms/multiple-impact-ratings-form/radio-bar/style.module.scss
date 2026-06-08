@@ -1,0 +1,32 @@
+.radioControl {
+  [class*='_radioGroup_'] {
+    display: flex !important;
+    flex: 1 !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  [class*='awsui_root_'] {
+    display: flex !important;
+    width: 100% !important;
+    justify-content: space-around !important;
+  }
+
+  [class*='awsui_wrapper_'] {
+    margin-block-start: 0 !important;
+  }
+
+  [class*='awsui_description_'] {
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+    max-width: 128px;
+  }
+
+  [class*='awsui_label_'] {
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+    max-width: 128px;
+  }
+}

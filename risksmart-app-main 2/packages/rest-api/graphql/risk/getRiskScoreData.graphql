@@ -1,0 +1,77 @@
+query getRiskScoreData($where: risk_bool_exp!) {
+  risk(where: $where) {
+    Id
+    parent {
+      Id
+    }
+    controls {
+      control {
+        Id
+        Type
+        CustomAttributeData
+        testResults(
+          where: { RatingType: { _in: ["assessment", "rating"] } }
+          limit: 1
+          order_by: [
+            { TestDate: desc_nulls_last }
+            { CreatedAtTimestamp: desc }
+          ]
+        ) {
+          OverallEffectiveness
+          DesignEffectiveness
+          PerformanceEffectiveness
+        }
+      }
+    }
+
+    inherentAssessmentResults: assessmentResults(
+      order_by: [
+        {
+          riskAssessmentResult: {
+            TestDate: desc_nulls_last
+            CreatedAtTimestamp: desc
+          }
+        }
+      ]
+      where: {
+        riskAssessmentResult: {
+          ControlType: { _eq: Uncontrolled }
+          RatingType: { _in: ["assessment", "rating"] }
+        }
+      }
+      limit: 1
+    ) {
+      riskAssessmentResult {
+        Impact
+        Likelihood
+        Rating
+        ControlType
+      }
+    }
+
+    residualAssessmentResults: assessmentResults(
+      order_by: [
+        {
+          riskAssessmentResult: {
+            TestDate: desc_nulls_last
+            CreatedAtTimestamp: desc
+          }
+        }
+      ]
+      where: {
+        riskAssessmentResult: {
+          ControlType: { _eq: Controlled }
+          RatingType: { _in: ["assessment", "rating"] }
+        }
+      }
+      limit: 1
+    ) {
+      riskAssessmentResult {
+        Impact
+        Likelihood
+        Rating
+        ControlType
+      }
+    }
+  }
+}

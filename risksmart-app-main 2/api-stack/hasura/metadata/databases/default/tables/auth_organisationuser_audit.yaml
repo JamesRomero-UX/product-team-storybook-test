@@ -1,0 +1,3 @@
+table:
+  name: organisationuser_audit
+  schema: auth

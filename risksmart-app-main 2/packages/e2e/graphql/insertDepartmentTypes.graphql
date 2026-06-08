@@ -1,0 +1,5 @@
+mutation insertDepartmentTypes($objects: [department_type_insert_input!]!) {
+  insert_department_type(objects: $objects) {
+    affected_rows
+  }
+}

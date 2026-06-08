@@ -1,0 +1,7 @@
+mutation insertObligationSecondLineResults(
+  $results: [obligation_second_line_result_insert_input!]!
+) {
+  insert_obligation_second_line_result(objects: $results) {
+    affected_rows
+  }
+}

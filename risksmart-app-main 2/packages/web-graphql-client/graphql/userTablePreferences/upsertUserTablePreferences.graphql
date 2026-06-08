@@ -1,0 +1,11 @@
+mutation upsertUserTablePreferences($Preferences: jsonb!, $TableId: String!) {
+  insert_user_table_preferences(
+    objects: [{ TableId: $TableId, Preferences: $Preferences }]
+    on_conflict: {
+      constraint: user_table_preferences_pkey
+      update_columns: [Preferences]
+    }
+  ) {
+    affected_rows
+  }
+}

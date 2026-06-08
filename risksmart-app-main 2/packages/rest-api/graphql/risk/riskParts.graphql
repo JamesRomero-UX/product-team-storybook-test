@@ -1,0 +1,11 @@
+fragment RiskParts on risk {
+  CustomAttributeData
+  Description
+  Id
+  ParentRiskId
+  SequentialId
+  Status
+  Tier
+  Title
+  Treatment
+}

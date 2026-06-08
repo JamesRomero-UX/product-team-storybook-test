@@ -1,0 +1,14 @@
+query getCauseById($_eq: uuid!) {
+  cause(where: { Id: { _eq: $_eq } }) {
+    ModifiedByUser
+    CreatedByUser
+    Title
+    ModifiedAtTimestamp
+    CreatedAtTimestamp
+    Significance
+    ParentIssueId
+    Id
+    Description
+    CustomAttributeData
+  }
+}

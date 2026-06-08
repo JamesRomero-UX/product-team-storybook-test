@@ -1,0 +1,10 @@
+fragment RiskAssessmentResultParts on risk_assessment_result {
+  Id
+  Likelihood
+  Impact
+  Rating
+  ControlType
+  CustomAttributeData
+  Rationale
+  TestDate
+}

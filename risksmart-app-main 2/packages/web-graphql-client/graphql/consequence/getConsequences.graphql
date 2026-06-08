@@ -1,0 +1,44 @@
+query getConsequences($where: consequence_bool_exp! = {}) {
+  consequence(where: $where) {
+    ...ConsequenceParts
+    createdByUser {
+      FriendlyName
+    }
+    modifiedByUser {
+      FriendlyName
+    }
+    issue {
+      Type
+      SequentialId
+      CreatedAtTimestamp
+      Title
+      owners {
+        ...OwnerParts
+      }
+      ownerGroups {
+        ...OwnerGroupParts
+      }
+      contributors {
+        ...ContributorParts
+      }
+      contributorGroups {
+        ...ContributorGroupParts
+      }
+      assessment {
+        IssueType
+        ActualCloseDate
+        Status
+        Severity
+        departments {
+          ...DepartmentParts
+        }
+      }
+      departments {
+        ...DepartmentParts
+      }
+      tags {
+        ...TagParts
+      }
+    }
+  }
+}

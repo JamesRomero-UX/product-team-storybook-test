@@ -1,0 +1,19 @@
+query getDepartments {
+  department_type(order_by: { Name: asc }) {
+    DepartmentTypeId
+    Name
+    Description
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    createdByUser {
+      FriendlyName
+    }
+    modifiedByUser {
+      FriendlyName
+    }
+    department_type_group {
+      Id
+      Name
+    }
+  }
+}

@@ -1,0 +1,10 @@
+query getDashboards {
+  dashboard {
+    Id
+    Name
+    Description
+    Sharing
+    Content
+    CreatedByUser
+  }
+}

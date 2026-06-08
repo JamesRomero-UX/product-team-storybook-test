@@ -1,0 +1,15 @@
+mutation insertDataImportErrors(
+  $dataImportId: uuid!
+  $errors: [data_import_error_insert_input!]!
+) {
+  insert_data_import_error(objects: $errors) {
+    affected_rows
+  }
+
+  update_data_import(
+    where: { Id: { _eq: $dataImportId } }
+    _set: { Status: failed }
+  ) {
+    affected_rows
+  }
+}

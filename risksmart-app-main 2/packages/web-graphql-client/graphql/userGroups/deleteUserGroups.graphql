@@ -1,0 +1,5 @@
+mutation deleteUserGroups($UserGroupIds: [uuid!]!) {
+  deleteUserGroups(Ids: $UserGroupIds){
+    affected_rows
+  }
+}

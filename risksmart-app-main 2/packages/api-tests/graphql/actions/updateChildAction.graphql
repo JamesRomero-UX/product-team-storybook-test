@@ -1,0 +1,33 @@
+mutation updateChildAction(
+  $Id: uuid!
+  $DateDue: timestamptz!
+  $Title: String!
+  $Status: action_status_enum!
+  $Priority: Int
+  $Description: String
+  $DateRaised: timestamptz!
+  $ClosedDate: timestamptz
+  $CustomAttributeData: jsonb
+  $OriginalTimestamp: timestamptz!
+) {
+  updateChildAction(
+    Id: $Id
+    OriginalTimestamp: $OriginalTimestamp
+    DateDue: $DateDue
+    Title: $Title
+    Status: $Status
+    Priority: $Priority
+    Description: $Description
+    DateRaised: $DateRaised
+    ClosedDate: $ClosedDate
+    CustomAttributeData: $CustomAttributeData
+    ContributorGroupIds: []
+    ContributorUserIds: []
+    OwnerGroupIds: []
+    OwnerUserIds: []
+    TagTypeIds: []
+    DepartmentTypeIds: []
+  ) {
+    affected_rows
+  }
+}

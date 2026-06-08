@@ -1,0 +1,11 @@
+query getLatestRiskAssessmentResultConfigByOrg($OrgKey: String!) {
+  risk_assessment_result_config(
+    where: { IsLatest: { _eq: true }, OrgKey: { _eq: $OrgKey } }
+    limit: 1
+  ) {
+    Id
+    Version
+    Config
+    IsLatest
+  }
+}

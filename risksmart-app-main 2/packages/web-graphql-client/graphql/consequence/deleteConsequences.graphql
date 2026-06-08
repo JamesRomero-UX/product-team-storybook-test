@@ -1,0 +1,5 @@
+mutation deleteConsequences($Ids: [uuid!]) {
+  delete_consequence(where: { Id: { _in: $Ids } }) {
+    affected_rows
+  }
+}

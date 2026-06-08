@@ -1,0 +1,5 @@
+mutation insertDataImport($objects: [data_import_insert_input!]!) {
+  insert_data_import(objects: $objects) {
+    affected_rows
+  }
+}

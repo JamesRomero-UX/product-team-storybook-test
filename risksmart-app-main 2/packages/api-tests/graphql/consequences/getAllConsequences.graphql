@@ -1,0 +1,15 @@
+query getAllConsequences {
+  consequence(order_by: { Title: asc }) {
+    CostType
+    CostValue
+    Criticality
+    Description
+    Id
+    ParentIssueId
+    ModifiedAtTimestamp
+    CreatedAtTimestamp
+    Title
+    ModifiedByUser
+    CreatedByUser
+  }
+}

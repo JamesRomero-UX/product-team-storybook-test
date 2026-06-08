@@ -1,0 +1,176 @@
+table:
+  name: approver_response
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: approver_response
+  custom_root_fields: {}
+object_relationships:
+  - name: changeRequest
+    using:
+      manual_configuration:
+        column_mapping:
+          ChangeRequestId: Id
+        insertion_order: null
+        remote_table:
+          name: change_request
+          schema: risksmart
+  - name: approver
+    using:
+      foreign_key_constraint_on: ApproverId
+  - name: approvedBy
+    using:
+      manual_configuration:
+        column_mapping:
+          ApprovedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+select_permissions:
+  - role: Standard
+    permission:
+      query_root_fields: []
+      subscription_root_fields: []
+      columns:
+        - Id
+        - Approved
+        - Comment
+        - ApprovedByUser
+        - ApprovedAtTimestamp
+        - ModifiedAtTimestamp
+        - CreatedAtTimestamp
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-Id
+          - changeRequest:
+              parent:
+                permissions:
+                  _and:
+                    - UserId:
+                        _eq: X-Hasura-User-Id
+                    - OrgKey:
+                        _eq: X-Hasura-org-Id
+                    - AccessType:
+                        _eq: read
+  - role: read:change-request
+    permission:
+      query_root_fields: []
+      subscription_root_fields: []
+      columns:
+        - Id
+        - Approved
+        - Comment
+        - ApprovedByUser
+        - ApprovedAtTimestamp
+        - ModifiedAtTimestamp
+        - CreatedAtTimestamp
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-Id
+insert_permissions:
+  - role: app-user
+    permission:
+      backend_only: true
+      columns:
+        - ChangeRequestId
+        - ApproverId
+        - Approved
+        - Comment
+      check:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-Id
+          - changeRequest:
+              OrgKey:
+                _eq: X-Hasura-org-Id
+      set:
+        OrgKey: x-hasura-org-id
+        CreatedAtTimestamp: now()
+        CreatedByUser: x-hasura-user-id
+        ModifiedAtTimestamp: now()
+        ModifiedByUser: x-hasura-user-id
+update_permissions:
+  - role: RiskManager
+    permission:
+      backend_only: true
+      columns:
+        - Approved
+        - Comment
+        - ApprovedByUser
+        - ApprovedAtTimestamp
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-Id
+          - changeRequest:
+              OrgKey:
+                _eq: X-Hasura-org-Id
+      set:
+        ModifiedAtTimestamp: now()
+        ModifiedByUser: x-hasura-user-id
+  - role: app-user
+    permission:
+      backend_only: true
+      columns:
+        - Approved
+        - Comment
+        - ApprovedByUser
+        - ApprovedAtTimestamp
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-Id
+          - _or:
+            - approver:
+                UserId:
+                  _eq: X-Hasura-User-Id
+            - approver:
+                group:
+                  users:
+                    UserId:
+                      _eq: X-Hasura-User-Id
+            - _and:
+                - approver:
+                    OwnerApprover:
+                      _eq: true
+                - changeRequest:
+                    parentOwnerAndContributors:
+                      _or:
+                        - _and:
+                            - UserId:
+                                _eq: X-Hasura-User-Id
+                            - OrgKey:
+                                _eq: X-Hasura-org-Id
+                            - ContributorType:
+                                _eq: owner
+                        - _and:
+                            - UserId:
+                                _eq: X-Hasura-User-Id
+                            - OrgKey:
+                                _eq: X-Hasura-org-Id
+                            - ContributorType:
+                                _eq: contributor
+
+      set:
+        ModifiedAtTimestamp: now()
+        ModifiedByUser: x-hasura-user-id
+event_triggers:
+  - name: approver-response-update
+    definition:
+      enable_manual: true
+      update:
+        columns:
+          - Approved
+      insert:
+        columns: '*'
+    retry_conf:
+      interval_sec: 10
+      num_retries: 3
+      timeout_sec: 60
+    webhook: https://{{REST_API_DOMAIN}}/events
+    headers:
+      - name: RestApiKey
+        value_from_env: REST_API_KEY

@@ -1,0 +1,14 @@
+mutation insertSsoConfiguration($object: sso_configuration_insert_input!) {
+  insert_sso_configuration_one(object: $object) {
+    Id
+    Name
+    Strategy
+    ClientId
+    ConnectionId
+    IsActive
+    IsRestApiEnabled
+    IsOrganizationConnected
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+  }
+}

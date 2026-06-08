@@ -1,0 +1,2189 @@
+input ReportingFilterOptionsInput {
+  dataSourceType: String!
+  fieldId: String!
+  limit: Int!
+  offset: Int!
+  filteringText: String!
+}
+
+type ReportingFilterOption {
+  value: String!
+}
+
+type Query {
+  reportingFilterOptions(
+    Input: ReportingFilterOptionsInput!
+  ): [ReportingFilterOption!]!
+}
+
+input DataSource {
+  type: String!
+  joinType: String
+  parentIndex: Int
+  relationshipToParentIndex: String
+  latest: Boolean
+}
+
+input CustomDatasourceField {
+  dataSourceIndex: Int!
+  fieldId: String!
+}
+
+input SelectedDatasourceField {
+  dataSourceIndex: Int!
+  fieldId: String!
+  label: String
+}
+
+input GroupBy {
+  field: CustomDatasourceField!
+  datePrecision: String
+}
+
+input ReportingDataInput {
+  dataSources: [DataSource!]!
+  fields: [SelectedDatasourceField!]!
+  filters: jsonb!
+  groupBy: [GroupBy!]
+  aggregateType: String
+  aggregateField: CustomDatasourceField
+  limit: Int!
+  offset: Int!
+}
+
+type ReportField {
+  value: jsonb
+  meta: jsonb
+}
+
+type Query {
+  reportingData(Input: ReportingDataInput!): [[ReportField!]!]
+}
+
+type RefreshScheduleStateOutput {
+  missingNodeIds: [uuid!]!
+  unsupportedNodeIds: [String!]!
+}
+
+type Mutation {
+  refreshScheduleState(Ids: [uuid!]!): RefreshScheduleStateOutput!
+}
+
+type Mutation {
+  disconnectSlack: DisconnectSlackOutput!
+}
+
+type Mutation {
+  dataImportStartImport(Id: uuid!): DataImportStartImportOutput
+}
+
+type Query {
+  dataExportOneOffExport: DataExportOneOffExportOutput
+}
+
+type Mutation {
+  dataExportCreateSchedule(
+    object: DataExportCreateScheduleInput!
+  ): DataExportCreateScheduleOutput
+}
+
+type Mutation {
+  dataExportTestSchedule(
+    object: DataExportTestScheduleInput!
+  ): DataExportTestScheduleOutput
+}
+
+input FormFieldOption {
+  _tag: String!
+  AltValue: String
+  Value: String!
+}
+
+input InsertFormFieldInput {
+  Label: String!
+  AltLabel: String
+  Description: String
+  Type: String!
+  ParentType: String!
+  Options: [FormFieldOption!]!
+  Required: Boolean!
+  Hidden: Boolean!
+  ReadOnly: Boolean!
+  DefaultValue: String
+  IsCustomField: Boolean!
+  Conditions: jsonb
+}
+
+type Mutation {
+  insertFormField(object: InsertFormFieldInput!): IdOutput
+}
+
+input UpdateFormFieldInput {
+  FieldId: String!
+  Label: String
+  AltLabel: String
+  Description: String
+  ParentType: String!
+  Options: [FormFieldOption!]!
+  Required: Boolean!
+  Hidden: Boolean!
+  ReadOnly: Boolean!
+  DefaultValue: String
+  IsCustomField: Boolean!
+  Conditions: jsonb
+}
+
+type Mutation {
+  updateFormField(object: UpdateFormFieldInput!): IdOutput
+}
+
+input DeleteFormFieldInput {
+  FieldId: String!
+  ParentType: String!
+}
+
+type Mutation {
+  deleteFormField(object: DeleteFormFieldInput!): IdOutput
+}
+
+type Mutation {
+  dataImportValidate(Id: uuid!): DataImportValidateOutput
+}
+
+type Mutation {
+  updateApproverResponses(input: UpdateApproverResponsesInput!): IdOutput
+}
+
+type Mutation {
+  insertAssessmentActivityWithLinkedItems(
+    ActivityType: assessment_activity_type_enum!
+    ParentId: uuid!
+    Status: assessment_activity_status_enum!
+    Summary: String
+    Title: String!
+    CompletionDate: timestamptz
+    AssignedUser: String
+    LinkedItemIds: [uuid!]!
+    CustomAttributeData: jsonb
+    IsRCSA: Boolean
+    RiskId: uuid
+    OwnerGroupIds: [uuid!]!
+    OwnerUserIds: [String!]!
+  ): IdOutput
+}
+
+type Mutation {
+  insertChildDashboard(
+    Name: String!
+    Description: String
+    Sharing: dashboard_sharing_type_enum_action!
+    Content: jsonb!
+    ContributorUserIds: [String!]!
+    ContributorGroupIds: [uuid!]!
+  ): IdOutput
+}
+
+type Mutation {
+  updateChildDashboard(
+    Id: uuid!
+    Name: String!
+    Description: String
+    Sharing: dashboard_sharing_type_enum_action!
+    Content: jsonb!
+    ContributorUserIds: [String!]!
+    ContributorGroupIds: [uuid!]!
+  ): IdOutput
+}
+
+type Mutation {
+  updateAssessmentActivityWithLinkedItems(
+    Id: uuid!
+    ParentId: uuid!
+    OriginalTimestamp: timestamptz
+    ActivityType: assessment_activity_type_enum!
+    Status: assessment_activity_status_enum!
+    Summary: String
+    Title: String
+    CompletionDate: timestamptz
+    AssignedUser: String
+    LinkedItemIds: [uuid!]!
+    CustomAttributeData: jsonb
+    IsWizardAction: Boolean
+    OwnerUserIds: [String!]!
+    OwnerGroupIds: [uuid!]!
+  ): IdOutput
+}
+
+type Mutation {
+  insertChildAcceptance(
+    DateAcceptedFrom: timestamptz!
+    DateAcceptedTo: timestamptz!
+    Details: String
+    ParentId: uuid!
+    Status: acceptance_status_enum
+    Title: String
+    ApprovedByUser: String
+    ApprovedByUserGroup: uuid
+    RequestedByUser: String
+    RequestedByUserGroup: uuid
+    CustomAttributeData: jsonb
+  ): IdOutput
+}
+
+type Mutation {
+  insertChildAppetite(
+    LowerAppetite: Int
+    ParentIds: [uuid!]!
+    Statement: String
+    UpperAppetite: Int
+    CustomAttributeData: jsonb
+    EffectiveDate: timestamptz
+    AppetiteType: appetite_type_enum
+    ImpactAppetite: Int
+    LikelihoodAppetite: Int
+    ImpactId: uuid
+  ): IdOutput
+}
+
+type Mutation {
+  insertChildAction(
+    DateDue: timestamptz!
+    Title: String!
+    Status: action_status_enum!
+    Priority: Int = 1
+    Description: String
+    DateRaised: timestamptz!
+    ParentId: uuid
+    ClosedDate: timestamptz
+    CustomAttributeData: jsonb
+    OwnerUserIds: [String!]!
+    ContributorUserIds: [String!]!
+    OwnerGroupIds: [uuid!]!
+    ContributorGroupIds: [uuid!]!
+    TagTypeIds: [uuid!]!
+    DepartmentTypeIds: [uuid!]!
+  ): IdOutput
+}
+
+type Mutation {
+  updateChildAction(
+    Id: uuid!
+    OriginalTimestamp: timestamptz!
+    DateDue: timestamptz!
+    DateRaised: timestamptz!
+    Description: String
+    Priority: Int
+    Status: action_status_enum!
+    Title: String!
+    ClosedDate: timestamptz
+    CustomAttributeData: jsonb
+    ContributorUserIds: [String!]!
+    ContributorGroupIds: [uuid!]!
+    OwnerUserIds: [String!]!
+    OwnerGroupIds: [uuid!]!
+    TagTypeIds: [uuid!]!
+    DepartmentTypeIds: [uuid!]!
+  ): UpdateChildActionOutput
+}
+
+type Mutation {
+  insertChildControl(object: InsertChildControlInput): IdOutput
+}
+
+type Mutation {
+  insertQuestionnaireInvites(
+    ThirdPartyId: uuid!
+    UserEmails: [String!]!
+    Message: String
+    QuestionnaireTemplateVersionIds: [uuid!]!
+  ): GenericMutationOutput!
+}
+
+type Mutation {
+  insertThirdPartyContactApi(
+    ThirdPartyId: uuid!
+    Email: String!
+    Name: String
+    JobTitle: String
+  ): IdOutput
+}
+
+type Mutation {
+  revokeThirdPartyContactAccess(
+    ContactIds: [uuid!]!
+  ): RevokeThirdPartyContactAccessOutput
+}
+
+input ScheduleInput {
+  Frequency: test_frequency_enum
+  ManualDueDate: timestamptz
+  TimeToCompleteValue: Int
+  TimeToCompleteUnit: unit_of_time_enum
+  StartDate: timestamptz
+}
+
+input UpdateChildControlInput {
+  Id: uuid!
+  OriginalTimestamp: timestamptz!
+  Description: String
+  Title: String!
+  Type: String
+  CustomAttributeData: jsonb
+  ContributorUserIds: [String!]!
+  ContributorGroupIds: [uuid!]!
+  OwnerUserIds: [String!]!
+  OwnerGroupIds: [uuid!]!
+  TagTypeIds: [uuid!]!
+  DepartmentTypeIds: [uuid!]!
+  schedule: ScheduleInput!
+}
+
+type Mutation {
+  updateThirdPartyResponseStatusAction(
+    Action: third_party_response_enum_action!
+    ResponseIds: [uuid!]!
+    Reason: String
+    RequestType: String
+    ShareWithRespondents: Boolean
+    ThirdPartyId: uuid!
+  ): GenericMutationOutput!
+}
+
+type Mutation {
+  updateChildControl(object: UpdateChildControlInput): GenericMutationOutput
+}
+
+input UpdateChildIndicatorInput {
+  Description: String
+  LowerAppetiteNum: numeric
+  UpperAppetiteNum: numeric
+  LowerToleranceNum: numeric
+  TargetValueTxt: String
+  Title: String
+  Type: indicator_type_enum
+  Unit: String
+  UpperToleranceNum: numeric
+  Id: uuid!
+  CustomAttributeData: jsonb
+  OwnerUserIds: [String!]!
+  ContributorUserIds: [String!]!
+  OwnerGroupIds: [uuid!]!
+  ContributorGroupIds: [uuid!]!
+  TagTypeIds: [uuid!]!
+  DepartmentTypeIds: [uuid!]!
+  schedule: ScheduleInput!
+}
+
+type Mutation {
+  updateChildIndicator(object: UpdateChildIndicatorInput): IdOutput
+}
+
+input InsertChildIndicatorInput {
+  Description: String
+  LowerAppetiteNum: numeric
+  UpperAppetiteNum: numeric
+  LowerToleranceNum: numeric
+  TargetValueTxt: String
+  Title: String
+  Type: indicator_type_enum
+  Unit: String
+  UpperToleranceNum: numeric
+  ParentId: uuid
+  CustomAttributeData: jsonb
+  OwnerUserIds: [String!]!
+  ContributorUserIds: [String!]!
+  OwnerGroupIds: [uuid!]!
+  ContributorGroupIds: [uuid!]!
+  TagTypeIds: [uuid!]!
+  DepartmentTypeIds: [uuid!]!
+  schedule: ScheduleInput!
+}
+
+type Mutation {
+  insertChildIndicator(object: InsertChildIndicatorInput): IdOutput
+}
+
+input InsertQuestionnaireTemplateInput {
+  Title: String!
+  Description: String
+  CustomAttributeData: jsonb
+  TagTypeIds: [uuid!]!
+  DepartmentTypeIds: [uuid!]!
+  OwnerUserIds: [String!]!
+  ContributorUserIds: [String!]!
+  OwnerGroupIds: [uuid!]!
+  ContributorGroupIds: [uuid!]!
+}
+
+type Mutation {
+  insertQuestionnaireTemplateApi(
+    object: InsertQuestionnaireTemplateInput
+  ): IdOutput
+}
+
+input UpdateQuestionnaireTemplateInput {
+  Id: uuid!
+  Title: String!
+  Description: String
+  CustomAttributeData: jsonb
+  TagTypeIds: [uuid!]!
+  DepartmentTypeIds: [uuid!]!
+  OwnerUserIds: [String!]!
+  ContributorUserIds: [String!]!
+  OwnerGroupIds: [uuid!]!
+  ContributorGroupIds: [uuid!]!
+}
+
+type Mutation {
+  updateQuestionnaireTemplateApi(
+    object: UpdateQuestionnaireTemplateInput
+  ): IdOutput
+}
+
+type InsertChildIssueOutput {
+  Id: uuid!
+  SequentialId: Int!
+}
+
+input InsertIssueInput {
+  Title: String!
+  Details: String
+  ImpactsCustomer: Boolean
+  IsExternalIssue: Boolean
+  DateOccurred: timestamptz!
+  DateIdentified: timestamptz!
+  ParentId: uuid
+  Type: String!
+  CustomAttributeData: jsonb
+  TagTypeIds: [uuid!]!
+  DepartmentTypeIds: [uuid!]!
+  OwnerUserIds: [String!]!
+  ContributorUserIds: [String!]!
+  OwnerGroupIds: [uuid!]!
+  ContributorGroupIds: [uuid!]!
+  Meta: jsonb
+}
+
+type Mutation {
+  insertChildIssue(object: InsertIssueInput): InsertChildIssueOutput
+}
+
+input UpdateIssueInput {
+  Title: String!
+  Details: String
+  ImpactsCustomer: Boolean
+  IsExternalIssue: Boolean
+  DateOccurred: timestamptz!
+  DateIdentified: timestamptz!
+  Id: uuid!
+  CustomAttributeData: jsonb
+  TagTypeIds: [uuid!]!
+  DepartmentTypeIds: [uuid!]!
+  OwnerUserIds: [String!]!
+  ContributorUserIds: [String!]!
+  OwnerGroupIds: [uuid!]!
+  ContributorGroupIds: [uuid!]!
+  OriginalTimestamp: timestamptz!
+}
+
+type Mutation {
+  updateIssueApi(object: UpdateIssueInput): GenericMutationOutput
+}
+
+input InsertImpactInput {
+  Rationale: String
+  RatingGuidance: String
+  Name: String!
+  LikelihoodAppetite: smallint
+  CustomAttributeData: jsonb
+  OwnerUserIds: [String!]!
+  OwnerGroupIds: [uuid!]!
+}
+
+type Mutation {
+  insertImpactApi(object: InsertImpactInput): IdOutput
+}
+
+input UpdateImpactInput {
+  Id: uuid!
+  Rationale: String
+  RatingGuidance: String
+  Name: String!
+  LikelihoodAppetite: smallint
+  CustomAttributeData: jsonb
+  OwnerUserIds: [String!]!
+  OwnerGroupIds: [uuid!]!
+}
+
+type Mutation {
+  updateImpactApi(object: UpdateImpactInput): GenericMutationOutput
+}
+
+type Mutation {
+  deleteTagTypeApi(Ids: [uuid!]!): GenericMutationOutput
+}
+
+type Mutation {
+  deleteDepartmentTypeApi(Ids: [uuid!]!): GenericMutationOutput
+}
+
+type Mutation {
+  insertChildIssueAssessment(
+    ActualCloseDate: timestamptz
+    ThirdPartyResponsible: String
+    TargetCloseDate: timestamptz
+    PolicyOwnerCommentary: String
+    CertifiedIndividual: String
+    IssueCausedByThirdParty: Boolean
+    IssueType: String
+    ParentIssueId: uuid!
+    PolicyOwner: String
+    PolicyBreach: Boolean
+    PoliciesBreached: String
+    Rationale: String
+    RegulatoryBreach: Boolean
+    RegulationsBreached: String
+    RegulationsBreachedIds: [uuid!]!
+    Reportable: Boolean
+    Severity: Int
+    Status: issue_assessment_status_enum
+    IssueCausedBySystemIssue: Boolean
+    SystemResponsible: String
+    CustomAttributeData: jsonb
+    TagTypeIds: [uuid!]!
+    DepartmentTypeIds: [uuid!]!
+    AssociatedControlIds: [uuid!]!
+    PoliciesBreachedIds: [uuid!]!
+  ): IdOutput
+}
+
+input AttestationInput {
+  AttestationGroupIds: [uuid!]!
+  AttestationPromptText: String
+  AttestationTimeLimit: interval
+  RequireGlobalAttestation: Boolean!
+}
+
+input InsertChildDocumentInput {
+  Title: String!
+  Purpose: String
+  DocumentType: String!
+  ParentDocument: uuid
+  LinkedDocumentIds: [uuid!]!
+  CustomAttributeData: jsonb
+  OwnerUserIds: [String!]!
+  ContributorUserIds: [String!]!
+  OwnerGroupIds: [uuid!]!
+  ContributorGroupIds: [uuid!]!
+  TagTypeIds: [uuid!]!
+  DepartmentTypeIds: [uuid!]!
+  schedule: ScheduleInput!
+  attestation: AttestationInput
+}
+
+type Mutation {
+  insertChildDocument(object: InsertChildDocumentInput): IdOutput
+}
+
+input UpdateChildDocumentInput {
+  Id: uuid!
+  Title: String!
+  Purpose: String
+  DocumentType: String!
+  ParentDocument: uuid
+  LinkedDocumentIds: [uuid!]!
+  CustomAttributeData: jsonb
+  OwnerUserIds: [String!]!
+  ContributorUserIds: [String!]!
+  OwnerGroupIds: [uuid!]!
+  ContributorGroupIds: [uuid!]!
+  TagTypeIds: [uuid!]!
+  DepartmentTypeIds: [uuid!]!
+  schedule: ScheduleInput!
+  OriginalTimestamp: timestamptz!
+  attestation: AttestationInput
+}
+
+type Mutation {
+  updateChildDocument(object: UpdateChildDocumentInput): IdOutput
+}
+
+input InsertAttestationConfigInput {
+  AttestationGroupIds: [uuid!]!
+  AttestationPromptText: String
+  AttestationTimeLimit: interval
+  ParentId: uuid!
+  RequireGlobalAttestation: Boolean!
+}
+
+type Mutation {
+  insertChildAttestationConfig(object: InsertAttestationConfigInput): IdOutput
+}
+
+input InsertChildAttestationCycleInput {
+  DocumentId: uuid!
+  AllowCarryForward: Boolean!
+}
+
+type Mutation {
+  insertChildAttestationCycle(
+    object: InsertChildAttestationCycleInput
+  ): IdOutput
+}
+
+extend type Mutation {
+  insertDocumentVersion(
+    FileId: uuid
+    NextReviewDate: timestamptz
+    ParentDocumentId: uuid!
+    ReasonForReview: String
+    ReviewDate: timestamptz
+    ReviewedBy: String
+    Summary: String
+    Version: String
+    Content: String
+    Type: document_file_type_enum
+    Link: String
+    CustomAttributeData: jsonb
+  ): IdOutput
+}
+
+type Mutation {
+  insertChildRiskAssessmentResult(
+    Rating: Int
+    Likelihood: Int
+    Impact: Int
+    Impacts: [RiskAssessmentResultImpactsInput!]
+    TestDate: timestamptz
+    Rationale: String
+    AssessmentId: uuid
+    RiskIds: [uuid!]!
+    CustomAttributeData: jsonb
+    ControlType: risk_assessment_result_control_type_enum
+  ): InsertChildRiskAssessmentResultOutput
+}
+
+type Mutation {
+  insertChildRiskInternalAuditResult(
+    Rating: Int
+    Likelihood: Int
+    Impact: Int
+    TestDate: timestamptz
+    Rationale: String
+    InternalAuditReportId: uuid!
+    RiskIds: [uuid!]!
+    CustomAttributeData: jsonb
+    ControlType: risk_assessment_result_control_type_enum
+  ): InsertChildRiskAssessmentResultOutput
+}
+
+type Mutation {
+  insertChildRiskSecondLineResult(
+    Rating: Int
+    Likelihood: Int
+    Impact: Int
+    TestDate: timestamptz
+    Rationale: String
+    ComplianceMonitoringAssessmentId: uuid!
+    RiskIds: [uuid!]!
+    CustomAttributeData: jsonb
+    ControlType: risk_assessment_result_control_type_enum
+  ): InsertChildRiskAssessmentResultOutput
+}
+
+type Mutation {
+  updateChildRiskAssessmentResult(
+    Id: uuid!
+    Rating: Int
+    Likelihood: Int
+    Impact: Int
+    Impacts: [RiskAssessmentResultImpactsInput!]
+    TestDate: timestamptz
+    Rationale: String
+    CustomAttributeData: jsonb
+    AssessmentId: uuid
+  ): GenericMutationOutput
+}
+
+type Mutation {
+  insertChildObligationAssessmentResult(
+    Rating: Int
+    TestDate: timestamptz
+    Rationale: String
+    AssessmentId: uuid
+    ObligationIds: [uuid!]!
+    CustomAttributeData: jsonb
+  ): InsertChildObligationAssessmentResultOutput
+}
+
+type Mutation {
+  insertChildObligationInternalAuditResult(
+    Rating: Int
+    TestDate: timestamptz
+    Rationale: String
+    InternalAuditReportId: uuid!
+    ObligationIds: [uuid!]!
+    CustomAttributeData: jsonb
+  ): InsertChildObligationAssessmentResultOutput
+}
+
+type Mutation {
+  insertChildObligationSecondLineResult(
+    Rating: Int
+    TestDate: timestamptz
+    Rationale: String
+    ComplianceMonitoringAssessmentId: uuid!
+    ObligationIds: [uuid!]!
+    CustomAttributeData: jsonb
+  ): InsertChildObligationAssessmentResultOutput
+}
+
+type Mutation {
+  insertChildDocumentAssessmentResult(
+    Rating: Int
+    TestDate: timestamptz
+    Rationale: String
+    AssessmentId: uuid
+    DocumentIds: [uuid!]!
+    CustomAttributeData: jsonb
+  ): InsertChildDocumentAssessmentResultOutput
+}
+
+type Mutation {
+  insertChildDocumentInternalAuditResult(
+    Rating: Int
+    TestDate: timestamptz
+    Rationale: String
+    InternalAuditReportId: uuid!
+    DocumentIds: [uuid!]!
+    CustomAttributeData: jsonb
+  ): InsertChildDocumentAssessmentResultOutput
+}
+
+type Mutation {
+  insertChildDocumentSecondLineResult(
+    Rating: Int
+    TestDate: timestamptz
+    Rationale: String
+    ComplianceMonitoringAssessmentId: uuid!
+    DocumentIds: [uuid!]!
+    CustomAttributeData: jsonb
+  ): InsertChildDocumentAssessmentResultOutput
+}
+
+input InsertChildControlInput {
+  Description: String
+  Title: String!
+  Type: String
+  CustomAttributeData: jsonb
+  OwnerUserIds: [String!]!
+  ContributorUserIds: [String!]!
+  OwnerGroupIds: [uuid!]!
+  ContributorGroupIds: [uuid!]!
+  TagTypeIds: [uuid!]!
+  DepartmentTypeIds: [uuid!]!
+  ParentId: uuid!
+  schedule: ScheduleInput!
+}
+
+input UpdateTestResultInput {
+  Id: uuid!
+  ParentControlId: uuid!
+  Title: String
+  TestType: String
+  Description: String
+  DesignEffectiveness: Int
+  PerformanceEffectiveness: Int
+  OverallEffectiveness: Int
+  Submitter: String
+  TestDate: timestamptz
+  CustomAttributeData: jsonb
+  OriginalTimestamp: timestamptz
+}
+
+type Mutation {
+  updateTestResultApi(object: UpdateTestResultInput): IdOutput
+}
+
+type Mutation {
+  updateControlTestInternalAuditResultApi(
+    object: UpdateTestResultInput
+  ): IdOutput
+}
+
+type Mutation {
+  updateControlTestSecondLineResultApi(object: UpdateTestResultInput): IdOutput
+}
+
+type Mutation {
+  insertControlTestResult(
+    AssessmentId: uuid
+    ControlIds: [uuid!]!
+    Title: String
+    TestType: String
+    Description: String
+    DesignEffectiveness: Int
+    PerformanceEffectiveness: Int
+    OverallEffectiveness: Int
+    Submitter: String
+    TestDate: timestamptz
+    CustomAttributeData: jsonb
+  ): insertControlTestResultOutput
+}
+
+type Mutation {
+  insertChildControlTestInternalAuditResult(
+    InternalAuditReportId: uuid!
+    ControlIds: [uuid!]!
+    Title: String
+    TestType: String
+    Description: String
+    DesignEffectiveness: Int
+    PerformanceEffectiveness: Int
+    OverallEffectiveness: Int
+    Submitter: String
+    TestDate: timestamptz
+    CustomAttributeData: jsonb
+  ): insertControlTestResultOutput
+}
+
+type Mutation {
+  insertChildControlTestSecondLineResult(
+    ComplianceMonitoringAssessmentId: uuid!
+    ControlIds: [uuid!]!
+    Title: String
+    TestType: String
+    Description: String
+    DesignEffectiveness: Int
+    PerformanceEffectiveness: Int
+    OverallEffectiveness: Int
+    Submitter: String
+    TestDate: timestamptz
+    CustomAttributeData: jsonb
+  ): insertControlTestResultOutput
+}
+
+type Mutation {
+  insertChildImpactRating(
+    AssessmentId: uuid
+    RatedItemId: uuid!
+    CompletedBy: String
+    Ratings: [InsertImpactRatingPairInput!]!
+    TestDate: timestamptz!
+    CustomAttributeData: jsonb
+    Likelihood: Int
+  ): insertChildImpactRatingOutput
+}
+
+type Mutation {
+  insertChildImpactInternalAuditRating(
+    InternalAuditReportId: uuid!
+    RatedItemId: uuid!
+    CompletedBy: String
+    Ratings: [InsertImpactRatingPairInput!]!
+    TestDate: timestamptz!
+    CustomAttributeData: jsonb
+    Likelihood: Int
+  ): insertChildImpactRatingOutput
+}
+
+type Mutation {
+  insertChildImpactSecondLineRating(
+    ComplianceMonitoringAssessmentId: uuid!
+    RatedItemId: uuid!
+    CompletedBy: String
+    Ratings: [InsertImpactRatingPairInput!]!
+    TestDate: timestamptz!
+    CustomAttributeData: jsonb
+    Likelihood: Int
+  ): insertChildImpactRatingOutput
+}
+
+type Mutation {
+  insertReferenceUser(UserName: String, Email: String!): IdOutput
+}
+
+type Mutation {
+  insertInternalAudit(Input: InsertInternalAuditInput): IdOutput
+}
+
+type Mutation {
+  updateInternalAudit(Input: UpdateInternalAuditInput): IdOutput
+}
+
+type Mutation {
+  linkItems(Source: uuid, Targets: [uuid!]!): LinkItemsOutput
+}
+
+input InsertChildRiskInput {
+  Description: String
+  ParentRiskId: uuid
+  Tier: Int!
+  Treatment: risk_treatment_type_enum
+  Status: risk_status_type_enum
+  Title: String!
+  CustomAttributeData: jsonb
+  OwnerUserIds: [String!]!
+  ContributorUserIds: [String!]!
+  OwnerGroupIds: [uuid!]!
+  ContributorGroupIds: [uuid!]!
+  TagTypeIds: [uuid!]!
+  DepartmentTypeIds: [uuid!]!
+  schedule: ScheduleInput!
+}
+
+type Mutation {
+  insertChildRisk(object: InsertChildRiskInput): IdOutput
+}
+
+input InsertAssessmentInput {
+  Title: String
+  Summary: String
+  ActualCompletionDate: timestamptz
+  NextTestDate: timestamptz
+  StartDate: timestamptz
+  TargetCompletionDate: timestamptz
+  CompletedByUser: String
+  Status: assessment_status_enum!
+  OriginatingItemId: uuid
+  Outcome: Int
+  CustomAttributeData: jsonb
+  OwnerUserIds: [String!]!
+  ContributorUserIds: [String!]!
+  OwnerGroupIds: [uuid!]!
+  ContributorGroupIds: [uuid!]!
+  TagTypeIds: [uuid!]!
+  DepartmentTypeIds: [uuid!]!
+}
+
+type Mutation {
+  insertAssessmentApi(object: InsertAssessmentInput): IdOutput
+}
+
+type Mutation {
+  insertComplianceMonitoringAssessmentApi(
+    object: InsertAssessmentInput
+  ): IdOutput
+}
+
+type Mutation {
+  insertInternalAuditReportApi(object: InsertAssessmentInput): IdOutput
+}
+
+input UpdateAssessmentInput {
+  Id: uuid!
+  Title: String
+  Summary: String
+  ActualCompletionDate: timestamptz
+  NextTestDate: timestamptz
+  StartDate: timestamptz
+  TargetCompletionDate: timestamptz
+  CompletedByUser: String
+  Status: assessment_status_enum!
+  OriginatingItemId: uuid
+  Outcome: Int
+  CustomAttributeData: jsonb
+  OwnerUserIds: [String!]!
+  ContributorUserIds: [String!]!
+  OwnerGroupIds: [uuid!]!
+  ContributorGroupIds: [uuid!]!
+  TagTypeIds: [uuid!]!
+  DepartmentTypeIds: [uuid!]!
+}
+
+type Mutation {
+  updateAssessmentApi(object: UpdateAssessmentInput): GenericMutationOutput
+}
+
+type Mutation {
+  updateComplianceMonitoringAssessmentApi(
+    object: UpdateAssessmentInput
+  ): GenericMutationOutput
+}
+
+type Mutation {
+  updateInternalAuditReportApi(
+    object: UpdateAssessmentInput
+  ): GenericMutationOutput
+}
+
+input InsertThirdPartyInput {
+  Title: String!
+  Description: String
+  CompanyName: String
+  CompaniesHouseNumber: String
+  Address: String
+  CityTown: String
+  Postcode: String
+  Country: String
+  PrimaryContactName: String
+  ContactName: String
+  ContactEmail: String
+  CompanyDomain: String
+  Type: String
+  Status: String
+  Criticality: Int
+  CustomAttributeData: jsonb
+  OwnerUserIds: [String!]!
+  ContributorUserIds: [String!]!
+  OwnerGroupIds: [uuid!]!
+  ContributorGroupIds: [uuid!]!
+  TagTypeIds: [uuid!]!
+  DepartmentTypeIds: [uuid!]!
+}
+
+type Mutation {
+  insertThirdPartyApi(object: InsertThirdPartyInput): IdOutput
+}
+
+input UpdateThirdPartyInput {
+  Id: uuid!
+  Title: String!
+  Description: String
+  CompanyName: String
+  CompaniesHouseNumber: String
+  Address: String
+  CityTown: String
+  Postcode: String
+  Country: String
+  PrimaryContactName: String
+  ContactName: String
+  ContactEmail: String
+  CompanyDomain: String
+  Type: String
+  Status: String
+  Criticality: Int
+  CustomAttributeData: jsonb
+  OwnerUserIds: [String!]!
+  ContributorUserIds: [String!]!
+  OwnerGroupIds: [uuid!]!
+  ContributorGroupIds: [uuid!]!
+  TagTypeIds: [uuid!]!
+  DepartmentTypeIds: [uuid!]!
+}
+
+type Mutation {
+  updateThirdPartyApi(object: UpdateThirdPartyInput): IdOutput
+}
+
+input InsertChildObligationInput {
+  Description: String
+  Interpretation: String
+  ParentId: uuid
+  Type: obligation_type_enum_action!
+  Adherence: String!
+  Title: String!
+  CustomAttributeData: jsonb
+  OwnerUserIds: [String!]!
+  ContributorUserIds: [String!]!
+  OwnerGroupIds: [uuid!]!
+  ContributorGroupIds: [uuid!]!
+  TagTypeIds: [uuid!]!
+  DepartmentTypeIds: [uuid!]!
+  schedule: ScheduleInput!
+}
+
+input UpdateChildObligationInput {
+  Id: uuid!
+  Description: String
+  Interpretation: String
+  ParentId: uuid
+  Type: obligation_type_enum_action!
+  Adherence: String!
+  Title: String!
+  CustomAttributeData: jsonb
+  OwnerUserIds: [String!]!
+  ContributorUserIds: [String!]!
+  OwnerGroupIds: [uuid!]!
+  ContributorGroupIds: [uuid!]!
+  TagTypeIds: [uuid!]!
+  DepartmentTypeIds: [uuid!]!
+  schedule: ScheduleInput!
+}
+
+input InsertEnterpriseRiskInput {
+  Description: String
+  ParentId: uuid
+  Title: String!
+  Tier: Int!
+  CustomAttributeData: jsonb
+  Meta: jsonb
+  Treatment: risk_treatment_type_enum
+}
+
+type Mutation {
+  insertChildEnterpriseRisk(object: InsertEnterpriseRiskInput): IdOutput
+}
+
+input UpdateEnterpriseRiskInput {
+  Id: uuid!
+  Description: String
+  ParentId: uuid
+  Title: String!
+  Tier: Int!
+  CustomAttributeData: jsonb
+  Treatment: risk_treatment_type_enum
+  Meta: jsonb
+}
+
+type Mutation {
+  updateChildEnterpriseRisk(
+    object: UpdateEnterpriseRiskInput
+  ): GenericMutationOutput
+}
+
+type Mutation {
+  deleteChildEnterpriseRisk(Id: uuid!): GenericMutationOutput
+}
+
+input EnterpriseRiskInstanceInput {
+  Owners: [String]
+  Department: String!
+}
+
+input InstantiateEnterpriseRiskInput {
+  EnterpriseRiskIds: [uuid!]!
+  Entities: [uuid!]!
+}
+
+input AddRiskToEnterpriseRiskInput {
+  EnterpriseRiskId: uuid
+  EntityId: uuid!
+  RiskId: uuid!
+}
+
+type Mutation {
+  instantiateChildEnterpriseRisk(
+    object: InstantiateEnterpriseRiskInput
+  ): GenericMutationOutput
+}
+
+type Mutation {
+  addRiskToEnterpriseRisk(
+    objects: [AddRiskToEnterpriseRiskInput!]!
+  ): GenericMutationOutput
+}
+
+input InsertWizardInput {
+  RiskId: uuid!
+  AssessmentId: uuid
+  CurrentStep: Int
+  Status: wizard_status_enum
+  ActivityId: uuid
+}
+
+type Mutation {
+  insertChildWizard(object: InsertWizardInput): InsertWizardOutput
+}
+
+input UpdateWizardInput {
+  RiskId: uuid!
+  CurrentStep: Int
+  Status: wizard_status_enum
+}
+
+type Mutation {
+  updateWizardById(object: UpdateWizardInput): GenericMutationOutput
+}
+
+type Mutation {
+  deleteWizardById(RiskId: uuid!): GenericMutationOutput
+}
+
+input InsertEntityInput {
+  Description: String
+  ParentId: uuid
+  Name: String!
+  Weight: numeric!
+  owners: [String!]!
+  ownerGroups: [String!]!
+}
+
+type Mutation {
+  insertChildEntity(object: InsertEntityInput): IdOutput
+}
+
+input UpdateEntityInput {
+  Id: uuid!
+  Description: String
+  ParentId: uuid
+  Name: String!
+  Weight: numeric!
+  owners: [String!]!
+  ownerGroups: [String!]!
+}
+
+type Mutation {
+  updateChildEntity(object: UpdateEntityInput): GenericMutationOutput
+}
+
+type Mutation {
+  deleteChildEntity(Id: uuid!): GenericMutationOutput
+}
+
+type Mutation {
+  insertChildObligation(object: InsertChildObligationInput): IdOutput
+}
+
+type Mutation {
+  updateChildObligation(object: UpdateChildObligationInput): IdOutput
+}
+
+input InsertChildObligationChangeAttestationInput {
+  ObligationChangeId: uuid!
+  UserId: String!
+}
+
+type Mutation {
+  insertChildObligationChangeAttestation(
+    object: InsertChildObligationChangeAttestationInput!
+  ): IdOutput
+}
+
+input DeleteChildObligationChangeAttestationInput {
+  ObligationChangeId: uuid!
+  UserId: String!
+}
+
+type Mutation {
+  deleteChildObligationChangeAttestation(
+    object: DeleteChildObligationChangeAttestationInput!
+  ): IdOutput
+}
+
+type Mutation {
+  attestRecord(Id: uuid!): GenericMutationOutput!
+}
+
+type Mutation {
+  attestationNotRequired(Ids: [uuid!]!): GenericMutationOutput!
+}
+
+type Mutation {
+  unlinkItems(Ids: [uuid!]!): UnlinkItemsOutput
+}
+
+type Query {
+  notificationPreferences: NotificationPreferencesOutput!
+}
+
+type Query {
+  slackNotificationConnection: SlackNotificationConnectionOutput!
+}
+
+type Mutation {
+  overrideChangeRequest(
+    Id: uuid!
+    Approved: Boolean!
+    Rationale: String!
+  ): IdOutput!
+}
+
+type Mutation {
+  updateChildIssueAssessment(
+    ActualCloseDate: timestamptz
+    ThirdPartyResponsible: String
+    TargetCloseDate: timestamptz
+    PolicyOwnerCommentary: String
+    CertifiedIndividual: String
+    IssueCausedByThirdParty: Boolean
+    IssueType: String
+    PolicyOwner: String
+    PolicyBreach: Boolean
+    PoliciesBreached: String
+    PoliciesBreachedIds: [uuid!]!
+    Rationale: String
+    RegulatoryBreach: Boolean
+    RegulationsBreached: String
+    RegulationsBreachedIds: [uuid!]!
+    Reportable: Boolean
+    Severity: Int
+    Status: issue_assessment_status_enum
+    IssueCausedBySystemIssue: Boolean
+    SystemResponsible: String
+    CustomAttributeData: jsonb
+    TagTypeIds: [uuid!]!
+    DepartmentTypeIds: [uuid!]!
+    AssociatedControlIds: [uuid!]!
+    OriginalTimestamp: timestamptz!
+    Id: uuid!
+  ): IdOutput
+}
+
+type Mutation {
+  updateDocumentVersion(
+    LatestModifiedAtTimestamp: timestamptz!
+    Id: uuid!
+    FileId: uuid
+    NextReviewDate: timestamptz
+    ReasonForReview: String
+    ReviewDate: timestamptz
+    ReviewedBy: String
+    Status: version_status_enum
+    Summary: String
+    Version: String!
+    Content: String
+    Type: document_file_type_enum!
+    Link: String
+    CustomAttributeData: jsonb
+  ): GenericMutationOutput
+}
+
+type Mutation {
+  publishQuestionnaireTemplateVersion(
+    QuestionnaireTemplateId: uuid!
+    QuestionnaireTemplateVersionId: uuid!
+  ): GenericMutationOutput!
+}
+
+type Mutation {
+  updateChildAcceptance(
+    Id: uuid!
+    LatestModifiedAtTimestamp: timestamptz!
+    DateAcceptedFrom: timestamptz!
+    DateAcceptedTo: timestamptz!
+    Details: String
+    Status: acceptance_status_enum
+    Title: String
+    ApprovedByUser: String
+    ApprovedByUserGroup: uuid
+    RequestedByUser: String
+    RequestedByUserGroup: uuid
+    CustomAttributeData: jsonb
+  ): GenericMutationOutput!
+}
+
+input UpdateChildRiskInput {
+  Description: String
+  ParentRiskId: uuid = null
+  Tier: Int!
+  Title: String!
+  Treatment: risk_treatment_type_enum
+  Status: risk_status_type_enum
+  Id: uuid!
+  CustomAttributeData: jsonb
+  ContributorUserIds: [String!]!
+  ContributorGroupIds: [uuid!]!
+  OwnerUserIds: [String!]!
+  OwnerGroupIds: [uuid!]!
+  TagTypeIds: [uuid!]!
+  DepartmentTypeIds: [uuid!]!
+  schedule: ScheduleInput!
+}
+
+type Mutation {
+  updateChildRisk(object: UpdateChildRiskInput): IdOutput!
+}
+
+type Mutation {
+  updateNotificationPreferences(
+    preferenceSet: UpdateNotificationPreferencesInput!
+  ): UpdateNotificationPreferencesOutput!
+}
+
+type Mutation {
+  recalculateRiskScores: RecalculateRiskScoresOutput!
+}
+
+type Mutation {
+  recalculateAppetites: RecalculateAppetitesOutput!
+}
+
+type Mutation {
+  deleteRiskById(Id: uuid!): GenericMutationOutput!
+}
+type Mutation {
+  deleteDocumentById(Id: uuid!): GenericMutationOutput!
+}
+
+type Mutation {
+  deleteUserGroups(Ids: [uuid!]!): GenericMutationOutput!
+}
+
+type Mutation {
+  deleteControlsById(Ids: [uuid!]!): GenericMutationOutput!
+}
+
+type Mutation {
+  deleteIssuesById(Ids: [uuid!]!): GenericMutationOutput!
+}
+
+type Query {
+  available_roles: [RoleOutput!]!
+}
+
+type Query {
+  getScimConfig: GetScimConfigOutput!
+}
+
+type Mutation {
+  update_user_roles(
+    userId: String!
+    roleIds: [String!]!
+  ): UpdateUserRolesMutationOutput!
+}
+
+type Mutation {
+  insert_scim_domain(domain: String!): ScimDomainOutput!
+}
+
+type Mutation {
+  delete_scim_domain(domain: String!): DeleteScimDomainOutput
+}
+
+type Mutation {
+  insert_scim_token(expireInMonths: String!): ScimTokenOutput!
+}
+
+type Mutation {
+  delete_scim_token(keyId: String!): DeleteScimTokenOutput!
+}
+
+type Mutation {
+  deleteAcceptancesById(Ids: [uuid!]!): GenericMutationOutput!
+}
+
+type Mutation {
+  deleteActionsById(Ids: [uuid!]!): GenericMutationOutput!
+}
+
+type Mutation {
+  customRoleInsert(Input: CustomRoleInsertInputData): IdOutput
+}
+
+type Mutation {
+  customRoleUpdate(Input: CustomRoleUpdateInputData): GenericMutationOutput
+}
+
+type Mutation {
+  customRoleUserUpdate(
+    Input: CustomRoleUserUpdateInputData
+  ): GenericMutationOutput
+}
+
+enum data_export_schedule_frequency_enum {
+  """
+  Daily
+  """
+  daily
+  """
+  Weekly
+  """
+  weekly
+  """
+  Monthly
+  """
+  monthly
+}
+
+enum data_export_schedule_storage_type_enum {
+  """
+  AzureBlobStorage
+  """
+  azureBlobStorage
+  """
+  AmazonS3
+  """
+  amazonS3
+  """
+  SFTP
+  """
+  sftp
+  """
+  MsSharePoint
+  """
+  msSharePoint
+}
+
+enum data_export_schedule_status_enum {
+  """
+  Active
+  """
+  active
+  """
+  Inactive
+  """
+  inactive
+}
+
+enum risk_assessment_result_control_type_enum {
+  Controlled
+  Uncontrolled
+}
+
+enum issue_assessment_status_enum {
+  """
+  Awaitingclosure
+  """
+  awaitingclosure
+  """
+  Closed
+  """
+  closed
+  """
+  Declined
+  """
+  declined
+  """
+  Firstlineapproval
+  """
+  firstlineapproval
+  """
+  Open
+  """
+  open
+  """
+  Pending
+  """
+  pending
+}
+
+enum version_status_enum {
+  """
+  Archived
+  """
+  archived
+  """
+  Draft
+  """
+  draft
+  """
+  Published
+  """
+  published
+  """
+  Pending Approval
+  """
+  pending_approval
+}
+
+enum document_file_type_enum {
+  """
+  File
+  """
+  file
+  """
+  Html
+  """
+  html
+  """
+  Link
+  """
+  link
+}
+
+enum questionnaire_version_status_enum {
+  """
+  Archived
+  """
+  archived
+  """
+  Draft
+  """
+  draft
+  """
+  Published
+  """
+  published
+}
+
+enum obligation_type_enum_action {
+  """
+  Task
+  """
+  task
+  """
+  Chapter
+  """
+  chapter
+  """
+  Rule
+  """
+  rule
+  """
+  High-level Standard
+  """
+  standard
+}
+
+enum action_status_enum {
+  """
+  Closed
+  """
+  closed
+  """
+  Open
+  """
+  open
+  """
+  Pending
+  """
+  pending
+}
+
+enum test_frequency_enum {
+  """
+  Adhoc
+  """
+  adhoc
+  """
+  Daily
+  """
+  daily
+  """
+  Weekly
+  """
+  weekly
+  """
+  Fortnightly
+  """
+  fortnightly
+  """
+  Fourweekly
+  """
+  fourweekly
+  """
+  Monthly
+  """
+  monthly
+  """
+  Quarterly
+  """
+  quarterly
+  """
+  Bi-Annually
+  """
+  biannually
+  """
+  Annually
+  """
+  annually
+}
+
+enum indicator_type_enum {
+  """
+  Boolean
+  """
+  boolean
+  """
+  Number
+  """
+  number
+  """
+  Text
+  """
+  text
+}
+
+enum acceptance_status_enum {
+  "1st line approval"
+  firstlineapproval
+  "awaiting closure"
+  awaitingclosure
+  "closed"
+  closed
+  "declined"
+  declined
+  "open"
+  open
+  "pending"
+  pending
+}
+
+enum appetite_type_enum {
+  "Risk"
+  risk
+  "Impact"
+  impact
+  "Likelihood"
+  likelihood
+}
+
+enum assessment_activity_type_enum {
+  "Task"
+  task
+  "Reminder"
+  reminder
+  "Review"
+  review
+  "Interview"
+  interview
+  "Meeting"
+  meeting
+}
+
+enum assessment_activity_status_enum {
+  "Complete"
+  complete
+  "Not Started"
+  notstarted
+  "In Progress"
+  inprogress
+}
+
+enum unit_of_time_enum {
+  """
+  Day
+  """
+  day
+  """
+  Week
+  """
+  week
+}
+
+enum risk_treatment_type_enum {
+  """
+  Terminate
+  """
+  terminate
+  """
+  Tolerate
+  """
+  tolerate
+  """
+  Transfer
+  """
+  transfer
+  """
+  Treat
+  """
+  treat
+}
+
+enum assessment_status_enum {
+  """
+  Complete
+  """
+  complete
+  """
+  Not Started
+  """
+  notstarted
+  """
+  In Progress
+  """
+  inprogress
+}
+
+enum risk_status_type_enum {
+  """
+  Active
+  """
+  active
+  """
+  Emerging
+  """
+  emerging
+  """
+  Monitored
+  """
+  monitored
+  """
+  Retired
+  """
+  retired
+}
+
+enum dashboard_sharing_type_enum_action {
+  """
+  Custom
+  """
+  custom
+  """
+  Organisation
+  """
+  organisation
+  """
+  Private
+  """
+  user_only
+}
+
+enum third_party_response_enum_action {
+  """
+  Approve
+  """
+  approve
+  """
+  Recall
+  """
+  recall
+  """
+  Request More Information
+  """
+  request_more_information
+  """
+  Reject
+  """
+  reject
+}
+
+enum wizard_status_enum {
+  """
+  Planned
+  """
+  planned
+  """
+  InProgress
+  """
+  inProgress
+}
+
+input DataExportCreateScheduleInput {
+  frequency: data_export_schedule_frequency_enum!
+  startDate: String
+  endDate: String
+  storageType: data_export_schedule_storage_type_enum!
+  sasToken: String
+  accountName: String
+  containerName: String
+  bucketName: String
+  s3Folder: String
+  accessKey: String
+  secretAccessKey: String
+  hostname: String
+  port: Int
+  username: String
+  password: String
+  sftpFolder: String
+  entraSecretValue: String
+  entraTenantId: String
+  entraClientId: String
+  sharePointSiteId: String
+  sharePointDriveId: String
+  spFolder: String
+}
+
+input DataExportTestScheduleInput {
+  scheduleId: uuid!
+}
+
+enum change_request_file_operation_enum {
+  "added"
+  added
+  "removed"
+  removed
+}
+
+input UpdateApproverResponsesInput {
+  ChangeRequestId: uuid!
+  Comment: String!
+  Response: Boolean!
+  LevelId: uuid!
+  OverrideLevel: Boolean!
+}
+
+input UpdateNotificationPreferencesInput {
+  id: String!
+  categories: jsonb
+  workflows: jsonb
+  channel_types: jsonb
+}
+
+input InsertImpactRatingPairInput {
+  ImpactId: uuid!
+  Rating: Int!
+}
+
+input RiskAssessmentResultImpactsInput {
+  Label: String!
+  Value: Int!
+}
+
+input InsertInternalAuditInput {
+  Title: String!
+  Description: String
+  BusinessArea: String!
+  CustomAttributeData: jsonb
+  OwnerUserIds: [String!]!
+  ContributorUserIds: [String!]!
+  OwnerGroupIds: [uuid!]!
+  ContributorGroupIds: [uuid!]!
+  TagTypeIds: [uuid!]!
+  DepartmentTypeIds: [uuid!]!
+}
+
+input UpdateInternalAuditInput {
+  Id: uuid!
+  Title: String!
+  Description: String
+  BusinessArea: String!
+  BusinessAreaId: uuid!
+  CustomAttributeData: jsonb
+  OwnerUserIds: [String!]!
+  OriginalTimestamp: timestamptz!
+  ContributorUserIds: [String!]!
+  OwnerGroupIds: [uuid!]!
+  ContributorGroupIds: [uuid!]!
+  TagTypeIds: [uuid!]!
+  DepartmentTypeIds: [uuid!]!
+}
+
+input InsertIngestionConfigInput {
+  IngestionConfig: jsonb
+  ApiKey: String
+}
+
+input UpdateIngestionConfigInput {
+  Id: uuid!
+  IngestionConfig: jsonb
+  OriginalTimestamp: timestamptz!
+  ApiKey: String
+}
+
+input DeleteIngestionConfigInput {
+  Id: uuid!
+}
+
+type Mutation {
+  insertChildIngestionConfig(object: InsertIngestionConfigInput!): IdOutput
+}
+
+type Mutation {
+  updateChildIngestionConfig(object: UpdateIngestionConfigInput!): IdOutput
+}
+
+type Mutation {
+  deleteChildIngestionConfig(object: DeleteIngestionConfigInput!): IdOutput
+}
+
+type GenericMutationOutput {
+  affected_rows: Int!
+}
+
+type IdOutput {
+  Id: uuid!
+}
+
+type InsertWizardOutput {
+  RiskId: uuid!
+}
+
+type UpdateChildActionOutput {
+  affected_rows: Int!
+  change_request_id: uuid
+}
+
+type InsertChildRiskAssessmentResultOutput {
+  Ids: [uuid!]!
+}
+
+type InsertChildObligationAssessmentResultOutput {
+  Ids: [uuid!]!
+}
+
+type InsertChildDocumentAssessmentResultOutput {
+  Ids: [uuid!]!
+}
+
+type insertControlTestResultOutput {
+  Ids: [uuid!]!
+}
+
+type insertChildImpactRatingOutput {
+  Ids: [uuid!]!
+}
+
+type LinkItemsOutput {
+  Links: [LinkItemRecordOutput!]!
+}
+
+type LinkItemRecordOutput {
+  Source: uuid!
+  Target: uuid!
+  RelationshipType: String!
+}
+
+type UnlinkItemsOutput {
+  Ids: [uuid]
+}
+
+type NotificationPreferencesOutput {
+  id: String!
+  categories: jsonb
+  workflows: jsonb
+  channel_types: jsonb
+}
+
+type UpdateNotificationPreferencesOutput {
+  message: String!
+}
+
+type DisconnectSlackOutput {
+  message: String!
+}
+
+type SlackNotificationConnectionOutput {
+  connected: Boolean!
+}
+
+type RecalculateRiskScoresOutput {
+  message: String
+}
+
+type DataImportValidateOutput {
+  message: String!
+}
+
+type DataImportStartImportOutput {
+  message: String!
+}
+
+type DataExportOneOffExportOutput {
+  message: String!
+  downloadUrl: String!
+  expiresInSeconds: Int!
+}
+
+type DataExportCreateScheduleOutput {
+  message: String!
+}
+
+type DataExportTestScheduleOutput {
+  message: String!
+}
+
+type RoleOutput {
+  id: String!
+  name: String!
+  description: String!
+}
+
+type UpdateUserRolesMutationOutput {
+  roles: [RoleOutput]!
+}
+
+type ScimDomainOutput {
+  domain: String!
+  createdOn: String!
+}
+
+type ScimTokenOutput {
+  keyId: String!
+  orgKey: String!
+  token: String!
+  createdOn: String!
+  expiresOn: String!
+  status: String!
+}
+
+type DeleteScimTokenOutput {
+  keyId: String!
+}
+
+type DeleteScimDomainOutput {
+  updatedDomains: [ScimDomainOutput!]!
+}
+
+type GetScimConfigOutput {
+  domains: [ScimDomainOutput!]!
+  tokens: [ScimTokenOutput!]!
+  legacyTokens: Boolean!
+}
+
+type RecalculateAppetitesOutput {
+  message: String
+}
+
+input CustomRoleInsertInputData {
+  Name: String!
+  Description: String
+  RoleKeys: [String!]!
+  UserIds: [String!]!
+}
+
+input CustomRoleUpdateInputData {
+  Id: uuid!
+  Name: String!
+  Description: String
+  RoleKeys: [String!]!
+  UserIds: [String!]!
+}
+
+input CustomRoleUserUpdateInputData {
+  CustomRoleIds: [String!]!
+  UserId: String!
+}
+
+type InsertRiskAssessmentResultConfigApiOutput {
+  Id: uuid!
+  Version: Int!
+  IsLatest: Boolean!
+}
+
+type UpdateRiskAssessmentResultConfigApiOutput {
+  Id: uuid!
+  Version: Int!
+  IsLatest: Boolean!
+}
+
+type Mutation {
+  insertRiskAssessmentResultConfigApi(
+    Config: jsonb!
+  ): InsertRiskAssessmentResultConfigApiOutput
+}
+
+type Mutation {
+  updateRiskAssessmentResultConfigApi(
+    Id: uuid!
+    Config: jsonb!
+    OriginalTimestamp: timestamptz!
+  ): UpdateRiskAssessmentResultConfigApiOutput
+}
+
+input InsertSsoConfigInput {
+  strategy: String!
+  domain: String!
+  clientId: String!
+  clientSecret: String!
+  scope: String!
+  addOrgConnection: Boolean!
+  connectionId: String
+  domainAliases: [String]
+}
+
+type SsoConfigOutput {
+  Id: String!
+  Name: String!
+  Strategy: String!
+  Enabled: Boolean!
+  IsOrgConnected: Boolean!
+  Action: String
+  Options: SsoConfigOptions
+}
+
+type SsoConfigOptions {
+  Domain: String
+  DomainAliases: [String]
+}
+
+type Mutation {
+  insertSsoConfig(
+    object: InsertSsoConfigInput!
+  ): SsoConfigOutput
+}
+
+input DeleteSsoConfigInput {
+  clientId: String!
+}
+
+type DeleteSsoConfigOutput {
+  deletedCount: Int!
+}
+
+type Mutation {
+  deleteSsoConfig(
+    object: DeleteSsoConfigInput!
+  ): DeleteSsoConfigOutput
+}
+
+type RevokeThirdPartyContactAccessResultOutput {
+  Id: uuid!
+  IsRevoked: Boolean!
+  Message: String!
+}
+
+type RevokeThirdPartyContactAccessOutput {
+  results: [RevokeThirdPartyContactAccessResultOutput!]!
+}

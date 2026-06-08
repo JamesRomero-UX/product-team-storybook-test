@@ -1,0 +1,18 @@
+query getImpactsWithLatestDatedRiskRating(
+  $RatedItemId: uuid!
+  $OrgKey: String!
+) {
+  impact(where: { OrgKey: { _eq: $OrgKey } }) {
+    ratings(
+      where: {
+        RatedItemId: { _eq: $RatedItemId }
+        TestDate: { _is_null: false }
+        OrgKey: { _eq: $OrgKey }
+      }
+      order_by: [{ RatedItemId: desc }, { TestDate: desc }]
+      limit: 1
+    ) {
+      TestDate
+    }
+  }
+}

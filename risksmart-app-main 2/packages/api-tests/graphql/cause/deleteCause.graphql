@@ -1,0 +1,5 @@
+mutation deleteCause($Id: uuid!) {
+  delete_cause(where: { Id: { _eq: $Id } }) {
+    affected_rows
+  }
+}

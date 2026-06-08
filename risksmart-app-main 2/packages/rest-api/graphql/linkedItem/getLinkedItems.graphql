@@ -1,0 +1,8 @@
+query getLinkedItems($Ids: [uuid!]!) {
+  linked_item(where: { Id: { _in: $Ids } }) {
+    Id
+    Source
+    Target
+    RelationshipType
+  }
+}

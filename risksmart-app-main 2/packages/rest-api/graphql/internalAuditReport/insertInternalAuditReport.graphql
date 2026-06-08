@@ -1,0 +1,81 @@
+mutation insertInternalAuditReport(
+  $Id: uuid!
+  $Title: String
+  $Summary: String
+  $ActualCompletionDate: timestamptz
+  $NextTestDate: timestamptz
+  $StartDate: timestamptz
+  $TargetCompletionDate: timestamptz
+  $CompletedByUser: String
+  $Status: assessment_status_enum!
+  $Tags: [tag_insert_input!]!
+  $Departments: [department_insert_input!]!
+  $Owners: [owner_insert_input!]!
+  $OwnerGroups: [owner_group_insert_input!]!
+  $Contributors: [contributor_insert_input!]!
+  $ContributorGroups: [contributor_group_insert_input!]!
+  $CustomAttributeData: jsonb
+  $OriginatingItemId: uuid
+  $Outcome: Int
+) {
+  insert_internal_audit_report_one(
+    object: {
+      Id: $Id
+      Title: $Title
+      Summary: $Summary
+      ActualCompletionDate: $ActualCompletionDate
+      NextTestDate: $NextTestDate
+      StartDate: $StartDate
+      TargetCompletionDate: $TargetCompletionDate
+      CompletedByUser: $CompletedByUser
+      CustomAttributeData: $CustomAttributeData
+      OriginatingItemId: $OriginatingItemId
+      Status: $Status
+      Outcome: $Outcome
+    }
+  ) {
+    Id
+  }
+
+  insert_tag(
+    objects: $Tags
+    on_conflict: { constraint: tag_pkey, update_columns: [] }
+  ) {
+    affected_rows
+  }
+
+  insert_department(
+    objects: $Departments
+    on_conflict: { constraint: department_pkey, update_columns: [] }
+  ) {
+    affected_rows
+  }
+
+  insert_contributor(
+    objects: $Contributors
+    on_conflict: { constraint: contributor_pkey, update_columns: [] }
+  ) {
+    affected_rows
+  }
+
+  insert_owner(
+    objects: $Owners
+    on_conflict: { constraint: owner_pkey, update_columns: [] }
+  ) {
+    affected_rows
+  }
+
+  insert_contributor_group(
+    objects: $ContributorGroups
+    on_conflict: { constraint: contributor_group_pkey, update_columns: [] }
+  ) {
+    affected_rows
+  }
+
+  insert_owner_group(
+    objects: $OwnerGroups
+    on_conflict: { constraint: owner_group_pkey, update_columns: [] }
+  ) {
+    affected_rows
+  }
+}

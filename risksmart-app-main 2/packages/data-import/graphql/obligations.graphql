@@ -1,0 +1,5 @@
+mutation insertObligations($obligations: [obligation_insert_input!]!) {
+  insert_obligation(objects: $obligations) {
+    affected_rows
+  }
+}

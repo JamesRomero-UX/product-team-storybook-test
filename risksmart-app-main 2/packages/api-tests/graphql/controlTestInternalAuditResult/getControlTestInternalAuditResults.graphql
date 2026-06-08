@@ -1,0 +1,16 @@
+query getControlTestInternalAuditResults {
+  control_test_internal_audit_result {
+    Title
+    Submitter
+    Description
+    ParentControlId
+    TestType
+    DesignEffectiveness
+    PerformanceEffectiveness
+    OverallEffectiveness
+    TestDate
+    CustomAttributeData
+    SequentialId
+    ModifiedAtTimestamp
+  }
+}

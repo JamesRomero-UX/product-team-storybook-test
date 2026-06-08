@@ -1,0 +1,17 @@
+mutation insertObligationImpact(
+  $Description: String!
+  $ImpactRating: smallint!
+  $ParentObligationId: uuid!
+  $CustomAttributeData: jsonb
+) {
+  insert_obligation_impact_one(
+    object: {
+      Description: $Description
+      ImpactRating: $ImpactRating
+      ParentObligationId: $ParentObligationId
+      CustomAttributeData: $CustomAttributeData
+    }
+  ) {
+    Id
+  }
+}

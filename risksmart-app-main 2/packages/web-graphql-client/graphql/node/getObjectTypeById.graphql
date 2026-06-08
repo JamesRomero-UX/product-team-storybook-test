@@ -1,0 +1,5 @@
+query getObjectTypeById($Id: uuid!) {
+  node: node_by_pk(Id: $Id) {
+    ObjectType
+  }
+}

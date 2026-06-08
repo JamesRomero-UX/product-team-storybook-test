@@ -1,0 +1,42 @@
+table:
+  name: attestation_record_status_view
+  schema: risksmart
+configuration:
+  column_config:
+    Status:
+      custom_name: Status
+      comment: The computed attestation status including overdue
+  custom_column_names: {}
+  custom_name: attestation_record_status_view
+  custom_root_fields: {}
+select_permissions:
+  - role: Public
+    permission:
+      columns:
+        - Status
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+  - role: Standard
+    permission:
+      columns:
+        - Status
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      allow_aggregations: true
+  - role: read:attestation-record
+    permission:
+      columns:
+        - Status
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      allow_aggregations: true
+  - role: app-user
+    permission:
+      columns:
+        - Status
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id

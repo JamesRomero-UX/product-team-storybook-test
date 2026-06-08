@@ -1,0 +1,1 @@
+id,parentIssueId,issueType,severity,targetCloseDate,actualCloseDate,status,certifiedIndividual,regulatoryBreach,regulationsBreached,reportable,rationale,issueCausedByThirdParty,thirdPartyResponsible,issueCausedBySystemIssue,systemResponsible,policyBreach,policiesBreached,policyOwner,policyOwnerCommentary

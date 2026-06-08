@@ -1,0 +1,31 @@
+mutation updateAcceptance(
+  $Id: uuid!
+  $LatestModifiedAtTimestamp: timestamptz!
+  $DateAcceptedFrom: timestamptz!
+  $DateAcceptedTo: timestamptz!
+  $Details: String
+  $Status: acceptance_status_enum
+  $Title: String
+  $ApprovedByUser: String
+  $ApprovedByUserGroup: uuid
+  $RequestedByUser: String
+  $RequestedByUserGroup: uuid
+  $CustomAttributeData: jsonb
+) {
+  updateChildAcceptance(
+    Id: $Id
+    LatestModifiedAtTimestamp: $LatestModifiedAtTimestamp
+    DateAcceptedFrom: $DateAcceptedFrom
+    DateAcceptedTo: $DateAcceptedTo
+    Details: $Details
+    Status: $Status
+    Title: $Title
+    ApprovedByUser: $ApprovedByUser
+    ApprovedByUserGroup: $ApprovedByUserGroup
+    RequestedByUser: $RequestedByUser
+    RequestedByUserGroup: $RequestedByUserGroup
+    CustomAttributeData: $CustomAttributeData
+  ) {
+    affected_rows
+  }
+}

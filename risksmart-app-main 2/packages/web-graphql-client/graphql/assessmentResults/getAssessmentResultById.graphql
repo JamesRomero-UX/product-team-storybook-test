@@ -1,0 +1,23 @@
+query getAssessmentResultById($Id: uuid!) {
+  assessment_result_parent(where: { Id: { _eq: $Id } }) {
+    Id
+    ParentId
+    ResultType
+    ParentType
+    obligationAssessmentResult {
+      ...ObligationAssessmentResultParts
+    }
+    documentAssessmentResult {
+      ...DocumentAssessmentResultParts
+    }
+    riskAssessmentResult {
+      ...RiskAssessmentResultParts
+    }
+    testResult {
+      ...TestResultParts
+    }
+    impactRating {
+      ...ImpactRatingParts
+    }
+  }
+}

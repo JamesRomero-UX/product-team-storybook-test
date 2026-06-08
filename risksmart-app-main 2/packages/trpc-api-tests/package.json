@@ -1,0 +1,53 @@
+{
+  "name": "@risksmart-app/trpc-api-tests",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./dist/stub-pdp/app.js",
+  "scripts": {
+    "tsc": "tsc --noEmit",
+    "build": "tsup",
+    "docker:build": "pnpm run build && docker compose up --build stub-pdp stub-auth0 -d --wait --force-recreate",
+    "docker:compose:api-test:trpc": "docker compose down trpc && PDP_ENDPOINT=http://stub-pdp:8010 AUTH0_STUB_URL=http://stub-auth0:8020 docker compose up trpc -d --wait",
+    "docker:compose:trpc": "docker compose down trpc && docker compose up trpc -d --wait",
+    "backend:api-test:sam": "PDP_ENDPOINT=http://stub-pdp:8010 PERMIT_API_URL=http://stub-pdp:8010 bash ../../scripts/restart-backend.sh --no-watch",
+    "backend:sam": "bash ../../scripts/restart-backend.sh",
+    "test": "vitest run",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "@types/express": "^5.0.6",
+    "express": "catalog:",
+    "msw": "catalog:",
+    "ts-node": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:"
+  },
+  "dependencies": {
+    "@mswjs/http-middleware": "catalog:",
+    "@risksmart-app/domain": "workspace:*",
+    "@risksmart-app/drizzle": "workspace:*",
+    "@risksmart-app/eslint-config": "workspace:*",
+    "@risksmart-app/local-auth-provider": "workspace:*",
+    "@risksmart-app/shared": "workspace:*",
+    "@risksmart-app/test-data": "workspace:*",
+    "@risksmart-app/trpc": "workspace:*",
+    "@risksmart-app/tenant-configuration": "workspace:*",
+    "@risksmart-app/form-configuration": "workspace:*",
+    "@trpc/client": "catalog:",
+    "dayjs": "catalog:",
+    "dotenv": "catalog:",
+    "drizzle-orm": "catalog:",
+    "helmet": "catalog:",
+    "eslint": "catalog:",
+    "pg": "catalog:",
+    "pino": "catalog:",
+    "prettier": "catalog:",
+    "superjson": "catalog:",
+    "uuid": "catalog:",
+    "zod": "catalog:"
+  }
+}

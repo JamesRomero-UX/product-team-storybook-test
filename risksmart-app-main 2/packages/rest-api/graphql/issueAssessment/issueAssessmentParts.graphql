@@ -1,0 +1,23 @@
+fragment IssueAssessmentParts on issue_assessment {
+  ActualCloseDate
+  ThirdPartyResponsible
+  TargetCloseDate
+  PolicyOwnerCommentary
+  CertifiedIndividual
+  IssueCausedBySystemIssue
+  IssueCausedByThirdParty
+  IssueType
+  PoliciesBreached
+  PolicyOwner
+  PolicyBreach
+  Rationale
+  RegulatoryBreach
+  RegulationsBreached
+  Reportable
+  Severity
+  Status
+  SystemResponsible
+  ParentIssueId
+  ModifiedAtTimestamp
+  Type
+}

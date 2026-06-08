@@ -1,0 +1,25 @@
+{
+	"blocks": [
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "You have a policy to approve"
+			}
+		},
+		{
+			"type": "actions",
+			"elements": [
+				{
+					"type": "button",
+					"text": {
+						"type": "plain_text",
+						"text": "View policy",
+						"emoji": true
+					},
+					"url": "{{ data.deepLinkBaseUrl | default: vars.app_base_url }}/policy/{{ documentId }}?organization={{ data.deepLinkOrgId | default: data.org_id }}{% if recipient.connection %}&connection={{ recipient.connection }}{% endif %}"
+				}
+			]
+		}
+	]
+}

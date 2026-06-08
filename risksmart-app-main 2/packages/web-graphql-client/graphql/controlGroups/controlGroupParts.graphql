@@ -1,0 +1,11 @@
+fragment ControlGroupParts on control_group {
+  Description
+  Id
+  Owner
+  ModifiedAtTimestamp
+  CreatedAtTimestamp
+  Title
+  ModifiedByUser
+  CreatedByUser
+  CustomAttributeData
+}

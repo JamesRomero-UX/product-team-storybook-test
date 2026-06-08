@@ -1,0 +1,15 @@
+subscription tppGetResponses {
+  third_party_response {
+    ...TppThirdPartyResponseParts
+
+    questionnaireTemplateVersion {
+      Id
+      Version
+
+      parent {
+        Id
+        Title
+      }
+    }
+  }
+}

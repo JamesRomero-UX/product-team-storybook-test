@@ -1,0 +1,18 @@
+query getDocumentInternalAuditResultById($Id: uuid!) {
+  document_internal_audit_result(where: { Id: { _eq: $Id } }) {
+    ...DocumentInternalAuditResultParts
+    parents {
+      document {
+        Id
+        Title
+      }
+      internalAuditReport {
+        Id
+        Title
+      }
+    }
+    files {
+      ...RelationFileParts
+    }
+  }
+}

@@ -1,0 +1,268 @@
+table:
+  name: relation_file
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: relation_file
+  custom_root_fields: {}
+object_relationships:
+  - name: acceptance
+    using:
+      manual_configuration:
+        column_mapping:
+          ParentId: Id
+        insertion_order: null
+        remote_table:
+          name: acceptance
+          schema: risksmart
+  - name: action
+    using:
+      manual_configuration:
+        column_mapping:
+          ParentId: Id
+        insertion_order: null
+        remote_table:
+          name: action
+          schema: risksmart
+  - name: appetite
+    using:
+      manual_configuration:
+        column_mapping:
+          ParentId: Id
+        insertion_order: null
+        remote_table:
+          name: appetite
+          schema: risksmart
+  - name: createdByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          CreatedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: document
+    using:
+      manual_configuration:
+        column_mapping:
+          ParentId: Id
+        insertion_order: null
+        remote_table:
+          name: document
+          schema: risksmart
+  - name: file
+    using:
+      manual_configuration:
+        column_mapping:
+          FileId: Id
+        insertion_order: null
+        remote_table:
+          name: file
+          schema: risksmart
+  - name: issue
+    using:
+      manual_configuration:
+        column_mapping:
+          ParentId: Id
+        insertion_order: null
+        remote_table:
+          name: issue
+          schema: risksmart
+  - name: issueUpdate
+    using:
+      manual_configuration:
+        column_mapping:
+          ParentId: Id
+        insertion_order: null
+        remote_table:
+          name: issue_update
+          schema: risksmart
+  - name: modifiedByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          ModifiedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: organisation
+    using:
+      foreign_key_constraint_on: OrgKey
+  - name: parentType
+    using:
+      foreign_key_constraint_on: ParentType
+  - name: testResult
+    using:
+      manual_configuration:
+        column_mapping:
+          ParentId: Id
+        insertion_order: null
+        remote_table:
+          name: test_result
+          schema: risksmart
+  - name: thirdParty
+    using:
+      manual_configuration:
+        column_mapping:
+          ParentId: Id
+        insertion_order: null
+        remote_table:
+          name: third_party
+          schema: risksmart
+  - name: thirdPartyResponse
+    using:
+      manual_configuration:
+        column_mapping:
+          ParentId: Id
+        insertion_order: null
+        remote_table:
+          name: third_party_response
+          schema: risksmart
+  - name: riskAssessmentResult
+    using:
+      manual_configuration:
+        column_mapping:
+          ParentId: Id
+        insertion_order: null
+        remote_table:
+          name: risk_assessment_result
+          schema: risksmart
+array_relationships:
+  - name: permissions
+    using:
+      manual_configuration:
+        column_mapping:
+          ParentId: Id
+        insertion_order: null
+        remote_table:
+          name: permission_view
+          schema: risksmart
+insert_permissions:
+  # @TODO:
+  # We shouldn't allow uploading files against everything with no checks other than the org key.
+  # This is probably because of issue reporting, but we should add that as an exception.
+  - role: insert:relation-file
+    permission:
+      check:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - file:
+              OrgKey:
+                _eq: X-Hasura-org-id
+      set:
+        CreatedByUser: x-hasura-user-id
+        ModifiedByUser: x-hasura-user-id
+        OrgKey: x-hasura-org-id
+      columns:
+        - ParentId
+        - ParentType
+        - FileId
+        - ChangeRequestFileOperation
+select_permissions:
+  - role: app-user
+    permission:
+      columns:
+        - FileId
+        - ParentId
+        - ChangeRequestFileOperation
+      filter:
+        _and: 
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - _or:
+              - permissions:
+                  _and:
+                    - UserId:
+                        _eq: X-Hasura-User-Id
+                    - OrgKey:
+                        _eq: X-Hasura-org-Id
+                    - AccessType:
+                        _eq: read
+              - thirdPartyResponse:
+                  invitees:
+                    UserId:
+                      _eq: X-Hasura-User-Id
+  - role: Standard
+    permission:
+      columns:
+        - FileId
+        - ParentId
+        - ChangeRequestFileOperation
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - permissions:
+              _and:
+                - UserId:
+                    _eq: X-Hasura-User-Id
+                - OrgKey:
+                    _eq: X-Hasura-org-Id
+                - AccessType:
+                    _eq: read
+      allow_aggregations: true
+  - role: read:relation-file
+    permission:
+      columns:
+        - FileId
+        - ParentId
+        - ChangeRequestFileOperation
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      allow_aggregations: true
+delete_permissions:
+  - role: Standard
+    permission:
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - permissions:
+              _and:
+                - UserId:
+                    _eq: X-Hasura-User-Id
+                - OrgKey:
+                    _eq: X-Hasura-org-Id
+                - AccessType:
+                    _eq: delete
+  - role: delete:third-party-relation-file
+    permission:
+      filter:
+        _and: 
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - thirdPartyResponse:
+              _and:
+                - Status:
+                    _in: ["in_progress", "not_started"]
+                - invitees:
+                    UserId:
+                      _eq: X-Hasura-User-Id
+  - role: delete:relation-file
+    permission:
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+event_triggers:
+  - name: relation_file
+    definition:
+      delete:
+        columns: '*'
+      enable_manual: false
+      insert:
+        columns: '*'
+      update:
+        columns: '*'
+    retry_conf:
+      interval_sec: 10
+      num_retries: 3
+      timeout_sec: 60
+    webhook: https://{{REST_API_DOMAIN}}/events
+    headers:
+      - name: RestApiKey
+        value_from_env: REST_API_KEY

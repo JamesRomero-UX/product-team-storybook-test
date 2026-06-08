@@ -1,0 +1,16 @@
+.radioList {
+  display: flex;
+  flex-direction: column;
+  row-gap: 6px;
+}
+
+.expandable {
+  [class*='awsui_header_'] {
+    color: #14143a !important;
+    transition: color 0.2s !important;
+
+    &:hover {
+      color: #15beb0 !important;
+    }
+  }
+}

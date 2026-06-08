@@ -1,0 +1,15 @@
+mutation insertThirdPartyContactApi(
+  $ThirdPartyId: uuid!
+  $Email: String!
+  $Name: String
+  $JobTitle: String
+) {
+  insertThirdPartyContactApi(
+    ThirdPartyId: $ThirdPartyId
+    Email: $Email
+    Name: $Name
+    JobTitle: $JobTitle
+  ) {
+    Id
+  }
+}

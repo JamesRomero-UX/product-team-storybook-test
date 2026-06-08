@@ -1,0 +1,7 @@
+.form {
+  [class*='awsui_grid-column_'] {
+    display: flex !important;
+    flex: 1 !important;
+    max-inline-size: 100% !important;
+  }
+}

@@ -1,0 +1,23 @@
+query getAllFormsCustomisation {
+  # This contains the custom attribute configuration for the form (json forms schema)
+  form_configuration {
+    ...FormConfigurationParts
+  }
+  # This contains customisation for both standard and custom attributes
+  form_field_configuration {
+    FieldId
+    Hidden
+    Required
+    ReadOnly
+    DefaultValue
+    FormConfigurationParentType
+    Label
+    Description
+  }
+  # This contains the order of both standard and custom attributes within a form
+  form_field_ordering {
+    FieldId
+    Position
+    FormConfigurationParentType
+  }
+}

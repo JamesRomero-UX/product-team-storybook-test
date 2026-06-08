@@ -1,0 +1,10 @@
+query getDocumentAuditById($Id: uuid!) {
+  document_audit(
+    where: { Id: { _eq: $Id } }
+    order_by: { ModifiedAtTimestamp: desc }
+    limit: 1
+  ) {
+    Id
+    Action
+  }
+}

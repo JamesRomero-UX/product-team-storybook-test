@@ -1,0 +1,8 @@
+table:
+  name: taxonomy_org_audit
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: taxonomy_org_audit
+  custom_root_fields: {}

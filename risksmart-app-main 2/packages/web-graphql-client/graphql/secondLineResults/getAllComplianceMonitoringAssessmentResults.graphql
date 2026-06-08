@@ -1,0 +1,129 @@
+query getAllComplianceMonitoringAssessmentResults {
+  document_second_line_result(order_by: { CreatedByUser: asc }) {
+    ...DocumentSecondLineResultParts
+    complianceMonitoringAssessments: parents(
+      where: { ParentType: { _eq: compliance_monitoring_assessment } }
+    ) {
+      complianceMonitoringAssessment {
+        Id
+        Title
+        ActualCompletionDate
+        StartDate
+        Status
+        completedByUser {
+          FriendlyName
+        }
+      }
+    }
+    documents: parents(where: { ParentType: { _eq: document } }) {
+      document {
+        Id
+        Title
+      }
+      node {
+        Id
+        SequentialId
+        ObjectType
+      }
+    }
+    files {
+      ...RelationFileParts
+    }
+  }
+
+  obligation_second_line_result(order_by: { CreatedByUser: asc }) {
+    ...ObligationSecondLineResultParts
+    complianceMonitoringAssessments: parents(
+      where: { ParentType: { _eq: compliance_monitoring_assessment } }
+    ) {
+      complianceMonitoringAssessment {
+        Id
+        Title
+        ActualCompletionDate
+        StartDate
+        Status
+        completedByUser {
+          FriendlyName
+        }
+      }
+    }
+    obligations: parents(where: { ParentType: { _eq: obligation } }) {
+      obligation {
+        Id
+        Title
+      }
+      node {
+        Id
+        SequentialId
+        ObjectType
+      }
+    }
+    files {
+      ...RelationFileParts
+    }
+  }
+
+  risk_controlled_second_line_result(order_by: { CreatedByUser: asc }) {
+    ...RiskControlledSecondLineResultParts
+    complianceMonitoringAssessments: parents(
+      where: { ParentType: { _eq: compliance_monitoring_assessment } }
+    ) {
+      complianceMonitoringAssessment {
+        Id
+        Title
+        ActualCompletionDate
+        StartDate
+        Status
+        completedByUser {
+          FriendlyName
+        }
+      }
+    }
+    risks: parents(where: { ParentType: { _eq: risk } }) {
+      risk {
+        Id
+        Title
+      }
+      node {
+        Id
+        SequentialId
+        ObjectType
+      }
+    }
+    files {
+      ...RelationFileParts
+    }
+  }
+
+  risk_uncontrolled_second_line_result(order_by: { CreatedByUser: asc }) {
+    ...RiskUncontrolledSecondLineResultParts
+    complianceMonitoringAssessments: parents(
+      where: { ParentType: { _eq: compliance_monitoring_assessment } }
+    ) {
+      complianceMonitoringAssessment {
+        Id
+        Title
+        ActualCompletionDate
+        StartDate
+        Status
+        completedByUser {
+          FriendlyName
+        }
+      }
+    }
+    risks: parents(where: { ParentType: { _eq: risk } }) {
+      risk {
+        Id
+        Title
+      }
+      node {
+        Id
+        SequentialId
+        ObjectType
+      }
+    }
+    files {
+      ...RelationFileParts
+    }
+  }
+}

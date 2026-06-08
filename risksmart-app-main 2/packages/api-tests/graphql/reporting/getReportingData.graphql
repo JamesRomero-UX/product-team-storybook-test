@@ -1,0 +1,6 @@
+query getReportingData($Input: ReportingDataInput!) {
+  reportingData(Input: $Input) {
+    value
+    meta
+  }
+}

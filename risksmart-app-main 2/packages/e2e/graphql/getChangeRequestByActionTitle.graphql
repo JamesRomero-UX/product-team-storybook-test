@@ -1,0 +1,10 @@
+query getChangeRequestByActionTitle($actionTitle: String!) {
+  change_request(
+    where: { parent: { action: { Title: { _eq: $actionTitle } } } }
+  ) {
+    Id
+    parent {
+      Id
+    }
+  }
+}

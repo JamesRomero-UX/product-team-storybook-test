@@ -1,0 +1,18 @@
+fragment RiskParts on risk {
+  Id
+  Title
+  Tier
+  Description
+  ParentRiskId
+  CreatedByUser
+  Treatment
+  Status
+  ModifiedByUser
+  CreatedAtTimestamp
+  ModifiedAtTimestamp
+  CustomAttributeData
+  SequentialId
+  schedule {
+    ...ScheduleParts
+  }
+}

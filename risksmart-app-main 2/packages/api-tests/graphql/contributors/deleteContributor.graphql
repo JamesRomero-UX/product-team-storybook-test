@@ -1,0 +1,5 @@
+mutation deleteContributor($Id: uuid!) {
+  delete_contributor(where: { ParentId: { _eq: $Id } }) {
+    affected_rows
+  }
+}

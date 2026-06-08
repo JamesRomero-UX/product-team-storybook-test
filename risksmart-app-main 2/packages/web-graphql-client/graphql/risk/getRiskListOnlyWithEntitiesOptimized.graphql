@@ -1,0 +1,10 @@
+query getRiskListOnlyWithEntitiesOptimized {
+  risk {
+    Id
+    Title
+    SequentialId
+    enterpriseRiskInstance {
+      ...EnterpriseRiskInstanceWithEntityHierarchyParts
+    }
+  }
+}

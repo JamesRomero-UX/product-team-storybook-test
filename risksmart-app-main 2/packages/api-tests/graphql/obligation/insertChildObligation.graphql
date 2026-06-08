@@ -1,0 +1,5 @@
+mutation insertChildObligation($object: InsertChildObligationInput) {
+  insertChildObligation(object: $object) {
+    Id
+  }
+}

@@ -1,0 +1,5 @@
+query getControlGroupsByTitle($title: String!) {
+  control_group(where: { Title: { _eq: $title } }) {
+    ...ControlGroupParts
+  }
+}

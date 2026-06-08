@@ -1,0 +1,160 @@
+table:
+  name: obligation_change
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: obligation_change
+  custom_root_fields: {}
+object_relationships:
+  - name: obligation
+    using:
+      manual_configuration:
+        column_mapping:
+          ObligationId: Id
+        insertion_order: null
+        remote_table:
+          name: obligation
+          schema: risksmart
+  - name: createdBy
+    using:
+      manual_configuration:
+        column_mapping:
+          CreatedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: modifiedBy
+    using:
+      manual_configuration:
+        column_mapping:
+          ModifiedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: org
+    using:
+      manual_configuration:
+        column_mapping:
+          OrgKey: OrgKey
+        insertion_order: null
+        remote_table:
+          name: organisation
+          schema: auth
+array_relationships:
+  - name: actions
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: action_parent
+          schema: risksmart
+  - name: permissions
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: Id
+        insertion_order: null
+        remote_table:
+          name: permission_view
+          schema: risksmart
+  - name: ownerGroups
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: owner_group
+          schema: risksmart
+  - name: owners
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: owner
+          schema: risksmart
+  - name: contributorGroups
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: contributor_group
+          schema: risksmart
+  - name: contributors
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: contributor
+          schema: risksmart
+  - name: ancestorContributors
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: Id
+        insertion_order: null
+        remote_table:
+          name: ancestor_contributor_view
+          schema: risksmart
+  - name: attestations
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ObligationChangeId
+        insertion_order: null
+        remote_table:
+          name: obligation_change_attestation
+          schema: risksmart
+select_permissions:
+  - role: app-user
+    permission:
+      columns:
+        - Id
+        - SequentialId
+        - ObligationId
+        - ExternalId
+        - EffectiveDate
+        - DescriptionBefore
+        - DescriptionAfter
+        - Rationale
+        - CreatedAtTimestamp
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - CreatedByUser
+        - OrgKey
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - _or:
+            - _exists:
+                _table:
+                  name: user_role_access
+                  schema: risksmart
+                _where:
+                  _and:
+                    - AccessType:
+                        _eq: read
+                    - ObjectType:
+                        _eq: obligation_change
+                    - UserId:
+                        _eq: X-Hasura-User-Id
+            - permissions:
+                _and:
+                  - UserId:
+                      _eq: X-Hasura-User-Id
+                  - OrgKey:
+                      _eq: X-Hasura-org-Id
+                  - AccessType:
+                      _eq: read

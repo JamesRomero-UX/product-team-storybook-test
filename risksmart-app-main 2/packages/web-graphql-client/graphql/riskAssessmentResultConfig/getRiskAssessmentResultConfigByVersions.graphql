@@ -1,0 +1,8 @@
+query getRiskAssessmentResultConfigByVersions($versions: [Int!]!) {
+  risk_assessment_result_config(where: { Version: { _in: $versions } }) {
+    Id
+    Version
+    Config
+    IsLatest
+  }
+}

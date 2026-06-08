@@ -1,0 +1,18 @@
+query getObligationSecondLineResultById($Id: uuid!) {
+  obligation_second_line_result(where: { Id: { _eq: $Id } }) {
+    ...ObligationSecondLineResultParts
+    parents {
+      obligation {
+        Id
+        Title
+      }
+      complianceMonitoringAssessment {
+        Id
+        Title
+      }
+    }
+    files {
+      ...RelationFileParts
+    }
+  }
+}

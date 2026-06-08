@@ -1,0 +1,12 @@
+query getTaxonomyByLocaleAndOrg($Locale: String!, $OrgKey: String!) {
+  taxonomy(
+    where: {
+      organisations: { Locale: { _eq: $Locale }, OrgKey: { _eq: $OrgKey } }
+    }
+  ) {
+    Common
+    Library
+    Rating
+    Taxonomy
+  }
+}

@@ -1,0 +1,31 @@
+table:
+  name: action_audit
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: action_audit
+  custom_root_fields: {}
+select_permissions:
+  - role: read:audit
+    permission:
+      columns:
+        - Id
+        - Title
+        - DateRaised
+        - DateDue
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - Status
+        - Priority
+        - ClosedDate
+        - Description
+        - CreatedByUser
+        - CreatedAtTimestamp
+        - CustomAttributeData
+        - SequentialId
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+      allow_aggregations: true

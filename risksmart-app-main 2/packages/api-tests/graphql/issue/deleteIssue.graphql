@@ -1,0 +1,5 @@
+mutation deleteIssue($Id: uuid!) {
+  deleteIssuesById(Ids: [$Id]) {
+    affected_rows
+  }
+}

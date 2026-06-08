@@ -1,0 +1,36 @@
+import type { GetActiveAppetitesByParentIdQuery } from '@risksmart-app/web-graphql-client/generated/graphql';
+import { Appetite_Status_Enum } from '@risksmart-app/web-graphql-client/generated/graphql';
+
+type ActiveAppetite =
+  GetActiveAppetitesByParentIdQuery['appetite_parent'][number];
+
+const defaultAppetiteByRiskId: ActiveAppetite = {
+  Status: Appetite_Status_Enum.Active,
+  appetite: {
+    Id: '3e2cf5e6-70f5-407a-b546-904a76dbea7f',
+    LowerAppetite: 1,
+    UpperAppetite: 1,
+    ImpactAppetite: 3,
+    LikelihoodAppetite: null,
+    Statement: '',
+    EffectiveDate: '2024-02-01T00:00:00+00:00',
+    AppetiteType: 'impact',
+    CreatedAtTimestamp: '2024-10-07T13:26:59.013602+00:00',
+    ModifiedAtTimestamp: '2024-10-07T13:38:57.764053+00:00',
+    CreatedByUser: 'auth0|644151efc3a961d2784456d9',
+    ModifiedByUser: 'auth0|644151efc3a961d2784456d9',
+    CustomAttributeData: null,
+    SequentialId: 20005,
+    __typename: 'appetite',
+  },
+};
+
+export const buildActiveAppetite = (
+  appetiteOverrides: Partial<ActiveAppetite['appetite']> = {}
+): ActiveAppetite => ({
+  ...defaultAppetiteByRiskId,
+  appetite: {
+    ...defaultAppetiteByRiskId.appetite!,
+    ...appetiteOverrides,
+  },
+});

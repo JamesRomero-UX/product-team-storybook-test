@@ -1,0 +1,12 @@
+fragment CauseParts on cause {
+  ModifiedByUser
+  CreatedByUser
+  Title
+  ModifiedAtTimestamp
+  CreatedAtTimestamp
+  Significance
+  ParentIssueId
+  Id
+  Description
+  CustomAttributeData
+}

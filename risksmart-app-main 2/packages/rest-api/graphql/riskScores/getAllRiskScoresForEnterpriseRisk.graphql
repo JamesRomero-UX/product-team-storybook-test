@@ -1,0 +1,30 @@
+query getAllRiskScoresForEnterpriseRisk($OrgKey: String!) {
+  risk_score(
+    where: {
+      OrgKey: { _eq: $OrgKey }
+      risk: {
+        enterpriseRiskInstance: { EnterpriseRiskId: { _is_null: false } }
+      }
+    }
+  ) {
+    ResidualScore
+    ResidualRating
+    InherentScore
+    InherentRating
+    ResidualImpact
+    ResidualLikelihood
+    InherentImpact
+    InherentLikelihood
+
+    risk {
+      enterpriseRiskInstance {
+        RiskId
+        EnterpriseRiskId
+        EntityId
+        entity {
+          Weight
+        }
+      }
+    }
+  }
+}

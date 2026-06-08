@@ -1,0 +1,5 @@
+query getWidgetIssuesByType($where: issue_assessment_bool_exp!) {
+  issue_assessment(where: $where) {
+    IssueType
+  }
+}

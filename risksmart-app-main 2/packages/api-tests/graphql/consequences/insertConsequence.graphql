@@ -1,0 +1,5 @@
+mutation insertConsequence($objects: [consequence_insert_input!]!) {
+  insert_consequence(objects: $objects) {
+    affected_rows
+  }
+}

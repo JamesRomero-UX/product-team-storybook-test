@@ -1,0 +1,41 @@
+.booleanCell {
+  [class*='awsui_native-input'] {
+    &:hover {
+      cursor: pointer !important;
+    }
+  }
+}
+
+.textArea {
+  textarea {
+    resize: vertical !important;
+  }
+}
+
+.dateInput {
+  div:nth-last-child(2) {
+    display: none;
+  }
+  [class*='awsui_date-picker-trigger'] button {
+    height: 36px !important;
+    width: 36px !important;
+    text-align: center !important;
+    border-width: 1.5px !important;
+    @apply text-teal #{!important};
+    &:disabled {
+      color: #B4B4BB !important;
+      &:hover {
+        cursor: default !important;
+      }
+    }
+  }
+}
+
+.customisableControl {
+  [class*='awsui_label-wrapper'],
+  [class*='awsui_trigger'],
+  [class*='awsui_root'] {
+    display: flex !important;
+    align-items: center !important;
+  }
+}

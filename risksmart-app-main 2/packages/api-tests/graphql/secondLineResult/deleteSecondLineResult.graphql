@@ -1,0 +1,20 @@
+mutation deleteDocumentSecondLineResult($Id: uuid!) {
+  delete_document_second_line_result(where: { Id: { _eq: $Id } }) {
+    affected_rows
+  }
+}
+
+mutation deleteObligationSecondLineResult($Id: uuid!) {
+  delete_obligation_second_line_result(where: { Id: { _eq: $Id } }) {
+    affected_rows
+  }
+}
+
+mutation deleteRiskSecondLineResult($Id: uuid!) {
+  delete_risk_controlled_second_line_result(where: { Id: { _eq: $Id } }) {
+    affected_rows
+  }
+  delete_risk_uncontrolled_second_line_result(where: { Id: { _eq: $Id } }) {
+    affected_rows
+  }
+}

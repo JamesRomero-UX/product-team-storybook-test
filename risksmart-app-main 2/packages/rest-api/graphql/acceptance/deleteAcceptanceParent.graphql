@@ -1,0 +1,7 @@
+mutation deleteAcceptanceParent($AcceptanceId: uuid, $ParentId: uuid) {
+  delete_acceptance_parent(
+    where: { Id: { _eq: $AcceptanceId }, ParentId: { _eq: $ParentId } }
+  ) {
+    affected_rows
+  }
+}

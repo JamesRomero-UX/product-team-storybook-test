@@ -1,0 +1,16 @@
+query getAttestationRecords {
+  attestation_record {
+    Id
+    AttestationStatus
+    attestationRecordStatus {
+      Status
+    }
+    Active
+    NodeId
+    UserId
+    CreatedAtTimestamp
+    CreatedByUser
+    ModifiedAtTimestamp
+    ModifiedByUser
+  }
+}

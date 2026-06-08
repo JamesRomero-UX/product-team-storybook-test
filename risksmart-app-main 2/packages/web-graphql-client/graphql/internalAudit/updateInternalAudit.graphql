@@ -1,0 +1,5 @@
+mutation updateInternalAudit($Input: UpdateInternalAuditInput) {
+  updateInternalAudit(Input: $Input) {
+    Id
+  }
+}

@@ -1,0 +1,14 @@
+query getActiveAppetitesByParentId($parentId: uuid!) {
+  appetite_parent(
+    where: { ParentId: { _eq: $parentId }, Status: { _eq: active } }
+  ) {
+    Status
+    appetite {
+      ...AppetiteParts
+      impact {
+        Id
+        Name
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+query getDataImports(
+  $where: data_import_bool_exp
+  $limit: Int
+  $orderBy: [data_import_order_by!]
+) {
+  data_import(where: $where, limit: $limit, order_by: $orderBy) {
+    Id
+    Status
+    files {
+      file {
+        ContentType
+        FileName
+        FileSize
+        Id
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+query getRisksByTier($where: risk_bool_exp!) {
+  risk(where: $where, order_by: { Title: asc }) {
+    Id
+    Title
+    SequentialId
+    enterpriseRiskInstance {
+      EnterpriseRiskId
+      EntityId
+      entity {
+        Id
+        Name
+      }
+    }
+  }
+}

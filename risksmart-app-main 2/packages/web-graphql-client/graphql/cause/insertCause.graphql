@@ -1,0 +1,21 @@
+mutation insertCause(
+  $Title: String
+  $Description: String
+  $Significance: Int
+  $ParentIssueId: uuid
+  $CustomAttributeData: jsonb
+) {
+  insert_cause(
+    objects: {
+      Description: $Description
+      ParentIssueId: $ParentIssueId
+      Significance: $Significance
+      Title: $Title
+      CustomAttributeData: $CustomAttributeData
+    }
+  ) {
+    returning {
+      Id
+    }
+  }
+}

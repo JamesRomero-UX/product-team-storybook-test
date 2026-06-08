@@ -1,0 +1,16 @@
+query getNode($Id: uuid!) {
+  node_by_pk(Id: $Id) {
+    Id
+    ObjectType
+    ancestorContributors {
+      ContributorType
+      UserId
+
+      user {
+        Id
+        UserName
+        Email
+      }
+    }
+  }
+}

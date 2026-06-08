@@ -1,0 +1,44 @@
+.root {
+  [class*='awsui_header-cell-text'] {
+    font-size: 13px;
+    @apply font-semibold #{!important};
+  }
+  /* Table cell dividers */
+  [class*='awsui_divider_'] {
+    border-left-width: 1.5px !important;
+  }
+  /* table header bottom border width */
+  [class*='awsui_header-cell']:not(#\9):not(:last-child):before {
+    border-width: 1.5px !important;
+  }
+
+  /* Table header/content separator */
+  [class*='awsui_header-cell'] {
+    border-bottom-width: 1.5px !important;
+  }
+
+  /* HACK – Overrides table cell header color */
+  [class*='awsui_sorting-icon'] [class*='awsui_icon'],
+  [class*='awsui_header-cell-text'] {
+    color: #5c5c79 !important;
+  }
+
+  /* HACK – Overrides links in table cell */
+  [class*='awsui_body-cell'] a {
+    color: #2d2d53 !important;
+  }
+  [class*='awsui_body-cell'] a {
+    font-weight: 600 !important;
+    text-decoration: none !important;
+  }
+
+  [class*='awsui_body-cell'] a:hover {
+    color: #00decb !important;
+    text-decoration: underline !important;
+  }
+
+  /* HACK – Removes dashes from under tags icon */
+  [class*='awsui_body-cell'] [class*='awsui_trigger-type-text'] {
+    border-bottom: none !important;
+  }
+}

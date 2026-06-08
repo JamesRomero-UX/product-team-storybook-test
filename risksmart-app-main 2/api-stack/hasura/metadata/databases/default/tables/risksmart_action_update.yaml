@@ -1,0 +1,234 @@
+table:
+  name: action_update
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: action_update
+  custom_root_fields: {}
+object_relationships:
+  - name: action
+    using:
+      manual_configuration:
+        column_mapping:
+          ParentActionId: Id
+        insertion_order: null
+        remote_table:
+          name: action
+          schema: risksmart
+  - name: createdByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          CreatedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: modifiedByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          ModifiedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: organisation
+    using:
+      foreign_key_constraint_on: OrgKey
+array_relationships:
+  - name: files
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: relation_file
+          schema: risksmart
+  - name: permissions
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: Id
+        insertion_order: null
+        remote_table:
+          name: permission_view
+          schema: risksmart
+insert_permissions:
+  - role: Standard
+    permission:
+      check:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - action:
+              _and:
+                - OrgKey:
+                    _eq: X-Hasura-org-id
+                - permissions:
+                    _and:
+                      - UserId:
+                          _eq: X-Hasura-User-Id
+                      - OrgKey:
+                          _eq: X-Hasura-org-Id
+                      - AccessType:
+                          _eq: insert
+      set:
+        CreatedByUser: x-hasura-user-id
+        ModifiedByUser: x-hasura-user-id
+        OrgKey: x-hasura-org-id
+      columns:
+        - Id
+        - Title
+        - Description
+        - ParentActionId
+        - CustomAttributeData
+  - role: insert:action-update
+    permission:
+      check:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - action:
+              OrgKey:
+                _eq: X-Hasura-org-id
+      set:
+        CreatedByUser: x-hasura-user-id
+        ModifiedByUser: x-hasura-user-id
+        OrgKey: x-hasura-org-id
+      columns:
+        - Id
+        - Title
+        - Description
+        - ParentActionId
+        - CustomAttributeData
+select_permissions:
+  - role: Standard
+    permission:
+      columns:
+        - Id
+        - Title
+        - Description
+        - ParentActionId
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - CreatedByUser
+        - CreatedAtTimestamp
+        - CustomAttributeData
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - permissions:
+              _and:
+                - UserId:
+                    _eq: X-Hasura-User-Id
+                - OrgKey:
+                    _eq: X-Hasura-org-Id
+                - AccessType:
+                    _eq: read
+                - ObjectType:
+                    _eq: action_update
+      allow_aggregations: true
+  - role: read:action-update
+    permission:
+      columns:
+        - Id
+        - Title
+        - Description
+        - ParentActionId
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - CreatedByUser
+        - CreatedAtTimestamp
+        - CustomAttributeData
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      allow_aggregations: true
+update_permissions:
+  - role: Standard
+    permission:
+      columns:
+        - Title
+        - Description
+        - ParentActionId
+        - CustomAttributeData
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - permissions:
+              _and:
+                - UserId:
+                    _eq: X-Hasura-User-Id
+                - OrgKey:
+                    _eq: X-Hasura-org-Id
+      check:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - action:
+              OrgKey:
+                _eq: X-Hasura-org-id
+      set:
+        ModifiedAtTimestamp: now()
+        ModifiedByUser: x-hasura-user-id
+  - role: update:action-update
+    permission:
+      columns:
+        - Title
+        - Description
+        - ParentActionId
+        - CustomAttributeData
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      check:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - action:
+              OrgKey:
+                _eq: X-Hasura-org-id
+      set:
+        ModifiedAtTimestamp: now()
+        ModifiedByUser: x-hasura-user-id
+delete_permissions:
+  - role: Standard
+    permission:
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - permissions:
+              _and:
+                - UserId:
+                    _eq: X-Hasura-User-Id
+                - OrgKey:
+                    _eq: X-Hasura-org-Id
+  - role: delete:action-update
+    permission:
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+event_triggers:
+  - name: action-update
+    definition:
+      delete:
+        columns: '*'
+      enable_manual: true
+      insert:
+        columns: '*'
+      update:
+        columns: '*'
+    retry_conf:
+      interval_sec: 10
+      num_retries: 3
+      timeout_sec: 60
+    webhook: https://{{REST_API_DOMAIN}}/events
+    headers:
+      - name: RestApiKey
+        value_from_env: REST_API_KEY

@@ -1,0 +1,22 @@
+query getAppetitesByRiskId($riskId: uuid!) {
+  appetite_parent(
+    where: { ParentId: { _eq: $riskId } }
+    order_by: [
+      { appetite: { EffectiveDate: desc_nulls_last } }
+      { appetite: { CreatedAtTimestamp: desc_nulls_last } }
+    ]
+  ) {
+    Status
+
+    appetite {
+      ...AppetiteParts
+      modifiedByUser {
+        FriendlyName
+      }
+      impact {
+        Id
+        Name
+      }
+    }
+  }
+}

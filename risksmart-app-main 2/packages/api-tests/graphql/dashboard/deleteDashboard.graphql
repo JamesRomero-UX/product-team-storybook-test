@@ -1,0 +1,5 @@
+mutation deleteDashboard($Id: uuid!) {
+  delete_dashboard(where: { Id: { _eq: $Id } }) {
+    affected_rows
+  }
+}

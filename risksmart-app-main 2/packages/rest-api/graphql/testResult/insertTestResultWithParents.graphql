@@ -1,0 +1,8 @@
+mutation insertTestResultsWithParents($results: [test_result_insert_input!]!) {
+  insert_test_result(objects: $results) {
+    affected_rows
+    returning {
+      Id
+    }
+  }
+}

@@ -1,0 +1,16 @@
+fragment IssueParts on issue {
+  DateIdentified
+  DateOccurred
+  Details
+  Id
+  ImpactsCustomer
+  IsExternalIssue
+  CreatedAtTimestamp
+  ModifiedAtTimestamp
+  Title
+  CreatedByUser
+  ModifiedByUser
+  SequentialId
+  CustomAttributeData
+  Meta
+}

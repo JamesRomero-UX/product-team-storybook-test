@@ -1,0 +1,13 @@
+query getImpacts {
+  impact {
+    CreatedAtTimestamp
+    CreatedByUser
+    Rationale
+    RatingGuidance
+    Id
+    ModifiedAtTimestamp
+    ModifiedByUser
+    Name
+    CustomAttributeData
+  }
+}

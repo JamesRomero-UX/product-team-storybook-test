@@ -1,0 +1,49 @@
+{
+  "name": "@risksmart-app/mcp-server",
+  "version": "1.0.0",
+  "description": "Authenticated MCP server exposing RiskSmart GRC data to AI clients",
+  "type": "module",
+  "main": "./dist/app.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "private": true,
+  "scripts": {
+    "tsc": "tsc --noEmit",
+    "build": "tsup",
+    "dev:server": "tsx watch ./src/app | pino-pretty",
+    "docker:build": "docker compose --profile mcp up --build mcp-server -d --wait --force-recreate",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix",
+    "test:unit": "vitest --run",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@risksmart-app/modules": "workspace:*",
+    "auth0": "catalog:",
+    "dd-trace": "catalog:",
+    "dotenv": "catalog:",
+    "fastmcp": "catalog:",
+    "hono": "catalog:",
+    "jsonwebtoken": "catalog:",
+    "lodash": "catalog:",
+    "jwks-rsa": "catalog:",
+    "pino": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@risksmart-app/eslint-config": "workspace:*",
+    "@tsconfig/node22": "catalog:",
+    "@types/jsonwebtoken": "catalog:",
+    "@types/node": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
+    "esbuild-plugin-file-path-extensions": "catalog:",
+    "eslint": "catalog:",
+    "eslint-plugin-import": "catalog:",
+    "pino-pretty": "catalog:",
+    "tsup": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

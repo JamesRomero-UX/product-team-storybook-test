@@ -1,0 +1,22 @@
+query getLatestComplianceMonitoringAssessmentDocumentAssessmentResultByDocumentId(
+  $DocumentId: uuid!
+) {
+  document_second_line_result(
+    where: { parents: { ParentId: { _eq: $DocumentId } } }
+    order_by: [{ TestDate: desc_nulls_last }, { CreatedAtTimestamp: desc }]
+    limit: 1
+  ) {
+    ...DocumentSecondLineResultParts
+    ancestorContributors {
+      ...AncestorContributorParts
+    }
+    parents(where: { ParentType: { _eq: compliance_monitoring_assessment } }) {
+      complianceMonitoringAssessment {
+        ...ComplianceMonitoringAssessmentParts
+        completedByUser {
+          FriendlyName
+        }
+      }
+    }
+  }
+}

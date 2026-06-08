@@ -1,0 +1,28 @@
+query getIndicatorsParentsById($Id: uuid!) {
+  indicator(
+    where: {
+      Id: { _eq: $Id }
+      _or: [
+        { parents: { risk: { Id: { _is_null: false } } } }
+        { parents: { control: { Id: { _is_null: false } } } }
+      ]
+    }
+  ) {
+    CreatedAtTimestamp
+    CreatedByUser
+    ModifiedAtTimestamp
+    ModifiedByUser
+    parents {
+      control {
+        Title
+        Id
+        SequentialId
+      }
+      risk {
+        Title
+        Id
+        SequentialId
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+mutation insertObligationChangeAttestation(
+  $ObligationChangeId: uuid!
+  $UserId: String!
+) {
+  insert_obligation_change_attestation_one(
+    object: { ObligationChangeId: $ObligationChangeId, UserId: $UserId }
+  ) {
+    Id
+  }
+}

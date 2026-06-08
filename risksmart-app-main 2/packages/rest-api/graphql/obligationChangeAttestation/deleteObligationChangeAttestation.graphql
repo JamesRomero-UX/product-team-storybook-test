@@ -1,0 +1,15 @@
+mutation deleteObligationChangeAttestation(
+  $ObligationChangeId: uuid!
+  $UserId: String!
+) {
+  delete_obligation_change_attestation(
+    where: {
+      ObligationChangeId: { _eq: $ObligationChangeId }
+      UserId: { _eq: $UserId }
+    }
+  ) {
+    returning {
+      Id
+    }
+  }
+}

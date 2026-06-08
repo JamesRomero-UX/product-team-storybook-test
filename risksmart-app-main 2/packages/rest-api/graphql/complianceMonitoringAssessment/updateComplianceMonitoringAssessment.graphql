@@ -1,0 +1,127 @@
+mutation updateComplianceMonitoringAssessment(
+  $Id: uuid!
+  $Title: String
+  $Summary: String
+  $ActualCompletionDate: timestamptz
+  $NextTestDate: timestamptz
+  $StartDate: timestamptz
+  $TargetCompletionDate: timestamptz
+  $CompletedByUser: String
+  $CustomAttributeData: jsonb
+  $OriginatingItemId: uuid
+  $Status: assessment_status_enum!
+  $contributorIds: [String!]!
+  $contributors: [contributor_insert_input!]!
+  $contributorGroups: [contributor_group_insert_input!]!
+  $contributorGroupIds: [uuid!]!
+  $ownerIds: [String!]!
+  $owners: [owner_insert_input!]!
+  $ownerGroups: [owner_group_insert_input!]!
+  $ownerGroupIds: [uuid!]!
+  $TagTypeIds: [uuid!]!
+  $tags: [tag_insert_input!]!
+  $DepartmentTypeIds: [uuid!]!
+  $departments: [department_insert_input!]!
+  $Outcome: Int
+) {
+  update_compliance_monitoring_assessment(
+    where: { Id: { _eq: $Id } }
+    _set: {
+      Title: $Title
+      Summary: $Summary
+      ActualCompletionDate: $ActualCompletionDate
+      NextTestDate: $NextTestDate
+      StartDate: $StartDate
+      Status: $Status
+      TargetCompletionDate: $TargetCompletionDate
+      CompletedByUser: $CompletedByUser
+      CustomAttributeData: $CustomAttributeData
+      OriginatingItemId: $OriginatingItemId
+      Outcome: $Outcome
+    }
+  ) {
+    affected_rows
+  }
+
+  delete_tag(
+    where: { ParentId: { _eq: $Id }, TagTypeId: { _nin: $TagTypeIds } }
+  ) {
+    affected_rows
+  }
+
+  insert_tag(
+    objects: $tags
+    on_conflict: { constraint: tag_pkey, update_columns: [] }
+  ) {
+    affected_rows
+  }
+
+  delete_department(
+    where: {
+      ParentId: { _eq: $Id }
+      DepartmentTypeId: { _nin: $DepartmentTypeIds }
+    }
+  ) {
+    affected_rows
+  }
+
+  insert_department(
+    objects: $departments
+    on_conflict: { constraint: department_pkey, update_columns: [] }
+  ) {
+    affected_rows
+  }
+
+  delete_contributor(
+    where: { ParentId: { _eq: $Id }, UserId: { _nin: $contributorIds } }
+  ) {
+    affected_rows
+  }
+
+  insert_contributor(
+    objects: $contributors
+    on_conflict: { constraint: contributor_pkey, update_columns: [] }
+  ) {
+    affected_rows
+  }
+
+  delete_owner(where: { ParentId: { _eq: $Id }, UserId: { _nin: $ownerIds } }) {
+    affected_rows
+  }
+
+  insert_owner(
+    objects: $owners
+    on_conflict: { constraint: owner_pkey, update_columns: [] }
+  ) {
+    affected_rows
+  }
+
+  delete_contributor_group(
+    where: {
+      ParentId: { _eq: $Id }
+      UserGroupId: { _nin: $contributorGroupIds }
+    }
+  ) {
+    affected_rows
+  }
+
+  insert_contributor_group(
+    objects: $contributorGroups
+    on_conflict: { constraint: contributor_group_pkey, update_columns: [] }
+  ) {
+    affected_rows
+  }
+
+  delete_owner_group(
+    where: { ParentId: { _eq: $Id }, UserGroupId: { _nin: $ownerGroupIds } }
+  ) {
+    affected_rows
+  }
+
+  insert_owner_group(
+    objects: $ownerGroups
+    on_conflict: { constraint: owner_group_pkey, update_columns: [] }
+  ) {
+    affected_rows
+  }
+}

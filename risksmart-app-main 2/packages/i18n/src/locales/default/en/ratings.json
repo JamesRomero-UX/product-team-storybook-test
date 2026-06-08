@@ -1,0 +1,1641 @@
+{
+  "obligation_change_status": [
+    {
+      "label": "Unread",
+      "value": "unread",
+      "color": "orange"
+    },
+    {
+      "label": "Read",
+      "value": "read",
+      "color": "light-green"
+    }
+  ],
+  "acceptance_status": [
+    {
+      "color": "light-grey",
+      "label": "Draft",
+      "value": "pending"
+    },
+    {
+      "color": "orange",
+      "label": "Pending $t(approval_one)",
+      "value": "pending_approval"
+    },
+    {
+      "color": "light-green",
+      "label": "Open",
+      "value": "open"
+    },
+    {
+      "color": "light-grey",
+      "label": "Closed",
+      "value": "closed"
+    },
+    {
+      "color": "light-grey",
+      "label": "Declined",
+      "value": "declined"
+    }
+  ],
+  "action_status": [
+    {
+      "color": "light-grey",
+      "label": "Pending",
+      "value": "pending"
+    },
+    {
+      "color": "light-green",
+      "label": "Open",
+      "value": "open"
+    },
+    {
+      "color": "light-grey",
+      "label": "Closed",
+      "value": "closed"
+    },
+    {
+      "color": "light-red",
+      "label": "Overdue",
+      "value": "overdue"
+    }
+  ],
+  "adherence": [
+    {
+      "label": "Mandatory",
+      "value": "mandatory"
+    },
+    {
+      "label": "Advised",
+      "value": "advised"
+    },
+    {
+      "label": "Flexible",
+      "value": "flexible"
+    },
+    {
+      "label": "Best practice",
+      "value": "bestPractice"
+    }
+  ],
+  "appetite_performance": [
+    {
+      "color": "dark-green",
+      "label": "Inside",
+      "value": "inside"
+    },
+    {
+      "color": "dark-red",
+      "label": "Outside",
+      "value": "outside"
+    }
+  ],
+  "appetite_status": [
+    {
+      "color": "light-grey",
+      "label": "Archived",
+      "value": "archived"
+    },
+    {
+      "color": "dark-green",
+      "label": "Active",
+      "value": "active"
+    },
+    {
+      "color": "light-green",
+      "label": "Upcoming",
+      "value": "upcoming"
+    }
+  ],
+  "approval_status": [
+    {
+      "color": "orange",
+      "label": "Pending $t(approval_one)",
+      "value": "pending"
+    },
+    {
+      "color": "light-grey",
+      "label": "Cancelled",
+      "value": "deleted"
+    },
+    {
+      "color": "light-green",
+      "label": "Approved",
+      "value": "approved"
+    },
+    {
+      "color": "dark-red",
+      "label": "Rejected",
+      "value": "rejected"
+    },
+    {
+      "color": "light-red",
+      "label": "Failed",
+      "value": "failed"
+    }
+  ],
+  "assessment_activity_status": [
+    {
+      "color": "light-green",
+      "label": "Complete",
+      "value": "complete"
+    },
+    {
+      "color": "orange",
+      "label": "In-progress",
+      "value": "inprogress"
+    },
+    {
+      "color": "light-grey",
+      "label": "Not started",
+      "value": "notstarted"
+    }
+  ],
+  "assessment_outcome": [
+    {
+      "color": "light-green",
+      "label": "Satisfactory",
+      "value": 1
+    },
+    {
+      "color": "orange",
+      "label": "Requires minor improvement",
+      "value": 2
+    },
+    {
+      "color": "dark-red",
+      "label": "Requires significant improvement",
+      "value": 3
+    }
+  ],
+  "assessment_status": [
+    {
+      "color": "light-green",
+      "label": "Complete",
+      "value": "complete"
+    },
+    {
+      "color": "orange",
+      "label": "In-progress",
+      "value": "inprogress"
+    },
+    {
+      "color": "light-grey",
+      "label": "Not started",
+      "value": "notstarted"
+    }
+  ],
+  "attestation_record_status": [
+    {
+      "color": "secondary-green-800",
+      "label": "Attested",
+      "value": "attested"
+    },
+    {
+      "color": "secondary-red-800",
+      "label": "Not attested",
+      "value": "not_attested"
+    },
+    {
+      "color": "light-grey",
+      "label": "Not required",
+      "value": "not_required"
+    },
+    {
+      "color": "dark-red",
+      "label": "Expired",
+      "value": "expired"
+    },
+    {
+      "color": "orange",
+      "label": "Pending",
+      "value": "pending"
+    },
+    {
+      "color": "secondary-red-900",
+      "label": "Overdue",
+      "value": "overdue"
+    }
+  ],
+  "attestation_cycle_status": [
+    {
+      "color": "secondary-green-800",
+      "label": "Active",
+      "value": "active"
+    },
+    {
+      "color": "secondary-red-900",
+      "label": "Overdue",
+      "value": "overdue"
+    },
+    {
+      "color": "secondary-green-700",
+      "label": "Concluded",
+      "value": "concluded"
+    }
+  ],
+  "compliance_monitoring_assessment_outcome": [
+    {
+      "color": "light-green",
+      "label": "Satisfactory",
+      "value": 1
+    },
+    {
+      "color": "orange",
+      "label": "Requires minor improvement",
+      "value": 2
+    },
+    {
+      "color": "dark-red",
+      "label": "Requires significant improvement",
+      "value": 3
+    }
+  ],
+  "consequences_type": [
+    {
+      "label": "Customer",
+      "value": "customer"
+    },
+    {
+      "label": "Financial",
+      "value": "financial"
+    },
+    {
+      "label": "Legal & Regulatory",
+      "value": "legal_and_regulatory"
+    },
+    {
+      "label": "Operational",
+      "value": "operational"
+    },
+    {
+      "label": "Reputational",
+      "value": "reputational"
+    }
+  ],
+  "criticality": [
+    {
+      "color": "dark-green",
+      "label": "Minimal",
+      "range": [1, 1],
+      "value": 1
+    },
+    {
+      "color": "light-green",
+      "label": "Low",
+      "range": [2, 6],
+      "value": 2
+    },
+    {
+      "color": "orange",
+      "label": "Moderate",
+      "range": [7, 12],
+      "value": 3
+    },
+    {
+      "color": "light-red",
+      "label": "High",
+      "range": [13, 24],
+      "value": 4
+    },
+    {
+      "color": "dark-red",
+      "label": "Critical",
+      "range": [25, 25],
+      "value": 5
+    }
+  ],
+  "data_import_status": [
+    {
+      "color": "light-grey",
+      "label": "Not started",
+      "value": "notstarted"
+    },
+    {
+      "color": "orange",
+      "label": "Validating",
+      "value": "validating"
+    },
+    {
+      "color": "orange",
+      "label": "Importing",
+      "value": "initiatingImport"
+    },
+    {
+      "color": "orange",
+      "label": "Importing",
+      "value": "importing"
+    },
+    {
+      "color": "light-green",
+      "label": "Valid",
+      "value": "valid"
+    },
+    {
+      "color": "dark-green",
+      "label": "Complete",
+      "value": "complete"
+    },
+    {
+      "color": "dark-red",
+      "label": "Failed",
+      "value": "failed"
+    }
+  ],
+  "data_export_execution_status": [
+    {
+      "color": "light-grey",
+      "label": "Scheduled",
+      "value": "scheduled"
+    },
+    {
+      "color": "orange",
+      "label": "Cancelled",
+      "value": "cancelled"
+    },
+    {
+      "color": "dark-green",
+      "label": "Complete",
+      "value": "complete"
+    },
+    {
+      "color": "dark-red",
+      "label": "Failed",
+      "value": "failed"
+    }
+  ],
+  "design_effectiveness": [
+    {
+      "color": "dark-green",
+      "label": "Designed to reduce all of the risk",
+      "value": 4
+    },
+    {
+      "color": "light-green",
+      "label": "Designed to reduce most of the risk",
+      "value": 3
+    },
+    {
+      "color": "orange",
+      "label": "Designed to reduce some of the risk",
+      "value": 2
+    },
+    {
+      "color": "light-red",
+      "label": "Limited or Poorly designed",
+      "value": 1
+    },
+    {
+      "color": "dark-red",
+      "label": "Not yet in place",
+      "value": 0
+    }
+  ],
+  "document_file_status": [
+    {
+      "color": "light-grey",
+      "label": "Draft",
+      "value": "draft"
+    },
+    {
+      "color": "light-grey",
+      "label": "Archived",
+      "value": "archived"
+    },
+    {
+      "color": "light-green",
+      "label": "Published",
+      "value": "published"
+    },
+    {
+      "color": "orange",
+      "label": "Pending $t(approval_one)",
+      "value": "pending_approval"
+    }
+  ],
+  "document_review_status": [
+    {
+      "color": "light-grey",
+      "label": "Not set",
+      "value": "not_set"
+    },
+    {
+      "color": "blue-300",
+      "label": "Not due",
+      "value": "not_due"
+    },
+    {
+      "color": "orange",
+      "label": "Due",
+      "value": "due"
+    },
+    {
+      "color": "light-red",
+      "label": "Overdue",
+      "value": "overdue"
+    }
+  ],
+  "document_file_type": [
+    {
+      "label": "Link",
+      "value": "link"
+    },
+    {
+      "label": "File",
+      "value": "file"
+    },
+    {
+      "label": "Text",
+      "value": "html"
+    }
+  ],
+  "effectiveness": [
+    {
+      "color": "dark-green",
+      "label": "Fully effective",
+      "range": [14, 16],
+      "value": 4
+    },
+    {
+      "color": "light-green",
+      "label": "Mostly effective",
+      "range": [8, 13],
+      "value": 3
+    },
+    {
+      "color": "orange",
+      "label": "Moderately effective",
+      "range": [4, 7],
+      "value": 2
+    },
+    {
+      "color": "light-red",
+      "label": "Partially effective",
+      "range": [1, 3],
+      "value": 1
+    },
+    {
+      "color": "dark-red",
+      "label": "Not effective",
+      "range": [0, 0],
+      "value": 0
+    }
+  ],
+  "frequency": [
+    {
+      "label": "Daily",
+      "value": "daily"
+    },
+    {
+      "label": "Weekly",
+      "value": "weekly"
+    },
+    {
+      "label": "Fortnightly",
+      "value": "fortnightly"
+    },
+    {
+      "label": "Four weekly",
+      "value": "fourweekly"
+    },
+    {
+      "label": "Monthly",
+      "value": "monthly"
+    },
+    {
+      "label": "Quarterly",
+      "value": "quarterly"
+    },
+    {
+      "label": "Biannually",
+      "value": "biannually"
+    },
+    {
+      "label": "Annually",
+      "value": "annually"
+    },
+    {
+      "label": "Ad hoc",
+      "value": "adhoc"
+    }
+  ],
+  "impact": [
+    {
+      "color": "dark-green",
+      "label": "Minimal",
+      "value": 1
+    },
+    {
+      "color": "light-green",
+      "label": "Low",
+      "value": 2
+    },
+    {
+      "color": "orange",
+      "label": "Moderate",
+      "value": 3
+    },
+    {
+      "color": "light-red",
+      "label": "High",
+      "value": 4
+    },
+    {
+      "color": "dark-red",
+      "label": "Critical",
+      "value": 5
+    }
+  ],
+  "impact_appetite": [
+    {
+      "color": "dark-green",
+      "label": "Minimal",
+      "value": 1
+    },
+    {
+      "color": "light-green",
+      "label": "Low",
+      "value": 2
+    },
+    {
+      "color": "orange",
+      "label": "Moderate",
+      "value": 3
+    },
+    {
+      "color": "light-red",
+      "label": "High",
+      "value": 4
+    },
+    {
+      "color": "dark-red",
+      "label": "Critical",
+      "value": 5
+    }
+  ],
+  "impact_performance": [
+    {
+      "color": "light-grey",
+      "label": "Unrated",
+      "value": "unrated"
+    },
+    {
+      "color": "dark-red",
+      "label": "Outside",
+      "value": "outside"
+    },
+    {
+      "color": "light-green",
+      "label": "Within",
+      "value": "within"
+    }
+  ],
+  "impact_performance_rating": [
+    {
+      "color": "light-green",
+      "label": "Above",
+      "value": "above"
+    },
+    {
+      "color": "light-grey",
+      "label": "Aligned",
+      "value": "aligned"
+    },
+    {
+      "color": "dark-red",
+      "label": "Below",
+      "value": "below"
+    }
+  ],
+  "impact_placemat": [
+    {
+      "color": "#004F82",
+      "label": "-4",
+      "value": -4
+    },
+    {
+      "color": "#00619E",
+      "label": "-3",
+      "value": -3
+    },
+    {
+      "color": "#66ABE2",
+      "label": "-2",
+      "value": -2
+    },
+    {
+      "color": "#cce3f5",
+      "label": "-1",
+      "value": -1
+    },
+    {
+      "color": "#f2f2f2",
+      "label": "0",
+      "value": 0
+    },
+    {
+      "color": "#FEF2CD",
+      "label": "1",
+      "value": 1
+    },
+    {
+      "color": "#FDD868",
+      "label": "2",
+      "value": 2
+    },
+    {
+      "color": "#FDCB36",
+      "label": "3",
+      "value": 3
+    },
+    {
+      "color": "#AB7E00",
+      "label": "4",
+      "value": 4
+    }
+  ],
+  "impact_placemat_aggregate_column_score": [
+    {
+      "color": "#1b1b1a",
+      "label": "Crucial",
+      "value": -15
+    },
+    {
+      "color": "#4D4D4C",
+      "label": "Severe",
+      "value": -9
+    },
+    {
+      "color": "#a4a4a4",
+      "label": "Uncomfortable",
+      "value": -5
+    },
+    {
+      "color": "#e0e0e0",
+      "label": "Minimal",
+      "value": -2
+    },
+    {
+      "color": "#ffffff",
+      "label": "Acceptable",
+      "value": 0
+    },
+    {
+      "color": "#DDDE4C",
+      "label": "Opportunity",
+      "value": 2
+    }
+  ],
+  "impact_rating_status": [
+    {
+      "color": "light-green",
+      "label": "Active",
+      "value": "active"
+    },
+    {
+      "color": "light-grey",
+      "label": "Archived",
+      "value": "archived"
+    }
+  ],
+  "indicator_conformance_status": [
+    {
+      "color": "light-grey",
+      "label": "Not set",
+      "value": 0
+    },
+    {
+      "color": "dark-red",
+      "label": "Outside",
+      "value": 1
+    },
+    {
+      "color": "light-green",
+      "label": "Within",
+      "value": 2
+    },
+    {
+      "color": "orange",
+      "label": "Outside of appetite",
+      "value": 3
+    }
+  ],
+  "indicator_conformance_trend": [
+    {
+      "color": "dark-red",
+      "label": "Deteriorating",
+      "value": "deteriorating"
+    },
+    {
+      "color": "light-green",
+      "label": "Improving",
+      "value": "improving"
+    },
+    {
+      "color": "light-grey",
+      "label": "Stable",
+      "value": "stable"
+    }
+  ],
+  "rating_trend": [
+    {
+      "color": "dark-red",
+      "label": "Increased",
+      "value": "increased"
+    },
+    {
+      "color": "light-green",
+      "label": "Decreased",
+      "value": "decreased"
+    },
+    {
+      "color": "light-grey",
+      "label": "Stable",
+      "value": "stable"
+    }
+  ],
+  "effectiveness_trend": [
+    {
+      "color": "light-green",
+      "label": "Increased",
+      "value": "increased"
+    },
+    {
+      "color": "dark-red",
+      "label": "Decreased",
+      "value": "decreased"
+    },
+    {
+      "color": "light-grey",
+      "label": "Stable",
+      "value": "stable"
+    }
+  ],
+  "indicator_type": [
+    {
+      "label": "Number",
+      "value": "number"
+    },
+    {
+      "label": "Text",
+      "value": "text"
+    }
+  ],
+  "internal_audit_entity_status": [
+    {
+      "color": "orange",
+      "label": "Not scheduled",
+      "value": "notscheduled"
+    },
+    {
+      "color": "light-green",
+      "label": "In progress",
+      "value": "inprogress"
+    },
+    {
+      "color": "light-green",
+      "label": "Planned",
+      "value": "planned"
+    },
+    {
+      "color": "light-grey",
+      "label": "Unallocated",
+      "value": "unallocated"
+    }
+  ],
+  "internal_audit_report_outcome": [
+    {
+      "color": "light-green",
+      "label": "Satisfactory",
+      "value": 1
+    },
+    {
+      "color": "orange",
+      "label": "Requires minor improvement",
+      "value": 2
+    },
+    {
+      "color": "dark-red",
+      "label": "Requires significant improvement",
+      "value": 3
+    }
+  ],
+  "issue_assessment_status": [
+    {
+      "color": "light-grey",
+      "label": "Pending",
+      "value": "pending"
+    },
+    {
+      "color": "light-green",
+      "label": "Open",
+      "value": "open"
+    },
+    {
+      "color": "light-grey",
+      "label": "Closed",
+      "value": "closed"
+    },
+    {
+      "color": "light-red",
+      "label": "Overdue",
+      "value": "overdue"
+    }
+  ],
+  "issue_breach_log_type": [
+    {
+      "label": "$t(common:issueBreachLogTypes.hack)",
+      "value": "hack"
+    },
+    {
+      "label": "$t(common:issueBreachLogTypes.physical)",
+      "value": "physical"
+    },
+    {
+      "label": "$t(common:issueBreachLogTypes.insider)",
+      "value": "insider"
+    },
+    {
+      "label": "$t(common:issueBreachLogTypes.disclosure)",
+      "value": "disclosure"
+    }
+  ],
+  "issue_consumer_duty_type": [
+    {
+      "label": "$t(common:issueConsumerDutyTypes.long-wait)",
+      "value": "long-wait"
+    },
+    {
+      "label": "$t(common:issueConsumerDutyTypes.unsupportive-agent)",
+      "value": "unsupportive-agent"
+    },
+    {
+      "label": "$t(common:issueConsumerDutyTypes.inconsistent-information)",
+      "value": "inconsistent-information"
+    }
+  ],
+  "issue_customer_trust_type": [
+    {
+      "label": "$t(common:issueCustomerTrustTypes.long-wait)",
+      "value": "long-wait"
+    },
+    {
+      "label": "$t(common:issueCustomerTrustTypes.unsupportive-agent)",
+      "value": "unsupportive-agent"
+    },
+    {
+      "label": "$t(common:issueCustomerTrustTypes.inconsistent-information)",
+      "value": "inconsistent-information"
+    }
+  ],
+  "issue_gdpr_breach_log_type": [
+    {
+      "label": "$t(common:issueGDPRBreachLogTypes.hack)",
+      "value": "hack"
+    },
+    {
+      "label": "$t(common:issueGDPRBreachLogTypes.physical)",
+      "value": "physical"
+    },
+    {
+      "label": "$t(common:issueGDPRBreachLogTypes.insider)",
+      "value": "insider"
+    },
+    {
+      "label": "$t(common:issueGDPRBreachLogTypes.disclosure)",
+      "value": "disclosure"
+    }
+  ],
+  "issue_pci_breach_log_type": [
+    {
+      "label": "$t(common:issuePCIBreachLogTypes.hack)",
+      "value": "hack"
+    },
+    {
+      "label": "$t(common:issuePCIBreachLogTypes.physical)",
+      "value": "physical"
+    },
+    {
+      "label": "$t(common:issuePCIBreachLogTypes.insider)",
+      "value": "insider"
+    },
+    {
+      "label": "$t(common:issuePCIBreachLogTypes.disclosure)",
+      "value": "disclosure"
+    }
+  ],
+  "issue_risk_event_type": [
+    {
+      "label": "$t(common:issueRiskEventTypes.internal-fraud)",
+      "value": "internal-fraud"
+    },
+    {
+      "label": "$t(common:issueRiskEventTypes.external-fraud)",
+      "value": "external-fraud"
+    },
+    {
+      "label": "$t(common:issueRiskEventTypes.system-failure)",
+      "value": "system-failure"
+    },
+    {
+      "label": "$t(common:issueRiskEventTypes.unethical-client)",
+      "value": "unethical-client"
+    }
+  ],
+  "issue_sar_log_type": [
+    {
+      "label": "$t(common:issueSARLogTypes.long-wait)",
+      "value": "a"
+    },
+    {
+      "label": "$t(common:issueSARLogTypes.unsupportive-agent)",
+      "value": "b"
+    },
+    {
+      "label": "$t(common:issueSARLogTypes.inconsistent-information)",
+      "value": "c"
+    }
+  ],
+  "issue_type": [
+    {
+      "label": "$t(common:issueTypes.near-miss)",
+      "value": "near-miss"
+    },
+    {
+      "label": "$t(common:issueTypes.material-impact)",
+      "value": "material-impact"
+    },
+    {
+      "label": "$t(common:issueTypes.internal-audit-finding)",
+      "value": "internal-audit-finding"
+    },
+    {
+      "label": "$t(common:issueTypes.compliance-finding)",
+      "value": "compliance-finding"
+    },
+    {
+      "label": "$t(common:issueTypes.control-test-finding)",
+      "value": "control-test-finding"
+    }
+  ],
+  "likelihood": [
+    {
+      "color": "dark-green",
+      "label": "Very Unlikely",
+      "value": 1
+    },
+    {
+      "color": "light-green",
+      "label": "Unlikely",
+      "value": 2
+    },
+    {
+      "color": "orange",
+      "label": "Likely",
+      "value": 3
+    },
+    {
+      "color": "light-red",
+      "label": "Very Likely",
+      "value": 4
+    },
+    {
+      "color": "dark-red",
+      "label": "Certain",
+      "value": 5
+    }
+  ],
+  "likelihood_appetite": [
+    {
+      "color": "dark-green",
+      "label": "Very Unlikely",
+      "value": 1
+    },
+    {
+      "color": "light-green",
+      "label": "Unlikely",
+      "value": 2
+    },
+    {
+      "color": "orange",
+      "label": "Likely",
+      "value": 3
+    },
+    {
+      "color": "light-red",
+      "label": "Very Likely",
+      "value": 4
+    },
+    {
+      "color": "dark-red",
+      "label": "Certain",
+      "value": 5
+    }
+  ],
+  "performance_effectiveness": [
+    {
+      "color": "dark-green",
+      "label": "Control is always applied correctly",
+      "value": 4
+    },
+    {
+      "color": "light-green",
+      "label": "Control is mostly applied correctly",
+      "value": 3
+    },
+    {
+      "color": "orange",
+      "label": "Control is sometimes applied correctly",
+      "value": 2
+    },
+    {
+      "color": "light-red",
+      "label": "Control is not applied, or not applied correctly",
+      "value": 1
+    },
+    {
+      "color": "dark-red",
+      "label": "Not yet in place",
+      "value": 0
+    }
+  ],
+  "performance_result": [
+    {
+      "color": "dark-red",
+      "label": "Non-compliant",
+      "value": 1
+    },
+    {
+      "color": "orange",
+      "label": "Working towards",
+      "value": 2
+    },
+    {
+      "color": "light-green",
+      "label": "Compliant",
+      "value": 3
+    },
+    {
+      "color": "dark-green",
+      "label": "Exceeding",
+      "value": 4
+    }
+  ],
+  "performance_result_unrated": [
+    {
+      "color": "light-grey",
+      "label": "Unrated",
+      "value": 0
+    }
+  ],
+  "performance_summary": [
+    {
+      "label": "Non-compliant",
+      "value": 1
+    },
+    {
+      "label": "Working towards",
+      "value": 2
+    },
+    {
+      "label": "Compliant",
+      "value": 3
+    }
+  ],
+  "priority": [
+    {
+      "color": "dark-green",
+      "label": "Low",
+      "value": 1
+    },
+    {
+      "color": "orange",
+      "label": "Medium",
+      "value": 2
+    },
+    {
+      "color": "dark-red",
+      "label": "High",
+      "value": 3
+    }
+  ],
+  "questionnaire_template_version_status": [
+    {
+      "color": "light-grey",
+      "label": "Draft",
+      "value": "draft"
+    },
+    {
+      "color": "light-red",
+      "label": "Archived",
+      "value": "archived"
+    },
+    {
+      "color": "light-green",
+      "label": "Published",
+      "value": "published"
+    }
+  ],
+  "risk_appetite": [
+    {
+      "color": "dark-green",
+      "guidance": null,
+      "label": "Minimal",
+      "value": 1
+    },
+    {
+      "color": "light-green",
+      "guidance": null,
+      "label": "Low",
+      "value": 2
+    },
+    {
+      "color": "orange",
+      "guidance": null,
+      "label": "Moderate",
+      "value": 3
+    },
+    {
+      "color": "light-red",
+      "guidance": null,
+      "label": "High",
+      "value": 4
+    },
+    {
+      "color": "dark-red",
+      "guidance": null,
+      "label": "Critical",
+      "value": 5
+    }
+  ],
+  "risk_controlled": [
+    {
+      "color": "dark-green",
+      "label": "Minimal",
+      "likelihoodImpact": [
+        {
+          "impact": 1,
+          "likelihood": 1
+        }
+      ],
+      "range": [1, 1],
+      "value": 1
+    },
+    {
+      "color": "light-green",
+      "label": "Low",
+      "likelihoodImpact": [
+        {
+          "impact": 1,
+          "likelihood": 2
+        },
+        {
+          "impact": 1,
+          "likelihood": 3
+        },
+        {
+          "impact": 1,
+          "likelihood": 4
+        },
+        {
+          "impact": 1,
+          "likelihood": 5
+        },
+        {
+          "impact": 2,
+          "likelihood": 1
+        },
+        {
+          "impact": 2,
+          "likelihood": 2
+        },
+        {
+          "impact": 2,
+          "likelihood": 3
+        },
+        {
+          "impact": 3,
+          "likelihood": 1
+        },
+        {
+          "impact": 3,
+          "likelihood": 2
+        },
+        {
+          "impact": 4,
+          "likelihood": 1
+        },
+        {
+          "impact": 5,
+          "likelihood": 1
+        }
+      ],
+      "range": [2, 6],
+      "value": 2
+    },
+    {
+      "color": "orange",
+      "label": "Moderate",
+      "likelihoodImpact": [
+        {
+          "impact": 2,
+          "likelihood": 4
+        },
+        {
+          "impact": 2,
+          "likelihood": 5
+        },
+        {
+          "impact": 3,
+          "likelihood": 3
+        },
+        {
+          "impact": 3,
+          "likelihood": 4
+        },
+        {
+          "impact": 4,
+          "likelihood": 2
+        },
+        {
+          "impact": 4,
+          "likelihood": 3
+        },
+        {
+          "impact": 5,
+          "likelihood": 2
+        }
+      ],
+      "range": [7, 12],
+      "value": 3
+    },
+    {
+      "color": "light-red",
+      "label": "High",
+      "likelihoodImpact": [
+        {
+          "impact": 3,
+          "likelihood": 5
+        },
+        {
+          "impact": 4,
+          "likelihood": 4
+        },
+        {
+          "impact": 4,
+          "likelihood": 5
+        },
+        {
+          "impact": 5,
+          "likelihood": 4
+        },
+        {
+          "impact": 5,
+          "likelihood": 3
+        }
+      ],
+      "range": [13, 24],
+      "value": 4
+    },
+    {
+      "color": "dark-red",
+      "label": "Critical",
+      "likelihoodImpact": [
+        {
+          "impact": 5,
+          "likelihood": 5
+        }
+      ],
+      "range": [25, 25],
+      "value": 5
+    }
+  ],
+  "risk_uncontrolled": [
+    {
+      "color": "dark-green",
+      "label": "Minimal",
+      "likelihoodImpact": [
+        {
+          "impact": 1,
+          "likelihood": 1
+        }
+      ],
+      "range": [1, 1],
+      "value": 1
+    },
+    {
+      "color": "light-green",
+      "label": "Low",
+      "likelihoodImpact": [
+        {
+          "impact": 1,
+          "likelihood": 2
+        },
+        {
+          "impact": 1,
+          "likelihood": 3
+        },
+        {
+          "impact": 1,
+          "likelihood": 4
+        },
+        {
+          "impact": 1,
+          "likelihood": 5
+        },
+        {
+          "impact": 2,
+          "likelihood": 1
+        },
+        {
+          "impact": 2,
+          "likelihood": 2
+        },
+        {
+          "impact": 2,
+          "likelihood": 3
+        },
+        {
+          "impact": 3,
+          "likelihood": 1
+        },
+        {
+          "impact": 3,
+          "likelihood": 2
+        },
+        {
+          "impact": 4,
+          "likelihood": 1
+        },
+        {
+          "impact": 5,
+          "likelihood": 1
+        }
+      ],
+      "range": [2, 6],
+      "value": 2
+    },
+    {
+      "color": "orange",
+      "label": "Moderate",
+      "likelihoodImpact": [
+        {
+          "impact": 2,
+          "likelihood": 4
+        },
+        {
+          "impact": 2,
+          "likelihood": 5
+        },
+        {
+          "impact": 3,
+          "likelihood": 3
+        },
+        {
+          "impact": 3,
+          "likelihood": 4
+        },
+        {
+          "impact": 4,
+          "likelihood": 2
+        },
+        {
+          "impact": 4,
+          "likelihood": 3
+        },
+        {
+          "impact": 5,
+          "likelihood": 2
+        }
+      ],
+      "range": [7, 12],
+      "value": 3
+    },
+    {
+      "color": "light-red",
+      "label": "High",
+      "likelihoodImpact": [
+        {
+          "impact": 3,
+          "likelihood": 5
+        },
+        {
+          "impact": 4,
+          "likelihood": 4
+        },
+        {
+          "impact": 4,
+          "likelihood": 5
+        },
+        {
+          "impact": 5,
+          "likelihood": 4
+        },
+        {
+          "impact": 5,
+          "likelihood": 3
+        }
+      ],
+      "range": [13, 24],
+      "value": 4
+    },
+    {
+      "color": "dark-red",
+      "label": "Critical",
+      "likelihoodImpact": [
+        {
+          "impact": 5,
+          "likelihood": 5
+        }
+      ],
+      "range": [25, 25],
+      "value": 5
+    }
+  ],
+  "severity": [
+    {
+      "color": "dark-green",
+      "label": "Minimal",
+      "value": 1
+    },
+    {
+      "color": "light-green",
+      "label": "Low",
+      "value": 2
+    },
+    {
+      "color": "orange",
+      "label": "Moderate",
+      "value": 3
+    },
+    {
+      "color": "light-red",
+      "label": "High",
+      "value": 4
+    },
+    {
+      "color": "dark-red",
+      "label": "Critical",
+      "value": 5
+    }
+  ],
+  "significance": [
+    {
+      "color": "dark-green",
+      "label": "Very Unlikely",
+      "value": 1
+    },
+    {
+      "color": "light-green",
+      "label": "Unlikely",
+      "value": 2
+    },
+    {
+      "color": "orange",
+      "label": "Likely",
+      "value": 3
+    },
+    {
+      "color": "light-red",
+      "label": "Very Likely",
+      "value": 4
+    },
+    {
+      "color": "dark-red",
+      "label": "Certain",
+      "value": 5
+    }
+  ],
+  "third_party_contact_status": [
+    {
+      "color": "orange",
+      "label": "Pending",
+      "value": "pending"
+    },
+    {
+      "color": "dark-green",
+      "label": "Active",
+      "value": "active"
+    },
+    {
+      "color": "light-red",
+      "label": "Revoked",
+      "value": "revoked"
+    }
+  ],
+  "third_party_criticality": [
+    {
+      "color": "dark-green",
+      "label": "Minimal",
+      "value": 1
+    },
+    {
+      "color": "light-green",
+      "label": "Low",
+      "value": 2
+    },
+    {
+      "color": "orange",
+      "label": "Moderate",
+      "value": 3
+    },
+    {
+      "color": "light-red",
+      "label": "High",
+      "value": 4
+    }
+  ],
+  "third_party_response_status": [
+    {
+      "color": "dark-green",
+      "label": "Completed",
+      "value": "completed"
+    },
+    {
+      "color": "orange",
+      "label": "In progress",
+      "value": "in_progress"
+    },
+    {
+      "color": "light-red",
+      "label": "Expired",
+      "value": "expired"
+    },
+    {
+      "color": "light-green",
+      "label": "Awaiting review",
+      "value": "awaiting_review"
+    },
+    {
+      "color": "dark-red",
+      "label": "Rejected",
+      "value": "rejected"
+    },
+    {
+      "color": "light-grey",
+      "label": "Not started",
+      "value": "not_started"
+    },
+    {
+      "color": "light-red",
+      "label": "Recalled",
+      "value": "recalled"
+    }
+  ],
+  "third_party_status": [
+    {
+      "color": "light-green",
+      "label": "Active",
+      "value": "active"
+    },
+    {
+      "color": "orange",
+      "label": "Pre-contract",
+      "value": "pre_contract"
+    },
+    {
+      "color": "light-red",
+      "label": "Review due",
+      "value": "review_due"
+    },
+    {
+      "color": "light-grey",
+      "label": "Archived",
+      "value": "archived"
+    }
+  ],
+  "third_party_type": [
+    {
+      "label": "Consultant",
+      "value": "consultant"
+    },
+    {
+      "label": "Managed Service",
+      "value": "managed_service"
+    },
+    {
+      "label": "Outsource",
+      "value": "outsource"
+    },
+    {
+      "label": "Partner",
+      "value": "partner"
+    },
+    {
+      "label": "Supplier",
+      "value": "supplier"
+    }
+  ],
+  "test_schedule_status": [
+    {
+      "color": "light-red",
+      "label": "Overdue",
+      "value": "overdue"
+    },
+    {
+      "color": "light-green",
+      "label": "Due",
+      "value": "due"
+    }
+  ]
+}

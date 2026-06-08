@@ -1,0 +1,19 @@
+query getLinkedItems($Id: uuid!) {
+  as_source: linked_item(
+    where: { Source: { _eq: $Id }, RelationshipType: { _neq: "child_parent" } }
+  ) {
+    Id
+    Source
+    Target
+    RelationshipType
+  }
+
+  as_target: linked_item(
+    where: { Target: { _eq: $Id }, RelationshipType: { _neq: "child_parent" } }
+  ) {
+    Id
+    Source
+    Target
+    RelationshipType
+  }
+}

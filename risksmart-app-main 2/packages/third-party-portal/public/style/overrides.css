@@ -1,0 +1,284 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Small borders!! */
+/* Inputs */
+[class*='awsui_input'],
+  /* Text areas */
+[class*='awsui_textarea'],
+  /* Date picker */
+[class*='awsui_button-trigger'],
+  /* Segment button */
+[class*='awsui_segment'] {
+  border-width: 1.5px !important;
+}
+
+/* Override default max and min calculated widths (Date picker + others) */
+.grid.place-items-stretch [class*='awsui_trigger-wrapper'],
+.grid.place-items-stretch [class*='awsui_root'] {
+  min-width: 0% !important;
+  max-width: 100% !important;
+}
+
+/* HACK – Overrides italic style on text input placeholder */
+[class*='awsui_input'][type='text']::placeholder {
+  font-style: normal !important;
+}
+
+/* HACK – Overrides hover state on radio buttons and select dropdowns */
+[class*='awsui_label-wrapper'],
+[class*='awsui_control'] [type='button'] {
+  cursor: pointer !important;
+}
+
+/* HACK - Link button hover/active background when placed in header */
+[class*='awsui_button'][class*='awsui_variant-link']:not(#\9):hover {
+  background: #f2f8fd !important;
+  border-color: #f2f8fd !important;
+}
+[class*='awsui_button'][class*='awsui_variant-link']:not(#\9):active {
+  background: #d3e7f9 !important;
+  border-color: #d3e7f9 !important;
+}
+
+/* HACK - border on date range drop down */
+[class*='awsui_footer'] {
+  @apply border-grey200 !important;
+}
+
+/* HACK - change the segment control colours. Note, this can be changes using the cloudscape theme  */
+button[class*='awsui_segment']:first-child {
+  border-right-width: 0px !important;
+}
+button[class*='awsui_segment']:not(#\9) {
+  @apply bg-white text-navy_light  !important;
+}
+[class*='awsui_segment'][class*='awsui_selected']:not(#\9) {
+  @apply bg-teal text-navy_light   !important;
+}
+
+.newFiles [class*='awsui_type-success'] {
+  background-color: #ecfbfa !important;
+  border-color: #00decb !important;
+}
+.newFiles [class*='awsui_type-success'] [class*='awsui_icon'][role='img'] {
+  display: none !important;
+}
+
+/* No drop shadow on containers or drop downs */
+[class*='awsui_dropdown-content-wrapper'],
+[class*='awsui_variant-default']:after,
+[class*='awsui_variant-stacked']:after,
+[class*='awsui_card-inner']:after {
+  box-shadow: none !important;
+}
+/* Border on containers */
+[class*='awsui_variant-default'],
+[class*='awsui_variant-stacked'],
+[class*='awsui_card-inner'] {
+  @apply border-grey250 !important;
+  border: 1px solid;
+}
+
+/* Border styles on drop downs */
+[class*='awsui_dropdown-content-wrapper']:after {
+  border-width: 1.5px !important;
+  border-radius: 6px !important;
+  @apply border-grey250 !important;
+}
+
+[class*='awsui_selectable-item'][class*='awsui_highlighted']:not(#\9),
+[class*='awsui_selectable-item'][class*='awsui_selected']:not(#\9) {
+  border-color: transparent !important;
+}
+
+/* Drop down styles */
+[class*='awsui_dropdown-content'] {
+  /* Gap around selectable items and container */
+  [class*='awsui_options-list'] {
+    border-radius: 0px !important;
+    margin: 10px !important;
+  }
+
+  /* Changing group headings on drop down buttons */
+  [class*='awsui_header'] {
+    @apply font-normal text-grey500 text-xs !important;
+  }
+
+  /* Don't nest child drop down button items */
+  [class*='awsui_has-category-header'] [class*='awsui_menu-item'] {
+    padding-left: 22px !important;
+  }
+
+  /* Not borders around items in drop downs */
+  [class*='awsui_selectable-item'],
+  [class*='awsui_menu-item'] {
+    border-width: 0px !important;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+
+    /* Property and Operator label styling */
+    [class*='awsui_filtering-match-highlight'] {
+      @apply text-navy bg-transparent !important;
+    }
+
+    /* Rounded corners on previously selected item */
+    &[class*='awsui_has-background'] {
+      border-radius: 5px !important;
+    }
+    /* Don't nest child items */
+    &[class*='awsui_child'] {
+      padding-left: 8px !important;
+    }
+
+    [class*='awsui_label'] {
+      @apply font-semibold !important;
+    }
+
+    /* Change drop down heading style */
+    &[class*='awsui_parent'] {
+      [class*='awsui_option-content'] {
+        @apply font-normal text-grey500 text-xs !important;
+      }
+    }
+  }
+
+  [class*='awsui_selected-icon'] {
+    margin-left: 4px !important;
+  }
+
+  /* Reduce border width on select drop down selected items */
+
+  [class*='awsui_highlighted'] {
+    color: #2d2d53 !important;
+    border: white !important;
+    /* colorBackgroundDropdownItemHover doesn't apply over a selected item */
+    @apply bg-grey150 !important;
+    font-weight: 600;
+    border-radius: 4px !important;
+  }
+}
+
+[class*='awsui_use-portal'] [class*='awsui_dropdown-content'] {
+  min-width: 100px;
+}
+
+[class*='awsui_use-portal']
+  [class*='awsui_dropdown-content']
+  [class*='awsui_item-element'] {
+  border-bottom: 0px !important;
+  border-width: 0px !important;
+}
+
+[class*='awsui_use-portal']
+  [class*='awsui_dropdown-content']
+  [class*='awsui_dropdown-content']
+  [role='menu'] {
+  margin: 4px !important;
+  border: 0px !important;
+  border-radius: 4px !important;
+}
+
+[class*='awsui_use-portal']
+  [class*='awsui_dropdown-content']
+  [class*='awsui_dropdown-content'] {
+  max-height: auto !important;
+}
+
+/* Fix to ensure the TinyMce text editor menus/dialogs are shown in a Cloudscape modal */
+.tox-tinymce-aux {
+  z-index: 6000 !important;
+}
+
+[class*='awsui_button-trigger'] {
+  [class*='awsui_label-text'] {
+    font-style: normal !important;
+  }
+  [class*='awsui_label-token'] {
+    @apply font-normal text-xs !important;
+  }
+}
+
+@media print {
+  body {
+    width: 297mm !important;
+    font-size: 87.06%;
+  }
+
+  button {
+    display: none !important;
+  }
+
+  main {
+    background-color: transparent !important;
+  }
+
+  @page {
+    size: A4 landscape;
+  }
+
+  [class*='boardItem'] {
+    transition: none !important;
+    -webkit-print-color-adjust: exact !important;
+    -moz-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  [aria-describedby*='awsui-pie-chart'] > g,
+  div[aria-describedby*='awsui-pie-chart'] svg > g {
+    transform: translate(240px, 152px) !important;
+  }
+
+  [class*='barChart'] svg,
+  [class*='_chart_'] svg {
+    /* @TODO: we need a clever way to calculate the scale based on the original and new viewport size (297mm) */
+    transform: scale(0.65, 0.8) translate(-120px, -20px) !important;
+  }
+
+  [class*='awsui_grid'] {
+    grid-auto-rows: 80px !important;
+  }
+
+  [class*='awsui_inner-content'] {
+    width: 100% !important;
+    flex: none;
+  }
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  /* Do NOT use overflow hidden, it clips the container content */
+  [class*='awsui_content']::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  [class*='awsui_content'] {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  [class*='awsui_header'] button[class*='awsui_handle_'] {
+    display: none;
+  }
+
+  .flex-grow {
+    padding-left: 0 !important;
+  }
+
+  [class*='boardItem']:has(.rich-text-widget) [class*='awsui_header'] {
+    display: none;
+  }
+  [class*='boardItem']:has(.rich-text-widget) > div > div {
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+  [class*='boardItem']:not(:has(.rich-text-widget))
+    [class*='awsui_content_']:has([class*='awsui_table'])
+    > div,
+  [class*='boardItem']:not(:has(.rich-text-widget))
+    [class*='awsui_content_']:has([class*='awsui_chart'])
+    > div {
+    min-height: 200px;
+    height: 100%;
+  }
+}

@@ -1,0 +1,69 @@
+mutation insertEntity($object: entity_insert_input!) {
+  insert_entity_one(object: $object) {
+    Id
+  }
+}
+
+mutation updateEntity(
+  $where: entity_bool_exp!
+  $_set: entity_set_input!
+  $Id: uuid!
+  $ownerIds: [String!]!
+  $owners: [owner_insert_input!]!
+  $ownerGroups: [owner_group_insert_input!]!
+  $ownerGroupIds: [uuid!]!
+) {
+  update_entity(where: $where, _set: $_set) {
+    affected_rows
+  }
+  delete_owner(where: { ParentId: { _eq: $Id }, UserId: { _nin: $ownerIds } }) {
+    affected_rows
+  }
+  insert_owner(
+    objects: $owners
+    on_conflict: { constraint: owner_pkey, update_columns: [] }
+  ) {
+    affected_rows
+  }
+  delete_owner_group(
+    where: { ParentId: { _eq: $Id }, UserGroupId: { _nin: $ownerGroupIds } }
+  ) {
+    affected_rows
+  }
+
+  insert_owner_group(
+    objects: $ownerGroups
+    on_conflict: { constraint: owner_group_pkey, update_columns: [] }
+  ) {
+    affected_rows
+  }
+}
+
+mutation deleteEntity($where: entity_bool_exp!) {
+  delete_entity(where: $where) {
+    affected_rows
+  }
+}
+
+query getEntityById($Id: uuid!) {
+  entity_by_pk(Id: $Id) {
+    Id
+    Name
+    Description
+    Weight
+
+    parent {
+      Id
+      Name
+      Description
+      Weight
+    }
+
+    children {
+      Id
+      Name
+      Description
+      Weight
+    }
+  }
+}

@@ -1,0 +1,12 @@
+query getActionUpdates {
+  action_update {
+    Description
+    Id
+    ParentActionId
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    Title
+    CreatedByUser
+    ModifiedByUser
+  }
+}

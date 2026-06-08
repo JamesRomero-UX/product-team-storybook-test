@@ -1,0 +1,21 @@
+query getImpactRatings {
+  impact_rating(where: { RatingType: { _in: ["assessment", "rating"] } }) {
+    ...ImpactRatingParts
+    createdByUser {
+      FriendlyName
+    }
+    completedBy {
+      FriendlyName
+    }
+    impact {
+      Id
+      Name
+    }
+    ratedItem {
+      risk {
+        Title
+      }
+      ObjectType
+    }
+  }
+}

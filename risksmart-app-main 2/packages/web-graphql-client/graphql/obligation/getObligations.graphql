@@ -1,0 +1,117 @@
+query getObligations(
+  $where: obligation_bool_exp! = {}
+  $obligationAssessmentResultsWhere: obligation_assessment_result_bool_exp = {}
+  $includeAssessmentResultsHistory: Boolean = false
+) {
+  obligation(where: $where) {
+    ...ObligationParts
+    scheduleState {
+      LatestDate
+      DueDate
+      OverdueDate
+    }
+    CreatedAtTimestamp
+    CreatedByUser
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedBy: createdBy {
+      FriendlyName
+    }
+    ModifiedBy: modifiedBy {
+      FriendlyName
+    }
+
+    Parent: parent {
+      Id
+      Title
+    }
+    parentNode {
+      Id
+      ObjectType
+      SequentialId
+    }
+    owners {
+      ...OwnerParts
+    }
+    ownerGroups {
+      ...OwnerGroupParts
+    }
+    contributors {
+      ...ContributorParts
+    }
+    contributorGroups {
+      ...ContributorGroupParts
+    }
+    tags {
+      ...TagParts
+    }
+    departments {
+      ...DepartmentParts
+    }
+    controls_aggregate {
+      aggregate {
+        count
+      }
+    }
+    BreachedIssues: issues(
+      where: {
+        issue: {
+          assessment: {
+            Status: { _in: [open, pending] }
+            RegulatoryBreach: { _eq: true }
+          }
+        }
+      }
+    ) {
+      ...BreachedIssuesParts
+    }
+    assessmentResults(
+      where: {
+        obligationAssessmentResult: {
+          _and: [
+            { RatingType: { _in: ["assessment", "rating"] } }
+            $obligationAssessmentResultsWhere
+          ]
+        }
+      }
+      order_by: [
+        { obligationAssessmentResult: { TestDate: desc_nulls_last } }
+        { obligationAssessmentResult: { CreatedAtTimestamp: desc_nulls_last } }
+      ]
+    ) @include(if: $includeAssessmentResultsHistory) {
+      ParentId
+      obligationAssessmentResult {
+        Id
+        Rating
+        TestDate
+        CreatedAtTimestamp
+      }
+    }
+  }
+  assessment_result_parent(
+    where: {
+      obligationAssessmentResult: {
+        RatingType: { _in: ["assessment", "rating"] }
+      }
+    }
+    distinct_on: [ParentId]
+    order_by: [
+      { ParentId: desc }
+      {
+        obligationAssessmentResult: {
+          TestDate: desc_nulls_last
+          CreatedAtTimestamp: desc_nulls_last
+        }
+      }
+    ]
+  ) {
+    obligationAssessmentResult {
+      parents {
+        ParentId
+      }
+      Id
+      Rating
+      CustomAttributeData
+    }
+  }
+}

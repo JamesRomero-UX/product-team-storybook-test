@@ -1,0 +1,10 @@
+fragment FileParts on file {
+  ContentType
+  FileName
+  FileSize
+  Id
+  CreatedAtTimestamp
+  CreatedByUser
+  ModifiedAtTimestamp
+  ModifiedByUser
+}

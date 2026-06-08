@@ -1,0 +1,218 @@
+clients:
+  - name: RiskSmart
+    allowed_clients: []
+    allowed_logout_urls: @@APP_ALLOWED_LOGOUT@@
+    app_type: spa
+    callbacks: @@APP_CALLBACKS@@
+    client_aliases: []
+    cross_origin_auth: false
+    cross_origin_authentication: false
+    custom_login_page_on: true
+    grant_types:
+      - authorization_code
+      - refresh_token
+    initiate_login_uri: ##APP_LOGIN_URL##
+    is_first_party: true
+    is_token_endpoint_ip_header_trusted: false
+    jwt_configuration:
+      alg: RS256
+      lifetime_in_seconds: 600
+      secret_encoded: false
+    logo_uri: >-
+      ##RISK_SMART_AUTH_LOGO##
+    native_social_login:
+      apple:
+        enabled: false
+      facebook:
+        enabled: false
+    oidc_conformant: true
+    organization_require_behavior: post_login_prompt
+    organization_usage: require
+    refresh_token:
+      expiration_type: expiring
+      leeway: 5
+      token_lifetime: 86400
+      idle_token_lifetime: 14400
+      infinite_token_lifetime: false
+      infinite_idle_token_lifetime: false
+      rotation_type: rotating
+    sso_disabled: false
+    token_endpoint_auth_method: none
+    web_origins: @@APP_WEB_ORIGINS@@
+  - name: Third Party Portal
+    allowed_clients: []
+    allowed_logout_urls: @@THIRD_PARTY_PORTAL_ALLOWED_LOGOUT@@
+    app_type: spa
+    callbacks: @@THIRD_PARTY_PORTAL_CALLBACKS@@
+    client_aliases: []
+    cross_origin_auth: false
+    cross_origin_authentication: false
+    custom_login_page_on: true
+    grant_types:
+      - authorization_code
+      - refresh_token
+    initiate_login_uri: ##THIRD_PARTY_PORTAL_LOGIN_URL##
+    is_first_party: true
+    is_token_endpoint_ip_header_trusted: false
+    jwt_configuration:
+      alg: RS256
+      lifetime_in_seconds: 600
+      secret_encoded: false
+    logo_uri: >-
+      ##RISK_SMART_AUTH_LOGO##
+    native_social_login:
+      apple:
+        enabled: false
+      facebook:
+        enabled: false
+    oidc_conformant: true
+    organization_require_behavior: post_login_prompt
+    organization_usage: require
+    refresh_token:
+      expiration_type: expiring
+      leeway: 5
+      token_lifetime: 86400
+      idle_token_lifetime: 14400
+      infinite_token_lifetime: false
+      infinite_idle_token_lifetime: false
+      rotation_type: rotating
+    sso_disabled: false
+    token_endpoint_auth_method: none
+    web_origins: @@THIRD_PARTY_PORTAL_WEB_ORIGINS@@
+  - name: auth0-deploy-cli
+    app_type: non_interactive
+    cross_origin_auth: false
+    custom_login_page_on: true
+    grant_types:
+      - client_credentials
+    is_first_party: true
+    is_token_endpoint_ip_header_trusted: false
+    jwt_configuration:
+      alg: RS256
+      lifetime_in_seconds: 36000
+      secret_encoded: false
+    oidc_conformant: true
+    refresh_token:
+      expiration_type: non-expiring
+      leeway: 0
+      infinite_token_lifetime: true
+      infinite_idle_token_lifetime: true
+      token_lifetime: 31557600
+      idle_token_lifetime: 2592000
+      rotation_type: non-rotating
+    sso_disabled: false
+    token_endpoint_auth_method: client_secret_post
+  # - name: RiskSmart Playground Integrations
+  #   app_type: non_interactive
+  #   cross_origin_auth: false
+  #   custom_login_page_on: true
+  #   grant_types:
+  #     - client_credentials
+  #   is_first_party: true
+  #   is_token_endpoint_ip_header_trusted: false
+  #   jwt_configuration:
+  #     alg: RS256
+  #     lifetime_in_seconds: 36000
+  #     secret_encoded: false
+  #   oidc_conformant: true
+  #   refresh_token:
+  #     expiration_type: non-expiring
+  #     leeway: 0
+  #     infinite_token_lifetime: true
+  #     infinite_idle_token_lifetime: true
+  #     token_lifetime: 31557600
+  #     idle_token_lifetime: 2592000
+  #     rotation_type: non-rotating
+  #   sso_disabled: false
+  #   token_endpoint_auth_method: client_secret_post
+  #   client_metadata:
+  #     org_id: org_SVEHNa9TiVYGe15u
+  #     tenant: MultiTenant
+  - name: RiskSmart Rest API
+    app_type: non_interactive
+    cross_origin_auth: false
+    custom_login_page_on: true
+    grant_types:
+      - client_credentials
+    is_first_party: true
+    is_token_endpoint_ip_header_trusted: false
+    jwt_configuration:
+      alg: RS256
+      lifetime_in_seconds: 36000
+      secret_encoded: false
+    oidc_conformant: true
+    refresh_token:
+      expiration_type: non-expiring
+      leeway: 0
+      infinite_token_lifetime: true
+      infinite_idle_token_lifetime: true
+      token_lifetime: 31557600
+      idle_token_lifetime: 2592000
+      rotation_type: non-rotating
+    sso_disabled: false
+    token_endpoint_auth_method: client_secret_post
+  - name: Protected Public Docs
+    allowed_clients: []
+    app_type: regular_web
+    callbacks:
+      - https://uae.docs.risksmart.com
+    client_aliases: []
+    cross_origin_auth: false
+    cross_origin_authentication: false
+    custom_login_page_on: true
+    grant_types:
+      - implicit
+    is_first_party: true
+    is_token_endpoint_ip_header_trusted: false
+    jwt_configuration:
+      alg: RS256
+      lifetime_in_seconds: 36000
+      secret_encoded: false
+    native_social_login:
+      apple:
+        enabled: false
+      facebook:
+        enabled: false
+    oidc_conformant: true
+    refresh_token:
+      expiration_type: non-expiring
+      leeway: 0
+      infinite_token_lifetime: true
+      infinite_idle_token_lifetime: true
+      token_lifetime: 31557600
+      idle_token_lifetime: 2592000
+      rotation_type: non-rotating
+    sso_disabled: false
+clientGrants:
+  # - client_id: RiskSmart Playground Integrations
+  #   audience: @@AWS_INTEGRATIONS_API_IDENTIFIER@@
+  #   scope: []
+  - client_id: RiskSmart Rest API
+    audience: @@AUTH0_MANAGEMENT_API_IDENTIFIER@@
+    scope:
+      - read:users
+      - create:users
+      - update:users
+      - read:roles
+      - create:organization_members
+      - create:organization_member_roles
+      - create:organization_invitations
+      - read:organization_member_roles
+      - delete:organization_members
+      - delete:organization_member_roles
+      - read:organizations
+      - create:user_tickets
+      - read:clients
+      - create:clients
+      - create:connections
+      - update:connections
+      - read:connections
+      - delete:connections
+      - create:organization_connections
+      - update:organization_connections
+      - read:organization_connections
+      - delete:organization_connections
+      - read:connections_options
+      - update:connections_options
+
+

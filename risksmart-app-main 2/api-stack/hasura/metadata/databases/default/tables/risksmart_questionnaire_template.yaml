@@ -1,0 +1,264 @@
+table:
+  name: questionnaire_template
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: questionnaire_template
+  custom_root_fields: {}
+object_relationships:
+  - name: createdByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          CreatedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: modifiedByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          ModifiedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+array_relationships:
+  - name: versions
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        remote_table:
+          name: questionnaire_template_version
+          schema: risksmart
+  - name: permissions
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: Id
+        insertion_order: null
+        remote_table:
+          name: permission_view
+          schema: risksmart
+  - name: tags
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: tag
+          schema: risksmart
+  - name: departments
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: department
+          schema: risksmart
+  - name: ancestorContributors
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: Id
+        insertion_order: null
+        remote_table:
+          name: ancestor_contributor_view
+          schema: risksmart
+  - name: contributorGroups
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: contributor_group
+          schema: risksmart
+  - name: contributors
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: contributor
+          schema: risksmart
+  - name: ownerGroups
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: owner_group
+          schema: risksmart
+  - name: owners
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: owner
+          schema: risksmart
+insert_permissions:
+  - role: app-user
+    permission:
+      columns:
+        - Id
+        - Title
+        - Description
+        - CreatedByUser
+        - ModifiedByUser
+        - CreatedAtTimestamp
+        - ModifiedAtTimestamp
+        - CustomAttributeData
+      backend_only: true
+      check:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      set:
+        CreatedByUser: x-hasura-user-id
+        ModifiedByUser: x-hasura-user-id
+        OrgKey: x-hasura-org-id
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - _or:
+            - _exists:
+                _table:
+                  name: user_role_access
+                  schema: risksmart
+                _where:
+                  _and:
+                    - AccessType:
+                        _eq: read
+                    - ObjectType:
+                        _eq: questionnaire_template
+                    - UserId:
+                        _eq: X-Hasura-User-Id
+            - permissions:
+                _and:
+                  - UserId:
+                      _eq: X-Hasura-User-Id
+                  - OrgKey:
+                      _eq: X-Hasura-org-Id
+                  - AccessType:
+                      _eq: read
+select_permissions:
+  - role: app-user
+    permission:
+      columns:
+        - Id
+        - Title
+        - Description
+        - CreatedAtTimestamp
+        - CreatedByUser
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - CustomAttributeData
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - _or:
+            - versions:
+                invitations:
+                  UserId:
+                    _eq: X-Hasura-User-Id
+            - _exists:
+                _table:
+                  name: user_role_access
+                  schema: risksmart
+                _where:
+                  _and:
+                    - AccessType:
+                        _eq: read
+                    - ObjectType:
+                        _eq: questionnaire_template
+                    - UserId:
+                        _eq: X-Hasura-User-Id
+            - permissions:
+                _and:
+                  - UserId:
+                      _eq: X-Hasura-User-Id
+                  - OrgKey:
+                      _eq: X-Hasura-org-Id
+                  - AccessType:
+                      _eq: read
+update_permissions:
+  - role: app-user
+    permission:
+      backend_only: true
+      check:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      set:
+        ModifiedAtTimestamp: now()
+        ModifiedByUser: x-hasura-user-id
+      columns:
+        - Title
+        - Description
+        - CustomAttributeData
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - _or:
+              - _exists:
+                  _table:
+                    name: user_role_access
+                    schema: risksmart
+                  _where:
+                    _and:
+                      - AccessType:
+                          _eq: update
+                      - ObjectType:
+                          _eq: questionnaire_template
+                      - UserId:
+                          _eq: X-Hasura-User-Id
+              - permissions:
+                  _and:
+                    - UserId:
+                        _eq: X-Hasura-User-Id
+                    - OrgKey:
+                        _eq: X-Hasura-org-Id
+                    - AccessType:
+                        _eq: update
+delete_permissions:
+  - role: app-user
+    permission:
+      check:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - _or:
+              - _exists:
+                  _table:
+                    name: user_role_access
+                    schema: risksmart
+                  _where:
+                    _and:
+                      - AccessType:
+                          _eq: delete
+                      - ObjectType:
+                          _eq: questionnaire_template
+                      - UserId:
+                          _eq: X-Hasura-User-Id
+              - permissions:
+                  _and:
+                    - UserId:
+                        _eq: X-Hasura-User-Id
+                    - OrgKey:
+                        _eq: X-Hasura-org-Id
+                    - AccessType:
+                        _eq: delete

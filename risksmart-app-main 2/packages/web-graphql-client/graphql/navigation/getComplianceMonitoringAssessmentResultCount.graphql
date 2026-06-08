@@ -1,0 +1,22 @@
+query getComplianceMonitoringAssessmentResultCount {
+  risk_controlled_second_line_result_aggregate {
+    aggregate {
+      count
+    }
+  }
+  risk_uncontrolled_second_line_result_aggregate {
+    aggregate {
+      count
+    }
+  }
+  document_second_line_result_aggregate {
+    aggregate {
+      count
+    }
+  }
+  obligation_second_line_result_aggregate {
+    aggregate {
+      count
+    }
+  }
+}

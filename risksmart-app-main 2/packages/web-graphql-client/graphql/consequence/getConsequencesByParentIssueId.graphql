@@ -1,0 +1,5 @@
+query getConsequencesByParentIssueId($_eq: uuid!) {
+  consequence(where: { ParentIssueId: { _eq: $_eq } }) {
+    ...ConsequenceParts
+  }
+}

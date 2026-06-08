@@ -1,0 +1,10 @@
+query getAllTags {
+  tag(order_by: { type: { Name: asc } }) {
+    ParentId
+    TagTypeId
+    type {
+      Description
+      Name
+    }
+  }
+}

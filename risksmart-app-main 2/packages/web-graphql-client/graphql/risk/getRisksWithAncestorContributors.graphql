@@ -1,0 +1,9 @@
+# Waring, get risks with ancestor contributors is very slow
+query getRisksWithAncestorContributors {
+  risk {
+    ...RiskParts
+    ancestorContributors {
+      ...AncestorContributorParts
+    }
+  }
+}

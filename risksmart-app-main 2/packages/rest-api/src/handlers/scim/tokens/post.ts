@@ -1,0 +1,70 @@
+import axios from 'axios';
+import { InternalServerError } from 'http-errors';
+import { backendRouteHandler } from 'src/backendActionApiHandler';
+import { getEnv } from 'src/environment';
+import { getLogger } from 'src/logger';
+import { initSentry } from 'src/sentryInit';
+import { getSessionData } from 'src/session';
+import { signRequest } from 'src/signRequest';
+
+import { postSchema } from './postSchema';
+
+const logger = getLogger();
+
+initSentry();
+
+export const handler = backendRouteHandler(postSchema, async (body) => {
+  try {
+    logger.debug('body', { body });
+    const sessionData = getSessionData(body.session_variables);
+    const orgKey = sessionData.orgKey;
+    const tenant = sessionData.tenant;
+    const expireInMonths = body.input.expireInMonths;
+
+    const scimApiUrl = getEnv('SCIM_INTERNAL_API_URL');
+    logger.info('Generating SCIM token for organisation', {
+      orgKey,
+      scimApiUrl,
+    });
+
+    const url = `${scimApiUrl}/organisation/${orgKey}/tokens`;
+
+    const bodyData = JSON.stringify({ tenant, expireInMonths });
+    const headers = await signRequest(url, 'POST', {}, bodyData);
+
+    logger.info('Calling internal API', { url, expireInMonths, tenant });
+    const response = await axios.post(url, bodyData, {
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    logger.info('Internal api responded with status', {
+      status: response.status,
+    });
+
+    return {
+      statusCode: response.status,
+      body: JSON.stringify(response.data),
+    };
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      logger.error('Error calling internal API:', {
+        error,
+        status: error.response?.status,
+        data: error.response?.data,
+        message: error.message,
+        code: error.code,
+      });
+      if (error.response?.status && error.response.status <= 400) {
+        return {
+          statusCode: error.response.status,
+          body: JSON.stringify(error.response.data),
+        };
+      }
+    }
+    logger.error('Error calling internal API:', { error });
+    throw new InternalServerError('Internal server error');
+  }
+});

@@ -1,0 +1,91 @@
+mutation insertDocumentAssessmentResult(
+  $objects: [document_assessment_result_insert_input!]!
+) {
+  insert_document_assessment_result(objects: $objects) {
+    affected_rows
+  }
+}
+
+mutation insertChildDocumentAssessmentResult(
+  $Rating: Int
+  $AssessmentId: uuid
+  $DocumentIds: [uuid!]!
+  $CustomAttributeData: jsonb
+  $TestDate: timestamptz
+  $Rationale: String
+) {
+  insertChildDocumentAssessmentResult(
+    Rating: $Rating
+    AssessmentId: $AssessmentId
+    DocumentIds: $DocumentIds
+    CustomAttributeData: $CustomAttributeData
+    TestDate: $TestDate
+    Rationale: $Rationale
+  ) {
+    Ids
+  }
+}
+
+mutation insertObligationAssessmentResult(
+  $objects: [obligation_assessment_result_insert_input!]!
+) {
+  insert_obligation_assessment_result(objects: $objects) {
+    affected_rows
+  }
+}
+
+mutation insertChildObligationAssessmentResult(
+  $Rating: Int
+  $AssessmentId: uuid
+  $ObligationIds: [uuid!]!
+  $CustomAttributeData: jsonb
+  $TestDate: timestamptz
+  $Rationale: String
+) {
+  insertChildObligationAssessmentResult(
+    Rating: $Rating
+    AssessmentId: $AssessmentId
+    ObligationIds: $ObligationIds
+    CustomAttributeData: $CustomAttributeData
+    TestDate: $TestDate
+    Rationale: $Rationale
+  ) {
+    Ids
+  }
+}
+
+mutation insertRiskAssessmentResult(
+  $objects: [risk_assessment_result_insert_input!]!
+) {
+  insert_risk_assessment_result(objects: $objects) {
+    affected_rows
+  }
+}
+
+mutation insertChildRiskAssessmentResult(
+  $Rating: Int
+  $Likelihood: Int
+  $Impact: Int
+  $Impacts: [RiskAssessmentResultImpactsInput!]
+  $ControlType: risk_assessment_result_control_type_enum
+  $AssessmentId: uuid
+  $RiskIds: [uuid!]!
+  $CustomAttributeData: jsonb
+  $TestDate: timestamptz
+  $Rationale: String
+) {
+  insertChildRiskAssessmentResult(
+    Rating: $Rating
+    AssessmentId: $AssessmentId
+    RiskIds: $RiskIds
+    Impact: $Impact
+    Impacts: $Impacts
+    Likelihood: $Likelihood
+    ControlType: $ControlType
+    CustomAttributeData: $CustomAttributeData
+    TestDate: $TestDate
+    Rationale: $Rationale
+  ) {
+    Ids
+  }
+}

@@ -1,0 +1,29 @@
+mutation insertDocumentVersion(
+  $FileId: uuid
+  $NextReviewDate: timestamptz
+  $ParentDocumentId: uuid!
+  $ReasonForReview: String
+  $ReviewDate: timestamptz
+  $ReviewedBy: String
+  $Summary: String
+  $Version: String
+  $Content: String
+  $Type: document_file_type_enum
+  $Link: String
+) {
+  insertDocumentVersion(
+    FileId: $FileId
+    NextReviewDate: $NextReviewDate
+    ParentDocumentId: $ParentDocumentId
+    ReasonForReview: $ReasonForReview
+    ReviewDate: $ReviewDate
+    ReviewedBy: $ReviewedBy
+    Summary: $Summary
+    Version: $Version
+    Content: $Content
+    Type: $Type
+    Link: $Link
+  ) {
+    Id
+  }
+}

@@ -1,0 +1,10 @@
+query getIssueChangeRequestByIssueTitle($issueTitle: String!) {
+  change_request(
+    where: { parent: { issue: { Title: { _eq: $issueTitle } } } }
+  ) {
+    Id
+    parent {
+      Id
+    }
+  }
+}

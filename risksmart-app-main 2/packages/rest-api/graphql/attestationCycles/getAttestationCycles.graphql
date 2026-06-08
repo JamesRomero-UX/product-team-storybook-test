@@ -1,0 +1,49 @@
+query getAttestationCycles(
+  $where: attestation_cycle_bool_exp!
+  $orderBy: [attestation_cycle_order_by!]
+  $limit: Int
+) {
+  attestation_cycle(where: $where, order_by: $orderBy, limit: $limit) {
+    CreatedAtTimestamp
+    CreatedByUser
+    ModifiedAtTimestamp
+    ModifiedByUser
+    Status
+    AllowCarryForward
+    Id
+    ParentId
+    ConcludedAtTimestamp
+
+    records {
+      Id
+      AttestationStatus
+      UserId
+      Active
+      ExpiresAt
+      AttestedAt
+      CycleId
+      NodeId
+      ConfigId
+      CarriedForwardFromRecordId
+    }
+
+    parent {
+      parent {
+        attestationConfig {
+          ParentId
+          timeLimitMs
+          RequireGlobalAttestation
+          groups {
+            group {
+              Id
+              Name
+              users {
+                UserId
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,1 @@
+import{j as r}from"./iframe-BUnym78j.js";import{L as e}from"./index-DmTvXYHb.js";import{u as i}from"./use-link-DDtd94aK.js";const m=({onFollow:o,...s})=>{const{handleFollow:t}=i();return r.jsx(e,{onFollow:o?n=>{n.preventDefault(),o(n)}:t,...s})};m.__docgenInfo={description:"",methods:[],displayName:"Link"};export{m as L};

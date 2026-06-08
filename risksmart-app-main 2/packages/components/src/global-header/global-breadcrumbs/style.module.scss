@@ -1,0 +1,26 @@
+.breadcrumbs {
+  [class*='awsui_breadcrumb-group'] {
+    width: 100% !important;
+    padding-right: 24px !important;
+  }
+
+  // Breadcrumb text
+  span:not([class*='awsui_menu-item']) {
+    color: white !important;
+    opacity: 85% !important;
+    transition: opacity 0.15s ease-in-out !important;
+  }
+
+  // Only animate the opacity of non-icon, non-last breadcrumb items on hover
+  div:not([class*='awsui_last']) {
+    span:not([class*='awsui_menu-item']) {
+      &:hover:not([class*='awsui_icon']) {
+        opacity: 100% !important;
+      }
+    }
+  }
+
+  [class*='awsui_anchor'] {
+    text-decoration: none !important;
+  }
+}

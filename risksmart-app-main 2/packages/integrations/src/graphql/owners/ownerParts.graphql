@@ -1,0 +1,7 @@
+fragment OwnerParts on owner {
+  UserId
+  user {
+    UserName
+    Id
+  }
+}

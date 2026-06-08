@@ -1,0 +1,7 @@
+query getRiskListOnlyOptimized {
+  risk {
+    Id
+    Title
+    SequentialId
+  }
+}

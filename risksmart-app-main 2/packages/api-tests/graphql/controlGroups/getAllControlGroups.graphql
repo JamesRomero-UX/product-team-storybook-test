@@ -1,0 +1,12 @@
+query getAllControlGroups {
+  control_group {
+    Id
+    Owner
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    Title
+    CreatedByUser
+    ModifiedByUser
+    Description
+  }
+}

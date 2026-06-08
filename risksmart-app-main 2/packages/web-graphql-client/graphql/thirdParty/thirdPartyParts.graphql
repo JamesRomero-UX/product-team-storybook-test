@@ -1,0 +1,24 @@
+fragment ThirdPartyParts on third_party {
+  Id
+  SequentialId
+  Title
+  Description
+  CompanyName
+  CompaniesHouseNumber
+  Address
+  CityTown
+  Postcode
+  Country
+  PrimaryContactName
+  ContactName
+  ContactEmail
+  CompanyDomain
+  Type
+  Status
+  Criticality
+  CreatedByUser
+  CustomAttributeData
+  ModifiedByUser
+  CreatedAtTimestamp
+  ModifiedAtTimestamp
+}

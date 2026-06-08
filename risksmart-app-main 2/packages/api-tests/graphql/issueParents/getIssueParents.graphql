@@ -1,0 +1,10 @@
+query getIssueParents {
+  issue_parent {
+    ParentId
+    IssueId
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+    CreatedAtTimestamp
+  }
+}

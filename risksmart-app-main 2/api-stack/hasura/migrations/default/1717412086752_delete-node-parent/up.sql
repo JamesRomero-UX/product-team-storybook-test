@@ -1,0 +1,91 @@
+drop table risksmart.node_parent;
+
+drop function risksmart.node_parent_delete_with_actionid_parentid;
+
+drop function risksmart.node_parent_delete_with_assessmentid;
+
+drop function risksmart.node_parent_delete_with_controlid_parentid;
+
+drop function risksmart.node_parent_delete_with_indicatorid;
+
+drop function risksmart.node_parent_delete_with_indicatorid_parentid;
+
+drop function risksmart.node_parent_delete_with_issueid_parentid;
+
+drop function risksmart.node_parent_delete_with_originatingitemid;
+
+drop function risksmart.node_parent_delete_with_parentactionid;
+
+drop function risksmart.node_parent_delete_with_parentcontrolid;
+
+drop function risksmart.node_parent_delete_with_parentdocumentid;
+
+drop function risksmart.node_parent_delete_with_parentid;
+
+drop function risksmart.node_parent_delete_with_parentissueid;
+
+drop function risksmart.node_parent_delete_with_parentobligationid;
+
+drop function risksmart.node_parent_delete_with_parentriskid;
+
+drop function risksmart.node_parent_delete_with_rateditemid;
+
+drop function risksmart.node_parent_insert_with_actionid_parentid;
+
+drop function risksmart.node_parent_insert_with_assessmentid;
+
+drop function risksmart.node_parent_insert_with_controlid_parentid;
+
+drop function risksmart.node_parent_insert_with_indicatorid;
+
+drop function risksmart.node_parent_insert_with_indicatorid_parentid;
+
+drop function risksmart.node_parent_insert_with_issueid_parentid;
+
+drop function risksmart.node_parent_insert_with_originatingitemid;
+
+drop function risksmart.node_parent_insert_with_parentactionid;
+
+drop function risksmart.node_parent_insert_with_parentcontrolid;
+
+drop function risksmart.node_parent_insert_with_parentdocumentid;
+
+drop function risksmart.node_parent_insert_with_parentid;
+
+drop function risksmart.node_parent_insert_with_parentissueid;
+
+drop function risksmart.node_parent_insert_with_parentobligationid;
+
+drop function risksmart.node_parent_insert_with_parentriskid;
+
+drop function risksmart.node_parent_insert_with_rateditemid;
+
+drop function risksmart.node_parent_update_with_actionid_parentid;
+
+drop function risksmart.node_parent_update_with_assessmentid;
+
+drop function risksmart.node_parent_update_with_controlid_parentid;
+
+drop function risksmart.node_parent_update_with_indicatorid;
+
+drop function risksmart.node_parent_update_with_indicatorid_parentid;
+
+drop function risksmart.node_parent_update_with_issueid_parentid;
+
+drop function risksmart.node_parent_update_with_originatingitemid;
+
+drop function risksmart.node_parent_update_with_parentactionid;
+
+drop function risksmart.node_parent_update_with_parentcontrolid;
+
+drop function risksmart.node_parent_update_with_parentdocumentid;
+
+drop function risksmart.node_parent_update_with_parentid;
+
+drop function risksmart.node_parent_update_with_parentissueid;
+
+drop function risksmart.node_parent_update_with_parentobligationid;
+
+drop function risksmart.node_parent_update_with_parentriskid;
+
+drop function risksmart.node_parent_update_with_rateditemid;

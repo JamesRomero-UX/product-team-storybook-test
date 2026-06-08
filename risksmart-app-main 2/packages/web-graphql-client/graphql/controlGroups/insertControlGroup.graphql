@@ -1,0 +1,17 @@
+mutation insertControlGroup(
+  $Title: String!
+  $Description: String!
+  $Owner: String!
+  $CustomAttributeData: jsonb
+) {
+  insert_control_group_one(
+    object: {
+      Title: $Title
+      Description: $Description
+      Owner: $Owner
+      CustomAttributeData: $CustomAttributeData
+    }
+  ) {
+    Id
+  }
+}

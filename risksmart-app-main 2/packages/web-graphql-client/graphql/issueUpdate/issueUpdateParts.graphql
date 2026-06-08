@@ -1,0 +1,11 @@
+fragment IssueUpdateParts on issue_update {
+  Description
+  Id
+  ParentIssueId
+  CreatedAtTimestamp
+  ModifiedAtTimestamp
+  Title
+  CreatedByUser
+  ModifiedByUser
+  CustomAttributeData
+}

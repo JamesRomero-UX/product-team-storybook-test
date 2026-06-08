@@ -1,0 +1,44 @@
+@use '@risk-smart/themed-design-tokens/visual-refresh' as awsui;
+
+.badge {
+  border-collapse: separate;
+  border-spacing: 0;
+  caption-side: top;
+  cursor: auto;
+  direction: ltr;
+  empty-cells: show;
+  font-style: normal;
+  font-variant: normal;
+  font-stretch: normal;
+  -webkit-hyphens: none;
+  hyphens: none;
+  list-style: disc outside none;
+  tab-size: 8;
+  text-align-last: auto;
+  text-indent: 0;
+  text-shadow: none;
+  text-transform: none;
+  visibility: visible;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  widows: 2;
+  word-spacing: normal;
+  box-sizing: border-box;
+  font-weight: 400;
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+  font-size: 12px;
+  line-height: 22px;
+  text-align: center;
+  letter-spacing: 0.005em;
+  display: inline-block;
+  max-width: 100%;
+  min-width: 80px;
+  border-radius: awsui.$border-radius-badge;
+  padding: 0 awsui.$space-static-xs;
+  vertical-align: middle;
+  margin-bottom: awsui.$space-static-xxs;
+  color: awsui.$color-text-body-default;
+  background-color: awsui.$color-background-button-primary-disabled;
+}

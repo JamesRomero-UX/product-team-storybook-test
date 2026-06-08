@@ -1,0 +1,18 @@
+fragment AttestationParts on attestation_record {
+  Id
+  Active
+  AttestationStatus
+  ConfigId
+  ExpiresAt
+  CreatedAtTimestamp
+  UserId
+  NodeId
+  CarriedForwardFromRecordId
+  CycleId
+  node {
+    ObjectType
+  }
+  attestationRecordStatus {
+    Status
+  }
+}

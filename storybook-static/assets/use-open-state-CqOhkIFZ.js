@@ -1,0 +1,1 @@
+import{r as a}from"./iframe-BUnym78j.js";const u=({onOpen:t,onClose:o,defaultOpen:d=!1})=>{const[e,s]=a.useState(d),[i,p]=a.useState(!1),r=l=>{e||(s(!0),p(!!l),t?.())},n=()=>{e&&(s(!1),o?.())};return{isOpen:e,openDropdown:r,closeDropdown:n,toggleDropdown:()=>{e?n():r(!1)},openedWithKeyboard:i}};export{u};

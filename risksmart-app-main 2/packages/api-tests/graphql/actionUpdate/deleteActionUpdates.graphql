@@ -1,0 +1,5 @@
+mutation deleteActionUpdate($Id: uuid!) {
+  delete_action_update(where: { Id: { _eq: $Id } }) {
+    affected_rows
+  }
+}

@@ -1,0 +1,112 @@
+name: Template / Tofu Apply
+
+permissions:
+  pull-requests: write
+  contents: read
+  id-token: write
+  actions: read
+
+on:
+  workflow_call:
+    inputs:
+      aws_region:
+        description: 'AWS region to deploy to'
+        required: true
+        type: string
+      env:
+        description: 'Environment to deploy to'
+        required: true
+        type: string
+      account:
+        description: 'AWS account to deploy to'
+        required: true
+        type: string
+      deploy_role:
+        description: 'AWS role to assume for tofu deployment'
+        required: true
+        type: string
+      tf_actions_working_dir:
+        description: 'Terraform working directory'
+        type: string
+        required: true
+      uses_workspaces:
+        description: 'Is this an SDLC account - dev, staging prod? If yes, use workspaces.'
+        required: false
+        type: boolean
+      runner_label:
+        description: 'Runner label to use for the job'
+        required: false
+        type: string
+      enable_datadog_provider:
+        description: 'Enable Datadog provider, injects DD_API_KEY and DD_APP_KEY from secrets'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  tofu-apply:
+    runs-on:
+      - ${{ inputs.runner_label }}
+      - ${{ github.run_id }}-${{ github.run_attempt }}-tofu-apply-${{ inputs.env }}-${{ inputs.aws_region }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ inputs.tf_actions_working_dir }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
+
+      - name: Setup OpenTofu
+        uses: opentofu/setup-opentofu@9d84900f3238fab8cd84ce47d658d25dd008be2f # v1.0.8
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4.3.1
+        with:
+          role-to-assume: ${{ inputs.deploy_role }}
+          aws-region: ${{ inputs.aws_region }}
+
+      - name: Configure Datadog provider credentials
+        if: ${{ inputs.enable_datadog_provider }}
+        env:
+          DD_API_KEY_VALUE: ${{ secrets.TOFU_DD_API_KEY }}
+          DD_APP_KEY_VALUE: ${{ secrets.TOFU_DD_APP_KEY }}
+        run: |
+          # Inject from GitHub Secrets for Datadog provider authentication
+          echo "DD_API_KEY=$DD_API_KEY_VALUE" >> "$GITHUB_ENV"
+          echo "DD_APP_KEY=$DD_APP_KEY_VALUE" >> "$GITHUB_ENV"
+
+      # This is not ideal, but we need to provide the Datadog Forwarder API key in each account.
+      # TODO: Replace with secret management solution when available
+      - name: Configure Tofu secrets
+        env:
+          DD_FORWARDER_KEY: ${{ secrets.TOFU_DATADOG_FORWARDER_API_KEY }}
+          DD_INFRA_MONITORING_KEY: ${{ secrets.TOFU_DATADOG_INFRA_MONITORING_API_KEY }}
+          DD_AGENTLESS_SCANNER_KEY: ${{ secrets.TOFU_DATADOG_AGENTLESS_SCANNER_API_KEY }}
+        run: |
+          # Datadog Forwarder API key (for creating AWS Secrets Manager secrets)
+          if [[ -n "$DD_FORWARDER_KEY" ]]; then
+            echo "TF_VAR_datadog_forwarder_api_key=$DD_FORWARDER_KEY" >> "$GITHUB_ENV"
+          fi
+          # Datadog Infra Monitoring API key (for EventBridge API Destinations)
+          if [[ -n "$DD_INFRA_MONITORING_KEY" ]]; then
+            echo "TF_VAR_datadog_infra_monitoring_api_key=$DD_INFRA_MONITORING_KEY" >> "$GITHUB_ENV"
+          fi
+          # Datadog Agentless Scanner API key (requires Remote Configuration enabled)
+          if [[ -n "$DD_AGENTLESS_SCANNER_KEY" ]]; then
+            echo "TF_VAR_datadog_agentless_scanner_api_key=$DD_AGENTLESS_SCANNER_KEY" >> "$GITHUB_ENV"
+          fi
+
+      - name: Setup Tofu modules access
+        uses: risk-smart/risksmart-terraform-modules/.github/actions/setup-module-access@e37b23efb86493475a812d1a527a70ff4fbd8c2b
+        with:
+          app-id: ${{ secrets.TOFU_MODULES_APP_ID }}
+          private-key: ${{ secrets.TOFU_MODULES_APP_PRIVATE_KEY }}
+
+      - name: Verify OpenTofu version
+        run: tofu version
+
+      - name: OpenTofu Init
+        run: tofu init
+
+      - name: OpenTofu Apply
+        run: tofu apply -auto-approve

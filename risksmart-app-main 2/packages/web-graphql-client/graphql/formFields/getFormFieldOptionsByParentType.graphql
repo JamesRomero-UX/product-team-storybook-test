@@ -1,0 +1,14 @@
+query getFormFieldOptionsByParentType($parentTypes: [parent_type_enum!]!) {
+  form_field_configuration(
+    where: { FormConfigurationParentType: { _in: $parentTypes } }
+  ) {
+    FormConfigurationParentType
+    FieldId
+    Hidden
+    Required
+    ReadOnly
+    DefaultValue
+    Label
+    Description
+  }
+}

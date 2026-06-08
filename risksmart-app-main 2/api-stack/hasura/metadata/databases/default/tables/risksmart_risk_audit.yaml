@@ -1,0 +1,147 @@
+table:
+  name: risk_audit
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: risk_audit
+  custom_root_fields: {}
+array_relationships:
+  - name: contributorGroupAudits
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: contributor_group_audit
+          schema: risksmart
+  - name: contributorAudits
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: contributor_audit
+          schema: risksmart
+  - name: ownerGroupAudits
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: owner_group_audit
+          schema: risksmart
+  - name: ownerAudits
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: owner_audit
+          schema: risksmart
+  - name: tagAudits
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: tag_audit
+          schema: risksmart
+  - name: departmentAudits
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: department_audit
+          schema: risksmart
+  - name: assessmentResultAudits
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: assessment_result_parent_audit
+          schema: risksmart
+  - name: controlAudits
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: control_parent_audit
+          schema: risksmart
+  - name: acceptanceAudits
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: acceptance_parent_audit
+          schema: risksmart
+  - name: actionAudits
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: action_parent_audit
+          schema: risksmart
+  - name: appetiteAudits
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: appetite_parent_audit
+          schema: risksmart
+  - name: impactRatingAudits
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: RatedItemId
+        insertion_order: null
+        remote_table:
+          name: impact_rating_audit
+          schema: risksmart
+  - name: indicatorAudits
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: indicator_parent_audit
+          schema: risksmart
+select_permissions:
+  - role: read:audit
+    permission:
+      columns:
+        - Id
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - Title
+        - Description
+        - Tier
+        - Treatment
+        - Status
+        - ParentRiskId
+        - CreatedByUser
+        - CreatedAtTimestamp
+        - CustomAttributeData
+        - SequentialId
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      allow_aggregations: true

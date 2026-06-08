@@ -1,0 +1,25 @@
+subscription getThirdPartyResponsesByThirdParty($ThirdPartyId: uuid!) {
+  third_party_response(where: { ParentId: { _eq: $ThirdPartyId } }) {
+    ...ThirdPartyResponseParts
+    invitees {
+      UserEmail
+      UserId
+      user {
+        FriendlyName
+      }
+    }
+    createdByUser {
+      FriendlyName
+    }
+    modifiedByUser {
+      FriendlyName
+    }
+    questionnaireTemplateVersion {
+      Id
+      Version
+      parent {
+        Title
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+mutation updateCustomRole(
+  $filter: custom_role_bool_exp!
+  $updateInput: custom_role_set_input!
+) {
+  update_custom_role(where: $filter, _set: $updateInput) {
+    affected_rows
+  }
+}

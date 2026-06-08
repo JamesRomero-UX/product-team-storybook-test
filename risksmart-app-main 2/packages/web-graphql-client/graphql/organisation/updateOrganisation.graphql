@@ -1,0 +1,8 @@
+mutation updateOrganisation($OrgKey: String, $ScimEnabled: Boolean) {
+  update_auth_organisation(
+    where: { OrgKey: { _eq: $OrgKey } }
+    _set: { ScimEnabled: $ScimEnabled }
+  ) {
+    affected_rows
+  }
+}

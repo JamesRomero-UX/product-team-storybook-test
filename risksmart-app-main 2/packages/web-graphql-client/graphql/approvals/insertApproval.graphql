@@ -1,0 +1,5 @@
+mutation insertApproval($approval: approval_insert_input!) {
+  insert_approval_one(object: $approval) {
+    Id
+  }
+}

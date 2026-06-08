@@ -1,0 +1,46 @@
+table:
+  name: taxonomy_org
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: taxonomy_org
+  custom_root_fields: {}
+object_relationships:
+  - name: taxonomy
+    using:
+      foreign_key_constraint_on: TaxonomyId
+insert_permissions:
+  - role: CustomerSupport
+    permission:
+      check: {}
+      set:
+        CreatedByUser: x-hasura-User-Id
+        ModifiedAtTimestamp: now()
+        ModifiedByUser: x-hasura-User-Id
+        OrgKey: x-hasura-org-id
+      columns:
+        - TaxonomyId
+        - Locale
+        - OrgName
+select_permissions:
+  - role: app-user
+    permission:
+      columns:
+        - Id
+        - TaxonomyId
+        - Locale
+        - OrgName
+        - CreatedByUser
+        - ModifiedByUser
+        - ModifiedAtTimestamp
+        - CreatedAtTimestamp
+        - OrgKey
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-Id
+      allow_aggregations: true
+delete_permissions:
+  - role: CustomerSupport
+    permission:
+      filter: {}

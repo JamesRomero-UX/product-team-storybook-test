@@ -1,0 +1,13 @@
+query getActionUpdateAuditById($Id: uuid!) {
+  action_update_audit(where: { Id: { _eq: $Id } }, order_by: {ModifiedAtTimestamp: desc}) {
+    Description
+    Id
+    ParentActionId
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    Title
+    CreatedByUser
+    ModifiedByUser
+    CustomAttributeData
+  }
+}

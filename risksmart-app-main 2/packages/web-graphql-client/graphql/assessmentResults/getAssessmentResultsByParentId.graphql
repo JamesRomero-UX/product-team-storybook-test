@@ -1,0 +1,293 @@
+query getAssessmentResultsByParentId($ParentId: uuid!) {
+  document_assessment_result(
+    where: { parents: { ParentId: { _eq: $ParentId } } }
+    order_by: [{ TestDate: desc_nulls_last }, { CreatedAtTimestamp: desc }]
+  ) {
+    ...DocumentAssessmentResultParts
+    parents(where: { ParentType: { _eq: document } }) {
+      document {
+        Id
+        Title
+      }
+      node {
+        Id
+        SequentialId
+        ObjectType
+      }
+    }
+    files {
+      ...RelationFileParts
+    }
+    ancestorContributors {
+      ...AncestorContributorParts
+    }
+  }
+
+  obligation_assessment_result(
+    where: { parents: { ParentId: { _eq: $ParentId } } }
+    order_by: [{ TestDate: desc_nulls_last }, { CreatedAtTimestamp: desc }]
+  ) {
+    ...ObligationAssessmentResultParts
+    parents(where: { ParentType: { _eq: obligation } }) {
+      obligation {
+        Id
+        Title
+      }
+      node {
+        Id
+        SequentialId
+        ObjectType
+      }
+    }
+    files {
+      ...RelationFileParts
+    }
+    ancestorContributors {
+      ...AncestorContributorParts
+    }
+  }
+
+  risk_assessment_result(
+    where: { parents: { ParentId: { _eq: $ParentId } } }
+    order_by: [{ TestDate: desc_nulls_last }, { CreatedAtTimestamp: desc }]
+  ) {
+    ...RiskAssessmentResultParts
+    parents(where: { ParentType: { _eq: risk } }) {
+      risk {
+        Id
+        Title
+      }
+      node {
+        Id
+        SequentialId
+        ObjectType
+      }
+    }
+    files {
+      ...RelationFileParts
+    }
+    ancestorContributors {
+      ...AncestorContributorParts
+    }
+  }
+
+  test_result(
+    where: { assessmentParents: { ParentId: { _eq: $ParentId } } }
+    order_by: [{ TestDate: desc_nulls_last }, { CreatedAtTimestamp: desc }]
+  ) {
+    ...TestResultParts
+    parent {
+      ...ControlParts
+    }
+    files {
+      ...RelationFileParts
+    }
+  }
+
+  impact_rating(
+    where: { assessmentParents: { ParentId: { _eq: $ParentId } } }
+  ) {
+    ...ImpactRatingParts
+    createdByUser {
+      FriendlyName
+    }
+    completedBy {
+      FriendlyName
+    }
+    impact {
+      Id
+      Name
+    }
+    ratedItem {
+      risk {
+        Title
+      }
+      ObjectType
+    }
+  }
+
+  issue(where: { parents: { ParentId: { _eq: $ParentId } } }) {
+    ...IssueParts
+    consequences {
+      CostType
+      CostValue
+      Type
+    }
+    owners {
+      ...OwnerParts
+    }
+    ownerGroups {
+      ...OwnerGroupParts
+    }
+    contributors {
+      ...ContributorParts
+    }
+    contributorGroups {
+      ...ContributorGroupParts
+    }
+    ancestorContributors {
+      ...AncestorContributorParts
+    }
+    assessment {
+      ...IssueAssessmentParts
+      modifiedByUser {
+        FriendlyName
+      }
+      createdByUser {
+        FriendlyName
+      }
+      certifiedIndividual {
+        FriendlyName
+      }
+      departments {
+        ...DepartmentParts
+      }
+    }
+    actions_aggregate(where: { action: { Status: { _eq: open } } }) {
+      aggregate {
+        count
+      }
+    }
+    modifiedByUser {
+      FriendlyName
+    }
+    createdByUser {
+      FriendlyName
+    }
+    departments {
+      ...DepartmentParts
+    }
+    tags {
+      ...TagParts
+    }
+    parents {
+      obligation {
+        Title
+        Id
+      }
+      document {
+        Title
+        Id
+      }
+      control {
+        Title
+        Id
+      }
+      assessment {
+        Title
+        Id
+      }
+    }
+  }
+
+  impact(where: { parents: { ParentId: { _eq: $ParentId } } }) {
+    ...ImpactParts
+    createdByUser {
+      FriendlyName
+    }
+    owners {
+      ...OwnerParts
+    }
+    ownerGroups {
+      ...OwnerGroupParts
+    }
+    ratings(
+      distinct_on: [RatedItemId]
+      order_by: [{ RatedItemId: desc }, { TestDate: desc }]
+    ) {
+      Rating
+      RatedItemId
+      ratedItem {
+        risk {
+          Id
+          Title
+        }
+      }
+    }
+    appetites(
+      order_by: [
+        { EffectiveDate: desc_nulls_last }
+        { CreatedAtTimestamp: desc_nulls_last }
+      ]
+    ) {
+      ...AppetiteParts
+      ImpactId
+      parents {
+        risk {
+          Id
+        }
+      }
+    }
+  }
+
+  action(where: { parents: { ParentId: { _eq: $ParentId } } }) {
+    ...ActionParts
+    parents {
+      parent {
+        Id
+        ObjectType
+        SequentialId
+      }
+      obligation {
+        Title
+        Id
+      }
+      risk {
+        Title
+        Id
+      }
+      control {
+        Title
+        Id
+      }
+      issue {
+        Title
+        Id
+        Type
+      }
+      document {
+        Title
+        Id
+      }
+      assessment {
+        Title
+        Id
+      }
+    }
+    updates(order_by: { CreatedAtTimestamp: desc }, limit: 1) {
+      ...ActionUpdateParts
+    }
+    updates_aggregate {
+      aggregate {
+        count
+      }
+    }
+    owners {
+      ...OwnerParts
+    }
+    ownerGroups {
+      ...OwnerGroupParts
+    }
+    contributors {
+      ...ContributorParts
+    }
+    contributorGroups {
+      ...ContributorGroupParts
+    }
+    ancestorContributors {
+      ...AncestorContributorParts
+    }
+    modifiedByUser {
+      FriendlyName
+    }
+    createdByUser {
+      FriendlyName
+    }
+    tags {
+      ...TagParts
+    }
+    departments {
+      ...DepartmentParts
+    }
+  }
+}

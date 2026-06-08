@@ -1,0 +1,166 @@
+{
+  "name": "Get Expanded Risks Webhook",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "97a42e5e-6315-4c37-97ce-5877a40ea1ab",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "path": "8cecc497-0356-4dd1-b579-74e3514517c3",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        220
+      ],
+      "id": "27e90d36-7282-46ad-babd-376dd46844bb",
+      "name": "Webhook",
+      "webhookId": "8cecc497-0356-4dd1-b579-74e3514517c3",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "RAksmSnTdJjC0Mr8",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "CUSTOM.getExpandedRisks",
+      "typeVersion": 1,
+      "position": [
+        260,
+        100
+      ],
+      "id": "35d4d4cd-a43e-4a7e-93e7-1656cb688243",
+      "name": "Get Expanded Risks",
+      "executeOnce": true,
+      "alwaysOutputData": false,
+      "credentials": {
+        "riskSmartAuthApi": {
+          "id": "0qEi1XwZ3BD5YBWn",
+          "name": "RiskSmart Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "curlImport": "",
+        "httpVariantWarning": "",
+        "method": "POST",
+        "url": "https://http-intake.logs.datadoghq.eu/api/v2/logs",
+        "": "",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "datadogApi",
+        "provideSslCertificates": false,
+        "sendQuery": false,
+        "sendHeaders": false,
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "[\n  {\n    \"ddsource\": \"n8n\",\n    \"ddtags\": \"env:dev\",\n    \"hostname\": \"http://localhost:8090/\",\n    \"message\": \"Get Expanded Risks Workflow\",\n    \"service\": \"n8n\",\n    \"status\": \"Ok\"\n  }\n]",
+        "options": {},
+        "infoMessage": ""
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        480,
+        0
+      ],
+      "id": "2e2f596b-5370-487c-a57f-678830223d81",
+      "name": "Datadog HTTP Request",
+      "extendsCredential": "datadogApi",
+      "credentials": {
+        "datadogApi": {
+          "id": "ocdi60Nns1WJlvGD",
+          "name": "Datadog account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        480,
+        220
+      ],
+      "id": "25bee9fa-e872-4522-b496-ab9fc49d5311",
+      "name": "Respond to Webhook",
+      "executeOnce": false
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get Expanded Risks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Get Expanded Risks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Expanded Risks": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Datadog HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "24c0b0e2-e123-4b0c-b929-1dce6aa9ca94",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a205132df1840abf976b886f8faf3614de55e9a4c689c8a2ec31bc3644f2cbc2"
+  },
+  "id": "xrG3Llvdxq92zNDR",
+  "tags": []
+}

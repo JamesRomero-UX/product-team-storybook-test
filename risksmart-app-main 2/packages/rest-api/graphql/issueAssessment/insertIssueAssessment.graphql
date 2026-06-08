@@ -1,0 +1,95 @@
+mutation insertIssueAssessment(
+  $Id: uuid!
+  $ActualCloseDate: timestamptz
+  $ThirdPartyResponsible: String
+  $TargetCloseDate: timestamptz
+  $PolicyOwnerCommentary: String
+  $CertifiedIndividual: String
+  $IssueCausedBySystemIssue: Boolean
+  $IssueCausedByThirdParty: Boolean
+  $IssueType: String
+  $Type: parent_type_enum!
+  $ParentIssueId: uuid!
+  $PoliciesBreached: String
+  $PolicyOwner: String
+  $PolicyBreach: Boolean
+  $Rationale: String
+  $RegulatoryBreach: Boolean
+  $RegulationsBreached: String
+  $Reportable: Boolean
+  $Severity: Int
+  $Status: issue_assessment_status_enum
+  $SystemResponsible: String
+  $Tags: [tag_insert_input!]!
+  $Departments: [department_insert_input!]!
+  $CustomAttributeData: jsonb
+  $ParentIds: [uuid!]!
+  $parents: [issue_parent_insert_input!]!
+  $TagTypeIds: [uuid!]!
+) {
+  insert_issue_assessment_one(
+    object: {
+      Id: $Id
+      ActualCloseDate: $ActualCloseDate
+      ThirdPartyResponsible: $ThirdPartyResponsible
+      TargetCloseDate: $TargetCloseDate
+      PolicyOwnerCommentary: $PolicyOwnerCommentary
+      CertifiedIndividual: $CertifiedIndividual
+      IssueCausedBySystemIssue: $IssueCausedBySystemIssue
+      IssueCausedByThirdParty: $IssueCausedByThirdParty
+      IssueType: $IssueType
+      ParentIssueId: $ParentIssueId
+      PoliciesBreached: $PoliciesBreached
+      PolicyOwner: $PolicyOwner
+      PolicyBreach: $PolicyBreach
+      Rationale: $Rationale
+      RegulatoryBreach: $RegulatoryBreach
+      RegulationsBreached: $RegulationsBreached
+      Reportable: $Reportable
+      Severity: $Severity
+      Status: $Status
+      SystemResponsible: $SystemResponsible
+      CustomAttributeData: $CustomAttributeData
+      Type: $Type
+    }
+  ) {
+    ParentIssueId
+  }
+
+  delete_tag(
+    where: {
+      ParentId: { _eq: $ParentIssueId }
+      TagTypeId: { _nin: $TagTypeIds }
+    }
+  ) {
+    affected_rows
+  }
+
+  insert_tag(
+    objects: $Tags
+    on_conflict: { constraint: tag_pkey, update_columns: [] }
+  ) {
+    affected_rows
+  }
+
+  insert_department(objects: $Departments) {
+    affected_rows
+  }
+
+  delete_issue_parent(
+    where: {
+      ParentId: { _nin: $ParentIds }
+      IssueId: { _eq: $ParentIssueId }
+      parent: { ObjectType: { _in: [control, obligation] } }
+    }
+  ) {
+    affected_rows
+  }
+
+  insert_issue_parent(
+    objects: $parents
+    on_conflict: { constraint: issue_parent_pkey, update_columns: [] }
+  ) {
+    affected_rows
+  }
+}

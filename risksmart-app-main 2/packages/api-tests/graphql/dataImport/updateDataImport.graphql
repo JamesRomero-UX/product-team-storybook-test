@@ -1,0 +1,5 @@
+mutation updateDataImport($Id: uuid!, $Status: data_import_status_enum) {
+  update_data_import(where: { Id: { _eq: $Id } }, _set: { Status: $Status }) {
+    affected_rows
+  }
+}

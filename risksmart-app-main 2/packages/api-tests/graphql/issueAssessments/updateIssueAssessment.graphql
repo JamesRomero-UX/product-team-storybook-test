@@ -1,0 +1,8 @@
+mutation updateIssueAssessment($Id: uuid!, $TargetCloseDate: timestamptz) {
+  update_issue_assessment(
+    where: { Id: { _eq: $Id } }
+    _set: { TargetCloseDate: $TargetCloseDate }
+  ) {
+    affected_rows
+  }
+}

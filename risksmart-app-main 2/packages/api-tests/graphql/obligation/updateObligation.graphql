@@ -1,0 +1,12 @@
+mutation updateObligation(
+  $Id: uuid!
+  $Title: String!
+  $Type: obligation_type_enum!
+) {
+  update_obligation(
+    where: { Id: { _eq: $Id } }
+    _set: { Title: $Title, Type: $Type }
+  ) {
+    affected_rows
+  }
+}

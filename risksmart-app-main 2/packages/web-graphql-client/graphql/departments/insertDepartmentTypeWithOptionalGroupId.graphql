@@ -1,0 +1,15 @@
+mutation insertDepartmentTypeWithOptionalGroupId(
+  $Name: String!
+  $Description: String
+  $DepartmentTypeGroupId: uuid
+) {
+  insert_department_type_one(
+    object: {
+      Name: $Name
+      Description: $Description
+      DepartmentTypeGroupId: $DepartmentTypeGroupId
+    }
+  ) {
+    DepartmentTypeId
+  }
+}

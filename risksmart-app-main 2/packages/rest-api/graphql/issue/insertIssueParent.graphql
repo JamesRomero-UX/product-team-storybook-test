@@ -1,0 +1,13 @@
+mutation insertIssueParent(
+  $IssueId: uuid!
+  $ParentId: uuid!
+  $ParentType: parent_type_enum!
+) {
+  insert_issue_parent_one(
+    object: { IssueId: $IssueId, ParentId: $ParentId, ParentType: $ParentType }
+  ) {
+    IssueId
+    ParentId
+    ParentType
+  }
+}

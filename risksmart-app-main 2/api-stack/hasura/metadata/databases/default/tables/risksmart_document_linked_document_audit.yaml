@@ -1,0 +1,21 @@
+table:
+  name: document_linked_document_audit
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: document_linked_document_audit
+  custom_root_fields: {}
+select_permissions:
+  - role: read:audit
+    permission:
+      columns:
+        - DocumentId
+        - LinkedDocumentId
+        - CreatedAtTimestamp
+        - CreatedByUser
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id

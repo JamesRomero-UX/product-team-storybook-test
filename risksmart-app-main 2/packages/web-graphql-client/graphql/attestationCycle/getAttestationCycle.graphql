@@ -1,0 +1,62 @@
+fragment AttestationCycleParts on attestation_cycle {
+  AllowCarryForward
+  CreatedAtTimestamp
+  CreatedByUser
+  Id
+  ModifiedAtTimestamp
+  ModifiedByUser
+  ParentId
+  Status
+  records {
+    AttestationStatus
+    attestationRecordStatus {
+      Status
+    }
+    ExpiresAt
+    UserId
+  }
+  parent {
+    Version
+    Id
+    parent {
+      Title
+      Id
+    }
+  }
+}
+
+query getAttestationCycleRegister {
+  attestation_cycle {
+    ...AttestationCycleParts
+  }
+}
+
+query getAttestationCycles(
+  $where: attestation_cycle_bool_exp!
+  $orderBy: [attestation_cycle_order_by!]
+) {
+  attestation_cycle(where: $where, order_by: $orderBy) {
+    ...AttestationCycleParts
+  }
+}
+
+query getActiveAttestationCycle($parentDocumentId: uuid!) {
+  attestation_cycle(
+    where: {
+      Status: { _eq: "active" }
+      parent: { ParentDocumentId: { _eq: $parentDocumentId } }
+    }
+  ) {
+    Id
+    CreatedAtTimestamp
+    CreatedByUser
+    ModifiedAtTimestamp
+    ModifiedByUser
+    Status
+    AllowCarryForward
+    parent {
+      Id
+      ParentDocumentId
+    }
+  }
+}

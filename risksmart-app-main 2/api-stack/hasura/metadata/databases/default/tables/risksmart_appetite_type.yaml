@@ -1,0 +1,9 @@
+table:
+  name: appetite_type
+  schema: risksmart
+is_enum: true
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: appetite_type
+  custom_root_fields: {}

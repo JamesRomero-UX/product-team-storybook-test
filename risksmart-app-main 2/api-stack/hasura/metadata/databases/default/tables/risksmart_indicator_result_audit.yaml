@@ -1,0 +1,27 @@
+table:
+  name: indicator_result_audit
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: indicator_result_audit
+  custom_root_fields: {}
+select_permissions:
+  - role: read:indicator-result
+    permission:
+      columns:
+        - CreatedByUser
+        - ModifiedByUser
+        - OrgKey
+        - CreatedAtTimestamp
+        - ModifiedAtTimestamp
+        - Id
+        - IndicatorId
+        - Description
+        - ResultDate
+        - TargetValueTxt
+        - TargetValueNum
+        - CustomAttributeData
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id

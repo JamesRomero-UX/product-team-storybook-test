@@ -1,0 +1,148 @@
+query getChangeRequests(
+  $where: change_request_bool_exp! = {}
+  $currentUserId: String!
+) {
+  change_request(where: $where) {
+    Id
+    SequentialId
+    ChangeRequestStatus
+    ModifiedAtTimestamp
+    CreatedAtTimestamp
+    Workflow
+    parent {
+      Id
+      ObjectType
+      SequentialId
+
+      documentFile {
+        Version
+        parent {
+          SequentialId
+          Id
+          Title
+          owners {
+            user {
+              Id
+              FriendlyName
+              Email
+            }
+          }
+        }
+      }
+      acceptance {
+        Title
+        parents {
+          risk {
+            owners {
+              user {
+                Id
+                FriendlyName
+                Email
+              }
+            }
+          }
+        }
+      }
+      risk {
+        Title
+        owners {
+          user {
+            Id
+            FriendlyName
+            Email
+          }
+        }
+      }
+      control {
+        Title
+        owners {
+          user {
+            Id
+            FriendlyName
+            Email
+          }
+        }
+      }
+      action {
+        Title
+        owners {
+          user {
+            Id
+            FriendlyName
+            Email
+          }
+        }
+      }
+      issue_assessment {
+        parent {
+          Id
+          Title
+          SequentialId
+          owners {
+            user {
+              Id
+              FriendlyName
+              Email
+            }
+          }
+        }
+      }
+    }
+    ParentId
+    createdBy {
+      Id
+      FriendlyName
+    }
+    contributors {
+      user {
+        Id
+        FriendlyName
+        Email
+      }
+    }
+    responses {
+      Id
+      Approved
+      CreatedAtTimestamp
+      ModifiedAtTimestamp
+      ApprovedByUser
+      ApprovedAtTimestamp
+      approver {
+        Id
+        OwnerApprover
+        level {
+          Id
+          ApprovalRuleType
+          SequenceOrder
+
+          approval {
+            InFlightEditRule
+            Id
+            Workflow
+          }
+        }
+        group {
+          Name
+          Id
+          users {
+            UserId
+          }
+        }
+        user {
+          FriendlyName
+          Email
+          Id
+        }
+      }
+    }
+    currentUserOwnerList: parentOwnerAndContributors(
+      where: {
+        ContributorType: { _eq: "owner" }
+        UserId: { _eq: $currentUserId }
+      }
+      distinct_on: [UserId]
+    ) {
+      UserId
+    }
+  }
+}

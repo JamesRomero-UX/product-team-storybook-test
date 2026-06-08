@@ -1,0 +1,18 @@
+{
+  "detail": {
+    "type": "EXTERNAL_OBLIGATIONS_UPDATED",
+    "data": {
+      "location": "s3://tech-admin-risksmartapp-rulebook-changes/manifest.json"
+    },
+    "metadata": {
+      "eventId": "",
+      "version": "1.0.0",
+      "timestamp": "2024-01-15T10:30:00.000Z",
+      "domain": "risksmart.app",
+      "service": "risksmart.data-layer",
+      "correlationId": "",
+      "tenant": "multitenant",
+      "orgKey": "org_Qshp7tYsxxAWwhVa"
+    }
+  }
+}

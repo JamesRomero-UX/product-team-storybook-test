@@ -1,0 +1,5 @@
+mutation insertOwnerGroups($ownerGroups: [owner_group_insert_input!]!) {
+  insert_owner_group(objects: $ownerGroups) {
+    affected_rows
+  }
+}

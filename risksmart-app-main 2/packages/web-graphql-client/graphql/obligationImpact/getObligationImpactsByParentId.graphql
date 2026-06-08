@@ -1,0 +1,23 @@
+query getObligationImpactsByParentId($_eq: uuid!) {
+  obligation_impact(where: { ParentObligationId: { _eq: $_eq } }) {
+    CreatedAtTimestamp
+    CreatedByUser
+    Description
+    Id
+    ImpactRating
+    ModifiedAtTimestamp
+    ModifiedByUser
+    ParentObligationId
+    CustomAttributeData
+    parent {
+      Title
+      Id
+    }
+    createdBy {
+      FriendlyName
+    }
+    modifiedBy {
+      FriendlyName
+    }
+  }
+}

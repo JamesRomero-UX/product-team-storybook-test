@@ -1,0 +1,21 @@
+query getDocumentFileById($Id: uuid!) {
+  document_file_by_pk(Id: $Id) {
+    Id
+    Version
+    FileId
+    Content
+    Type
+    Link
+    Summary
+    Status
+    ReasonForReview
+    ReviewedBy
+    ReviewDate
+    NextReviewDate
+    ParentDocumentId
+    CreatedByUser
+    ModifiedByUser
+    ModifiedAtTimestamp
+    CreatedAtTimestamp
+  }
+}

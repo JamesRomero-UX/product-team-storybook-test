@@ -1,0 +1,5 @@
+mutation deleteInternalAuditReport($Id: uuid!) {
+  delete_internal_audit_report(where: { Id: { _eq: $Id } }) {
+    affected_rows
+  }
+}

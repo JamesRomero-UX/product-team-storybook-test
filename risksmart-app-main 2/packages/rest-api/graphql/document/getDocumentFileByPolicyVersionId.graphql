@@ -1,0 +1,6 @@
+query GetDocumentFileByPolicyVersionId($Id: uuid!) {
+  document_file(where: { Id: { _eq: $Id } }) {
+    Id
+    ParentDocumentId
+  }
+}

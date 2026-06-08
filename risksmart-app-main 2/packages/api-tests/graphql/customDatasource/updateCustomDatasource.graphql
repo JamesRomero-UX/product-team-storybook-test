@@ -1,0 +1,8 @@
+mutation updateCustomDatasource(
+  $where: custom_datasource_bool_exp!
+  $set: custom_datasource_set_input!
+) {
+  update_custom_datasource(where: $where, _set: $set) {
+    affected_rows
+  }
+}

@@ -1,0 +1,71 @@
+table:
+  name: schedule
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: schedule
+  custom_root_fields: {}
+insert_permissions:
+  - role: app-user
+    permission:
+      backend_only: true
+      check:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+      set:
+        CreatedByUser: x-hasura-user-id
+        ModifiedByUser: x-hasura-user-id
+        OrgKey: x-hasura-org-id
+      columns:
+        - Id
+        - Frequency
+        - TimeToCompleteValue
+        - TimeToCompleteUnit
+        - StartDate
+        - ManualDueDate
+      backend_only: true
+select_permissions:
+  - role: app-user
+    permission:
+      columns:
+        - Id
+        - Frequency
+        - TimeToCompleteValue
+        - TimeToCompleteUnit
+        - StartDate
+        - ManualDueDate
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      allow_aggregations: true
+      query_root_fields: []
+      subscription_root_fields: []
+update_permissions:
+  - role: app-user
+    permission:
+      backend_only: true
+      columns:
+        - Frequency
+        - TimeToCompleteValue
+        - TimeToCompleteUnit
+        - StartDate
+        - ManualDueDate
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      check:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+      set:
+        ModifiedAtTimestamp: now()
+        ModifiedByUser: x-hasura-user-id
+delete_permissions:
+  - role: app-user
+    permission:
+      backend_only: true
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id

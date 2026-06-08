@@ -1,0 +1,16 @@
+mutation deleteTaxonomyOrg($TaxonomyId: uuid!, $OrgKey: String!) {
+  delete_taxonomy_org(
+    where: { TaxonomyId: { _eq: $TaxonomyId }, OrgKey: { _eq: $OrgKey } }
+  ) {
+    affected_rows
+  }
+
+  delete_taxonomy(
+    where: {
+      Id: { _eq: $TaxonomyId }
+      organisations_aggregate: { count: { predicate: { _eq: 0 } } }
+    }
+  ) {
+    affected_rows
+  }
+}

@@ -1,0 +1,10 @@
+query getFormConfigurationAudit($parentType: String!) {
+  form_configuration_audit(where: { ParentType: { _eq: $parentType } }, order_by: {ModifiedAtTimestamp: desc}) {
+    ParentType
+    ModifiedByUser
+    ModifiedAtTimestamp
+    CreatedByUser
+    CreatedAtTimestamp
+    CustomAttributeSchemaId
+  }
+}

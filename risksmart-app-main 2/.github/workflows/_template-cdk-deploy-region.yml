@@ -1,0 +1,188 @@
+name: Template / CDK Deploy Region
+
+# Used in post-merge and manual checks
+# Runs `cdk deploy` to apply infrastructure changes
+
+permissions:
+  actions: write
+  contents: read
+  id-token: write
+
+on:
+  workflow_call:
+    inputs:
+      env:
+        required: true
+        type: string
+      enable_turbo_cache:
+        required: false
+        type: boolean
+        default: false
+      aws_region:
+        required: true
+        type: string
+      multi_tenant_snapshot_prefix:
+        required: true
+        type: string
+      vpn_enabled:
+        required: true
+        type: boolean
+      risksmart_region:
+        required: true
+        type: boolean
+      external_api_image_tag:
+        required: true
+        type: string
+      external_api_config:
+        required: true
+        type: string
+      integrations_image_tag:
+        description: 'Integrations container semver tag (e.g., 1.0.0). Required - must exist in ECR.'
+        required: true
+        type: string
+
+      risksmart_region_prefix:
+        required: false
+        type: string
+        default: ''
+      risksmart_region_id:
+        required: false
+        type: string
+        default: ''
+      auth0_domain:
+        required: false
+        type: string
+        default: ''
+      auth0_management_client_id:
+        required: false
+        type: string
+        default: ''
+      auth0_risk_smart_rest_api_client_id:
+        required: false
+        type: string
+        default: ''
+      auth0_client_id:
+        required: false
+        type: string
+        default: ''
+      auth0_risk_smart_circle_client_id:
+        required: false
+        type: string
+        default: ''
+    secrets:
+      HASURA_JWT_SECRET:
+        required: true
+      AWS_DEPLOY_ROLE:
+        required: true
+      TRPC_SENTRY_DSN:
+        required: false
+      PUBLIC_API_DATADOG_KEY:
+        required: false
+      AUTH0_DOMAIN_NONCUSTOM:
+        required: true
+
+jobs:
+  DeployInfraToRegion:
+    name: Deploy Infra for region
+    runs-on:
+      - 'sprinters:aws:eu-west-2:ubuntu-24.04-arm:m7g.xlarge' # ARM-based runner
+      - ${{ github.run_id }}-${{ github.run_attempt }}-DeployInfraToRegion-${{ inputs.aws_region }}
+    environment: ${{ inputs.env }}
+    permissions:
+        actions: write
+        contents: read
+        id-token: write
+        packages: read
+    steps:
+      - name: Setup Turbo cache
+        uses: rharkor/caching-for-turbo@d124d2921c97c169010f6a7a624a36e9831472e1 # v 1.8
+        if: ${{ inputs.enable_turbo_cache }}
+
+      - name: Checkout repository
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@a3252b78c470c02df07e9d59298aecedc3ccdd6d # v3
+        with:
+          version: 10.28.2
+
+      - name: Setup node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+          registry-url: 'https://npm.pkg.github.com'
+
+      - name: Configure pnpm for GitHub Packages
+        run: |
+          pnpm config set @risk-smart:registry https://npm.pkg.github.com
+          pnpm config set //npm.pkg.github.com/:_authToken ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Setup Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.14.2'
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4.3.1
+        with:
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE }}
+          aws-region: ${{ inputs.aws_region }}
+
+      - name: Install AWS CLI
+        run: |
+          pip install awscli
+          aws --version
+
+      - name: Set TRPC container build
+        id: trpccontainerbuildid
+        run: echo "container_build=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Set sentry release
+        id: releaseid
+        run: echo "sentry_release=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy
+        env:
+          STAGE: ${{ vars.STAGE }}
+          BASE_DOMAIN: ${{ vars.BASE_DOMAIN }}
+          APP_NAME: ${{ vars.APP_NAME }}
+          APP_NAME_FOR_RS_REGION: ${{ vars.APP_NAME_FOR_RS_REGION }}
+          TPP_APP_NAME: ${{ vars.TPP_APP_NAME }}
+          AWS_REGION: ${{ inputs.aws_region }}
+          AWS_ACCOUNT_ID: ${{ vars.AWS_ACCOUNT_ID }}
+          HASURA_JWT_SECRET: ${{ secrets.HASURA_JWT_SECRET }}
+          # The below prefix would be "US-1-" for the US risksmart region - empty for London (for now)
+          MULTI_TENANT_SNAPSHOT_NAME: ${{ inputs.multi_tenant_snapshot_prefix }}${{ vars.STAGE }}-risksmartapp-db-cluster-snapshot-build-${{github.run_number}}-${{github.run_attempt}}
+          VPN_ENABLED: ${{ inputs.vpn_enabled }}
+          HASURA_ENABLE_CONSOLE: ${{ vars.HASURA_ENABLE_CONSOLE }}
+          HASURA_PG_CONNECTIONS: ${{ vars.HASURA_PG_CONNECTIONS }}
+          HASURA_LOG_LEVEL: ${{ vars.HASURA_LOG_LEVEL }}
+          RISKSMART_REGION: ${{ inputs.risksmart_region }}
+          RISKSMART_REGION_PREFIX: ${{ inputs.risksmart_region_prefix }}
+          RISKSMART_REGION_ID: ${{ inputs.risksmart_region_id }}
+          TRPC_CONTAINER_BUILD: ${{ steps.trpccontainerbuildid.outputs.container_build }}
+          # MCP uses the same versioning approach as TRPC (git short SHA).
+          MCP_CONTAINER_BUILD: ${{ steps.trpccontainerbuildid.outputs.container_build }}
+          MCP_AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN_NONCUSTOM }}
+          MCP_AUTH0_API_AUDIENCE: ${{ vars.AUTH0_API_AUDIENCE }}
+          # This uses the same versioning approach as TRPC for now.
+          TENANT_DEPLOYER_CONTAINER_BUILD: ${{ steps.trpccontainerbuildid.outputs.container_build }}
+          SENTRY_RELEASE: ${{steps.releaseid.outputs.sentry_release}}
+          EXTAPI_CONTAINER_BUILD: ${{ inputs.external_api_image_tag }}
+          EXTAPI_STACK_CONFIG: ${{ inputs.external_api_config }}
+          INTEGRATIONS_CONTAINER_BUILD: ${{ inputs.integrations_image_tag }}
+          TRPC_SENTRY_DSN: ${{ secrets.TRPC_SENTRY_DSN }}
+          PUBLIC_API_DATADOG_KEY: ${{ secrets.PUBLIC_API_DATADOG_KEY || ''}}
+          # Auth0 configuration for TRPC
+          AUTH0_DOMAIN: ${{ inputs.auth0_domain }}
+          AUTH0_MANAGEMENT_CLIENT_ID: ${{ inputs.auth0_management_client_id }}
+          AUTH0_RISK_SMART_REST_API_CLIENT_ID: ${{ inputs.auth0_risk_smart_rest_api_client_id }}
+          REACT_APP_AUTH0_CLIENT_ID: ${{ inputs.auth0_client_id }}
+          AUTH0_RISK_SMART_CIRCLE_CLIENT_ID: ${{ inputs.auth0_risk_smart_circle_client_id }}
+        run: |
+          cd cdk-stack
+          pnpm exec cdk deploy --app "pnpm dlx ts-node --prefer-ts-exts ./bin/cdk-stack.ts"  '*' --require-approval never --concurrency 10

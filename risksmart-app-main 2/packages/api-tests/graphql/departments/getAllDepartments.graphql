@@ -1,0 +1,10 @@
+query getAllDepartment {
+  department(order_by: { type: { Name: asc } }) {
+    ParentId
+    DepartmentTypeId
+    type {
+      Description
+      Name
+    }
+  }
+}

@@ -1,0 +1,29 @@
+query getAllRisksWithOwnersAndEntities {
+  risk(order_by: { Title: asc }) {
+    Description
+    Id
+    ParentRiskId
+    Tier
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    Title
+    CreatedByUser
+    ModifiedByUser
+
+    owners {
+      user {
+        Id
+      }
+    }
+    enterpriseRiskInstance {
+      entity {
+        Id
+        Name
+      }
+      enterpriseRisk {
+        Id
+        Title
+      }
+    }
+  }
+}

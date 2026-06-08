@@ -1,0 +1,8 @@
+[
+  {
+    "Source": "risksmart.app",
+    "DetailType": "PERMISSIONS_UPDATED",
+    "EventBusName": "tech-admin-risksmartApp-CommonEventBus",
+    "Detail": "{\"type\":\"PERMISSIONS_UPDATED\",\"data\":{\"userId\":\"auth0|644151efc3a961d2784456d9\",\"permissions\":[\"read:actions\",\"write:actions\",\"read:risks\"],\"updatedByUser\":\"admin-123\",\"orgKey\":\"org_Qshp7tYsxxAWwhVa\"},\"metadata\":{\"eventId\":\"event-101\",\"version\":\"1.0\",\"timestamp\":\"2025-09-18T10:10:00Z\",\"domain\":\"test\",\"service\":\"test-service\",\"correlationId\":\"6cd9480d-9c26-44a2-b5ff-f4b92c636d7f\",\"userId\":\"auth0|644151efc3a961d2784456d9\",\"tenant\":\"multitenant\",\"orgKey\":\"org_Qshp7tYsxxAWwhVa\"}}"
+  }
+]

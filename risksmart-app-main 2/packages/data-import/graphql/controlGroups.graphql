@@ -1,0 +1,5 @@
+mutation insertControlGroups($controlGroups: [control_group_insert_input!]!) {
+  insert_control_group(objects: $controlGroups) {
+    affected_rows
+  }
+}

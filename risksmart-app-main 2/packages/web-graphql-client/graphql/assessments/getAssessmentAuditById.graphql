@@ -1,0 +1,21 @@
+query getAssessmentAuditById($Id: uuid!) {
+  assessment_audit(where: { Id: { _eq: $Id } }, order_by: {ModifiedAtTimestamp: desc}) {
+    ActualCompletionDate
+    CompletedByUser
+    CreatedAtTimestamp
+    CreatedByUser
+    CustomAttributeData
+    Id
+    ModifiedAtTimestamp
+    ModifiedByUser
+    NextTestDate
+    OriginatingItemId
+    SequentialId
+    StartDate
+    Summary
+    TargetCompletionDate
+    Title
+    Status
+    Outcome
+  }
+}

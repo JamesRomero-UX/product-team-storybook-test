@@ -1,0 +1,5 @@
+mutation insertComplianceMonitoringAssessment($object: InsertAssessmentInput!) {
+  insertComplianceMonitoringAssessmentApi(object: $object) {
+    Id
+  }
+}

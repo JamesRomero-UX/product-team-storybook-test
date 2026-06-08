@@ -1,0 +1,18 @@
+query getAllObjectIds {
+  node {
+    Id
+    ObjectType
+  }
+  user {
+    Id
+  }
+  user_group {
+    Id
+  }
+  tag_type {
+    TagTypeId
+  }
+  department_type {
+    DepartmentTypeId
+  }
+}

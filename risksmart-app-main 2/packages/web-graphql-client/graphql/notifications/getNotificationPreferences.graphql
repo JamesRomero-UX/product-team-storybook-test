@@ -1,0 +1,11 @@
+query getNotificationPreferences {
+  notificationPreferences {
+    categories
+    channel_types
+    id
+    workflows
+  }
+  slackNotificationConnection {
+    connected
+  }
+}

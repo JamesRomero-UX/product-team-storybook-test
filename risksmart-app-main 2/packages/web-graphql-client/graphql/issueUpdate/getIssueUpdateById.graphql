@@ -1,0 +1,8 @@
+query getIssueUpdateById($_eq: uuid!) {
+  issue_update(where: { Id: { _eq: $_eq } }) {
+    ...IssueUpdateParts
+    files {
+      ...RelationFileParts
+    }
+  }
+}

@@ -1,0 +1,31 @@
+query getUsers {
+  auth_user {
+    Id
+    FirstName
+    LastName
+    FriendlyName
+    Email
+    RoleKey
+    Status
+    CreatedOn
+    LastSeen
+    DisplayName
+    JobTitle
+    Department
+    OfficeLocation
+    CreatedByUser
+    ModifiedByUser
+    ModifiedAtTimestamp
+    organisationusers {
+      RoleKey
+      LastSeen
+    }
+    userGroupUsers {
+      userGroups {
+        Id
+        Name
+      }
+    }
+    IsCustomerSupport
+  }
+}

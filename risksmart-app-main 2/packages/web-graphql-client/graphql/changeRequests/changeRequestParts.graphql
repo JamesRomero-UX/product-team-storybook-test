@@ -1,0 +1,160 @@
+fragment ChangeRequestParts on change_request {
+  createdBy {
+    FriendlyName
+    Id
+    Email
+  }
+  Id
+  SequentialId
+  ParentId
+  Type
+  parent {
+    Id
+    SequentialId
+    ObjectType
+    owners: ancestorContributors(where: { ContributorType: { _eq: "owner" } }) {
+      UserId
+      user {
+        FriendlyName
+      }
+      user_group {
+        users {
+          UserId
+        }
+      }
+      ContributorType
+    }
+
+    risk {
+      Title
+    }
+    documentFile {
+      Version
+      parent {
+        Id
+        SequentialId
+        Title
+        owners: ancestorContributors(
+          where: { ContributorType: { _eq: "owner" } }
+        ) {
+          UserId
+          user {
+            FriendlyName
+          }
+          user_group {
+            users {
+              UserId
+            }
+          }
+          ContributorType
+        }
+      }
+    }
+    acceptance {
+      Title
+      parents {
+        risk {
+          Id
+          owners: ancestorContributors(
+            where: { ContributorType: { _eq: "owner" } }
+          ) {
+            UserId
+            user {
+              FriendlyName
+            }
+            user_group {
+              users {
+                UserId
+              }
+            }
+            ContributorType
+          }
+        }
+      }
+    }
+    control {
+      Title
+    }
+    action {
+      Title
+    }
+    issue_assessment {
+      parent {
+        Id
+        SequentialId
+        Title
+        owners: ancestorContributors(
+          where: { ContributorType: { _eq: "owner" } }
+        ) {
+          UserId
+          user {
+            FriendlyName
+          }
+          user_group {
+            users {
+              UserId
+            }
+          }
+          ContributorType
+        }
+      }
+    }
+  }
+  CreatedAtTimestamp
+  ModifiedAtTimestamp
+  RequestedChanges
+  requestedFileChanges {
+    ...RelationFileParts
+  }
+  ChangeRequestStatus
+  contributors {
+    user {
+      Id
+      FriendlyName
+      Email
+    }
+  }
+  Comment
+  RequesterComment
+  OverriddenByUser
+  OverriddenAtTimestamp
+  responses {
+    Id
+    Approved
+    ModifiedAtTimestamp
+    CreatedAtTimestamp
+    ApprovedByUser
+    ApprovedAtTimestamp
+    Comment
+    approver {
+      Id
+      OwnerApprover
+      level {
+        Id
+        ApprovalRuleType
+        SequenceOrder
+        approval {
+          Id
+          ParentId
+          Workflow
+          InFlightEditRule
+        }
+      }
+      user {
+        FriendlyName
+        Email
+        Id
+      }
+      group {
+        Id
+        Name
+        users {
+          UserId
+          user {
+            FriendlyName
+          }
+        }
+      }
+    }
+  }
+}

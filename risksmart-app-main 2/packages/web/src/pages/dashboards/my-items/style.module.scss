@@ -1,0 +1,15 @@
+.multiselect {
+  width: 245px;
+  [class*='awsui_dropdown-content'] {
+    margin: 0 !important;
+  }
+  button[class*='awsui_button-trigger'] {
+    height: 39px;
+  }
+  ul[class*='awsui_options-list_'] {
+    overflow-y: hidden !important;
+  }
+  li[class*='awsui_selectable-item_'] {
+    padding-inline-start: 12px !important;
+  }
+}

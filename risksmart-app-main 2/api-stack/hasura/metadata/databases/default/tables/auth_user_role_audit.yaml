@@ -1,0 +1,24 @@
+table:
+  name: user_role_audit
+  schema: auth
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: user_role_audit
+  custom_root_fields: {}
+select_permissions:
+  - role: read:audit
+    permission:
+      columns:
+        - Id
+        - UserId
+        - RoleKey
+        - OrgKey
+        - CreatedByUser
+        - CreatedAtTimestamp
+        - ModifiedByUser
+        - ModifiedAtTimestamp
+        - Action
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id

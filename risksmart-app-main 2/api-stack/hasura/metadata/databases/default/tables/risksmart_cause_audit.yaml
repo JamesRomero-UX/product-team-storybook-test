@@ -1,0 +1,25 @@
+table:
+  name: cause_audit
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: cause_audit
+  custom_root_fields: {}
+select_permissions:
+  - role: read:audit
+    permission:
+      columns:
+        - Id
+        - Title
+        - Description
+        - Significance
+        - ParentIssueId
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - CreatedByUser
+        - CreatedAtTimestamp
+        - CustomAttributeData
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id

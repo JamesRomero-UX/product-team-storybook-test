@@ -1,0 +1,5 @@
+mutation deleteTagTypes($Ids: [uuid!]!) {
+  deleteTagTypeApi(Ids: $Ids) {
+    affected_rows
+  }
+}

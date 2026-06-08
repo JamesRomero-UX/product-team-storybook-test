@@ -1,0 +1,12 @@
+query getCustomAttributeSchemaAuditById($Id: uuid!) {
+  custom_attribute_schema_audit(where: { Id: { _eq: $Id } }, order_by: {ModifiedAtTimestamp: desc}) {
+    ModifiedByUser
+    ModifiedAtTimestamp
+    CreatedByUser
+    CreatedAtTimestamp
+    Id
+    Schema
+    Title
+    UiSchema
+  }
+}

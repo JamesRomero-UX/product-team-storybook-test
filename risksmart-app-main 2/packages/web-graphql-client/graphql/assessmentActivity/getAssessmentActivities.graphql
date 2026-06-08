@@ -1,0 +1,20 @@
+query getAssessmentActivities {
+  assessment_activity(where: { parentAssessment: {} }) {
+    ...AssessmentActivityParts
+    parentRisk {
+      Title
+      SequentialId
+      scheduleState {
+        DueDate
+        OverdueDate
+      }
+    }
+    assignedUser {
+      Id
+      FriendlyName
+    }
+    files {
+      ...RelationFileParts
+    }
+  }
+}

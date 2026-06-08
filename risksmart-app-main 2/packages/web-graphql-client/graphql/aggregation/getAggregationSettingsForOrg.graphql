@@ -1,0 +1,7 @@
+query getAggregationSettingsForOrg {
+  aggregation_org {
+    RiskScoringModel
+    Appetite
+    Config
+  }
+}

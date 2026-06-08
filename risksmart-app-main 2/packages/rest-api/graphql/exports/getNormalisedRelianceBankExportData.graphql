@@ -1,0 +1,145 @@
+query getNormalisedRelianceBankExportData($orgKey: String!) {
+  risk(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    CreatedAtTimestamp
+    CreatedByUser
+    Description
+    ModifiedAtTimestamp
+    ModifiedByUser
+    OrgKey
+    ParentRiskId
+    SequentialId
+    Status
+    Tier
+    Title
+    Treatment
+    CustomAttributeData
+  }
+  indicator(where: { OrgKey: { _eq: $orgKey } }) {
+    CreatedAtTimestamp
+    CreatedByUser
+    Description
+    Id
+    LowerAppetiteNum
+    LowerToleranceNum
+    ModifiedAtTimestamp
+    ModifiedByUser
+    OrgKey
+    SequentialId
+    TargetValueTxt
+    Title
+    Type
+    Unit
+    UpperAppetiteNum
+    UpperToleranceNum
+    CustomAttributeData
+  }
+  indicator_result(where: { OrgKey: { _eq: $orgKey } }) {
+    CreatedAtTimestamp
+    CreatedByUser
+    Description
+    Id
+    IndicatorId
+    ModifiedAtTimestamp
+    ModifiedByUser
+    OrgKey
+    ResultDate
+    TargetValueNum
+    TargetValueTxt
+    CustomAttributeData
+  }
+  owner(where: { OrgKey: { _eq: $orgKey } }) {
+    CreatedAtTimestamp
+    CreatedByUser
+    ModifiedAtTimestamp
+    ModifiedByUser
+    OrgKey
+    ParentId
+    UserId
+  }
+  user(where: { OrgKey: { _eq: $orgKey } }) {
+    BusinessUnit_Id
+    Department
+    Email
+    FirstName
+    FriendlyName
+    Id
+    IsCustomerSupport
+    JobTitle
+    LastName
+    LastSeen
+    OrgKey
+    RoleKey
+    Status
+    UserName
+    OfficeLocation
+  }
+  contributor(where: { OrgKey: { _eq: $orgKey } }) {
+    CreatedAtTimestamp
+    CreatedByUser
+    ModifiedAtTimestamp
+    ModifiedByUser
+    OrgKey
+    ParentId
+    UserId
+  }
+  department(where: { OrgKey: { _eq: $orgKey } }) {
+    CreatedAtTimestamp
+    CreatedByUser
+    DepartmentTypeId
+    ModifiedAtTimestamp
+    ModifiedByUser
+    OrgKey
+    ParentId
+  }
+  department_type(where: { OrgKey: { _eq: $orgKey } }) {
+    CreatedAtTimestamp
+    CreatedByUser
+    DepartmentTypeGroupId
+    DepartmentTypeId
+    Description
+    ModifiedAtTimestamp
+    ModifiedByUser
+    Name
+    OrgKey
+  }
+  tag(where: { OrgKey: { _eq: $orgKey } }) {
+    CreatedAtTimestamp
+    CreatedByUser
+    ModifiedAtTimestamp
+    ModifiedByUser
+    OrgKey
+    ParentId
+    TagTypeId
+  }
+  tag_type(where: { OrgKey: { _eq: $orgKey } }) {
+    CreatedAtTimestamp
+    CreatedByUser
+    Description
+    ModifiedAtTimestamp
+    ModifiedByUser
+    Name
+    OrgKey
+    TagTypeGroupId
+    TagTypeId
+  }
+  custom_attribute_schema(where: { OrgKey: { _eq: $orgKey } }) {
+    CreatedAtTimestamp
+    CreatedByUser
+    Id
+    ModifiedAtTimestamp
+    ModifiedByUser
+    OrgKey
+    Schema
+    UiSchema
+  }
+  indicator_parent(where: { OrgKey: { _eq: $orgKey } }) {
+    CreatedAtTimestamp
+    CreatedByUser
+    IndicatorId
+    ModifiedAtTimestamp
+    ModifiedByUser
+    OrgKey
+    ParentId
+  }
+}

@@ -1,0 +1,45 @@
+query getRiskById($id: uuid!) {
+  risk(where: { Id: { _eq: $id } }) {
+    Id
+    Title
+    Tier
+    Description
+    Treatment
+    OrgKey
+    Status
+    schedule {
+      Frequency
+      StartDate
+      TimeToCompleteUnit
+      TimeToCompleteValue
+    }
+    scheduleState {
+      LatestDate
+      DueDate
+      OverdueDate
+    }
+
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ParentRiskId
+    CreatedByUser
+    ModifiedByUser
+    parent {
+      Id
+      Title
+    }
+    assessmentResults {
+      riskAssessmentResult {
+        ControlType
+        Rating
+      }
+    }
+    tags {
+      type {
+        Description
+        Name
+      }
+      TagTypeId
+    }
+  }
+}

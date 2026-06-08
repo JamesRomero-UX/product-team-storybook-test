@@ -1,0 +1,29 @@
+table:
+  name: appetite_audit
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: appetite_audit
+  custom_root_fields: {}
+select_permissions:
+  - role: read:audit
+    permission:
+      columns:
+        - Id
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - LowerAppetite
+        - UpperAppetite
+        - Statement
+        - EffectiveDate
+        - ImpactAppetite
+        - AppetiteType
+        - CreatedByUser
+        - CreatedAtTimestamp
+        - CustomAttributeData
+        - SequentialId
+        - LikelihoodAppetite
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id

@@ -1,0 +1,6 @@
+query getControlTestSecondLineResultById($Id: uuid) {
+  control_test_second_line_result(where: { Id: { _eq: $Id } }) {
+    Id
+    ModifiedAtTimestamp
+  }
+}

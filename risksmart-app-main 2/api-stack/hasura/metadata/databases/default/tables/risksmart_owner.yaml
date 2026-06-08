@@ -1,0 +1,77 @@
+table:
+  name: owner
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: owner
+  custom_root_fields: {}
+object_relationships:
+  - name: user
+    using:
+      manual_configuration:
+        column_mapping:
+          UserId: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+insert_permissions:
+  - role: app-user
+    permission:
+      backend_only: true
+      check:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - user:
+              OrgKey:
+                _eq: X-Hasura-org-id
+      set:
+        CreatedByUser: x-hasura-User-Id
+        ModifiedByUser: x-hasura-User-Id
+        OrgKey: x-hasura-org-id
+      columns:
+        - ParentId
+        - UserId
+select_permissions:
+  - role: app-user
+    permission:
+      columns:
+        - ParentId
+        - UserId
+        - CreatedAtTimestamp
+        - CreatedByUser
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      allow_aggregations: true
+      query_root_fields: []
+      subscription_root_fields: []
+delete_permissions:
+  - role: app-user
+    permission:
+      backend_only: true
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+event_triggers:
+  - name: owner
+    definition:
+      delete:
+        columns: '*'
+      enable_manual: true
+      insert:
+        columns: '*'
+      update:
+        columns: '*'
+    retry_conf:
+      interval_sec: 10
+      num_retries: 3
+      timeout_sec: 60
+    webhook: https://{{REST_API_DOMAIN}}/events
+    headers:
+      - name: RestApiKey
+        value_from_env: REST_API_KEY

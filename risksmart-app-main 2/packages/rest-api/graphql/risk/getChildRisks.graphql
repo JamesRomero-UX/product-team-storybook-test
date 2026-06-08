@@ -1,0 +1,17 @@
+query getChildRisks($riskId: uuid!) {
+  risk(
+    where: {
+      _or: [
+        { ParentRiskId: { _eq: $riskId } }
+        { parent: { ParentRiskId: { _eq: $riskId } } }
+      ]
+    }
+  ) {
+    ...RiskParts
+    OrgKey
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedAtTimestamp
+    CreatedByUser
+  }
+}

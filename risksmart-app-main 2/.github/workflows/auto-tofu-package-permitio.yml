@@ -1,0 +1,66 @@
+# Usage:
+# - Dev-cloud: Automatic deployment on PR (plan) and main merge (apply), or manual via workflow_dispatch
+# - Staging/Prod Tofu: Runs as part of manual-app-deploy-staging.yml and manual-app-deploy-prod.yml
+
+name: Auto / Tofu Package Permit.io
+
+on:
+  # Dev-cloud: automatic on PR and main merge
+  pull_request:
+    paths:
+      - 'packages/permitio/**'
+      - '.github/workflows/auto-tofu-package-permitio.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'packages/permitio/**'
+      - '.github/workflows/auto-tofu-package-permitio.yml'
+
+  # Manual workflow_dispatch for dev-cloud only
+  workflow_dispatch:
+
+jobs:
+  # ============================================================================
+  # DEV-CLOUD JOBS (Automatic Triggers Only)
+  # ============================================================================
+
+  tofu-plan-dev-cloud:
+    name: Permit.io - Dev Cloud - Plan
+    uses: ./.github/workflows/_template-tofu-plan-workspaces.yml
+    permissions:
+      pull-requests: write
+      actions: write
+      contents: read
+      id-token: write
+    with:
+      runner_label: 'sprinters:aws:eu-west-1:ubuntu-latest:m7i-flex.large:spot=false'
+      env: dev-cloud
+      aws_region: eu-west-1
+      account: ci
+      tf_actions_working_dir: 'packages/permitio'
+      tf_vars_file: 'dev-cloud-eu-west-1.tfvars'
+      uses_workspaces: true
+      deploy_role: 'arn:aws:iam::437474201705:role/RiskSmart-GitHub-Deploy-Role'
+    secrets: inherit
+
+  tofu-apply-dev-cloud:
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    name: Permit.io - Dev Cloud - Apply
+    needs: tofu-plan-dev-cloud
+    uses: ./.github/workflows/_template-tofu-apply-workspaces.yml
+    permissions:
+      pull-requests: write
+      actions: write
+      contents: read
+      id-token: write
+    with:
+      runner_label: 'sprinters:aws:eu-west-1:ubuntu-latest:m7i-flex.large:spot=false'
+      env: dev-cloud
+      aws_region: eu-west-1
+      account: ci
+      tf_actions_working_dir: 'packages/permitio'
+      tf_vars_file: 'dev-cloud-eu-west-1.tfvars'
+      uses_workspaces: true
+      deploy_role: 'arn:aws:iam::437474201705:role/RiskSmart-GitHub-Deploy-Role'
+    secrets: inherit

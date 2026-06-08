@@ -1,0 +1,14 @@
+query getCauseAuditById($Id: uuid!) {
+  cause_audit(where: { Id: { _eq: $Id } }, order_by: {ModifiedAtTimestamp: desc}) {
+    ModifiedByUser
+    CreatedByUser
+    Title
+    ModifiedAtTimestamp
+    CreatedAtTimestamp
+    Significance
+    ParentIssueId
+    Id
+    Description
+    CustomAttributeData
+  }
+}

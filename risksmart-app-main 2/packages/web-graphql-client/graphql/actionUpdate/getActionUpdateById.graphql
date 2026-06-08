@@ -1,0 +1,8 @@
+query getActionUpdateById($_eq: uuid!) {
+  action_update(where: { Id: { _eq: $_eq } }) {
+    ...ActionUpdateParts
+    files {
+      ...RelationFileParts
+    }
+  }
+}

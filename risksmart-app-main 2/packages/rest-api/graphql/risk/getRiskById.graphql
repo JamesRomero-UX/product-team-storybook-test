@@ -1,0 +1,5 @@
+query getRiskById($Id: uuid!) {
+  risk(where: { Id: { _eq: $Id } }) {
+    ...RiskParts
+  }
+}

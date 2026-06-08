@@ -1,0 +1,23 @@
+mutation updateControlGroup(
+  $Description: String!
+  $Owner: String!
+  $Title: String!
+  $Id: uuid!
+  $OriginalTimestamp: timestamptz!
+  $CustomAttributeData: jsonb
+) {
+  update_control_group(
+    where: {
+      Id: { _eq: $Id }
+      ModifiedAtTimestamp: { _eq: $OriginalTimestamp }
+    }
+    _set: {
+      Description: $Description
+      Owner: $Owner
+      Title: $Title
+      CustomAttributeData: $CustomAttributeData
+    }
+  ) {
+    affected_rows
+  }
+}

@@ -1,0 +1,8 @@
+mutation updateScheduleState(
+  $where: schedule_state_bool_exp!
+  $set: schedule_state_set_input!
+) {
+  update_schedule_state(where: $where, _set: $set) {
+    affected_rows
+  }
+}

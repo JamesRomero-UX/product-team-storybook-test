@@ -1,0 +1,13 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    "tsc": {
+      "dependsOn": ["^tsc", "generate-graphql", "generate:api-types"],
+      "outputLogs": "full"
+    },
+    "build": {
+      "dependsOn": ["^build", "generate-graphql"]
+    }
+  }
+}

@@ -1,0 +1,5 @@
+mutation deleteComplianceMonitoringAssessments($Ids: [uuid!]!) {
+  delete_compliance_monitoring_assessment(where: { Id: { _in: $Ids } }) {
+    affected_rows
+  }
+}

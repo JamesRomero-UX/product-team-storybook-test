@@ -1,0 +1,7 @@
+query getOrgMetaData($orgKey: String!) {
+  auth_organisation_by_pk(OrgKey: $orgKey) {
+    OrgKey
+    Name
+    Meta
+  }
+}

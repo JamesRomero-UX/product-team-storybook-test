@@ -1,0 +1,16 @@
+query getCustomRoles {
+  custom_role {
+    Id
+    RoleName
+    Description
+    CreatedAtTimestamp
+    CreatedByUser
+    ModifiedByUser
+    ModifiedAtTimestamp
+    customRoleUsers_aggregate {
+      aggregate {
+        count
+      }
+    }
+  }
+}

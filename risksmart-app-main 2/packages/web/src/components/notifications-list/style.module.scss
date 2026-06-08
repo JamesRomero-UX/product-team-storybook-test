@@ -1,0 +1,14 @@
+.cell {
+  [class*='awsui_variant-stacked']::after {
+    border-radius: 10px !important;
+  }
+  [class*='awsui_with-paddings'] {
+    padding: 16px !important;
+  }
+}
+
+.notificationList {
+  [class*='awsui_help-panel'] {
+    padding: 20px !important;
+  }
+}

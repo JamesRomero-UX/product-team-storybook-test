@@ -1,0 +1,52 @@
+mutation insertFormFieldConfiguration(
+  $SchemaId: uuid!
+  $ParentType: parent_type_enum!
+  $FormFieldConfigurations: [form_field_configuration_insert_input!]!
+  $Schema: jsonb!
+  $UiSchema: jsonb!
+  $FieldsToDelete: [String!]!
+) {
+  insert_custom_attribute_schema_one(
+    object: { Id: $SchemaId, Schema: $Schema, UiSchema: $UiSchema }
+    on_conflict: {
+      update_columns: [Schema, UiSchema]
+      constraint: custom_attribute_schema_pkey
+    }
+  ) {
+    CreatedAtTimestamp
+  }
+
+  insert_form_configuration_one(
+    object: {
+      CustomAttributeSchemaId: $SchemaId
+      ParentType: $ParentType
+      fields_config: {
+        data: $FormFieldConfigurations
+        on_conflict: {
+          update_columns: [
+            Hidden
+            ReadOnly
+            Required
+            DefaultValue
+            Label
+            Description
+            Conditions
+          ]
+          constraint: form_field_configuration_pkey1
+        }
+      }
+    }
+    on_conflict: {
+      constraint: form_configuration_pkey
+      update_columns: [ParentType, CustomAttributeSchemaId]
+    }
+  ) {
+    CreatedAtTimestamp
+  }
+
+  delete_form_field_configuration(
+    where: { FieldId: { _in: $FieldsToDelete } }
+  ) {
+    affected_rows
+  }
+}

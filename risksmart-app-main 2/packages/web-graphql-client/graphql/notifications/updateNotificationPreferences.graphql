@@ -1,0 +1,7 @@
+mutation updateNotificationPreferences(
+  $preferenceSet: UpdateNotificationPreferencesInput!
+) {
+  updateNotificationPreferences(preferenceSet: $preferenceSet) {
+    message
+  }
+}

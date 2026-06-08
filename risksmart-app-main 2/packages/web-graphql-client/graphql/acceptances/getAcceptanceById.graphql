@@ -1,0 +1,16 @@
+query getAcceptanceById($_eq: uuid!) {
+  acceptance(where: { Id: { _eq: $_eq } }) {
+    ...AcceptanceParts
+    ancestorContributors {
+      ...AncestorContributorParts
+    }
+    files {
+      ...RelationFileParts
+    }
+    parents {
+      risk {
+        Id
+      }
+    }
+  }
+}

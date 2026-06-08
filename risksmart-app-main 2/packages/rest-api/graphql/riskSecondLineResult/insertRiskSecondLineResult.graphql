@@ -1,0 +1,15 @@
+mutation insertRiskControlledSecondLineResults(
+  $results: [risk_controlled_second_line_result_insert_input!]!
+) {
+  insert_risk_controlled_second_line_result(objects: $results) {
+    affected_rows
+  }
+}
+
+mutation insertRiskUncontrolledSecondLineResults(
+  $results: [risk_uncontrolled_second_line_result_insert_input!]!
+) {
+  insert_risk_uncontrolled_second_line_result(objects: $results) {
+    affected_rows
+  }
+}

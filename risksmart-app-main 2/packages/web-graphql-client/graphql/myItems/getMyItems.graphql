@@ -1,0 +1,194 @@
+query getMyItems($userId: String!) {
+  obligation(where: { ancestorContributors: { UserId: { _eq: $userId } } }) {
+    Id
+    Title
+    Description
+    owners {
+      ...OwnerParts
+    }
+    ownerGroups {
+      ...OwnerGroupParts
+    }
+    contributors {
+      ...ContributorParts
+    }
+    contributorGroups {
+      ...ContributorGroupParts
+    }
+    tags {
+      ...TagParts
+    }
+    departments {
+      ...DepartmentParts
+    }
+  }
+
+  risk(where: { ancestorContributors: { UserId: { _eq: $userId } } }) {
+    Id
+    Title
+    Description
+    owners {
+      ...OwnerParts
+    }
+    ownerGroups {
+      ...OwnerGroupParts
+    }
+    contributors {
+      ...ContributorParts
+    }
+    contributorGroups {
+      ...ContributorGroupParts
+    }
+    tags {
+      ...TagParts
+    }
+    departments {
+      ...DepartmentParts
+    }
+  }
+
+  action(where: { ancestorContributors: { UserId: { _eq: $userId } } }) {
+    Id
+    Title
+    Description
+    owners {
+      ...OwnerParts
+    }
+    ownerGroups {
+      ...OwnerGroupParts
+    }
+    contributors {
+      ...ContributorParts
+    }
+    contributorGroups {
+      ...ContributorGroupParts
+    }
+    tags {
+      ...TagParts
+    }
+    departments {
+      ...DepartmentParts
+    }
+  }
+
+  control(where: { ancestorContributors: { UserId: { _eq: $userId } } }) {
+    Id
+    Title
+    Description
+    owners {
+      ...OwnerParts
+    }
+    ownerGroups {
+      ...OwnerGroupParts
+    }
+    contributors {
+      ...ContributorParts
+    }
+    contributorGroups {
+      ...ContributorGroupParts
+    }
+    tags {
+      ...TagParts
+    }
+    departments {
+      ...DepartmentParts
+    }
+  }
+
+  indicator(where: { ancestorContributors: { UserId: { _eq: $userId } } }) {
+    Id
+    Title
+    Description
+    owners {
+      ...OwnerParts
+    }
+    ownerGroups {
+      ...OwnerGroupParts
+    }
+    contributors {
+      ...ContributorParts
+    }
+    contributorGroups {
+      ...ContributorGroupParts
+    }
+    tags {
+      ...TagParts
+    }
+    departments {
+      ...DepartmentParts
+    }
+  }
+
+  issue(where: { ancestorContributors: { UserId: { _eq: $userId } } }) {
+    Id
+    Title
+    Details
+    owners {
+      ...OwnerParts
+    }
+    ownerGroups {
+      ...OwnerGroupParts
+    }
+    contributors {
+      ...ContributorParts
+    }
+    contributorGroups {
+      ...ContributorGroupParts
+    }
+    tags {
+      ...TagParts
+    }
+    departments {
+      ...DepartmentParts
+    }
+  }
+
+  document(where: { ancestorContributors: { UserId: { _eq: $userId } } }) {
+    Id
+    Title
+    Purpose
+    owners {
+      ...OwnerParts
+    }
+    ownerGroups {
+      ...OwnerGroupParts
+    }
+    contributors {
+      ...ContributorParts
+    }
+    contributorGroups {
+      ...ContributorGroupParts
+    }
+    tags {
+      ...TagParts
+    }
+    departments {
+      ...DepartmentParts
+    }
+  }
+
+  assessment(where: { ancestorContributors: { UserId: { _eq: $userId } } }) {
+    Id
+    Title
+    Summary
+    owners {
+      ...OwnerParts
+    }
+    ownerGroups {
+      ...OwnerGroupParts
+    }
+    contributors {
+      ...ContributorParts
+    }
+    contributorGroups {
+      ...ContributorGroupParts
+    }
+
+    tags {
+      ...TagParts
+    }
+    departments {
+      ...DepartmentParts
+    }
+  }
+}

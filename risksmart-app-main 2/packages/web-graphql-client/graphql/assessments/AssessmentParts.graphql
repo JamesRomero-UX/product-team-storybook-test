@@ -1,0 +1,19 @@
+fragment AssessmentParts on assessment {
+  ActualCompletionDate
+  CompletedByUser
+  CreatedAtTimestamp
+  CreatedByUser
+  CustomAttributeData
+  Id
+  ModifiedAtTimestamp
+  ModifiedByUser
+  NextTestDate
+  OriginatingItemId
+  SequentialId
+  StartDate
+  Summary
+  TargetCompletionDate
+  Title
+  Status
+  Outcome
+}

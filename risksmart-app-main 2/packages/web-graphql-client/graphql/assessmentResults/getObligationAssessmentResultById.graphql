@@ -1,0 +1,18 @@
+query getObligationAssessmentResultById($Id: uuid!) {
+  obligation_assessment_result(where: { Id: { _eq: $Id } }) {
+    ...ObligationAssessmentResultParts
+    parents {
+      obligation {
+        Id
+        Title
+      }
+      assessment {
+        Id
+        Title
+      }
+    }
+    files {
+      ...RelationFileParts
+    }
+  }
+}

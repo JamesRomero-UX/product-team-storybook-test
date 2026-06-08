@@ -1,0 +1,11 @@
+@use '@risk-smart/themed-design-tokens/visual-refresh' as awsui;
+
+.header {
+  h1 span[data-testid='tab-title'],
+  h2 span[data-testid='tab-title'] {
+    @apply font-bold #{!important};
+    @apply text-grey800 #{!important};
+    font-size: 24px !important;
+    line-height: 30px !important;
+  }
+}

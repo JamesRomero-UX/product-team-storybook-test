@@ -1,0 +1,12 @@
+query getAllIssueUpdates {
+  issue_update {
+    Description
+    Id
+    ParentIssueId
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    Title
+    CreatedByUser
+    ModifiedByUser
+  }
+}

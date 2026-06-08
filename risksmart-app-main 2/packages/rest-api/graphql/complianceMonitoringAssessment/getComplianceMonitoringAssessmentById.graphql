@@ -1,0 +1,5 @@
+query getComplianceMonitoringAssessmentById($Id: uuid!) {
+  compliance_monitoring_assessment(where: { Id: { _eq: $Id } }) {
+    Id
+  }
+}

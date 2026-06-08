@@ -1,0 +1,9 @@
+query getAppetites {
+  appetite {
+    Id
+    SequentialId
+    ancestorContributors {
+      ...AncestorContributorParts
+    }
+  }
+}

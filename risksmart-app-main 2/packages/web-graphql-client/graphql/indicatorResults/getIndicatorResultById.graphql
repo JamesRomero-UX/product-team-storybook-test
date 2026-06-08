@@ -1,0 +1,19 @@
+query getIndicatorResultById($id: uuid!) {
+  indicator_result(where: { Id: { _eq: $id } }) {
+    Description
+    Id
+    ResultDate
+    TargetValueNum
+    TargetValueTxt
+    CustomAttributeData
+    modifiedBy {
+      FriendlyName
+    }
+    parent {
+      Type
+    }
+    files {
+      ...RelationFileParts
+    }
+  }
+}

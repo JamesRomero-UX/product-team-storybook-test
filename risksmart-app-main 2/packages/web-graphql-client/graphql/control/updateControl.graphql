@@ -1,0 +1,5 @@
+mutation updateControl($object: UpdateChildControlInput) {
+  updateChildControl(object: $object) {
+    affected_rows
+  }
+}

@@ -1,0 +1,8 @@
+mutation insertAppetiteParents($objects: [appetite_parent_insert_input!]!) {
+  insert_appetite_parent(
+    objects: $objects
+    on_conflict: { constraint: appetite_parent_pkey, update_columns: [] }
+  ) {
+    affected_rows
+  }
+}

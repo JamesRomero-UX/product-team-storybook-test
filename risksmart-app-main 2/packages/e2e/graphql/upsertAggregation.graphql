@@ -1,0 +1,11 @@
+mutation upsertAggregation($aggregationOrgs: [aggregation_org_insert_input!]!) {
+  insert_aggregation_org(
+    objects: $aggregationOrgs
+    on_conflict: {
+      constraint: aggregation_org_pkey
+      update_columns: [RiskScoringModel, ModifiedAtTimestamp]
+    }
+  ) {
+    affected_rows
+  }
+}

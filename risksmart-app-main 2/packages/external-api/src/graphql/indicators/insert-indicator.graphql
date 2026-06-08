@@ -1,0 +1,5 @@
+mutation insertIndicator($object: InsertChildIndicatorInput) {
+  insertChildIndicator(object: $object) {
+    Id
+  }
+}

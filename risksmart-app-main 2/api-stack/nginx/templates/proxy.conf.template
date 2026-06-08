@@ -1,0 +1,24 @@
+# nginx/conf/proxy.conf
+
+# Configure DNS resolver with TTL for periodic DNS refresh
+resolver 127.0.0.11 valid=30s ipv6=off;
+
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    server_name nginx;
+    underscores_in_headers on;
+    ssl_certificate /etc/nginx/ssl/nginx-selfsigned.crt;
+    ssl_certificate_key /etc/nginx/ssl/nginx-selfsigned.key;
+    proxy_http_version              1.1;
+    proxy_pass_request_headers      on;
+
+    location ~ (/events|/enable-events|/disable-events) {
+        set $event_proxy_upstream "event-proxy:80";
+        proxy_pass                      http://$event_proxy_upstream;
+    }
+
+    location / {
+        proxy_pass                      https://${REST_API_DOMAIN};
+    }
+}

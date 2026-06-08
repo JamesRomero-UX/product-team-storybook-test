@@ -1,0 +1,28 @@
+.borderedRow {
+  @apply border-grey150;
+  @apply border-0;
+  @apply border-t-2;
+  @apply border-solid;
+}
+
+.notificationTableRow {
+  @apply p-3;
+  @apply rounded;
+  @apply mb-2;
+
+  &.headerRow {
+    @apply bg-off_white;
+    @apply font-bold;
+  }
+
+  display: flex;
+
+  :first-child {
+    flex: 1;
+  }
+
+  :not(:first-child) {
+    @apply text-center;
+    min-width: 80px;
+  }
+}

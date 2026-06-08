@@ -1,0 +1,21 @@
+query getUserSearchPreferencesAuditById($Id: String!) {
+  user_search_preferences_audit(where: {
+    CreatedByUser: {
+      _eq: $Id
+    }
+  }) {
+    RecentUserIds
+    ShowGroups
+    FilterByActivePlatformUsers
+    ShowUserPlatformRole
+    ShowUserJobTitle
+    ShowDirectoryDepartment
+    ShowUserLocation
+    ShowUserEmail
+    ShowArchivedUsers
+    CreatedByUser
+    CreatedAtTimestamp
+    ModifiedByUser
+    ModifiedAtTimestamp
+  }
+}

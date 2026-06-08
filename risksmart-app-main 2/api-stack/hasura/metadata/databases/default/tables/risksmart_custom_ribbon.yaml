@@ -1,0 +1,74 @@
+table:
+  name: custom_ribbon
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: custom_ribbon
+  custom_root_fields: {}
+object_relationships:
+  - name: createdByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          CreatedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: modifiedByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          ModifiedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+insert_permissions:
+  - role: insert:custom-ribbon
+    permission:
+      check:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      set:
+        CreatedByUser: x-hasura-user-id
+        ModifiedByUser: x-hasura-user-id
+        OrgKey: X-Hasura-org-id
+      columns:
+        - ParentType
+        - Filters
+select_permissions:
+  - role: read:custom-ribbon
+    permission:
+      columns:
+        - CreatedAtTimestamp
+        - CreatedByUser
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - Id
+        - ParentType
+        - Filters
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+update_permissions:
+  - role: update:custom-ribbon
+    permission:
+      columns:
+        - Filters
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      check:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      set:
+        ModifiedAtTimestamp: now()
+        ModifiedByUser: x-hasura-user-id
+delete_permissions:
+  - role: delete:custom-ribbon
+    permission:
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id

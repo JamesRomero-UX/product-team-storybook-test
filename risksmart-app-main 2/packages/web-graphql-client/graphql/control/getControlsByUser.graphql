@@ -1,0 +1,5 @@
+query getControlsByUser($_eq: String = "") {
+  control(where: { CreatedByUser: { _eq: $_eq } }) {
+    ...ControlParts
+  }
+}

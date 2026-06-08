@@ -1,0 +1,9 @@
+query getUserGroupContributorsForObject($Id: uuid!) {
+  contributor_group(where: { ParentId: { _eq: $Id } }) {
+    group {
+      Email
+      Id
+      Name
+    }
+  }
+}

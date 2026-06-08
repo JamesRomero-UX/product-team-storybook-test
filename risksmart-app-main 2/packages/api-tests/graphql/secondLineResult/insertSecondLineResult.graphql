@@ -1,0 +1,97 @@
+mutation insertDocumentSecondLineResult(
+  $objects: [document_second_line_result_insert_input!]!
+) {
+  insert_document_second_line_result(objects: $objects) {
+    affected_rows
+  }
+}
+
+mutation insertChildDocumentSecondLineResult(
+  $Rating: Int
+  $ComplianceMonitoringAssessmentId: uuid!
+  $DocumentIds: [uuid!]!
+  $CustomAttributeData: jsonb
+  $TestDate: timestamptz
+  $Rationale: String
+) {
+  insertChildDocumentSecondLineResult(
+    Rating: $Rating
+    ComplianceMonitoringAssessmentId: $ComplianceMonitoringAssessmentId
+    DocumentIds: $DocumentIds
+    CustomAttributeData: $CustomAttributeData
+    TestDate: $TestDate
+    Rationale: $Rationale
+  ) {
+    Ids
+  }
+}
+
+mutation insertObligationSecondLineResult(
+  $objects: [obligation_second_line_result_insert_input!]!
+) {
+  insert_obligation_second_line_result(objects: $objects) {
+    affected_rows
+  }
+}
+
+mutation insertChildObligationSecondLineResult(
+  $Rating: Int!
+  $ComplianceMonitoringAssessmentId: uuid!
+  $ObligationIds: [uuid!]!
+  $CustomAttributeData: jsonb
+  $TestDate: timestamptz
+  $Rationale: String
+) {
+  insertChildObligationSecondLineResult(
+    Rating: $Rating
+    ComplianceMonitoringAssessmentId: $ComplianceMonitoringAssessmentId
+    ObligationIds: $ObligationIds
+    CustomAttributeData: $CustomAttributeData
+    TestDate: $TestDate
+    Rationale: $Rationale
+  ) {
+    Ids
+  }
+}
+
+mutation insertRiskUncontrolledSecondLineResult(
+  $objects: [risk_uncontrolled_second_line_result_insert_input!]!
+) {
+  insert_risk_uncontrolled_second_line_result(objects: $objects) {
+    affected_rows
+  }
+}
+
+mutation insertRiskControlledSecondLineResult(
+  $objects: [risk_controlled_second_line_result_insert_input!]!
+) {
+  insert_risk_controlled_second_line_result(objects: $objects) {
+    affected_rows
+  }
+}
+
+mutation insertChildRiskSecondLineResult(
+  $Rating: Int
+  $Likelihood: Int
+  $Impact: Int
+  $ControlType: risk_assessment_result_control_type_enum
+  $ComplianceMonitoringAssessmentId: uuid!
+  $RiskIds: [uuid!]!
+  $CustomAttributeData: jsonb
+  $TestDate: timestamptz
+  $Rationale: String
+) {
+  insertChildRiskSecondLineResult(
+    Rating: $Rating
+    ComplianceMonitoringAssessmentId: $ComplianceMonitoringAssessmentId
+    RiskIds: $RiskIds
+    Impact: $Impact
+    Likelihood: $Likelihood
+    ControlType: $ControlType
+    CustomAttributeData: $CustomAttributeData
+    TestDate: $TestDate
+    Rationale: $Rationale
+  ) {
+    Ids
+  }
+}

@@ -1,0 +1,15 @@
+mutation UpdateCustomRoleUsers(
+  $rolesToAdd: [custom_role_user_insert_input!]!
+  $userId: String!
+  $roleIdsToRemove: [uuid!]!
+) {
+  insert_custom_role_user(objects: $rolesToAdd) {
+    affected_rows
+  }
+
+  delete_custom_role_user(
+    where: { UserId: { _eq: $userId }, CustomRoleId: { _in: $roleIdsToRemove } }
+  ) {
+    affected_rows
+  }
+}

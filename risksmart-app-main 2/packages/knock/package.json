@@ -1,0 +1,25 @@
+{
+  "name": "@risksmart-app/knock",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "knock": "knock",
+    "knock:pull": "knock workflow pull --all --workflows-dir=./workflows && knock partial pull --all --partials-dir=./partials",
+    "knock:push": "knock workflow push --all --workflows-dir=./workflows && knock partial push --all --partials-dir=./partials",
+    "knock:configure": "./configure-knock.sh",
+    "test:unit": "vitest run",
+    "test:unit:watch": "vitest",
+  "knock:set-tenant-pref": "node ./knock_scripts/setDefaultTenantPreferenceSet.mjs",
+  "knock:set-user-prefs-bulk": "node ./knock_scripts/setUserPreferencesBulk.mjs"
+  },
+  "devDependencies": {
+    "@knocklabs/cli": "catalog:",
+    "liquidjs": "catalog:",
+    "vitest": "catalog:",
+    "dotenv": "catalog:"
+  }
+}
+
+
+

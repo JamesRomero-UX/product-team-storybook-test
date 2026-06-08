@@ -1,0 +1,5 @@
+mutation insertReferenceUser($UserName: String, $Email: String!) {
+  insertReferenceUser(UserName: $UserName, Email: $Email) {
+    Id
+  }
+}

@@ -1,0 +1,6 @@
+query getRelationFile($where: relation_file_bool_exp) {
+  relation_file(where: $where) {
+    FileId
+    ChangeRequestFileOperation
+  }
+}

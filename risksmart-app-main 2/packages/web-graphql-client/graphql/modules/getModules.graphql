@@ -1,0 +1,5 @@
+query getModules {
+  organisation_module {
+    ModuleSettings
+  }
+}

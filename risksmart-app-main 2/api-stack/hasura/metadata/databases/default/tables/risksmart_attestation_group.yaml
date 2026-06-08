@@ -1,0 +1,201 @@
+table:
+  name: attestation_group
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: attestation_group
+  custom_root_fields: {}
+object_relationships:
+  - name: createdByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          CreatedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: modifiedByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          ModifiedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: organisation
+    using:
+      foreign_key_constraint_on: OrgKey
+  - name: config
+    using:
+      foreign_key_constraint_on: ConfigId
+  - name: group
+    using:
+      foreign_key_constraint_on: GroupId
+array_relationships: []
+insert_permissions:
+  - role: Standard
+    permission:
+      check:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - config:
+              parent:
+                OrgKey:
+                  _eq: X-Hasura-org-id
+                permissions:
+                  _and:
+                    - UserId:
+                        _eq: X-Hasura-User-Id
+                    - OrgKey:
+                        _eq: X-Hasura-org-Id
+                    - AccessType:
+                        _eq: update
+      set:
+        CreatedByUser: x-hasura-user-id
+        ModifiedByUser: x-hasura-user-id
+        OrgKey: X-Hasura-org-id
+      columns:
+        - ConfigId
+        - GroupId
+  - role: insert:attestation-group
+    permission:
+      check:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - config:
+              OrgKey:
+                _eq: X-Hasura-org-id
+      set:
+        CreatedByUser: x-hasura-user-id
+        ModifiedByUser: x-hasura-user-id
+        OrgKey: X-Hasura-org-id
+      columns:
+        - ConfigId
+        - GroupId
+select_permissions:
+  - role: Standard
+    permission:
+      columns:
+        - CreatedAtTimestamp
+        - CreatedByUser
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - ConfigId
+        - GroupId
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - config:
+              parent:
+                permissions:
+                  _and:
+                    - UserId:
+                        _eq: X-Hasura-User-Id
+                    - OrgKey:
+                        _eq: X-Hasura-org-Id
+                    - AccessType:
+                        _eq: read
+  - role: read:attestation-group
+    permission:
+      columns:
+        - CreatedAtTimestamp
+        - CreatedByUser
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - ConfigId
+        - GroupId
+      filter:
+        config:
+          OrgKey:
+            _eq: X-Hasura-org-id
+update_permissions:
+  - role: Standard
+    permission:
+      columns:
+        - ConfigId
+        - GroupId
+      filter:
+        config:
+          OrgKey:
+            _eq: X-Hasura-org-id
+          parent:
+            permissions:
+              _and:
+                - UserId:
+                    _eq: X-Hasura-User-Id
+                - OrgKey:
+                    _eq: X-Hasura-org-Id
+                - AccessType:
+                    _eq: update
+      check:
+        config:
+          OrgKey:
+            _eq: X-Hasura-org-id
+      set:
+        ModifiedAtTimestamp: now()
+        ModifiedByUser: x-hasura-user-id
+  - role: update:attestation-group
+    permission:
+      columns:
+        - ConfigId
+        - GroupId
+      filter:
+        config:
+          OrgKey:
+            _eq: X-Hasura-org-id
+      check:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - config:
+              OrgKey:
+                _eq: X-Hasura-org-id
+      set:
+        ModifiedAtTimestamp: now()
+        ModifiedByUser: x-hasura-user-id
+delete_permissions:
+  - role: Standard
+    permission:
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - config:
+              parent:
+                permissions:
+                  _and:
+                    - UserId:
+                        _eq: X-Hasura-User-Id
+                    - OrgKey:
+                        _eq: X-Hasura-org-Id
+                    - AccessType:
+                        _eq: update
+  - role: delete:attestation-group
+    permission:
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+event_triggers:
+  - name: attesattion_group
+    definition:
+      delete:
+        columns: '*'
+      enable_manual: true
+      insert:
+        columns: '*'
+      update:
+        columns: '*'
+    retry_conf:
+      interval_sec: 10
+      num_retries: 3
+      timeout_sec: 60
+    webhook: https://{{REST_API_DOMAIN}}/events
+    headers:
+      - name: RestApiKey
+        value_from_env: REST_API_KEY

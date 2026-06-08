@@ -1,0 +1,8 @@
+mutation updateQuestionnaireTemplate(
+  $where: questionnaire_template_bool_exp!
+  $set: questionnaire_template_set_input
+) {
+  update_questionnaire_template(where: $where, _set: $set) {
+    affected_rows
+  }
+}

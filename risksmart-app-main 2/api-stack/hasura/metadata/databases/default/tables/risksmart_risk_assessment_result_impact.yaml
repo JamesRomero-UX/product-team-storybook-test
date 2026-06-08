@@ -1,0 +1,80 @@
+table:
+  name: risk_assessment_result_impact
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: risk_assessment_result_impact
+  custom_root_fields: {}
+object_relationships:
+  - name: riskAssessmentResult
+    using:
+      foreign_key_constraint_on: RiskAssessmentResultId
+  - name: organisation
+    using:
+      foreign_key_constraint_on: OrgKey
+  - name: createdByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          CreatedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: modifiedByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          ModifiedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+insert_permissions:
+  - role: insert:risk-assessment-result-impact
+    permission:
+      check:
+        OrgKey:
+          _eq: x-hasura-org-id
+      set:
+        OrgKey: x-hasura-org-id
+        CreatedByUser: x-hasura-user-id
+        ModifiedByUser: x-hasura-user-id
+      backend_only: true
+      columns:
+        - RiskAssessmentResultId
+        - Label
+        - Value
+update_permissions:
+  - role: update:risk-assessment-result-impact
+    permission:
+      check:
+        OrgKey:
+          _eq: x-hasura-org-id
+      set:
+        ModifiedByUser: x-hasura-user-id
+        ModifiedAtTimestamp: now()
+      backend_only: true
+      columns:
+        - Value
+      filter:
+        OrgKey:
+          _eq: x-hasura-org-id
+select_permissions:
+  - role: read:risk-assessment-result-impact
+    permission:
+      columns:
+        - Id
+        - RiskAssessmentResultId
+        - Label
+        - Value
+      filter:
+        OrgKey:
+          _eq: x-hasura-org-id
+delete_permissions:
+  - role: delete:risk-assessment-result-impact
+    permission:
+      filter:
+        OrgKey:
+          _eq: x-hasura-org-id

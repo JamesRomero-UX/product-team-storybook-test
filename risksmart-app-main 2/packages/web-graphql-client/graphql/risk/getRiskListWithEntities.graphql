@@ -1,0 +1,16 @@
+query getRiskListWithEntities {
+  # Enhanced risk query including entity information for multi-entity support
+  risk {
+    Id
+    Title
+    SequentialId
+    enterpriseRiskInstance {
+      ...EnterpriseRiskInstanceWithEntityHierarchyParts
+    }
+  }
+  # Get risks nodes so we have IDs for even controls we don't have access to
+  node(where: { ObjectType: { _eq: risk } }) {
+    Id
+    SequentialId
+  }
+}

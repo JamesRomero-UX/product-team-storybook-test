@@ -1,0 +1,15 @@
+fragment ControlParts on control {
+  CreatedByUser
+  ModifiedByUser
+  Description
+  Id
+  CreatedAtTimestamp
+  ModifiedAtTimestamp
+  Title
+  Type
+  CustomAttributeData
+  SequentialId
+  schedule {
+    ...ScheduleParts
+  }
+}

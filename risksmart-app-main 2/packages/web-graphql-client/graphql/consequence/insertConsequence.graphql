@@ -1,0 +1,25 @@
+mutation insertConsequence(
+  $Title: String
+  $Description: String
+  $Criticality: Int
+  $ParentIssueId: uuid
+  $CostValue: numeric
+  $CostType: cost_type_enum
+  $CustomAttributeData: jsonb
+  $Type: consequence_type_enum
+) {
+  insert_consequence_one(
+    object: {
+      Title: $Title
+      Description: $Description
+      Criticality: $Criticality
+      ParentIssueId: $ParentIssueId
+      CostValue: $CostValue
+      CostType: $CostType
+      CustomAttributeData: $CustomAttributeData
+      Type: $Type
+    }
+  ) {
+    Id
+  }
+}

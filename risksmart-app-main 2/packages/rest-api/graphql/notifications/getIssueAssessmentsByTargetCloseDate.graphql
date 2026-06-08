@@ -1,0 +1,16 @@
+query getIssueAssessmentsByTargetCloseDate(
+  $minTargetCloseDate: timestamptz
+  $maxTargetCloseDate: timestamptz
+) {
+  issue_assessment(
+    where: {
+      Status: { _neq: closed }
+      TargetCloseDate: { _gte: $minTargetCloseDate, _lt: $maxTargetCloseDate }
+      Type: { _eq: issue_assessment }
+    }
+  ) {
+    ParentIssueId
+    OrgKey
+    TargetCloseDate
+  }
+}

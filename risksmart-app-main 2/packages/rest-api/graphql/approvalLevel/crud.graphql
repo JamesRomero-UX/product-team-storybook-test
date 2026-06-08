@@ -1,0 +1,36 @@
+query getApprovalLevels(
+  $where: approval_level_bool_exp
+  $limit: Int
+  $orderBy: [approval_level_order_by!]
+) {
+  approval_level(where: $where, limit: $limit, order_by: $orderBy) {
+    ...ApprovalLevelParts
+  }
+}
+
+mutation deleteApprovalLevels($where: approval_level_bool_exp!) {
+  delete_approval_level(where: $where) {
+    returning {
+      ...ApprovalLevelParts
+    }
+  }
+}
+
+mutation insertApprovalLevels($objects: [approval_level_insert_input!]!) {
+  insert_approval_level(objects: $objects) {
+    returning {
+      ...ApprovalLevelParts
+    }
+  }
+}
+
+mutation updateApprovalLevels(
+  $where: approval_level_bool_exp!
+  $set: approval_level_set_input!
+) {
+  update_approval_level(where: $where, _set: $set) {
+    returning {
+      ...ApprovalLevelParts
+    }
+  }
+}

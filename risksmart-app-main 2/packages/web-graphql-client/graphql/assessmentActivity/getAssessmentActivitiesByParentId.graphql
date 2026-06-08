@@ -1,0 +1,13 @@
+query getAssessmentActivitiesByParentId($AssessmentId: uuid!) {
+  assessment_activity(
+    where: { ParentId: { _eq: $AssessmentId }, IsRCSA: { _eq: false } }
+  ) {
+    ...AssessmentActivityParts
+    assignedUser {
+      FriendlyName
+    }
+    files {
+      ...RelationFileParts
+    }
+  }
+}

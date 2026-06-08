@@ -1,0 +1,24 @@
+table:
+  name: file_audit
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: file_audit
+  custom_root_fields: {}
+select_permissions:
+  - role: read:audit
+    permission:
+      columns:
+        - Id
+        - FileName
+        - FileSize
+        - ContentType
+        - Meta
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - CreatedByUser
+        - CreatedAtTimestamp
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id

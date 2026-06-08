@@ -1,0 +1,29 @@
+query getLatestPublicDocumentFileByDocumentId($documentId: uuid!) {
+  document_file(
+    where: {
+      Status: { _eq: published }
+      ParentDocumentId: { _eq: $documentId }
+    }
+    order_by: { CreatedAtTimestamp: desc }
+  ) {
+    ...PublicDocumentRelationFileParts
+    Link
+    Content
+    file {
+      ...FileParts
+    }
+    reviewedBy {
+      FriendlyName
+    }
+    parent {
+      Title
+      DocumentType
+      owners {
+        ...OwnerParts
+      }
+      ownerGroups {
+        ...OwnerGroupParts
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+query getApprovalById($Id: uuid!) {
+  approval: approval_by_pk(Id: $Id) {
+    Id
+    Workflow
+    ModifiedAtTimestamp
+    CreatedAtTimestamp
+    InFlightEditRule
+    levels(order_by: { SequenceOrder: asc }) {
+      Id
+      approvers {
+        Id
+        UserId
+        UserGroupId
+        OwnerApprover
+        user {
+          FriendlyName
+        }
+        group {
+          Name
+        }
+      }
+      ApprovalRuleType
+    }
+    createdBy {
+      Id
+      FriendlyName
+    }
+  }
+}

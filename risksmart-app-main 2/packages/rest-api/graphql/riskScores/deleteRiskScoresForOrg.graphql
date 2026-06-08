@@ -1,0 +1,5 @@
+mutation deleteRiskScoresForOrg($OrgKey: String!) {
+  delete_risk_score(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+}

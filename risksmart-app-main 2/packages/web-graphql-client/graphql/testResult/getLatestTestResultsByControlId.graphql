@@ -1,0 +1,26 @@
+query getLatestTestResultsByControlId($controlId: uuid) {
+  test_result(
+    where: {
+      ParentControlId: { _eq: $controlId }
+      RatingType: { _in: ["assessment", "rating"] }
+    }
+    order_by: [{ TestDate: desc_nulls_last }, { CreatedAtTimestamp: desc }]
+    limit: 1
+  ) {
+    ...TestResultParts
+    submitter {
+      FriendlyName
+    }
+    files {
+      ...RelationFileParts
+    }
+    assessmentParents(where: { ParentType: { _eq: assessment } }) {
+      assessment {
+        ...AssessmentParts
+        completedByUser {
+          FriendlyName
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+query getUserGroupsWithApprovers {
+  user_group(order_by: { Name: asc }) {
+    Id
+    Name
+    Email
+    Description
+    OwnerContributor
+    createdByUser {
+      FriendlyName
+    }
+    CreatedAtTimestamp
+    modifiedByUser {
+      FriendlyName
+    }
+    ModifiedAtTimestamp
+    users_aggregate {
+      aggregate {
+        count
+      }
+    }
+    approvers_aggregate {
+      aggregate {
+        count
+      }
+    }
+  }
+}

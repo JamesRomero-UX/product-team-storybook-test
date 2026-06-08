@@ -1,0 +1,15 @@
+mutation InsertTaxonomy {
+  insert_taxonomy_one(
+    object: {
+      Description: "Description"
+      Common: {}
+      Library: {}
+      Taxonomy: {}
+      Rating: {}
+      InternalAuditRating: {}
+      organisations: { data: { Locale: "en", OrgName: "" } }
+    }
+  ) {
+    Id
+  }
+}

@@ -1,0 +1,35 @@
+mutation updateDocumentVersion(
+  $Id: uuid!
+  $FileId: uuid
+  $LatestModifiedAtTimestamp: timestamptz!
+  $NextReviewDate: timestamptz
+  $ReasonForReview: String
+  $ReviewDate: timestamptz
+  $ReviewedBy: String
+  $Status: version_status_enum!
+  $Summary: String
+  $Version: String!
+  $Content: String
+  $Type: document_file_type_enum!
+  $Link: String
+  $CustomAttributeData: jsonb
+) {
+  updateDocumentVersion(
+    NextReviewDate: $NextReviewDate
+    ReasonForReview: $ReasonForReview
+    ReviewDate: $ReviewDate
+    ReviewedBy: $ReviewedBy
+    Summary: $Summary
+    Status: $Status
+    Version: $Version
+    FileId: $FileId
+    Content: $Content
+    Type: $Type
+    Link: $Link
+    Id: $Id
+    LatestModifiedAtTimestamp: $LatestModifiedAtTimestamp
+    CustomAttributeData: $CustomAttributeData
+  ) {
+    affected_rows
+  }
+}

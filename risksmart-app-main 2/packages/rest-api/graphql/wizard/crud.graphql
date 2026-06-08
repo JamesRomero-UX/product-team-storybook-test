@@ -1,0 +1,30 @@
+query getWizard($RiskId: uuid!) {
+  wizard_by_pk(RiskId: $RiskId) {
+    RiskId
+  }
+}
+
+mutation insertWizard($object: wizard_insert_input!) {
+  insert_wizard_one(object: $object) {
+    RiskId
+  }
+}
+
+mutation updateWizard(
+  $RiskId: uuid!
+  $CurrentStep: Int!
+  $Status: wizard_status_enum
+) {
+  update_wizard(
+    _set: { CurrentStep: $CurrentStep, Status: $Status }
+    where: { RiskId: { _eq: $RiskId } }
+  ) {
+    affected_rows
+  }
+}
+
+mutation deleteWizard($RiskId: uuid!) {
+  delete_wizard(where: { RiskId: { _eq: $RiskId } }) {
+    affected_rows
+  }
+}

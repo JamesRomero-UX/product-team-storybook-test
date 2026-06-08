@@ -1,0 +1,6 @@
+query getOrganisations($where: auth_organisation_bool_exp! = {}) {
+  auth_organisation(where: $where) {
+    OrgKey
+    Meta
+  }
+}

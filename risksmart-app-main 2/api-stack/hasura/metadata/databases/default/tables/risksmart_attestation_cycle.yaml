@@ -1,0 +1,117 @@
+
+table:
+  name: attestation_cycle
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: attestation_cycle
+  custom_root_fields: {}
+object_relationships:
+  - name: createdByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          CreatedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: modifiedByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          ModifiedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: organisation
+    using:
+      foreign_key_constraint_on: OrgKey
+  - name: parent
+    using:
+      foreign_key_constraint_on: ParentId
+array_relationships:
+  - name: records
+    using:
+      foreign_key_constraint_on:
+        column: CycleId
+        table:
+          name: attestation_record
+          schema: risksmart
+insert_permissions:
+  - role: insert:attestation-cycle
+    permission:
+      check:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      set:
+        CreatedByUser: x-hasura-user-id
+        ModifiedByUser: x-hasura-user-id
+        OrgKey: X-Hasura-org-id
+      columns:
+        - Id
+        - Status
+        - AllowCarryForward
+        - ParentId
+        - CreatedByUser
+        - ModifiedByUser
+        - CreatedAtTimestamp
+        - ModifiedAtTimestamp
+        - ConcludedAtTimestamp
+select_permissions:
+  - role: read:attestation-cycle
+    permission:
+      columns:
+        - Id
+        - Status
+        - AllowCarryForward
+        - ParentId
+        - CreatedByUser
+        - ModifiedByUser
+        - CreatedAtTimestamp
+        - ModifiedAtTimestamp
+        - ConcludedAtTimestamp
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+update_permissions:
+  - role: update:attestation-cycle
+    permission:
+      columns:
+        - Status
+        - ConcludedAtTimestamp
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      check:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      set:
+        ModifiedAtTimestamp: now()
+        ModifiedByUser: x-hasura-user-id
+delete_permissions:
+  - role: delete:attestation-cycle
+    permission:
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+event_triggers:
+  - name: attestation_cycle
+    definition:
+      delete:
+        columns: '*'
+      enable_manual: true
+      insert:
+        columns: '*'
+      update:
+        columns: '*'
+    retry_conf:
+      interval_sec: 10
+      num_retries: 3
+      timeout_sec: 60
+    webhook: https://{{REST_API_DOMAIN}}/events
+    headers:
+      - name: RestApiKey
+        value_from_env: REST_API_KEY

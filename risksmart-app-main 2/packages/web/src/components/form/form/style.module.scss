@@ -1,0 +1,45 @@
+@use '@risk-smart/themed-design-tokens/visual-refresh' as awsui;
+.noFieldsetBorder {
+  fieldset {
+    border: 0;
+  }
+}
+.dangerButton {
+  background: awsui.$color-charts-red-500 !important;
+  border-color: awsui.$color-charts-red-500 !important;
+  color: #ffffff !important;
+}
+
+.draggableField {
+  display: flex;
+  cursor: move;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5em;
+  background: var(--color-off-white);
+  flex: 1;
+}
+
+/* TODO Remove 750px limit once all form fields are wrapped in FormRow */
+form {
+  label {
+    font-weight: 600 !important;
+  }
+
+  [class*='awsui_button-trigger'] {
+    min-height: 36px !important;
+    span[class*='awsui_icon'] {
+      @apply text-teal #{!important};
+    }
+  }
+
+  span[class*='awsui_placeholder'],
+  ::placeholder {
+    font-style: normal !important;
+  }
+}
+
+.formSidebar {
+  max-width: 350px;
+  width: 100%;
+}

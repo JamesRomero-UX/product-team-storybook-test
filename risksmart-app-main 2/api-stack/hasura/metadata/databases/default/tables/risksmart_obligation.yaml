@@ -1,0 +1,415 @@
+table:
+  name: obligation
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: obligation
+  custom_root_fields: {}
+object_relationships:
+  - name: schedule
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: Id
+        insertion_order: null
+        remote_table:
+          name: schedule
+          schema: risksmart   
+  - name: scheduleState
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: Id
+        insertion_order: null
+        remote_table:
+          name: schedule_state
+          schema: risksmart  
+  - name: createdBy
+    using:
+      manual_configuration:
+        column_mapping:
+          CreatedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: modifiedBy
+    using:
+      manual_configuration:
+        column_mapping:
+          ModifiedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: obligation_type
+    using:
+      foreign_key_constraint_on: Type
+  - name: org
+    using:
+      manual_configuration:
+        column_mapping:
+          OrgKey: OrgKey
+        insertion_order: null
+        remote_table:
+          name: organisation
+          schema: auth
+  - name: parent
+    using:
+      manual_configuration:
+        column_mapping:
+          ParentId: Id
+        insertion_order: null
+        remote_table:
+          name: obligation
+          schema: risksmart
+  - name: parentNode
+    using:
+      manual_configuration:
+        column_mapping:
+          ParentId: Id
+        insertion_order: null
+        remote_table:
+          name: node
+          schema: risksmart
+  - name: regulatorySource
+    using:
+      manual_configuration:
+        column_mapping:
+          RegulatorySourceId: Id
+        insertion_order: null
+        remote_table:
+          name: regulatory_source
+          schema: risksmart
+array_relationships:
+  - name: ancestorContributors
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: Id
+        insertion_order: null
+        remote_table:
+          name: ancestor_contributor_view
+          schema: risksmart
+  - name: actions
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: action_parent
+          schema: risksmart
+  - name: contributorGroups
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: contributor_group
+          schema: risksmart
+  - name: contributors
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: contributor
+          schema: risksmart
+  - name: controls
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: control_parent
+          schema: risksmart
+  - name: departments
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: department
+          schema: risksmart
+  - name: impacts
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentObligationId
+        insertion_order: null
+        remote_table:
+          name: obligation_impact
+          schema: risksmart
+  - name: assessmentResults
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: assessment_result_parent
+          schema: risksmart
+  - name: insertPermissions
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: Id
+        insertion_order: null
+        remote_table:
+          name: insert_permission_view
+          schema: risksmart
+  - name: issues
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: issue_parent
+          schema: risksmart
+  - name: ownerGroups
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: owner_group
+          schema: risksmart
+  - name: owners
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: owner
+          schema: risksmart
+  - name: permissions
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: Id
+        insertion_order: null
+        remote_table:
+          name: permission_view
+          schema: risksmart
+  - name: tags
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: tag
+          schema: risksmart
+  - name: changes
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ObligationId
+        insertion_order: null
+        remote_table:
+          name: obligation_change
+          schema: risksmart
+insert_permissions:
+  - role: Standard
+    permission:
+      backend_only: true
+      check:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - parent:
+              _and:
+                - OrgKey:
+                    _eq: X-Hasura-org-id
+                - insertPermissions:
+                    _and:
+                      - UserId:
+                          _eq: X-Hasura-User-Id
+                      - OrgKey:
+                          _eq: X-Hasura-org-Id
+                      - ObjectType:
+                          _eq: obligation
+
+      set:
+        CreatedByUser: x-hasura-user-id
+        ModifiedByUser: x-hasura-user-id
+        OrgKey: X-Hasura-org-id
+      columns:
+        - Id
+        - Adherence
+        - Description
+        - Interpretation
+        - ParentId
+        - Title
+        - Type
+        - Reference
+        - SourceUrl
+        - CustomAttributeData
+  - role: insert:obligation
+    permission:
+      backend_only: true
+      check:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      set:
+        CreatedByUser: x-hasura-User-Id
+        ModifiedByUser: x-hasura-User-Id
+        OrgKey: x-hasura-org-id
+      columns:
+        - Id
+        - Adherence
+        - Description
+        - Interpretation
+        - ParentId
+        - Title
+        - Type
+        - CustomAttributeData
+        - Reference
+        - SourceUrl
+select_permissions:
+  - role: Standard
+    permission:
+      columns:
+        - Adherence
+        - CreatedAtTimestamp
+        - CreatedByUser
+        - Description
+        - Id
+        - Interpretation
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - OrgKey
+        - ParentId
+        - Title
+        - Type
+        - CustomAttributeData
+        - SequentialId
+        - ExternalId
+        - RegulatorySourceId
+        - ExternalSyncedAt
+        - Reference
+        - SourceUrl
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - permissions:
+              _and:
+                - UserId:
+                    _eq: X-Hasura-User-Id
+                - OrgKey:
+                    _eq: X-Hasura-org-Id
+                - AccessType:
+                    _eq: read
+                - ObjectType:
+                    _eq: obligation
+      allow_aggregations: true
+  - role: read:obligation
+    permission:
+      columns:
+        - Adherence
+        - CreatedAtTimestamp
+        - CreatedByUser
+        - Description
+        - Id
+        - Interpretation
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - OrgKey
+        - ParentId
+        - Title
+        - Type
+        - CustomAttributeData
+        - SequentialId
+        - ExternalId
+        - RegulatorySourceId
+        - ExternalSyncedAt
+        - Reference
+        - SourceUrl
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      allow_aggregations: true
+update_permissions:
+  - role: Standard
+    permission:
+      backend_only: true
+      columns:
+        - Adherence
+        - Description
+        - Interpretation
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - ParentId
+        - Title
+        - Type
+        - CustomAttributeData
+        - Reference
+        - SourceUrl
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - permissions:
+              _and:
+                - UserId:
+                    _eq: X-Hasura-User-Id
+                - OrgKey:
+                    _eq: X-Hasura-org-Id
+                - AccessType:
+                    _eq: update
+      check: null
+      set:
+        ModifiedAtTimestamp: now()
+        ModifiedByUser: x-hasura-User-Id
+  - role: update:obligation
+    permission:
+      backend_only: true
+      columns:
+        - Adherence
+        - Description
+        - Interpretation
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - ParentId
+        - Title
+        - Type
+        - CustomAttributeData
+        - Reference
+        - SourceUrl
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      check: null
+      set:
+        ModifiedAtTimestamp: now()
+        ModifiedByUser: x-hasura-User-Id
+delete_permissions:
+  - role: Standard
+    permission:
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - permissions:
+              _and:
+                - UserId:
+                    _eq: X-Hasura-User-Id
+                - OrgKey:
+                    _eq: X-Hasura-org-Id
+                - AccessType:
+                    _eq: delete
+  - role: delete:obligation
+    permission:
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id

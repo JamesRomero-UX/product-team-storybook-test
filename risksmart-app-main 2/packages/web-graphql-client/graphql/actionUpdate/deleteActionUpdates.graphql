@@ -1,0 +1,13 @@
+mutation deleteActionUpdates($Ids: [uuid!]) {
+  delete_file(where: { relationFile: { ParentId: { _in: $Ids } } }) {
+    affected_rows
+  }
+
+  delete_relation_file(where: { ParentId: { _in: $Ids } }) {
+    affected_rows
+  }
+
+  delete_action_update(where: { Id: { _in: $Ids } }) {
+    affected_rows
+  }
+}

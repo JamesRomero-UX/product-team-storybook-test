@@ -1,0 +1,31 @@
+query getRiskControlledSecondLineResultsByParentId($Id: uuid) {
+  risk_controlled_second_line_result(
+    where: {
+      parents: { ParentId: { _eq: $Id } }
+      TestDate: { _is_null: false }
+    }
+    order_by: { TestDate: desc }
+  ) {
+    Id
+    Impact
+    Likelihood
+    Rating
+    TestDate
+  }
+}
+
+query getRiskUncontrolledSecondLineResultsByParentId($Id: uuid) {
+  risk_uncontrolled_second_line_result(
+    where: {
+      parents: { ParentId: { _eq: $Id } }
+      TestDate: { _is_null: false }
+    }
+    order_by: { TestDate: desc }
+  ) {
+    Id
+    Impact
+    Likelihood
+    Rating
+    TestDate
+  }
+}

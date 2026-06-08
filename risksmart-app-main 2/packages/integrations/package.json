@@ -1,0 +1,58 @@
+{
+  "name": "n8n-nodes-risksmart",
+  "version": "1.1.3",
+  "type": "commonjs",
+  "description": "These node support custom integrations into the RiskSmart platform.",
+  "keywords": [
+    "n8n-community-node-package"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc && pnpm pack",
+    "postpack": "./postPack.sh",
+    "dev": "tsc --watch",
+    "format": "prettier src --write",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix",
+    "prepublishOnly": "pnpm run build && pnpm run lint -c .eslintrc.prepublish.js src package.json",
+    "generate-graphql": "graphql-codegen --config codegen.ts",
+    "start": "docker compose -f ./docker-compose.yml up --build",
+    "stop": "docker compose -f ./docker-compose.yml down",
+    "tsc": "tsc --noEmit"
+  },
+  "files": [
+    "dist"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/RiskSmartAuth/RiskSmartAuthApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/**/*"
+    ]
+  },
+  "author": {
+    "name": "RiskSmart"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@graphql-codegen/cli": "catalog:",
+    "@graphql-codegen/introspection": "catalog:",
+    "@graphql-codegen/typescript": "catalog:",
+    "@graphql-codegen/typescript-operations": "catalog:",
+    "@graphql-typed-document-node/core": "catalog:",
+    "@risksmart-app/eslint-config": "workspace:*",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "n8n-workflow": "catalog:",
+    "ncp": "catalog:"
+  },
+  "dependencies": {
+    "graphql": "catalog:",
+    "jwt-decode": "catalog:",
+    "prettier": "catalog:",
+    "prettier-plugin-jsdoc": "catalog:",
+    "zod": "catalog:"
+  }
+}

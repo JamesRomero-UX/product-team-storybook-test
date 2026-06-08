@@ -1,0 +1,943 @@
+name: Auto / Pre-Merge App Checks
+
+permissions:
+  actions: write
+  contents: read
+  id-token: write
+  pull-requests: write
+  packages: read
+
+on:
+  pull_request:
+    branches: ["main"]
+    paths-ignore:
+      - ".github/workflows/auto-tofu-*.yml"
+      - "infrastructure/**"
+      - "docs/**"
+      - "*.md"
+
+jobs:
+  # Change Detection
+  DetectChanges:
+    name: Meta / Detect Changes
+    runs-on:
+      - sprinters:aws:ubuntu-24.04-minimal
+      - ${{ github.run_id }}-${{ github.run_attempt }}-DetectChanges
+    permissions:
+      pull-requests: read
+      contents: read
+    outputs:
+      integrations: ${{ steps.filter.outputs.integrations }}
+      external_api: ${{ steps.filter.outputs.external_api }}
+      cdk: ${{ steps.filter.outputs.cdk }}
+      atomic_ui: ${{ steps.filter.outputs.atomic_ui }}
+      web: ${{ steps.filter.outputs.web }}
+      web_blocks: ${{ steps.filter.outputs.web_blocks }}
+      api: ${{ steps.filter.outputs.api }}
+      e2e: ${{ steps.filter.outputs.e2e }}
+      shared: ${{ steps.filter.outputs.shared }}
+      zapier: ${{ steps.filter.outputs.zapier }}
+      mcp_server: ${{ steps.filter.outputs.mcp_server }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+
+      - name: Detect changed paths
+        id: filter
+        uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
+        with:
+          filters: |
+            integrations:
+              - 'packages/integrations/**'
+            external_api:
+              - 'packages/external-api/**'
+            cdk:
+              - 'cdk-stack/**'
+              - 'stacks/**'
+            atomic_ui:
+              - 'packages/atomic-ui/**'
+            web_blocks:
+              - 'packages/web/src/blocks/**'
+            web:
+              - 'packages/web/**'
+              - 'packages/components/**'
+              - 'packages/i18n/**'
+            api:
+              - 'packages/rest-api/**'
+              - 'packages/api-tests/**'
+              - 'packages/trpc/**'
+              - 'packages/trpc-api-tests/**'
+              - 'packages/events/**'
+              - 'packages/database/**'
+              - 'api-stack/**'
+              - 'services/**'
+            e2e:
+              - 'packages/e2e/**'
+            zapier:
+              - 'packages/zapier-app/**'
+              - 'packages/external-api/src/schemas/**'
+            mcp_server:
+              - 'packages/mcp-server/**'
+            shared:
+              - 'packages/shared/**'
+              - 'packages/auth/**'
+              - 'packages/eslint-config/**'
+              - 'sst.config.ts'
+              - 'package.json'
+              - 'pnpm-workspace.yaml'
+              - 'pnpm-lock.yaml'
+              - 'tsconfig.json'
+
+  # Build Jobs
+  IntegrationsVersionCheck:
+    name: Integrations / Version Check
+    needs: DetectChanges
+    if: |
+      needs.DetectChanges.outputs.integrations == 'true' ||
+      needs.DetectChanges.outputs.cdk == 'true' ||
+      needs.DetectChanges.outputs.shared == 'true'
+    uses: ./.github/workflows/_template-package-version-check.yml
+    permissions:
+      contents: read
+      packages: read
+      id-token: write
+    with:
+      env: ci
+      package_path: 'packages/integrations/package.json'
+      package_name: 'Integrations'
+      ecr_repository: 'risksmart/integrations'
+      run_published_check: true
+    secrets: inherit
+
+  IntegrationsBuild:
+    name: Integrations / Build
+    needs:
+      - DetectChanges
+      - IntegrationsVersionCheck
+    if: |
+      always() &&
+      needs.IntegrationsVersionCheck.result == 'success' &&
+      needs.IntegrationsVersionCheck.outputs.build_required == 'true'
+    uses: ./.github/workflows/_template-integrations-container-build.yml
+    permissions:
+      pull-requests: write
+      actions: write
+      contents: read
+      id-token: write
+      packages: read
+    with:
+      runner_label: sprinters:aws:eu-west-2:ubuntu-24.04-arm:c6g.xlarge:spot=false
+      env: dev-cloud
+      enable_turbo_cache: true
+      package_version: ${{ needs.IntegrationsVersionCheck.outputs.current_version }}
+      version_changed: true
+      push_to_ecr: false
+    secrets: inherit
+
+  ExtAPIBuildCheck:
+    name: External API / Version Check
+    needs: DetectChanges
+    if: |
+      needs.DetectChanges.outputs.external_api == 'true' ||
+      needs.DetectChanges.outputs.cdk == 'true' ||
+      needs.DetectChanges.outputs.integrations == 'true' ||
+      needs.DetectChanges.outputs.shared == 'true'
+    uses: ./.github/workflows/_template-package-version-check.yml
+    with:
+      env: dev-cloud
+      package_path: "packages/external-api/package.json"
+      package_name: "External API"
+      ssm_config_name: "/dev-cloud/ext-api/config"
+    secrets: inherit
+
+  # Infrastructure Jobs
+  CDKSynth:
+    name: CDK / Synth
+    needs:
+      - DetectChanges
+      - IntegrationsVersionCheck
+      - IntegrationsBuild
+      - ExtAPIBuildCheck
+    if: |
+      always() &&
+      needs.DetectChanges.result == 'success' &&
+      (needs.DetectChanges.outputs.cdk == 'true' || needs.DetectChanges.outputs.integrations == 'true' || needs.DetectChanges.outputs.shared == 'true') &&
+      (needs.IntegrationsVersionCheck.result == 'success' || needs.IntegrationsVersionCheck.result == 'skipped') &&
+      (needs.IntegrationsBuild.result == 'success' || needs.IntegrationsBuild.result == 'skipped') &&
+      (needs.ExtAPIBuildCheck.result == 'success' || needs.ExtAPIBuildCheck.result == 'skipped')
+    uses: ./.github/workflows/_template-cdk-synth.yml
+    permissions:
+      actions: write
+      contents: read
+      id-token: write
+      pull-requests: write
+      packages: read
+    with:
+      env: dev-cloud
+      extapi_container_build: ${{ needs.ExtAPIBuildCheck.outputs.current_version }}
+      extapi_config: ${{ needs.ExtAPIBuildCheck.outputs.ssm_config_value }}
+      integrations_container_build: ${{ needs.IntegrationsVersionCheck.outputs.current_version }}
+    secrets: inherit
+
+  # Test Jobs
+  ZapierAppTest:
+    name: Zapier App / Test
+    needs: DetectChanges
+    if: |
+      needs.DetectChanges.outputs.zapier == 'true' ||
+      needs.DetectChanges.outputs.external_api == 'true' ||
+      needs.DetectChanges.outputs.shared == 'true'
+    runs-on:
+      - sprinters:aws:ubuntu-24.04-minimal
+      - ${{ github.run_id }}-${{ github.run_attempt }}-ZapierAppTest
+    permissions:
+      actions: write
+      contents: read
+      packages: read
+    steps:
+      - name: Setup Turbo cache
+        uses: rharkor/caching-for-turbo@d124d2921c97c169010f6a7a624a36e9831472e1 # v 1.8
+
+      - name: Checkout repository
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@a3252b78c470c02df07e9d59298aecedc3ccdd6d # v3
+        with:
+          version: 10.28.2
+
+      - name: Setup node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
+          cache: "pnpm"
+          registry-url: "https://npm.pkg.github.com"
+
+      - name: Configure pnpm for GitHub Packages
+        run: |
+          pnpm config set @risk-smart:registry https://npm.pkg.github.com
+          pnpm config set //npm.pkg.github.com/:_authToken ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run lint checks
+        run: pnpm exec turbo lint --filter=@risksmart-app/zapier-app
+
+      - name: Run unit tests and contract validation
+        run: pnpm exec turbo test:unit --filter=@risksmart-app/zapier-app
+
+  # Integration tests (Layer 1 + Layer 2) are run post-merge against dev-cloud
+  # where actual infrastructure is available. See auto-post-merge-app-deploy-dev-cloud.yml.
+
+  MCPServerTest:
+    name: MCP Server / Test
+    needs: DetectChanges
+    if: |
+      needs.DetectChanges.outputs.mcp_server == 'true' ||
+      needs.DetectChanges.outputs.shared == 'true'
+    runs-on:
+      - sprinters:aws:ubuntu-24.04-minimal
+      - ${{ github.run_id }}-${{ github.run_attempt }}-MCPServerTest
+    permissions:
+      actions: write
+      contents: read
+      packages: read
+    steps:
+      - name: Setup Turbo cache
+        uses: rharkor/caching-for-turbo@d124d2921c97c169010f6a7a624a36e9831472e1 # v 1.8
+
+      - name: Checkout repository
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@a3252b78c470c02df07e9d59298aecedc3ccdd6d # v3
+        with:
+          version: 10.28.2
+
+      - name: Setup node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
+          cache: "pnpm"
+          registry-url: "https://npm.pkg.github.com"
+
+      - name: Configure pnpm for GitHub Packages
+        run: |
+          pnpm config set @risk-smart:registry https://npm.pkg.github.com
+          pnpm config set //npm.pkg.github.com/:_authToken ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run lint checks
+        run: pnpm exec turbo lint --filter=@risksmart-app/mcp-server
+
+      - name: Run unit tests
+        run: pnpm exec turbo test:unit --filter=@risksmart-app/mcp-server
+
+  AtomicUITest:
+    name: Atomic UI / Test
+    needs: DetectChanges
+    if: |
+      needs.DetectChanges.outputs.atomic_ui == 'true'
+    runs-on:
+      - sprinters:aws:ubuntu-24.04-minimal
+      - ${{ github.run_id }}-${{ github.run_attempt }}-AtomicUITest
+    permissions:
+      actions: write
+      contents: read
+      packages: read
+    steps:
+      - name: Setup Turbo cache
+        uses: rharkor/caching-for-turbo@d124d2921c97c169010f6a7a624a36e9831472e1 # v 1.8
+
+      - name: Checkout repository
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@a3252b78c470c02df07e9d59298aecedc3ccdd6d # v3
+        with:
+          version: 10.28.2
+
+      - name: Setup node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: '.nvmrc'
+          cache: "pnpm"
+          registry-url: "https://npm.pkg.github.com"
+
+      - name: Configure pnpm for GitHub Packages
+        run: |
+          pnpm config set @risk-smart:registry https://npm.pkg.github.com
+          pnpm config set //npm.pkg.github.com/:_authToken ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Install Playwright dependencies
+        run: sudo env "PATH=$PATH" pnpm exec playwright install-deps
+        working-directory: packages/atomic-ui
+
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-atomic-ui-cache-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('pnpm-lock.yaml') }}
+
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install chromium
+        working-directory: packages/atomic-ui
+
+      - name: Run lint checks
+        run: pnpm run lint
+        working-directory: packages/atomic-ui
+
+      - name: Generate CSS
+        run: pnpm run tw:build
+        working-directory: packages/atomic-ui
+
+      - name: Run unit tests
+        run: pnpm run test:unit:coverage
+        working-directory: packages/atomic-ui
+
+      - name: Run Chromatic
+        uses: chromaui/action@5ec258af08deb3e8c36653bd618cb7fe52090031 # v15.2.0
+        with:
+          projectToken: ${{ secrets.CHROMATIC_ATOMIC_UI_TOKEN }}
+          workingDir: packages/atomic-ui
+          onlyChanged: true
+
+  WebBuildAndTest:
+    name: Web / Build and Test
+    needs: DetectChanges
+    if: |
+      needs.DetectChanges.outputs.web == 'true' ||
+      needs.DetectChanges.outputs.api == 'true' ||
+      needs.DetectChanges.outputs.atomic_ui == 'true' ||
+      needs.DetectChanges.outputs.shared == 'true' ||
+      needs.DetectChanges.outputs.external_api == 'true'
+    concurrency:
+      group: web-build-and-test-${{ github.head_ref }}
+      cancel-in-progress: true
+    runs-on:
+      - "sprinters:aws:eu-west-2:ubuntu-latest:m7i-flex.4xlarge:spot=false:temp=64"
+      - ${{ github.run_id }}-${{ github.run_attempt }}-WebBuildAndTest
+    environment:
+      name: dev-cloud
+      url: https://github.com
+    permissions:
+      actions: write
+      contents: read
+      id-token: write
+      packages: read
+    steps:
+      - name: Setup Turbo cache
+        uses: rharkor/caching-for-turbo@d124d2921c97c169010f6a7a624a36e9831472e1 # v 1.8
+
+      - name: Checkout repository
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@a3252b78c470c02df07e9d59298aecedc3ccdd6d # v3
+        with:
+          version: 10.28.2
+
+      - name: Setup node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: '.nvmrc'
+          cache: "pnpm"
+          registry-url: "https://npm.pkg.github.com"
+
+      - name: Configure pnpm for GitHub Packages
+        run: |
+          pnpm config set @risk-smart:registry https://npm.pkg.github.com
+          pnpm config set //npm.pkg.github.com/:_authToken ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Install Playwright dependencies
+        run: sudo env "PATH=$PATH" pnpm exec playwright install-deps
+        working-directory: packages/web
+
+      - name: Cache Playwright browsers
+        id: playwright-cache-web
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-web-cache-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('pnpm-lock.yaml') }}
+
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install chromium
+        working-directory: packages/web
+
+      - name: Start API containers
+        # Only enable containers required to build
+        run: docker compose up graphql-engine event-proxy nginx postgres trpc dynamodb-local -d --wait
+        working-directory: api-stack
+
+      - name: Wait for API
+        timeout-minutes: 10
+        run: bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' 127.0.0.1:8080/v1/version)" != "200" ]]; do sleep 1; done'
+
+      - name: Apply Hasura migrations
+        run: pnpm run hasura-migrate:for-type-gen
+
+      - name: Generate GraphQL types
+        run: pnpm run generate-graphql
+
+      - name: Start external-api container
+        # external-api depends on generated GraphQL types at build time, so must be built after type generation
+        run: docker compose up external-api -d --wait
+        working-directory: api-stack
+
+      - name: Generate SST types
+        env:
+          # Dummy values to keep sst types happy
+          HASURA_ENDPOINT: "-"
+          PDP_ENDPOINT: "-"
+          HASURA_TENANT_ENDPOINT: "-"
+          REST_API_KEY: "-"
+          HASURA_ADMIN_SECRET: "-"
+          KNOCK_SECRET_KEY: "-"
+          SLACK_CLIENT_SECRET: "-"
+          SLACK_CLIENT_ID: "-"
+          AUTH0_DOMAIN: "-"
+          AUTH0_DOMAIN_NONCUSTOM: "-"
+          AUTH0_API_REST_AUDIENCE: "-"
+          AUTH0_API_INTEGRATIONS_AUDIENCE: "-"
+          AUTH0_MANAGEMENT_CLIENT_ID: "-"
+          AUTH0_THIRD_PARTY_CONNECTION_NAME: "-"
+          AUTH0_THIRD_PARTY_CLIENT_ID: "-"
+          SCIM_INTERNAL_API_URL: "-"
+          HYBISCUS_API_KEY: "-"
+          HYBISCUS_API_URL: "-"
+          WEB_APP_URL: "-"
+          BEDROCK_GUARDRAIL_IDENTIFIER: "_"
+          BEDROCK_GUARDRAIL_VERSION: "_"
+          AUTH0_RISK_SMART_REST_API_CLIENT_ID: "-"
+          REACT_APP_AUTH0_CLIENT_ID: "-"
+          AUTH0_RISK_SMART_CIRCLE_CLIENT_ID: "-"
+        run: pnpm exec sst types --stage integration
+
+      - name: Run TypeScript checks
+        run: pnpm run tsc
+        env:
+          NODE_OPTIONS: --max-old-space-size=8192
+
+      - name: Run lint checks
+        env:
+          ENABLE_NO_CYCLE: true
+        run: pnpm run lint
+
+      - name: Run unit tests
+        run: pnpm run test:unit
+
+      - name: Run Chromatic
+        if: needs.DetectChanges.outputs.web_blocks == 'true' || needs.DetectChanges.outputs.atomic_ui == 'true'
+        uses: chromaui/action@5ec258af08deb3e8c36653bd618cb7fe52090031 # v15.2.0
+        with:
+          projectToken: ${{ secrets.CHROMATIC_WEB_TOKEN }}
+          workingDir: packages/web
+          onlyChanged: true
+        env:
+          NODE_OPTIONS: --max-old-space-size=8192
+
+      - name: Run integration tests
+        env:
+          NODE_OPTIONS: --max-old-space-size=8192
+          VITEST_MIN_THREADS: 1
+          VITEST_MAX_THREADS: 4
+          DD_ENV: pr
+          DD_SERVICE: rest-integration-tests
+          AWS_REGION: eu-west-2
+        run: pnpm run test:integration
+
+      - name: Build web app
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          REACT_APP_AUTH0_DOMAIN: ${{ secrets.REACT_APP_AUTH0_DOMAIN }}
+          REACT_APP_AUTH0_CLIENT_ID: ${{ secrets.REACT_APP_AUTH0_CLIENT_ID }}
+          AUTH0_RISK_SMART_REST_API_CLIENT_ID: ${{ vars.AUTH0_RISK_SMART_REST_API_CLIENT_ID }}
+          REACT_APP_API_URL: https://${{ vars.STAGE }}-risksmartapp-api.${{ vars.AWS_ACCOUNT_ID }}.risksmart.link
+          REACT_APP_TENANT_API_URL: https://${{ vars.STAGE }}-risksmartapp-tenant.${{ vars.AWS_ACCOUNT_ID }}.risksmart.link
+          REACT_APP_WS_TENANT_API_URL: wss://${{ vars.STAGE }}-risksmartapp-api-tenant.${{ vars.AWS_ACCOUNT_ID }}.risksmart.link
+          REACT_APP_REST_API_URL: https://rest-api.${{ vars.STAGE }}.risksmart.link
+          REACT_APP_SEGMENT_KEY: ${{ vars.REACT_APP_SEGMENT_KEY }}
+          REACT_APP_KNOCK_PUBLIC_API_KEY: ${{ secrets.REACT_APP_KNOCK_PUBLIC_API_KEY }}
+          REACT_APP_KNOCK_FEED_CHANNEL_ID: ${{ vars.REACT_APP_KNOCK_FEED_CHANNEL_ID }}
+          REACT_APP_TINY_API_KEY: dummy-key
+          REACT_APP_ENVIRONMENT: ${{ vars.STAGE }}
+          REACT_APP_SLACK_CLIENT_ID: ${{ vars.SLACK_CLIENT_ID }}
+          NODE_OPTIONS: --max-old-space-size=8192
+          REACT_APP_DISABLE_PRODUCTLANE: true
+          REACT_APP_AMPLITUDE_API_KEY: ${{ secrets.REACT_APP_AMPLITUDE_API_KEY }}
+        run: pnpm run build
+
+      - name: Save Docker Compose logs
+        if: always()
+        working-directory: api-stack
+        run: docker compose logs graphql-engine event-proxy nginx postgres trpc dynamodb-local external-api -t  >> docker-compose.logs
+
+      - name: Upload Docker Compose logs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: docker_compose_web_build
+          path: api-stack/docker-compose.logs
+          retention-days: 5
+
+  APIAndE2ETests:
+    name: API / Integration and E2E Tests
+    needs: DetectChanges
+    if: |
+      needs.DetectChanges.outputs.api == 'true' ||
+      needs.DetectChanges.outputs.e2e == 'true' ||
+      needs.DetectChanges.outputs.web == 'true' ||
+      needs.DetectChanges.outputs.shared == 'true'
+    concurrency:
+      group: api-and-e2e-tests-${{ github.head_ref }}
+      cancel-in-progress: true
+    runs-on:
+      - "sprinters:aws:eu-west-2:ubuntu-22.04-arm:m8g.4xlarge:spot=false:temp=14"
+      - ${{ github.run_id }}-${{ github.run_attempt }}-tests
+    environment:
+      name: tech-admin
+      url: https://github.com
+    permissions:
+      actions: write
+      contents: read
+      id-token: write
+      packages: read
+    timeout-minutes: 60
+    env:
+      HASURA_ENDPOINT: http://localhost:8080
+      PDP_ENDPOINT: http://localhost:7001
+      HASURA_TENANT_ENDPOINT: http://localhost:8080
+      AUTH0_DOMAIN: dev-t8t3iey3b54zkh7i.uk.auth0.com
+      AUTH0_DOMAIN_NONCUSTOM: dev-t8t3iey3b54zkh7i.uk.auth0.com
+      AUTH0_API_REST_AUDIENCE: http://localhost:8080
+      AUTH0_API_INTEGRATIONS_AUDIENCE: http://localhost:8090
+      REST_API_KEY: bearer e8f20db9-e5c2-4e59-a814-298a2c366c0c
+      SLACK_CLIENT_ID: placeholder
+      AUTH0_MANAGEMENT_CLIENT_ID: ${{ vars.AUTH0_MANAGEMENT_CLIENT_ID }}
+      PR_STAGE: pr-${{ github.event.pull_request.number }}
+      AUTH0_THIRD_PARTY_CONNECTION_NAME: ${{ secrets.AUTH0_THIRD_PARTY_CONNECTION_NAME }}
+      AUTH0_THIRD_PARTY_CLIENT_ID: ${{ secrets.REACT_APP_TPP_AUTH0_CLIENT_ID }}
+      AUTH0_RISK_SMART_REST_API_CLIENT_ID: ${{ vars.AUTH0_RISK_SMART_REST_API_CLIENT_ID }}
+      REACT_APP_AUTH0_CLIENT_ID: ${{ vars.REACT_APP_AUTH0_CLIENT_ID }}
+      AUTH0_RISK_SMART_CIRCLE_CLIENT_ID: ''
+      SCIM_INTERNAL_API_URL: placeholder
+      HYBISCUS_API_KEY: ${{ secrets.HYBISCUS_API_KEY }}
+      HYBISCUS_API_URL: https://${{ vars.STAGE }}-risksmartapp-tenant.${{ vars.AWS_ACCOUNT_ID }}.risksmart.link/hybiscus/api/v1/async
+      WEB_APP_URL: http://localhost:3000
+      AWS_REGION: eu-west-2
+      BEDROCK_GUARDRAIL_IDENTIFIER: "wy0ycd48g66l"
+      BEDROCK_GUARDRAIL_VERSION: "1"
+    steps:
+      - name: Setup Turbo cache
+        uses: rharkor/caching-for-turbo@d124d2921c97c169010f6a7a624a36e9831472e1 # v 1.8
+
+      - name: Checkout repository
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@a3252b78c470c02df07e9d59298aecedc3ccdd6d # v3
+        with:
+          version: 10.28.2
+
+      - name: Setup node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: '.nvmrc'
+          cache: "pnpm"
+          registry-url: "https://npm.pkg.github.com"
+
+      - name: Configure pnpm for GitHub Packages
+        run: |
+          pnpm config set @risk-smart:registry https://npm.pkg.github.com
+          pnpm config set //npm.pkg.github.com/:_authToken ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4.3.1
+        with:
+          role-to-assume: ${{ secrets.AWS_INTEGRATION_ROLE }}
+          aws-region: eu-west-2
+
+      - name: Install PostgreSQL dependencies
+        run: sudo apt update && sudo apt-get install -y --fix-missing libpq-dev
+
+      - name: Start SST dev server
+        env:
+          KNOCK_HOST: http://localhost:9090
+          SQS_ENDPOINT: http://localhost:9091
+          AUTH0_THIRD_PARTY_CONNECTION_NAME: Username-Password-ThirdParty
+          LOCAL_NOTIFICATIONS_ENABLED: true
+          LOCAL_REPORTING_DATABASE_CONNECTION_STRING: postgres://reporting:reporting123!@localhost:5432/postgres
+        run: |
+          pnpm run sst:dev --stage "$PR_STAGE" > sst_setup.txt & SSTPID=$!; echo "SSTPID=$SSTPID" >> "$GITHUB_ENV"
+
+      - name: Wait for SST deployment
+        run: while ! grep "Deployed:" sst_setup.txt > /dev/null; do echo "waiting..."; sleep 5; done
+        timeout-minutes: 10
+
+      - name: Load SST secrets
+        run: pnpm exec sst secrets load ./secrets.dev.env --stage "$PR_STAGE"
+
+      - name: Read SST outputs
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7
+        id: sst-output
+        with:
+          result-encoding: string
+          script: |
+            try {
+              const fs = require('fs');
+              const jsonString = fs.readFileSync('./.sst/outputs.json');
+              var outputs = JSON.parse(jsonString);
+              console.log(outputs);
+              const apiEndpoint = outputs["${{ env.PR_STAGE }}-risksmart-app-RestAPI"].ApiEndpoint;
+              console.log("apiEndpoint", apiEndpoint);
+              const restApiDomain = apiEndpoint.replace("https://", "");
+              console.log("restApiDomain", restApiDomain);
+              core.setOutput('restApiDomain', restApiDomain);
+            } catch(err) {
+              core.error("Error while reading or parsing the JSON")
+              core.setFailed(err)
+            }
+
+      - name: Start API containers
+        env:
+          REST_API_DOMAIN: ${{steps.sst-output.outputs.restApiDomain}}
+          E2E_MOCK_MODE: true
+        # Only enable containers required to run tests
+        run: docker compose up -d --wait graphql-engine event-proxy nginx postgres
+        working-directory: api-stack
+
+      - name: Wait for API
+        timeout-minutes: 10
+        run: bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' 127.0.0.1:8080/v1/version)" != "200" ]]; do sleep 1; done'
+
+      - name: Apply Hasura migrations
+        run: pnpm run hasura-migrate:ci
+
+      - name: Generate GraphQL types
+        run: pnpm run generate-graphql
+
+      - name: Build web app
+        run: pnpm run build
+        env:
+          REACT_APP_AUTH0_DOMAIN: ${{ vars.REACT_APP_AUTH0_DOMAIN }}
+          REACT_APP_AUTH0_CLIENT_ID: ${{ vars.REACT_APP_AUTH0_CLIENT_ID }}
+          REACT_APP_API_URL: http://localhost:8080
+          REACT_APP_SEGMENT_KEY: ${{ vars.REACT_APP_SEGMENT_KEY }}
+          REACT_APP_REST_API_URL: https://${{steps.sst-output.outputs.restApiDomain}}
+          REACT_APP_TRPC_API_URL: http://localhost:2021
+          REACT_APP_EXTERNAL_API_URL: http://localhost:3200
+          REACT_APP_AUTH_LOCAL_STORAGE: true
+          REACT_APP_WS_TENANT_API_URL: ws://localhost:8080/v1/graphql
+          REACT_APP_TENANT_API_URL: http://localhost:8080
+          REACT_APP_ENVIRONMENT: dev-local
+          REACT_APP_KNOCK_PUBLIC_API_KEY: ${{ secrets.REACT_APP_KNOCK_PUBLIC_API_KEY }}
+          REACT_APP_KNOCK_FEED_CHANNEL_ID: ${{ vars.REACT_APP_KNOCK_FEED_CHANNEL_ID }}
+          REACT_APP_TINY_API_KEY: dummy-key
+          REACT_APP_DISABLE_PRODUCTLANE: true
+          NODE_OPTIONS: --max-old-space-size=8192
+          RELOAD_SW: true
+          REACT_APP_AMPLITUDE_API_KEY: ${{ secrets.REACT_APP_AMPLITUDE_API_KEY }}
+          REACT_APP_AI_CHAT_API_URL: http://localhost:8427
+          REACT_APP_AI_WORKFLOW_API_URL: http://localhost:8428
+          REACT_APP_FEATURE_empty_default_dashboard: true
+
+      - name: Run database linting
+        timeout-minutes: 5
+        run: pnpm db:lint
+        working-directory: packages/database
+
+      - name: Run REST API integration tests
+        env:
+          NODE_OPTIONS: --max-old-space-size=8192
+          VITEST_MIN_THREADS: 1
+          VITEST_MAX_THREADS: 4
+          DD_ENV: pr
+          DD_SERVICE: rest-api-tests
+        run: pnpm run test:int
+        working-directory: packages/rest-api
+
+      - name: Run API tests
+        env:
+          NODE_OPTIONS: --max-old-space-size=8192
+          VITEST_MIN_THREADS: 1
+          VITEST_MAX_THREADS: 5
+          REST_API_KEY: bearer e8f20db9-e5c2-4e59-a814-298a2c366c0c
+          DD_ENV: pr
+          DD_SERVICE: api-tests
+        run: STAGE=$PR_STAGE pnpm run test
+        working-directory: packages/api-tests
+
+      - name: Install Playwright dependencies
+        run: sudo apt update && sudo apt-get install -y libnss3 libnspr4
+        working-directory: packages/e2e
+
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('package.json') }}
+
+      - name: Install Playwright browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install chromium
+        working-directory: packages/e2e
+
+      - name: Run Playwright E2E tests
+        env:
+          LOGIN_PASSWORD: ${{ secrets.LOGIN_PASSWORD }}
+          DD_ENV: pr
+          DD_SERVICE: playwright-tests
+        run: |
+          echo "::notice:: This is the longest step in the pipeline (~17 minutes)."
+          pnpm run test:e2e
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: playwright-report
+          path: packages/e2e/playwright-report/
+          retention-days: 5
+
+      - name: Stop SST dev server
+        if: always()
+        run: kill "$SSTPID" || true
+
+      - name: Remove SST deployment
+        if: always()
+        run: pnpm run sst:remove --stage "$PR_STAGE" || true
+
+      - name: Remove SST secrets
+        if: always()
+        run: |
+          while IFS='=' read -r key _value || [ -n "$key" ]; do
+            # Skip empty lines and comments
+            [[ -z "$key" || "$key" =~ ^# ]] && continue
+            echo "Removing secret: $key"
+            pnpm exec sst secrets remove "$key" --stage "$PR_STAGE" || true
+          done < ./secrets.dev.env
+
+      - name: Upload SST logs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: sst
+          path: sst_setup.txt
+          retention-days: 5
+
+      - name: Save Docker Compose logs
+        if: always()
+        working-directory: api-stack
+        run: docker compose logs graphql-engine event-proxy nginx postgres -t  >> docker-compose.logs
+
+      - name: Upload Docker Compose logs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: docker_compose
+          path: api-stack/docker-compose.logs
+          retention-days: 5
+
+  TRPCAPITests:
+    name: tRPC / API Tests
+    needs: DetectChanges
+    if: |
+      needs.DetectChanges.outputs.api == 'true' ||
+      needs.DetectChanges.outputs.shared == 'true'
+    concurrency:
+      group: trpc-api-tests-${{ github.head_ref }}
+      cancel-in-progress: true
+    runs-on:
+      - "sprinters:aws:eu-west-2:ubuntu-22.04-arm:m8g.4xlarge:spot=false:temp=64"
+      - ${{ github.run_id }}-${{ github.run_attempt }}-TRPCAPITests
+    permissions:
+      actions: write
+      contents: read
+      packages: read
+    timeout-minutes: 45
+    env:
+      AWS_REGION: eu-west-2
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+      IS_LOCAL: "true"
+    steps:
+      - name: Setup Turbo cache
+        uses: rharkor/caching-for-turbo@d124d2921c97c169010f6a7a624a36e9831472e1 # v 1.8
+
+      - name: Checkout repository
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@a3252b78c470c02df07e9d59298aecedc3ccdd6d # v3
+        with:
+          version: 10.28.2
+
+      - name: Setup node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: '.nvmrc'
+          cache: "pnpm"
+          registry-url: "https://npm.pkg.github.com"
+
+      - name: Configure pnpm for GitHub Packages
+        run: |
+          pnpm config set @risk-smart:registry https://npm.pkg.github.com
+          pnpm config set //npm.pkg.github.com/:_authToken ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Start base services
+        run: docker compose --profile v3 up -d --wait postgres dynamodb-local rustfs elasticmq aws-init stub-pdp mock-auth-provider graphql-engine ssm-mock secrets-manager-mock stub-auth0
+        env:
+          PDP_ENDPOINT: http://stub-pdp:8010
+
+      - name: Wait for Hasura
+        timeout-minutes: 10
+        run: bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' 127.0.0.1:8080/v1/version)" != "200" ]]; do sleep 1; done'
+
+      - name: Apply Hasura migrations
+        run: pnpm run hasura-migrate:ci
+
+      - name: Setup SAM CLI
+        uses: aws-actions/setup-sam@d78e1a4a9656d3b223e59b80676a797f20093133 # v2
+        with:
+          use-installer: true
+
+      - name: Start local services (SAM + CDK + event router + tRPC)
+        run: |
+          node scripts/dev.js --no-watch > /tmp/dev-js.log 2>&1 &
+          DEV_PID=$!
+          echo "DEV_PID=$DEV_PID" >> "$GITHUB_ENV"
+          echo "dev.js started (PID: $DEV_PID)"
+        env:
+          PDP_ENDPOINT: http://stub-pdp:8010
+          PERMIT_API_URL: http://stub-pdp:8010
+          PDP_API_KEY: test
+          AUTH0_CLIENT_SECRET: test
+          AUTH0_STUB_URL: http://stub-auth0:8020
+
+      - name: Wait for local services
+        timeout-minutes: 15
+        run: |
+          # Tail dev.js output in background so CI logs show progress
+          tail -f /tmp/dev-js.log &
+          TAIL_PID=$!
+
+          wait_for() {
+            local name=$1 url=$2
+            echo "Waiting for ${name}..."
+            for _ in $(seq 1 450); do
+              if curl -so /dev/null -w '' "$url" 2>/dev/null; then
+                echo "${name} ready"
+                return 0
+              fi
+              sleep 2
+            done
+            echo "${name} failed to start"
+            return 1
+          }
+
+          wait_for "event router (:3010)" http://localhost:3010/healthz
+          wait_for "SAM API (:3001)" http://localhost:3001
+          wait_for "SAM API (:3002)" http://localhost:3002
+          wait_for "SAM API (:3003)" http://localhost:3003
+          wait_for "SAM API (:3004)" http://localhost:3004
+          wait_for "tRPC (:2021)" http://localhost:2021/healthz
+
+          kill $TAIL_PID 2>/dev/null || true
+          echo "All services ready"
+
+      - name: Create .env.test file for tests
+        run: cp .env.example .env.test
+        working-directory: packages/trpc-api-tests
+
+      - name: Run tRPC API tests
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
+          TRPC_TEST_URL: http://localhost:2021
+          AUTH_PROVIDER_URL: http://localhost:3232
+          DYNAMODB_ENDPOINT: http://localhost:8000
+          LOCAL_DATABASE_CONNECTION_STRING: postgres://postgres:postgrespassword@localhost:5432/postgres
+          IS_LOCAL: "true"
+          DISABLE_DATABASE_QUERYING_LOGGING: "true"
+          PDP_API_KEY: 'test'
+          AUTH0_DOMAIN: 'test'
+          AUTH0_STUB_URL: http://stub-auth0:8020
+          AUTH0_CLIENT_SECRET: 'test'
+          AUTH0_MANAGEMENT_CLIENT_ID: 'test'
+        run: pnpm run test
+        working-directory: packages/trpc-api-tests
+
+      - name: Collect CI logs
+        if: always()
+        run: |
+          mkdir -p ci-logs
+          docker compose logs postgres dynamodb-local elasticmq stub-pdp mock-auth-provider trpc -t > ci-logs/docker-compose.log 2>&1 || true
+          cp /tmp/dev-js.log ci-logs/dev-js.log || true
+
+      - name: Upload CI logs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: trpc-api-tests-logs
+          path: ci-logs/
+          retention-days: 5

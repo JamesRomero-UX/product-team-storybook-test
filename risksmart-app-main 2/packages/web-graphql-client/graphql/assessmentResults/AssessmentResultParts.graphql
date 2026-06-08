@@ -1,0 +1,98 @@
+fragment DocumentAssessmentResultParts on document_assessment_result {
+  Id
+  Rating
+  CustomAttributeData
+  Rationale
+  TestDate
+}
+
+fragment ObligationAssessmentResultParts on obligation_assessment_result {
+  Id
+  Rating
+  CustomAttributeData
+  Rationale
+  TestDate
+}
+
+fragment RiskAssessmentResultParts on risk_assessment_result {
+  Id
+  Likelihood
+  Impact
+  Rating
+  ControlType
+  CustomAttributeData
+  Rationale
+  TestDate
+}
+
+fragment DocumentInternalAuditResultParts on document_internal_audit_result {
+  Id
+  Rating
+  CustomAttributeData
+  Rationale
+  TestDate
+}
+
+fragment ObligationInternalAuditResultParts on obligation_internal_audit_result {
+  Id
+  Rating
+  CustomAttributeData
+  Rationale
+  TestDate
+}
+
+fragment RiskControlledInternalAuditResultParts on risk_controlled_internal_audit_result {
+  Id
+  Likelihood
+  Impact
+  Rating
+  CustomAttributeData
+  Rationale
+  TestDate
+}
+
+fragment RiskUncontrolledInternalAuditResultParts on risk_uncontrolled_internal_audit_result {
+  Id
+  Likelihood
+  Impact
+  Rating
+  CustomAttributeData
+  Rationale
+  TestDate
+}
+
+fragment DocumentSecondLineResultParts on document_second_line_result {
+  Id
+  Rating
+  CustomAttributeData
+  Rationale
+  TestDate
+}
+
+fragment ObligationSecondLineResultParts on obligation_second_line_result {
+  Id
+  Rating
+  CustomAttributeData
+  Rationale
+  TestDate
+}
+
+fragment RiskControlledSecondLineResultParts on risk_controlled_second_line_result {
+  Id
+  Likelihood
+  Impact
+  Rating
+  CustomAttributeData
+  Rationale
+  TestDate
+}
+
+fragment RiskUncontrolledSecondLineResultParts on risk_uncontrolled_second_line_result {
+  Id
+  Likelihood
+  Impact
+  Rating
+  CustomAttributeData
+  Rationale
+  TestDate
+}

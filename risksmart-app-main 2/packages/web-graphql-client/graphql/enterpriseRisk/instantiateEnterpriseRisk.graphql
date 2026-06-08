@@ -1,0 +1,10 @@
+mutation instatiateEnterpriseRisk(
+  $EnterpriseRiskIds: [uuid!]!
+  $Entities: [uuid!]!
+) {
+  instantiateChildEnterpriseRisk(
+    object: { EnterpriseRiskIds: $EnterpriseRiskIds, Entities: $Entities }
+  ) {
+    affected_rows
+  }
+}

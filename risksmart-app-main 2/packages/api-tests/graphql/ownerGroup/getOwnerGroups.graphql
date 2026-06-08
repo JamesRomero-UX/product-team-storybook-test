@@ -1,0 +1,6 @@
+query getOwnerGroups {
+  owner_group {
+    UserGroupId
+    ParentId
+  }
+}

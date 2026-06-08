@@ -1,0 +1,8 @@
+query getIssueByIdForUser($Id: uuid!) {
+  issue(where: { Id: { _eq: $Id } }) {
+    Title
+    SequentialId
+    Id
+    Type
+  }
+}

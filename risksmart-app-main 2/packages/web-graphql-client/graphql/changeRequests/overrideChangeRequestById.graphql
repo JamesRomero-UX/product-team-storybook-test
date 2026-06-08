@@ -1,0 +1,9 @@
+mutation overrideChangeRequestById(
+  $Id: uuid!
+  $Approved: Boolean!
+  $Rationale: String!
+) {
+  overrideChangeRequest(Id: $Id, Approved: $Approved, Rationale: $Rationale) {
+    Id
+  }
+}

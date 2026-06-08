@@ -1,0 +1,39 @@
+.tabs {
+  /* Tabs separator line width and increased padding */
+  [class*='awsui_tabs-tab-link'] {
+    border-width: 1.5px #{!important};
+    padding-top: 9px #{!important};
+    padding-bottom: 10px #{!important};
+  }
+  /* Tabs header separators */
+  [class*='awsui_tabs-tab']:not(#\9):not(:last-child)
+    > a
+    > [class*='awsui_tabs-tab-label'] {
+    border-right-width: 1.5px #{!important};
+  }
+  /* Tab font */
+  [class*='awsui_tabs-tab-label'] {
+    @apply font-semibold  text-grey600 #{!important};
+    font-size: 15px;
+  }
+  /* Active tab color and weight */
+  [class*='awsui_tabs-tab-active']:not(#\9):not(
+      [class*='awsui_tabs-tab-disabled']
+    )
+    [class*='awsui_tabs-tab-label'] {
+    @apply font-bold text-grey800 #{!important};
+  }
+
+  /* Header/content separator line width */
+  [class*='awsui_tabs-header-with-divider'] {
+    border-width: 1.5px #{!important};
+    border-bottom-color: #ededf2 #{!important};
+  }
+
+  [class*='awsui_actions-container'] {
+    margin-right: 1rem !important;
+    a {
+      color: darkslategrey !important;
+    }
+  }
+}

@@ -1,0 +1,19 @@
+query getActionById($Id: uuid!) {
+  action_by_pk(Id: $Id) {
+    Title
+    SequentialId
+    Priority
+    ClosedDate
+    Status
+    owners {
+      UserId
+    }
+    ownerGroups {
+      group {
+        users {
+          UserId
+        }
+      }
+    }
+  }
+}

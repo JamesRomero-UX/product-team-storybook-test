@@ -1,0 +1,9 @@
+table:
+  name: risk_treatment_type
+  schema: risksmart
+is_enum: true
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: risk_treatment_type
+  custom_root_fields: {}

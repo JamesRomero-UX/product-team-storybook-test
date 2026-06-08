@@ -1,0 +1,13 @@
+query getDefaultRoles {
+  auth_role_type {
+    RoleKey
+    Description
+    Name
+    Category
+    resourceTypes {
+      resourceType {
+        ResourceType
+      }
+    }
+  }
+}

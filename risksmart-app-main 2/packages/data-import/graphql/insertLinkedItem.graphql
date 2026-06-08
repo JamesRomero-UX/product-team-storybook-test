@@ -1,0 +1,9 @@
+mutation linkItems($Source: uuid!, $Targets: [uuid!]!) {
+  linkItems(Source: $Source, Targets: $Targets) {
+    Links {
+      Source
+      Target
+      RelationshipType
+    }
+  }
+}

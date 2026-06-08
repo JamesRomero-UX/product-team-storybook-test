@@ -1,0 +1,13 @@
+query getFileAuditById($Id: uuid!) {
+  file_audit(where: { Id: { _eq: $Id } }, order_by: {ModifiedAtTimestamp: desc}) {
+    Id
+    FileName
+    FileSize
+    Meta
+    ContentType
+    CreatedByUser
+    CreatedAtTimestamp
+    ModifiedByUser
+    ModifiedAtTimestamp
+  }
+}

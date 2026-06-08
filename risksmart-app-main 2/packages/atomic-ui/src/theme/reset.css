@@ -1,0 +1,11 @@
+/* Scoped reset for atomic-ui components only */
+/* Replaces Tailwind's preflight but only within .atomic-ui containers */
+
+.atomic-ui,
+.atomic-ui *,
+.atomic-ui *::before,
+.atomic-ui *::after {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+}

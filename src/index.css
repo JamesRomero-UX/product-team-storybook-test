@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap');
+
+@import '../risksmart-app-main 2/packages/atomic-ui/src/theme/default.css';
+@import '../risksmart-app-main 2/packages/atomic-ui/src/theme/fire.css';
+@import '../risksmart-app-main 2/packages/atomic-ui/src/theme/reset.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

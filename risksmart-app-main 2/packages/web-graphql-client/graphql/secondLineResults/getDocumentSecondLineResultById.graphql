@@ -1,0 +1,18 @@
+query getDocumentSecondLineResultById($Id: uuid!) {
+  document_second_line_result(where: { Id: { _eq: $Id } }) {
+    ...DocumentSecondLineResultParts
+    parents {
+      document {
+        Id
+        Title
+      }
+      complianceMonitoringAssessment {
+        Id
+        Title
+      }
+    }
+    files {
+      ...RelationFileParts
+    }
+  }
+}

@@ -1,0 +1,14 @@
+query getAcceptanceById($Id: uuid!) {
+  acceptance_by_pk(Id: $Id) {
+    DateAcceptedFrom
+    DateAcceptedTo
+    Details
+    Id
+    Status
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    Title
+    CreatedByUser
+    ModifiedByUser
+  }
+}

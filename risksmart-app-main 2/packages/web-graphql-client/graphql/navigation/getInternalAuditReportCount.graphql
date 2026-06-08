@@ -1,0 +1,7 @@
+query getInternalAuditReportCount {
+  internal_audit_report_aggregate {
+    aggregate {
+      count
+    }
+  }
+}

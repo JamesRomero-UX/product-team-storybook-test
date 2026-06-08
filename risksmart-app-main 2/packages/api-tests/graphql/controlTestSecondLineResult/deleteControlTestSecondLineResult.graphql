@@ -1,0 +1,5 @@
+mutation deleteControlTestSecondLineResult($Id: uuid!) {
+  delete_control_test_second_line_result(where: { Id: { _eq: $Id } }) {
+    affected_rows
+  }
+}

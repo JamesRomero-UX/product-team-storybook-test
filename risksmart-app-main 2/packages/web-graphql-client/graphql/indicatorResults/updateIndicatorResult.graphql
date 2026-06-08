@@ -1,0 +1,23 @@
+mutation updateIndicatorResult(
+  $id: uuid!
+  $Description: String
+  $ResultDate: timestamptz!
+  $TargetValueNum: numeric
+  $TargetValueTxt: String
+  $CustomAttributeData: jsonb
+) {
+  update_indicator_result(
+    where: { Id: { _eq: $id } }
+    _set: {
+      Description: $Description
+      ResultDate: $ResultDate
+      TargetValueNum: $TargetValueNum
+      TargetValueTxt: $TargetValueTxt
+      CustomAttributeData: $CustomAttributeData
+    }
+  ) {
+    returning {
+      Id
+    }
+  }
+}

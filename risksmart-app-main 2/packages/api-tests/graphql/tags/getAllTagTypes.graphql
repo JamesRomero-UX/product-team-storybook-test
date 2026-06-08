@@ -1,0 +1,7 @@
+query getAllTagTypes {
+  tag_type(order_by: { Name: asc }) {
+    TagTypeId
+    Description
+    Name
+  }
+}

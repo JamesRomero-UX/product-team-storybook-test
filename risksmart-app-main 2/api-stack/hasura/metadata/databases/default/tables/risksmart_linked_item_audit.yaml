@@ -1,0 +1,18 @@
+table:
+  name: linked_item_audit
+  schema: risksmart
+select_permissions:
+  - role: read:audit
+    permission:
+      columns:
+        - Id
+        - Source
+        - Target
+        - RelationshipType
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - CreatedAtTimestamp
+        - CreatedByUser
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id

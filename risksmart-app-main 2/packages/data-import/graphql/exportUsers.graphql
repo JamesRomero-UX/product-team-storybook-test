@@ -1,0 +1,10 @@
+query exportUsers($OrgKey: String) {
+  user(where: { OrgKey: { _eq: $OrgKey } }) {
+    Id
+    OrgKey
+    FirstName
+    LastName
+    Email
+    UserName
+  }
+}

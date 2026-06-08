@@ -1,0 +1,13 @@
+.typeCell {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+
+.typeIcon {
+  display: flex;
+  align-items: center;
+  padding-right: 0.3rem;
+}

@@ -1,0 +1,27 @@
+fragment ActionParts on action {
+  ClosedDate
+  DateDue
+  DateRaised
+  Description
+  Id
+  Priority
+  Status
+  Title
+  ModifiedAtTimestamp
+
+  parents(where: { risk: { Id: { _is_null: false } } }) {
+    risk {
+      Id
+      owners {
+        UserId
+      }
+      ownerGroups {
+        group {
+          users {
+            UserId
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+mutation InsertUserRoles($objects: [auth_user_role_insert_input!]!) {
+  insert_auth_user_role(objects: $objects) {
+    affected_rows
+    returning {
+      Id
+      RoleKey
+      role_type {
+        RoleKey
+        Name
+        Description
+      }
+    }
+  }
+}

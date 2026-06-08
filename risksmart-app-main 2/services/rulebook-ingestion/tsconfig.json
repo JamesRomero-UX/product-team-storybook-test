@@ -1,0 +1,21 @@
+{
+  "extends": "@tsconfig/node22/tsconfig.json",
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "es2022",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["src/*"],
+      "test/*": ["test/*"]
+    },
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "types": ["vitest/globals"],
+    "inlineSourceMap": false,
+    "inlineSources": true,
+    "sourceRoot": "/"
+  }
+}

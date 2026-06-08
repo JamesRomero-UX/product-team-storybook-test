@@ -1,0 +1,17 @@
+query getConsequenceAuditById($Id: uuid!) {
+  consequence_audit(where: { Id: { _eq: $Id } }, order_by: {ModifiedAtTimestamp: desc}) {
+    CostType
+    CostValue
+    Criticality
+    Description
+    Id
+    ParentIssueId
+    ModifiedAtTimestamp
+    CreatedAtTimestamp
+    Title
+    CreatedByUser
+    ModifiedByUser
+    CustomAttributeData
+    Type
+  }
+}

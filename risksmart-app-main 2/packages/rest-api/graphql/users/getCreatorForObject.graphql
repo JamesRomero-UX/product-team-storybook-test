@@ -1,0 +1,8 @@
+query getCreatorForObject($Id: String!, $OrgKey: String!) {
+  user(where: { OrgKey: { _eq: $OrgKey }, Id: { _eq: $Id } }) {
+    Email
+    UserName
+    Id
+    Status
+  }
+}

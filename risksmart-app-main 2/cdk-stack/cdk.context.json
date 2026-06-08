@@ -1,0 +1,46 @@
+{
+  "availability-zones:account=134258997950:region=eu-west-2": [
+    "eu-west-2a",
+    "eu-west-2b",
+    "eu-west-2c"
+  ],
+  "hosted-zone:account=134258997950:domainName=134258997950.risksmart.link:region=eu-west-2": {
+    "Id": "/hostedzone/Z06924102C3LKI7D9Z9D3",
+    "Name": "134258997950.risksmart.link."
+  },
+  "hosted-zone:account=134258997950:domainName=dr-risksmartapp-webapp.134258997950.risksmart.link:region=eu-west-2": {
+    "Id": "/hostedzone/Z08001863P76QAS4UZHP4",
+    "Name": "dr-risksmartapp-webapp.134258997950.risksmart.link."
+  },
+  "hosted-zone:account=046657674620:domainName=046657674620.risksmart.link:region=me-central-1": {
+    "Id": "/hostedzone/Z030203639609A9R487M6",
+    "Name": "046657674620.risksmart.link."
+  },
+  "availability-zones:account=046657674620:region=me-central-1": [
+    "me-central-1a",
+    "me-central-1b",
+    "me-central-1c"
+  ],
+  "hosted-zone:account=046657674620:domainName=046657674620.risksmart.link:region=eu-west-2": {
+    "Id": "/hostedzone/Z030203639609A9R487M6",
+    "Name": "046657674620.risksmart.link."
+  },
+  "hosted-zone:account=046657674620:domainName=tech-admin.risksmart.link:region=us-east-1": {
+    "Id": "/hostedzone/Z0606738MDN7FH1MJY42",
+    "Name": "tech-admin.risksmart.link."
+  },
+  "hosted-zone:account=046657674620:domainName=tech-admin.risksmart.link:region=eu-west-2": {
+    "Id": "/hostedzone/Z0606738MDN7FH1MJY42",
+    "Name": "tech-admin.risksmart.link."
+  },
+  "availability-zones:account=046657674620:region=eu-west-2": [
+    "eu-west-2a",
+    "eu-west-2b",
+    "eu-west-2c"
+  ],
+  "availability-zones:account=000000000000:region=eu-west-2": [
+    "eu-west-2a",
+    "eu-west-2b",
+    "eu-west-2c"
+  ]
+}

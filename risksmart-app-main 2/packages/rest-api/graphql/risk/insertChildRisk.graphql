@@ -1,0 +1,42 @@
+mutation insertChildRisk(
+  $Id: uuid!
+  $Description: String
+  $ParentRiskId: uuid = null
+  $Tier: Int!
+  $Treatment: risk_treatment_type_enum
+  $Status: risk_status_type_enum
+  $Title: String!
+  $CustomAttributeData: jsonb
+  $Tags: [tag_insert_input!]!
+  $Departments: [department_insert_input!]!
+  $Owners: [owner_insert_input!]!
+  $OwnerGroups: [owner_group_insert_input!]!
+  $Contributors: [contributor_insert_input!]!
+  $ContributorGroups: [contributor_group_insert_input!]!
+  $schedule: schedule_insert_input!
+) {
+  insert_risk_one(
+    object: {
+      Id: $Id
+      Description: $Description
+      ParentRiskId: $ParentRiskId
+      Tier: $Tier
+      Treatment: $Treatment
+      Status: $Status
+      Title: $Title
+      CustomAttributeData: $CustomAttributeData
+      contributors: { data: $Contributors }
+      owners: { data: $Owners }
+      contributorGroups: { data: $ContributorGroups }
+      ownerGroups: { data: $OwnerGroups }
+      tags: { data: $Tags }
+      departments: { data: $Departments }
+    }
+  ) {
+    Id
+  }
+
+  insert_schedule_one(object: $schedule) {
+    Id
+  }
+}

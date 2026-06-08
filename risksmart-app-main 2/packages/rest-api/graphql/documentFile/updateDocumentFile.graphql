@@ -1,0 +1,45 @@
+mutation updateDocumentFile(
+  $Id: uuid!
+  $FileId: uuid
+  $NextReviewDate: timestamptz
+  $ReasonForReview: String
+  $ReviewDate: timestamptz
+  $ReviewedBy: String
+  $Status: version_status_enum
+  $Summary: String
+  $Version: String
+  $Content: String
+  $deletedFileIds: [uuid!]!
+  $Type: document_file_type_enum
+  $Link: String
+  $CustomAttributeData: jsonb
+) {
+  delete_file(where: { Id: { _in: $deletedFileIds } }) {
+    affected_rows
+  }
+
+  delete_relation_file(where: { FileId: { _in: $deletedFileIds } }) {
+    affected_rows
+  }
+
+  update_document_file_by_pk(
+    pk_columns: { Id: $Id }
+    _set: {
+      NextReviewDate: $NextReviewDate
+      ReasonForReview: $ReasonForReview
+      ReviewDate: $ReviewDate
+      ReviewedBy: $ReviewedBy
+      Summary: $Summary
+      Status: $Status
+      Version: $Version
+      FileId: $FileId
+      Content: $Content
+      Type: $Type
+      Link: $Link
+      CustomAttributeData: $CustomAttributeData
+    }
+  ) {
+    Id
+    Status
+  }
+}

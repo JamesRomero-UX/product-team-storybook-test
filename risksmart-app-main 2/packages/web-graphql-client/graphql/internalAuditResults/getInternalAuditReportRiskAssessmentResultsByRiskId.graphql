@@ -1,0 +1,31 @@
+query getInternalAuditReportRiskAssessmentResultsByRiskId($RiskId: uuid!) {
+  risk_controlled_internal_audit_result(
+    where: { parents: { ParentId: { _eq: $RiskId } } }
+    order_by: [{ CreatedAtTimestamp: desc }]
+  ) {
+    ...RiskControlledInternalAuditResultParts
+    parents(where: { ParentType: { _eq: internal_audit_report } }) {
+      internalAuditReport {
+        ...InternalAuditReportParts
+        completedByUser {
+          FriendlyName
+        }
+      }
+    }
+  }
+
+  risk_uncontrolled_internal_audit_result(
+    where: { parents: { ParentId: { _eq: $RiskId } } }
+    order_by: [{ CreatedAtTimestamp: desc }]
+  ) {
+    ...RiskUncontrolledInternalAuditResultParts
+    parents(where: { ParentType: { _eq: internal_audit_report } }) {
+      internalAuditReport {
+        ...InternalAuditReportParts
+        completedByUser {
+          FriendlyName
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,69 @@
+query getAttestationConfigs(
+  $where: attestation_config_bool_exp
+  $limit: Int
+  $orderBy: [attestation_config_order_by!]
+) {
+  attestation_config(where: $where, limit: $limit, order_by: $orderBy) {
+    ...AttestationConfigParts
+  }
+}
+
+mutation deleteAttestationConfigs($where: attestation_config_bool_exp!) {
+  delete_attestation_config(where: $where) {
+    returning {
+      ...AttestationConfigParts
+    }
+  }
+}
+
+mutation insertAttestationConfigs(
+  $objects: [attestation_config_insert_input!]!
+) {
+  insert_attestation_config(objects: $objects) {
+    returning {
+      ...AttestationConfigParts
+    }
+  }
+}
+
+mutation updateAttestationConfigs(
+  $ParentId: uuid!
+  $RequireGlobalAttestation: Boolean!
+  $AttestationTimeLimit: interval
+  $AttestationPromptText: String
+  $AttestationGroups: [attestation_group_insert_input!]!
+  $AttestationGroupIds: [uuid!]!
+) {
+  insert_attestation_config_one(
+    object: {
+      ParentId: $ParentId
+      RequireGlobalAttestation: $RequireGlobalAttestation
+      AttestationTimeLimit: $AttestationTimeLimit
+      PromptText: $AttestationPromptText
+      groups: {
+        data: $AttestationGroups
+        on_conflict: { constraint: attestation_group_pkey, update_columns: [] }
+      }
+    }
+    on_conflict: {
+      constraint: attestation_config_pkey
+      update_columns: [
+        ParentId
+        RequireGlobalAttestation
+        AttestationTimeLimit
+        PromptText
+      ]
+    }
+  ) {
+    ParentId
+  }
+
+  delete_attestation_group(
+    where: {
+      config: { ParentId: { _eq: $ParentId } }
+      GroupId: { _nin: $AttestationGroupIds }
+    }
+  ) {
+    affected_rows
+  }
+}

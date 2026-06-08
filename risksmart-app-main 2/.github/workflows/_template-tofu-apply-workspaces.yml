@@ -1,0 +1,103 @@
+name: Template / Tofu Apply Workspaces
+
+permissions:
+  pull-requests: write
+  contents: read
+  id-token: write
+  actions: read
+
+on:
+  workflow_call:
+    inputs:
+      aws_region:
+        description: 'AWS region to deploy to'
+        required: true
+        type: string
+      env:
+        description: 'Environment to deploy to'
+        required: true
+        type: string
+      account:
+        description: 'AWS account to deploy to'
+        required: true
+        type: string
+      deploy_role:
+        description: 'AWS role to assume for tofu deployment'
+        required: true
+        type: string
+      tf_actions_working_dir:
+        description: 'Terraform working directory'
+        type: string
+        required: true
+      tf_vars_file:
+        description: 'Path to the Terraform variables file'
+        type: string
+        default: './envs/${{ inputs.env }}-${{ inputs.aws_region }}.tfvars'
+      uses_workspaces:
+        description: 'Is this an SDLC account - dev, staging prod? If yes, use workspaces.'
+        required: false
+        type: boolean
+      runner_label:
+        description: 'Runner label to use for the job'
+        required: false
+        type: string
+      package_version:
+        description: "Current build package version"
+        type: string
+        required: false
+
+jobs:
+  tofu-apply:
+    runs-on:
+      - ${{ inputs.runner_label }}
+      - ${{ github.run_id }}-${{ github.run_attempt }}-tofu-apply-${{ inputs.env }}-${{ inputs.aws_region }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ inputs.tf_actions_working_dir }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
+
+      - name: Setup OpenTofu
+        uses: opentofu/setup-opentofu@9d84900f3238fab8cd84ce47d658d25dd008be2f # v1.0.8
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4.3.1
+        with:
+          role-to-assume: ${{ inputs.deploy_role }}
+          aws-region: ${{ inputs.aws_region }}
+
+      - name: Verify OpenTofu version
+        run: tofu version
+
+      - name: Setup Tofu modules access
+        uses: risk-smart/risksmart-terraform-modules/.github/actions/setup-module-access@e37b23efb86493475a812d1a527a70ff4fbd8c2b
+        with:
+          app-id: ${{ secrets.TOFU_MODULES_APP_ID }}
+          private-key: ${{ secrets.TOFU_MODULES_APP_PRIVATE_KEY }}
+
+      - name: OpenTofu Init
+        env:
+          PACKAGE_VERSION: ${{ inputs.package_version }}
+        run: |
+          if [ -n "${PACKAGE_VERSION}" ]; then
+            tofu init -backend-config=envs/backend.tfbackend -var-file=envs/${{ inputs.tf_vars_file }} -var "package_version=${PACKAGE_VERSION}" -input=false
+          else
+            tofu init -backend-config=envs/backend.tfbackend -var-file=envs/${{ inputs.tf_vars_file }} -input=false
+          fi
+
+      - name: Select Tofu workspace
+        if: ${{ inputs.uses_workspaces }}
+        run: |
+          tofu workspace select -or-create=true ${{ inputs.env }}-${{ inputs.aws_region }}
+
+      - name: OpenTofu Apply
+        env:
+          PACKAGE_VERSION: ${{ inputs.package_version }}
+        run: |
+          if [ -n "${PACKAGE_VERSION}" ]; then
+            tofu apply -auto-approve -var-file=envs/${{ inputs.env }}-${{ inputs.aws_region }}.tfvars -var "package_version=${PACKAGE_VERSION}"
+          else
+            tofu apply -auto-approve -var-file=envs/${{ inputs.env }}-${{ inputs.aws_region }}.tfvars
+          fi

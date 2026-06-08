@@ -1,0 +1,13 @@
+query getDashboardAuditById($Id: uuid!) {
+  dashboard_audit(where: {Id: {_eq: $Id}}, order_by: {ModifiedAtTimestamp: desc}) {
+    Id
+    Name
+    Description
+    Sharing
+    Content
+    CreatedByUser
+    CreatedAtTimestamp
+    ModifiedByUser
+    ModifiedAtTimestamp
+  }
+}

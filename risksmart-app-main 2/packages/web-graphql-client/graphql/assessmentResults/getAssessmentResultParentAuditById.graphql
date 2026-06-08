@@ -1,0 +1,12 @@
+query getAssessmentResultParentAuditById($Id: uuid!) {
+  assessment_result_parent_audit(where: { Id: { _eq: $Id } }, order_by: {ModifiedAtTimestamp: desc}) {
+    Id
+    ParentId
+    ResultType
+    ParentType
+    CreatedByUser
+    CreatedAtTimestamp
+    ModifiedByUser
+    ModifiedAtTimestamp
+  }
+}

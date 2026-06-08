@@ -1,0 +1,31 @@
+query GetAuthUsersByFilter(
+  $limit: Int
+  $offset: Int
+  $orderBy: [auth_user_order_by!]
+  $where: auth_user_bool_exp
+) {
+  auth_user(limit: $limit, offset: $offset, order_by: $orderBy, where: $where) {
+    Id
+    FirstName
+    LastName
+    UserName
+    Email
+    Status
+    CreatedOn
+    AuthUser_Id
+    DisplayName
+    JobTitle
+    Department
+    OfficeLocation
+    organisationusers {
+      RoleKey
+      External_Id
+      LastSeen
+    }
+  }
+  auth_user_aggregate(where: $where) {
+    aggregate {
+      count
+    }
+  }
+}

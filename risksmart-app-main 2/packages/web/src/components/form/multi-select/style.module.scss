@@ -1,0 +1,27 @@
+.select {
+  [class*='awsui_button-trigger'] {
+    border-width: 1.5px !important;
+  }
+
+  [class*='awsui_tokens_'] {
+    /* Tokens / Pill */
+    [class*='awsui_token-box'] {
+      @apply bg-grey150 border-none  #{!important};
+      border-radius: 17px !important;
+      [class*='awsui_label'] {
+        @apply text-navy font-semibold text-[13px];
+      }
+    }
+  }
+  [class*='awsui_dropdown-content'] {
+    [class*='awsui_parent'] {
+      [class*='awsui_checkbox'] {
+        /* Hide checkboxes on groups */
+        display: none;
+      }
+      [class*='awsui_label'] {
+        @apply text-navy font-semibold text-[13px];
+      }
+    }
+  }
+}

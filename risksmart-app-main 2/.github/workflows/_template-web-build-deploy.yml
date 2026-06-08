@@ -1,0 +1,182 @@
+name: Template / Web Build Deploy
+
+permissions:
+  actions: write
+  contents: read
+  id-token: write
+
+on:
+  workflow_call:
+    inputs:
+      runner_label:
+        required: false
+        type: string
+        default: 'sprinters:aws:eu-west-2:ubuntu-latest:m7i-flex.large:spot=false'
+      env:
+        required: true
+        type: string
+      aws_region:
+        required: true
+        type: string
+      domain_prefix:
+        required: true
+        type: string
+      resource_prefix:
+        required: true
+        type: string
+      app_cloudfront_id:
+        required: true
+        type: string
+      app_or_risksmart_app:
+        required: true
+        type: string
+      react_app_auth0_domain:
+        required: true
+        type: string
+      react_app_auth0_client_id:
+        required: true
+        type: string
+    secrets:
+      SENTRY_AUTH_TOKEN:
+        required: true
+      AWS_DEPLOY_ROLE:
+        required: true
+      REACT_APP_AUTH0_DOMAIN:
+        required: true
+      REACT_APP_AUTH0_CLIENT_ID:
+        required: true
+      REACT_APP_KNOCK_PUBLIC_API_KEY:
+        required: true
+      REACT_APP_TINY_API_KEY:
+        required: true
+      REACT_APP_AMPLITUDE_API_KEY:
+        required: true
+
+jobs:
+  WebBuild:
+    name: Web Build (${{ inputs.aws_region }})
+    runs-on:
+      - ${{ inputs.runner_label }}
+      - ${{ github.run_id }}-${{ github.run_attempt }}-WebBuild-${{ inputs.aws_region }}
+    environment:
+      name: ${{ inputs.env }}
+      url: https://github.com
+    permissions:
+      actions: write
+      contents: read
+      id-token: write
+      packages: read
+    steps:
+      - name: Setup Turbo cache
+        uses: rharkor/caching-for-turbo@d124d2921c97c169010f6a7a624a36e9831472e1 # v 1.8
+
+      - name: Checkout repository
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@a3252b78c470c02df07e9d59298aecedc3ccdd6d # v3
+        with:
+          version: 10.28.2
+
+      - name: Setup node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+          registry-url: 'https://npm.pkg.github.com'
+
+      - name: Configure pnpm for GitHub Packages
+        run: |
+          pnpm config set @risk-smart:registry https://npm.pkg.github.com
+          pnpm config set //npm.pkg.github.com/:_authToken ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Start API containers
+        run: docker compose up graphql-engine postgres --detach
+        working-directory: api-stack
+
+      - name: Wait for API
+        timeout-minutes: 10
+        run: bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' 127.0.0.1:8080/v1/version)" != "200" ]]; do sleep 1; done'
+
+      - name: Apply Hasura migrations
+        run: pnpm run hasura-migrate:for-type-gen
+
+      - name: Generate GraphQL types
+        run: pnpm run generate-graphql
+
+      - name: Build web app
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          REACT_APP_AUTH0_DOMAIN: ${{ inputs.react_app_auth0_domain }}
+          REACT_APP_AUTH0_CLIENT_ID: ${{ inputs.react_app_auth0_client_id }}
+          REACT_APP_API_URL: https://${{ inputs.domain_prefix }}${{ vars.STAGE }}-${{ inputs.app_or_risksmart_app }}-api.${{ vars.AWS_ACCOUNT_ID }}.risksmart.link
+          REACT_APP_TENANT_API_URL: https://${{ inputs.domain_prefix }}${{ vars.STAGE }}-${{ inputs.app_or_risksmart_app }}-tenant.${{ vars.AWS_ACCOUNT_ID }}.risksmart.link
+          REACT_APP_WS_TENANT_API_URL: wss://${{ inputs.domain_prefix }}${{ vars.STAGE }}-${{ inputs.app_or_risksmart_app }}-api-tenant.${{ vars.AWS_ACCOUNT_ID }}.risksmart.link
+          REACT_APP_REST_API_URL: https://rest-api.${{ inputs.domain_prefix }}${{ vars.STAGE }}.risksmart.link
+          REACT_APP_TRPC_API_URL: https://${{ inputs.domain_prefix }}${{ vars.STAGE }}-${{ inputs.app_or_risksmart_app }}-tenant.${{ vars.AWS_ACCOUNT_ID }}.risksmart.link
+          REACT_APP_AI_CHAT_API_URL: https://${{ inputs.domain_prefix }}${{ vars.STAGE }}-${{ inputs.app_or_risksmart_app }}-tenant.${{ vars.AWS_ACCOUNT_ID }}.risksmart.link
+          REACT_APP_AI_WORKFLOW_API_URL: https://${{ inputs.domain_prefix }}${{ vars.STAGE }}-${{ inputs.app_or_risksmart_app }}-tenant.${{ vars.AWS_ACCOUNT_ID }}.risksmart.link
+          REACT_APP_EXTERNAL_API_URL: https://${{ inputs.domain_prefix }}${{ vars.STAGE }}-${{ inputs.app_or_risksmart_app }}-tenant.${{ vars.AWS_ACCOUNT_ID }}.risksmart.link
+          REACT_APP_SEGMENT_KEY: ${{ vars.REACT_APP_SEGMENT_KEY }}
+          REACT_APP_KNOCK_PUBLIC_API_KEY: ${{ secrets.REACT_APP_KNOCK_PUBLIC_API_KEY }}
+          REACT_APP_KNOCK_FEED_CHANNEL_ID: ${{ vars.REACT_APP_KNOCK_FEED_CHANNEL_ID }}
+          REACT_APP_TINY_API_KEY: ${{ secrets.REACT_APP_TINY_API_KEY }}
+          REACT_APP_ENVIRONMENT: ${{ vars.STAGE }}
+          REACT_APP_SLACK_CLIENT_ID: ${{ vars.SLACK_CLIENT_ID }}
+          NODE_OPTIONS: --max-old-space-size=8192
+          ENABLE_SERVICE_WORKERS: true
+          RELOAD_SW: true
+          REACT_APP_ENABLE_SENTRY: ${{ vars.REACT_APP_ENABLE_SENTRY }}
+          REACT_APP_AMPLITUDE_API_KEY: ${{ secrets.REACT_APP_AMPLITUDE_API_KEY }}
+        run: pnpm run build
+      # - name: Publish storybook
+      #   env:
+      #     NODE_OPTIONS: --max-old-space-size=8192
+      #     REACT_APP_REST_API_URL: ''
+      #   run: pnpm dlx chromatic --project-token=${{ secrets.CHROMATIC_TOKEN }} --exit-zero-on-changes
+      #   working-directory: packages/web
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: web-build-${{ inputs.aws_region }}
+          path: packages/web/build
+          retention-days: 5
+  WebDeploy:
+    name: Web Deploy (${{ inputs.aws_region }})
+    runs-on:
+      - ${{ inputs.runner_label }}
+      - ${{ github.run_id }}-${{ github.run_attempt }}-WebDeploy-${{ inputs.aws_region }}
+    needs: WebBuild
+    environment:
+      name: ${{ inputs.env }}
+      url: https://github.com
+    permissions:
+      actions: write
+      contents: read
+      id-token: write
+    steps:
+      - name: Setup Turbo cache
+        uses: rharkor/caching-for-turbo@d124d2921c97c169010f6a7a624a36e9831472e1 # v 1.8
+
+      - name: Download artifact
+        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5   # v4
+        with:
+          name: web-build-${{ inputs.aws_region }}
+          path: build
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4.3.1
+        with:
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE }}
+          aws-region: ${{ inputs.aws_region }}
+
+      - name: Deploy to S3 and invalidate CloudFront
+        run: |
+          aws s3 sync build s3://${{ inputs.resource_prefix }}${{ vars.REACT_APP_S3_BUCKET }}
+          aws cloudfront create-invalidation --distribution-id ${{ inputs.app_cloudfront_id }} --paths "/*"

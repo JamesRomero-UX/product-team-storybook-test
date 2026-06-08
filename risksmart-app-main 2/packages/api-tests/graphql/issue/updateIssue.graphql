@@ -1,0 +1,5 @@
+mutation updateIssue($Id: uuid!, $Title: String!) {
+  update_issue(where: { Id: { _eq: $Id } }, _set: { Title: $Title }) {
+    affected_rows
+  }
+}

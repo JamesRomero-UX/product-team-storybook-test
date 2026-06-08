@@ -1,0 +1,15 @@
+fragment ConsequenceParts on consequence {
+  CostType
+  CostValue
+  Criticality
+  Description
+  Id
+  ParentIssueId
+  ModifiedAtTimestamp
+  CreatedAtTimestamp
+  Title
+  CreatedByUser
+  ModifiedByUser
+  CustomAttributeData
+  Type
+}

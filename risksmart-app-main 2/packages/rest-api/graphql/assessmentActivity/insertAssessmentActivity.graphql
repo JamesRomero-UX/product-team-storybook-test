@@ -1,0 +1,40 @@
+mutation insertAssessmentActivity(
+  $Id: uuid
+  $ActivityType: assessment_activity_type_enum!
+  $ParentId: uuid!
+  $Status: assessment_activity_status_enum!
+  $Summary: String
+  $Title: String!
+  $CompletionDate: timestamptz
+  $AssignedUser: String
+  $CustomAttributeData: jsonb
+  $IsRCSA: Boolean
+  $RiskId: uuid
+  $Owners: [owner_insert_input!]!
+  $OwnerGroups: [owner_group_insert_input!]!
+) {
+  insert_assessment_activity_one(
+    object: {
+      Id: $Id
+      ActivityType: $ActivityType
+      ParentId: $ParentId
+      Status: $Status
+      Summary: $Summary
+      Title: $Title
+      CompletionDate: $CompletionDate
+      AssignedUser: $AssignedUser
+      CustomAttributeData: $CustomAttributeData
+      IsRCSA: $IsRCSA
+      RiskId: $RiskId
+    }
+  ) {
+    Id
+    ParentId
+  }
+  insert_owner(objects: $Owners) {
+    affected_rows
+  }
+  insert_owner_group(objects: $OwnerGroups) {
+    affected_rows
+  }
+}

@@ -1,0 +1,5 @@
+mutation updateAssessmentApi($object: UpdateAssessmentInput!) {
+  updateAssessmentApi(object: $object) {
+    affected_rows
+  }
+}

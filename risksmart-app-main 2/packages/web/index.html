@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0F0F2D" />
+    <link rel="stylesheet" href="./src/index.css" />
+    <script type="script" nonce="rAnd0m">
+      !(function () {
+        var analytics = (window.analytics = window.analytics || []);
+        if (!analytics.initialize)
+          if (analytics.invoked)
+            window.console &&
+              console.error &&
+              console.error('Segment snippet included twice.');
+          else {
+            analytics.invoked = !0;
+            analytics.methods = [
+              'trackSubmit',
+              'trackClick',
+              'trackLink',
+              'trackForm',
+              'pageview',
+              'identify',
+              'reset',
+              'group',
+              'track',
+              'ready',
+              'alias',
+              'debug',
+              'page',
+              'once',
+              'off',
+              'on',
+              'addSourceMiddleware',
+              'addIntegrationMiddleware',
+              'setAnonymousId',
+              'addDestinationMiddleware',
+            ];
+            analytics.factory = function (e) {
+              return function () {
+                var t = Array.prototype.slice.call(arguments);
+                t.unshift(e);
+                analytics.push(t);
+                return analytics;
+              };
+            };
+            for (var e = 0; e < analytics.methods.length; e++) {
+              var key = analytics.methods[e];
+              analytics[key] = analytics.factory(key);
+            }
+            analytics.load = function (key, e) {
+              var t = document.createElement('script');
+              t.type = 'text/javascript';
+              t.async = !0;
+              t.src =
+                'https://cdn.segment.com/analytics.js/v1/' +
+                key +
+                '/analytics.min.js';
+              var n = document.getElementsByTagName('script')[0];
+              n.parentNode.insertBefore(t, n);
+              analytics._loadOptions = e;
+            };
+            analytics._writeKey = '%REACT_APP_SEGMENT_KEY%';
+            analytics.SNIPPET_VERSION = '4.15.3';
+            analytics.load('%REACT_APP_SEGMENT_KEY%');
+            analytics.page();
+          }
+      })();
+    </script>
+    <script>
+      ((w) => {
+        const P = (w.Productlane = { queue: {} });
+        ['set', 'open', 'close', 'toggle', 'on', 'off', 'init'].forEach((m) => {
+          P[m] = ((n) =>
+            function () {
+              P.queue[n] = { args: arguments };
+            })(m);
+        });
+      })(window);
+      if ('%REACT_APP_DISABLE_PRODUCTLANE%' !== 'true') {
+        Productlane.init({
+          widgetKey: '8221e165-0f1a-44cf-9722-d742f5a65af2',
+          position: 'left',
+          theme: {
+            '--text-color-primary': '#111827',
+            '--text-color-primary-dark': '#FFFFFF',
+            '--text-color-secondary': '#9CA3AF',
+            '--text-color-secondary-dark': '#9CA3AF',
+            '--text-color-highlight': '#1692A4',
+            '--text-color-highlight-dark': '#1692A4',
+            '--background-color-primary': '#FFFFFF',
+            '--background-color-primary-dark': '#111827',
+            '--background-color-secondary': '#F3F4F6',
+            '--background-color-secondary-dark': '#1F2937',
+            '--border-color-primary': '#E5E7EB',
+            '--border-color-primary-dark': '#1F2937',
+          },
+        });
+      }
+    </script>
+
+    <script
+      async
+      defer
+      crossorigin="anonymous"
+      src="https://widget.productlane.com/latest.productlane-widget.min.js"
+    ></script>
+    <title data-amp-mask>RiskSmart</title>
+    <link
+      nonce="rAnd0m"
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAJVSURBVHgBxZY/SBtRHMe/d4koxtQsyZApm4JNUUg6dUizOigUXOpSN9uC7ZJJKK1OR6EIndXBzSWB2qkkmb1AAyUQOx0OAXWJShSNMb7fw8S8F//cJZfcB46898vdfb/3+/3eu1PAGB+fDQ0MuDbYcJIdPvSeZLVa+1wsJg3lVvxvn4RbKTMTUyoT/+GAOOGjrKtsMAvnmFThLD6nDcB9X3BsLMRWRujBi05Pz3ByUsHensHGFdhuIB5/icXFOZiBTGxt/UIqlUUndF0CytbKykdsb3+H1+uBVWzrATKytpaAVdxmTqI0a9pGcz4y4uE9MjPzGsGgvxmPRCZYLGapHKYMUKPpekGIZTK7TCiD9fVvggkyZcVAVyUolY54A7bSaqbnBgh5GQaDAVihawORyHNhTv3SNwPU+fF4VIgViwasYKoJKa3yxhSNTvCul6HG7IEBv6mdkRoylyvACrZtRCSuaZuwiqkMPC2+c6+4OxTAYOwFH18ZB7jI/ms/ByagtC4sfGnO5+enkUi8E+bp9K6QfjUwimdf30IdHryLsfH575xw745KQE8s13p19YPwMvK+nxbEieG5V1CkWMc9sLSk8e+CBvJKcbEMyCieIX7YYoB2wOXln0KMStFYmrXD47Zrro+O+WGLAYJeSOm0LsQapahs/sH12YXw3/mO3nYPJRx+U5eDdIPWetLTPvbpJe//pdIh/1X9oxiKhXnaL/X/qBb2zRnoJ45/FZOBMhyEDOThHCnV5arRluZEFspM+5OazycNNpiq15FEfygzrSxpkvYNmHbMvHul0gYAAAAASUVORK5CYII="
+    />
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/index.tsx"></script>
+  </body>
+</html>

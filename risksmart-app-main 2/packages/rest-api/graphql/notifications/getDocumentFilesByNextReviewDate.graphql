@@ -1,0 +1,22 @@
+query getDocumentFilesByReviewDate(
+  $minNextReviewDate: timestamptz!
+  $maxNextReviewDate: timestamptz!
+) {
+  document_file(
+    where: {
+      Status: { _eq: published }
+      NextReviewDate: { _gte: $minNextReviewDate, _lt: $maxNextReviewDate }
+    }
+  ) {
+    Id
+    OrgKey
+    ParentDocumentId
+    NextReviewDate
+    CreatedByUser
+    parent {
+      owners {
+        UserId
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+query getIndicatorAuditById($id: uuid) {
+  indicator_audit(where: { Id: { _eq: $id } }) {
+    SequentialId
+    Type
+    UpperToleranceNum
+    Unit
+    Title
+    TargetValueTxt
+    LowerToleranceNum
+    Id
+    Description
+    CustomAttributeData
+    CreatedAtTimestamp
+    CreatedByUser
+    ModifiedAtTimestamp
+    ModifiedByUser
+    LowerAppetiteNum
+    UpperAppetiteNum
+  }
+}

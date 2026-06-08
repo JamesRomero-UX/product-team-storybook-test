@@ -1,0 +1,48 @@
+mutation updateCustomRole(
+  $Id: uuid!
+  $RoleName: String!
+  $Description: String
+  $roleAssignments: [custom_role_assignment_insert_input!]!
+  $roleKeys: [String!]!
+  $users: [custom_role_user_insert_input!]!
+  $userIds: [String!]!
+) {
+  update_custom_role(
+    where: { Id: { _eq: $Id } }
+    _set: { RoleName: $RoleName, Description: $Description }
+  ) {
+    affected_rows
+  }
+
+  delete_custom_role_assignment(
+    where: { CustomRoleId: { _eq: $Id }, RoleTypeKey: { _nin: $roleKeys } }
+  ) {
+    affected_rows
+  }
+
+  insert_custom_role_assignment(
+    objects: $roleAssignments
+    on_conflict: {
+      constraint: custom_role_assignment_CustomRoleId_RoleTypeKey_OrgKey_key
+      update_columns: []
+    }
+  ) {
+    affected_rows
+  }
+
+  delete_custom_role_user(
+    where: { CustomRoleId: { _eq: $Id }, UserId: { _nin: $userIds } }
+  ) {
+    affected_rows
+  }
+
+  insert_custom_role_user(
+    objects: $users
+    on_conflict: {
+      constraint: custom_role_user_CustomRoleId_UserId_OrgKey_key
+      update_columns: []
+    }
+  ) {
+    affected_rows
+  }
+}

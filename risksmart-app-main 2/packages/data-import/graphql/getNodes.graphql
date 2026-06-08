@@ -1,0 +1,18 @@
+query getNodes($orgKey: String) {
+  node(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    ObjectType
+  }
+  user(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+  }
+  user_group(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+  }
+  tag_type(where: { OrgKey: { _eq: $orgKey } }) {
+    TagTypeId
+  }
+  department_type(where: { OrgKey: { _eq: $orgKey } }) {
+    DepartmentTypeId
+  }
+}

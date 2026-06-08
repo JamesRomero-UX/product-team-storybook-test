@@ -1,0 +1,5 @@
+mutation insertImpactBackend($objects: [impact_insert_input!]!) {
+  insert_impact(objects: $objects) {
+    affected_rows
+  }
+}

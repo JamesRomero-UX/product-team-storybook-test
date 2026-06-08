@@ -1,0 +1,7 @@
+mutation deleteIndicatorParent($IndicatorId: uuid, $ParentId: uuid) {
+  delete_indicator_parent(
+    where: { IndicatorId: { _eq: $IndicatorId }, ParentId: { _eq: $ParentId } }
+  ) {
+    affected_rows
+  }
+}

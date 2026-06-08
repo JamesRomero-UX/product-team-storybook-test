@@ -1,0 +1,9 @@
+mutation insertAppetiteParent($AppetiteId: uuid!, $ParentId: uuid!) {
+  insert_appetite_parent_one(
+    object: { Id: $AppetiteId, ParentId: $ParentId }
+    on_conflict: { constraint: appetite_parent_pkey, update_columns: [] }
+  ) {
+    Id
+    ParentId
+  }
+}

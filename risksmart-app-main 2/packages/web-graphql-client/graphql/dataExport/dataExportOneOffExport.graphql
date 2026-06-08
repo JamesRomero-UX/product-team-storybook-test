@@ -1,0 +1,7 @@
+query dataExportOneOffExport {
+  dataExportOneOffExport {
+    message
+    downloadUrl
+    expiresInSeconds
+  }
+}

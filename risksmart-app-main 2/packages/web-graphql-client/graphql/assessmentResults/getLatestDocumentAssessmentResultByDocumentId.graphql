@@ -1,0 +1,19 @@
+query getLatestDocumentAssessmentResultByDocumentId($DocumentId: uuid!) {
+  document_assessment_result(
+    where: {
+      parents: { ParentId: { _eq: $DocumentId } }
+      RatingType: { _in: ["assessment", "rating"] }
+    }
+    order_by: [{ TestDate: desc_nulls_last }, { CreatedAtTimestamp: desc }]
+  ) {
+    ...DocumentAssessmentResultParts
+    ancestorContributors {
+      ...AncestorContributorParts
+    }
+    parents(where: { ParentType: { _eq: assessment } }) {
+      assessment {
+        ...AssessmentParts
+      }
+    }
+  }
+}

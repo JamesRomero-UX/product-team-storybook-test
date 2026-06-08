@@ -1,0 +1,129 @@
+name: Template / Lambda Build Publish
+
+permissions:
+  actions: write
+  contents: read
+  id-token: write
+  packages: read
+
+on:
+  workflow_call:
+    inputs:
+      runner_label:
+        required: false
+        type: string
+        default: 'sprinters:aws:eu-west-2:ubuntu-24.04-arm:c6g.xlarge:spot=false'
+      build_dockerfile:
+        required: true
+        type: string
+      targets:
+        required: true
+        type: string
+        description: 'JSON array of targets: [{"region":"eu-west-1","bucket":"my-bucket","prefix":"lambda-builds"}]'
+      package_version:
+        required: false
+        type: string
+        default: ''
+      version_changed:
+        required: false
+        type: boolean
+        default: true
+      entry:
+        description: "Lambda entry file for esbuild"
+        required: false
+        default: "src/index.ts"
+        type: string
+      upload_to_s3:
+        required: false
+        type: boolean
+        default: true
+
+jobs:
+  BuildArtifact:
+    name: Build Lambda Artifacts
+    if: inputs.version_changed
+    runs-on:
+      - ${{ inputs.runner_label }}
+      - ${{ github.run_id }}-${{ github.run_attempt }}-BuildArtifact
+    outputs:
+      artifact_filename: 'tbc'
+    steps:
+      - name: Validate targets JSON input
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
+        with:
+          script: JSON.parse(process.env.TARGETS)
+        env:
+          TARGETS: ${{ inputs.targets }}
+
+      - name: Checkout code
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+
+      - name: Build docker builder image
+        run: docker build -t lambda-builder -f ${{ inputs.build_dockerfile }} .
+
+      - name: Produce versioned Lambda zip in ./artifacts
+        run: |
+          docker run --rm \
+            -e VERSION='${{ inputs.package_version }}' \
+            -e ENTRY='${{ inputs.entry }}' \
+            -v "${{ github.workspace }}:/workspace" \
+            lambda-builder
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: lambda-${{ inputs.package_version }}
+          path: artifacts/${{ inputs.package_version }}.zip
+          if-no-files-found: error
+
+      - name: Verify artifact exists
+        run: ls -l "artifacts/${{ inputs.package_version }}.zip"
+
+  PublishToS3:
+    name: Publish to S3 Regions
+    if: inputs.version_changed && inputs.upload_to_s3
+    needs: BuildArtifact
+    runs-on:
+      - ${{ inputs.runner_label }}
+      - ${{ github.run_id }}-${{ github.run_attempt }}-PublishToS3-${{ strategy.job-index }}
+    strategy:
+      fail-fast: false  # Continue uploading to other regions if one fails
+      matrix:
+        include: ${{ fromJson(inputs.targets) }}
+        # Each included item can have:
+        #   region (required), bucket (required), prefix (required)
+    steps:
+
+      - name: Download build artifact
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: lambda-${{ inputs.package_version }}
+          path: ./artifact
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4.3.1
+        with:
+          role-to-assume: ${{ vars.CI_AWS_DEPLOY_ROLE }}
+          aws-region: ${{ matrix.region }}
+
+      - name: 'Upload to S3 (region: ${{ matrix.region }})'
+        run: |
+          aws s3 cp "./artifact/${{ inputs.package_version }}.zip" \
+            "s3://${{ matrix.bucket }}/${{ matrix.prefix }}/" \
+            --only-show-errors \
+            --metadata version=${{ inputs.package_version }} \
+            --content-type application/zip
+
+      - name: Log S3 upload path
+        run: |
+          KEY="${{ matrix.prefix }}/${{ inputs.package_version }}.zip"
+          echo "Uploaded: s3://${{ matrix.bucket }}/${KEY} (region: ${{ matrix.region }})"
+
+  SkipBuildReturn:
+    name: Skip Build (No Version Changes)
+    if: "!inputs.version_changed"
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Log skip reason
+        run: echo "No changes. Skipping build. Version_changed value ${{ inputs.version_changed }}"

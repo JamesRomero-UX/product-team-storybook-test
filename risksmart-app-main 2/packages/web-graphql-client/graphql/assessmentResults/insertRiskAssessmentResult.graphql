@@ -1,0 +1,25 @@
+mutation insertRiskAssessmentResults(
+  $Rating: Int
+  $Likelihood: Int
+  $Impact: Int
+  $ControlType: risk_assessment_result_control_type_enum
+  $AssessmentId: uuid
+  $RiskIds: [uuid!]!
+  $CustomAttributeData: jsonb
+  $TestDate: timestamptz
+  $Rationale: String
+) {
+  insertChildRiskAssessmentResult(
+    Rating: $Rating
+    AssessmentId: $AssessmentId
+    RiskIds: $RiskIds
+    Impact: $Impact
+    Likelihood: $Likelihood
+    ControlType: $ControlType
+    CustomAttributeData: $CustomAttributeData
+    TestDate: $TestDate
+    Rationale: $Rationale
+  ) {
+    Ids
+  }
+}

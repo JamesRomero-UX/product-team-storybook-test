@@ -1,0 +1,10 @@
+query getIngestionConfigs {
+  ingestion_config {
+    Id
+    IngestionConfig
+    CreatedByUser
+    ModifiedByUser
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+  }
+}

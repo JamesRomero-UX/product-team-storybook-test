@@ -1,0 +1,9 @@
+table:
+  name: change_request_file_operation
+  schema: risksmart
+is_enum: true
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: change_request_file_operation
+  custom_root_fields: {}

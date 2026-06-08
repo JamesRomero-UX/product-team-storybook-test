@@ -1,0 +1,7 @@
+mutation deleteRelationFileById($parentIds: [uuid!], $fileIds: [uuid!]) {
+  delete_relation_file(
+    where: { FileId: { _in: $fileIds }, ParentId: { _in: $parentIds } }
+  ) {
+    affected_rows
+  }
+}

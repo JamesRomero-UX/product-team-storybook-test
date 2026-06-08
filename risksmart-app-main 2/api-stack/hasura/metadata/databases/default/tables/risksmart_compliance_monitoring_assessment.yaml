@@ -1,0 +1,296 @@
+table:
+  name: compliance_monitoring_assessment
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: compliance_monitoring_assessment
+  custom_root_fields: {}
+object_relationships:
+  - name: completedByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          CompletedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: createdByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          CreatedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: modifiedByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          ModifiedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: organisation
+    using:
+      foreign_key_constraint_on: OrgKey
+  - name: originatingItem
+    using:
+      manual_configuration:
+        column_mapping:
+          OriginatingItemId: Id
+        insertion_order: null
+        remote_table:
+          name: node
+          schema: risksmart
+array_relationships:
+  - name: ancestorContributors
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: Id
+        insertion_order: null
+        remote_table:
+          name: ancestor_contributor_view
+          schema: risksmart
+  - name: assessmentResults
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: assessment_result_parent
+          schema: risksmart
+  - name: assessmentActivities
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: assessment_activity
+          schema: risksmart
+  - name: assessmentActions
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: action_parent
+          schema: risksmart
+  - name: assessmentIssues
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: issue_parent
+          schema: risksmart
+  - name: contributorGroups
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: contributor_group
+          schema: risksmart
+  - name: contributors
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: contributor
+          schema: risksmart
+  - name: departments
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: department
+          schema: risksmart
+  - name: insertPermissions
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: Id
+        insertion_order: null
+        remote_table:
+          name: insert_permission_view
+          schema: risksmart
+  - name: ownerGroups
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: owner_group
+          schema: risksmart
+  - name: owners
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: owner
+          schema: risksmart
+  - name: permissions
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: Id
+        insertion_order: null
+        remote_table:
+          name: permission_view
+          schema: risksmart
+  - name: tags
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: tag
+          schema: risksmart
+insert_permissions:
+  - role: insert:compliance-monitoring-assessment
+    permission:
+      backend_only: true
+      check:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      set:
+        CreatedByUser: X-Hasura-user-id
+        ModifiedByUser: X-Hasura-user-id
+        OrgKey: X-Hasura-org-id
+      columns:
+        - Id
+        - Title
+        - Summary
+        - TargetCompletionDate
+        - ActualCompletionDate
+        - StartDate
+        - NextTestDate
+        - CompletedByUser
+        - CustomAttributeData
+        - OriginatingItemId
+        - Status
+        - Outcome
+select_permissions:
+  - role: Standard
+    permission:
+      columns:
+        - Id
+        - Title
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - permissions:
+              _and:
+                - UserId:
+                    _eq: X-Hasura-User-Id
+                - OrgKey:
+                    _eq: X-Hasura-org-Id
+                - AccessType:
+                    _eq: read
+  - role: ReadOnly
+    permission:
+      columns:
+        - Id
+        - Title
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - permissions:
+              _and:
+                - UserId:
+                    _eq: X-Hasura-User-Id
+                - OrgKey:
+                    _eq: X-Hasura-org-Id
+                - AccessType:
+                    _eq: read
+  - role: read:compliance-monitoring-assessment
+    permission:
+      columns:
+        - Id
+        - Title
+        - Summary
+        - TargetCompletionDate
+        - ActualCompletionDate
+        - StartDate
+        - SequentialId
+        - NextTestDate
+        - CompletedByUser
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - CreatedByUser
+        - CreatedAtTimestamp
+        - CustomAttributeData
+        - OriginatingItemId
+        - Status
+        - Outcome
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      allow_aggregations: true
+update_permissions:
+  - role: update:compliance-monitoring-assessment
+    permission:
+      columns:
+        - Title
+        - Summary
+        - TargetCompletionDate
+        - ActualCompletionDate
+        - StartDate
+        - NextTestDate
+        - CompletedByUser
+        - CustomAttributeData
+        - OriginatingItemId
+        - Status
+        - Outcome
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      check: {}
+      backend_only: true
+      set:
+        ModifiedAtTimestamp: now()
+        ModifiedByUser: x-hasura-user-id
+delete_permissions:
+  - role: delete:compliance-monitoring-assessment
+    permission:
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+event_triggers:
+  - name: compliance_monitoring_assessment
+    definition:
+      delete:
+        columns: '*'
+      enable_manual: false
+      insert:
+        columns: '*'
+      update:
+        columns: '*'
+    retry_conf:
+      interval_sec: 10
+      num_retries: 3
+      timeout_sec: 60
+    webhook: https://{{REST_API_DOMAIN}}/events
+    headers:
+      - name: RestApiKey
+        value_from_env: REST_API_KEY

@@ -1,0 +1,7 @@
+mutation insertCustomRoleAssignment(
+  $input: custom_role_assignment_insert_input!
+) {
+  insert_custom_role_assignment_one(object: $input) {
+    Id
+  }
+}

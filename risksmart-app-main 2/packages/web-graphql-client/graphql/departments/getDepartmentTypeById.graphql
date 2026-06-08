@@ -1,0 +1,13 @@
+query GetDepartmentTypeById($Id: uuid) {
+  department_type(where: { DepartmentTypeId: { _eq: $Id } }) {
+    DepartmentTypeId
+    Name
+    Description
+    ModifiedAtTimestamp
+    DepartmentTypeGroupId
+    department_type_group {
+      Id
+      Name
+    }
+  }
+}

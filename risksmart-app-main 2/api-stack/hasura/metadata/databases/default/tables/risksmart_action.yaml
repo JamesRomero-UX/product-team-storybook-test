@@ -1,0 +1,339 @@
+table:
+  name: action
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: action
+  custom_root_fields: {}
+object_relationships:
+  - name: actionUpdateSummary
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ActionId
+        insertion_order: null
+        remote_table:
+          name: action_update_summary_view
+          schema: risksmart
+  - name: actionStatus
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: Id
+        insertion_order: null
+        remote_table:
+          name: action_status_view
+          schema: risksmart
+  - name: createdByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          CreatedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: modifiedByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          ModifiedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: organisation
+    using:
+      foreign_key_constraint_on: OrgKey
+  - name: status
+    using:
+      foreign_key_constraint_on: Status
+array_relationships:
+  - name: parents
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ActionId
+        insertion_order: null
+        remote_table:
+          name: action_parent
+          schema: risksmart
+  - name: ancestorContributors
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: Id
+        insertion_order: null
+        remote_table:
+          name: ancestor_contributor_view
+          schema: risksmart
+  - name: contributorGroups
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: contributor_group
+          schema: risksmart
+  - name: contributors
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: contributor
+          schema: risksmart
+  - name: departments
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: department
+          schema: risksmart
+  - name: files
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: relation_file
+          schema: risksmart
+  - name: ownerGroups
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: owner_group
+          schema: risksmart
+  - name: owners
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: owner
+          schema: risksmart
+  - name: permissions
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: Id
+        insertion_order: null
+        remote_table:
+          name: permission_view
+          schema: risksmart
+  - name: tags
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: tag
+          schema: risksmart
+  - name: updates
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentActionId
+        insertion_order: null
+        remote_table:
+          name: action_update
+          schema: risksmart
+insert_permissions:
+  - role: Standard
+    permission:
+      check:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      set:
+        CreatedByUser: x-hasura-user-id
+        ModifiedByUser: x-hasura-user-id
+        OrgKey: x-hasura-org-id
+      columns:
+        - Id
+        - Title
+        - DateRaised
+        - DateDue
+        - Status
+        - Priority
+        - ClosedDate
+        - Description
+        - CustomAttributeData
+      backend_only: true
+  - role: insert:action
+    permission:
+      check:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      set:
+        CreatedByUser: x-hasura-user-id
+        ModifiedByUser: x-hasura-user-id
+        OrgKey: x-hasura-org-id
+      columns:
+        - Id
+        - Title
+        - DateRaised
+        - DateDue
+        - Status
+        - Priority
+        - ClosedDate
+        - Description
+        - CustomAttributeData
+      backend_only: true
+select_permissions:
+  - role: Standard
+    permission:
+      columns:
+        - Id
+        - Title
+        - DateRaised
+        - DateDue
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - Status
+        - Priority
+        - ClosedDate
+        - Description
+        - CreatedByUser
+        - CreatedAtTimestamp
+        - CustomAttributeData
+        - SequentialId
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - permissions:
+              _and:
+                - UserId:
+                    _eq: X-Hasura-User-Id
+                - OrgKey:
+                    _eq: X-Hasura-org-Id
+                - AccessType:
+                    _eq: read
+                - ObjectType:
+                    _eq: action
+      allow_aggregations: true
+  - role: read:action
+    permission:
+      columns:
+        - Id
+        - Title
+        - DateRaised
+        - DateDue
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - Status
+        - Priority
+        - ClosedDate
+        - Description
+        - CreatedByUser
+        - CreatedAtTimestamp
+        - CustomAttributeData
+        - SequentialId
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+      allow_aggregations: true
+update_permissions:
+  - role: Standard
+    permission:
+      backend_only: true
+      columns:
+        - Title
+        - DateRaised
+        - DateDue
+        - Status
+        - Priority
+        - ClosedDate
+        - Description
+        - CustomAttributeData
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - permissions:
+              _and:
+                - UserId:
+                    _eq: X-Hasura-User-Id
+                - OrgKey:
+                    _eq: X-Hasura-org-Id
+                - AccessType:
+                    _eq: update
+      check:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      set:
+        ModifiedAtTimestamp: now()
+        ModifiedByUser: x-hasura-user-id
+  - role: update:action
+    permission:
+      backend_only: true
+      columns:
+        - Title
+        - DateRaised
+        - DateDue
+        - Status
+        - Priority
+        - ClosedDate
+        - Description
+        - CustomAttributeData
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      check:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      set:
+        ModifiedAtTimestamp: now()
+        ModifiedByUser: x-hasura-user-id
+delete_permissions:
+  - role: Standard
+    permission:
+      backend_only: true
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - permissions:
+              _and:
+                - UserId:
+                    _eq: X-Hasura-User-Id
+                - OrgKey:
+                    _eq: X-Hasura-org-Id
+                - AccessType:
+                    _eq: delete
+  - role: delete:action
+    permission:
+      backend_only: true
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+event_triggers:
+  - name: action
+    definition:
+      delete:
+        columns: '*'
+      enable_manual: true
+      insert:
+        columns: '*'
+      update:
+        columns: '*'
+    retry_conf:
+      interval_sec: 10
+      num_retries: 3
+      timeout_sec: 60
+    webhook: https://{{REST_API_DOMAIN}}/events
+    headers:
+      - name: RestApiKey
+        value_from_env: REST_API_KEY

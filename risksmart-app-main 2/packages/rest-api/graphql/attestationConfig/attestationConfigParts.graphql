@@ -1,0 +1,9 @@
+fragment AttestationConfigParts on attestation_config {
+  ParentId
+  RequireGlobalAttestation
+  AttestationTimeLimit
+  timeLimitMs
+  groups {
+    GroupId
+  }
+}

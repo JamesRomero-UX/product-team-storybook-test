@@ -1,0 +1,8 @@
+mutation insertControlParent($ControlId: uuid!, $ParentId: uuid!) {
+  insert_control_parent_one(
+    object: { ControlId: $ControlId, ParentId: $ParentId }
+  ) {
+    ControlId
+    ParentId
+  }
+}

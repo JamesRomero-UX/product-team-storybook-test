@@ -1,0 +1,53 @@
+mutation updateIssue(
+  $Id: uuid!
+  $Title: String!
+  $Details: String!
+  $ImpactsCustomer: Boolean
+  $IsExternalIssue: Boolean
+  $DateOccurred: timestamptz!
+  $DateIdentified: timestamptz!
+  $OriginalTimestamp: timestamptz!
+  $CustomAttributeData: jsonb
+  $owners: [owner_insert_input!]!
+  $contributors: [contributor_insert_input!]!
+) {
+  update_issue(
+    _set: {
+      Title: $Title
+      Details: $Details
+      ImpactsCustomer: $ImpactsCustomer
+      IsExternalIssue: $IsExternalIssue
+      DateOccurred: $DateOccurred
+      DateIdentified: $DateIdentified
+      CustomAttributeData: $CustomAttributeData
+    }
+    where: {
+      ModifiedAtTimestamp: { _eq: $OriginalTimestamp }
+      Id: { _eq: $Id }
+    }
+  ) {
+    affected_rows
+  }
+
+  delete_contributor(where: { ParentId: { _eq: $Id } }) {
+    affected_rows
+  }
+
+  insert_contributor(
+    objects: $contributors
+    on_conflict: { constraint: contributor_pkey, update_columns: [] }
+  ) {
+    affected_rows
+  }
+
+  delete_owner(where: { ParentId: { _eq: $Id } }) {
+    affected_rows
+  }
+
+  insert_owner(
+    objects: $owners
+    on_conflict: { constraint: owner_pkey, update_columns: [] }
+  ) {
+    affected_rows
+  }
+}

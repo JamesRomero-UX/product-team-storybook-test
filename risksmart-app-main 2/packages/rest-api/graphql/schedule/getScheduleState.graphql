@@ -1,0 +1,5 @@
+query getSchedule($Id: uuid!) {
+  schedule_by_pk(Id: $Id) {
+    ...ScheduleParts
+  }
+}

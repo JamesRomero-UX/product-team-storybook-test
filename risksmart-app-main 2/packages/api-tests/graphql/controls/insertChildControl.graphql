@@ -1,0 +1,5 @@
+mutation insertChildControl($object: InsertChildControlInput) {
+  insertChildControl(object: $object) {
+    Id
+  }
+}

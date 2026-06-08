@@ -1,0 +1,16 @@
+query getAttestationStatus($ParentId: uuid!, $UserId: String!) {
+  attestation_record(
+    where: { NodeId: { _eq: $ParentId }, UserId: { _eq: $UserId } }
+    limit: 1
+    order_by: { CreatedAtTimestamp: desc }
+  ) {
+    Id
+    AttestationStatus
+    attestationRecordStatus {
+      Status
+    }
+    config {
+      PromptText
+    }
+  }
+}

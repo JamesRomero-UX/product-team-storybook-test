@@ -1,0 +1,7 @@
+query getControlCount($where: control_bool_exp! = {}) {
+  control_aggregate(where: $where) {
+    aggregate {
+      count
+    }
+  }
+}

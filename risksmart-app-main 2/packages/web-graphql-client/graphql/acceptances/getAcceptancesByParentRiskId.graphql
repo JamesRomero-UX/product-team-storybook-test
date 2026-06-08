@@ -1,0 +1,64 @@
+query getAcceptancesByParentRiskId($ParentId: uuid) {
+  acceptance(where: { parents: { ParentId: { _eq: $ParentId } } }) {
+    ...AcceptanceParts
+    ancestorContributors {
+      ...AncestorContributorParts
+    }
+    createdByUser {
+      FriendlyName
+    }
+    modifiedByUser {
+      FriendlyName
+    }
+    requestedByUser {
+      FriendlyName
+    }
+    requestedByUserGroup {
+      Name
+    }
+    approvedByUser {
+      FriendlyName
+    }
+    approvedByUserGroup {
+      Name
+    }
+    parents {
+      risk {
+        Id
+        Tier
+        Title
+        owners {
+          ...OwnerParts
+        }
+        ownerGroups {
+          ...OwnerGroupParts
+        }
+        contributors {
+          ...ContributorParts
+        }
+        contributorGroups {
+          ...ContributorGroupParts
+        }
+        ancestorContributors {
+          ...AncestorContributorParts
+        }
+        tags {
+          ...TagParts
+        }
+        departments {
+          ...DepartmentParts
+        }
+      }
+    }
+    files {
+      ...RelationFileParts
+    }
+    changeRequests(
+      distinct_on: [ChangeRequestStatus]
+      order_by: [{ ChangeRequestStatus: asc }, { ModifiedAtTimestamp: desc }]
+    ) {
+      ChangeRequestStatus
+      ModifiedAtTimestamp
+    }
+  }
+}

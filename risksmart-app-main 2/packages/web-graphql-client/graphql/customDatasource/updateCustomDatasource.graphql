@@ -1,0 +1,8 @@
+mutation updateCustomDatasource(
+  $Id: uuid!
+  $Data: custom_datasource_set_input!
+) {
+  update_custom_datasource_by_pk(pk_columns: { Id: $Id }, _set: $Data) {
+    Id
+  }
+}

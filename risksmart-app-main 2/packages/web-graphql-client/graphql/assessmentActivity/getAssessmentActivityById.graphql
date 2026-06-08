@@ -1,0 +1,66 @@
+query getAssessmentActivityById($AssessmentActivityId: uuid!) {
+  assessment_activity(where: { Id: { _eq: $AssessmentActivityId } }) {
+    ...AssessmentActivityParts
+    files {
+      ...RelationFileParts
+    }
+    ancestorContributors {
+      ...AncestorContributorParts
+    }
+  }
+  linked_item(where: { Source: { _eq: $AssessmentActivityId } }) {
+    Id
+    Source
+    Target
+    target_control {
+      ...ControlParts
+    }
+    target_control_group {
+      ...ControlGroupParts
+    }
+    target_obligation {
+      ...ObligationParts
+    }
+    target_document {
+      ...DocumentParts
+    }
+    target_risk {
+      ...RiskParts
+    }
+    target_assessment_activity {
+      ...AssessmentActivityParts
+    }
+    target_assessment {
+      ...AssessmentParts
+    }
+    target_impact {
+      ...ImpactParts
+    }
+    target_obligation_impact {
+      Id
+      Description
+      ParentObligationId
+    }
+    target_impact_rating {
+      Id
+      impact {
+        ...ImpactParts
+      }
+    }
+    target_action {
+      ...ActionParts
+    }
+    target_indicator {
+      ...IndicatorParts
+    }
+    target_acceptance {
+      ...AcceptanceParts
+    }
+    target_appetite {
+      ...AppetiteParts
+    }
+    target_issue {
+      ...IssueParts
+    }
+  }
+}

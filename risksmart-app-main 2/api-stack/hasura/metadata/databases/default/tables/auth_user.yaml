@@ -1,0 +1,126 @@
+table:
+  name: user
+  schema: auth
+array_relationships:
+  - name: organisationusers
+    using:
+      foreign_key_constraint_on:
+        column: User_Id
+        table:
+          name: organisationuser
+          schema: auth
+  - name: userGroupUsers
+    using:
+      foreign_key_constraint_on:
+        column: UserId
+        table:
+          name: user_group_user
+          schema: risksmart
+  - name: userRoles
+    using:
+      foreign_key_constraint_on:
+        column: UserId
+        table:
+          name: user_role
+          schema: auth
+  - name: customRoles
+    using:
+      foreign_key_constraint_on:
+        column: UserId
+        table:
+          name: custom_role_user
+          schema: risksmart
+select_permissions:
+  - role: read:auth-user
+    permission:
+      columns:
+        - RoleKey
+        - Email
+        - FirstName
+        - Id
+        - LastName
+        - UserName
+        - BusinessUnit_Id
+        - Status
+        - CreatedOn
+        - LastSeen
+        - DisplayName
+        - JobTitle
+        - Department
+        - OfficeLocation
+        - CreatedByUser
+        - ModifiedByUser
+        - ModifiedAtTimestamp
+        - AuthUser_Id
+        - FriendlyName
+        - IsCustomerSupport
+        - AuthConnection
+      filter:
+        organisationusers:
+          OrgKey:
+            _eq: X-Hasura-org-id
+      allow_aggregations: true
+  - role: app-user
+    permission:
+      columns:
+        - Email
+        - Id
+        - FriendlyName
+        - LastSeen
+      filter:
+        organisationusers:
+          OrgKey:
+            _eq: X-Hasura-org-id
+      allow_aggregations: true
+insert_permissions:
+  - role: insert:auth-user
+    permission:
+      columns:
+        - Id
+        - UserName
+        - Email
+      set:
+        CreatedOn: now()
+        CreatedByUser: x-hasura-user-id
+        Status: active
+      check: {}
+    backend_only: true
+update_permissions:
+  - role: update:auth-user
+    permission:
+      columns:
+        - RoleKey
+      set:
+        ModifiedByUser: x-hasura-user-id
+        ModifiedAtTimestamp: now()
+      filter:
+        organisationusers:
+          OrgKey:
+            _eq: X-Hasura-org-id
+      check: {}
+    backend_only: true
+event_triggers:
+  - name: user
+    definition:
+      delete:
+        columns: '*'
+      enable_manual: true
+      insert:
+        columns: '*'
+      update:
+        columns:
+          - Id
+          - FirstName
+          - LastName
+          - Email
+          - UserName
+          - Status
+          - FriendlyName
+    retry_conf:
+      interval_sec: 10
+      num_retries: 3
+      timeout_sec: 60
+    webhook: https://{{REST_API_DOMAIN}}/events
+    headers:
+      - name: RestApiKey
+        value_from_env: REST_API_KEY

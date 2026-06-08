@@ -1,0 +1,7 @@
+mutation updateIngestionConfig(
+  $object: UpdateIngestionConfigInput!
+) {
+  updateChildIngestionConfig(object: $object) {
+    Id
+  }
+}

@@ -1,0 +1,5 @@
+mutation deleteDocumentLinkedDocument($DocumentId: uuid!) {
+  delete_document_linked_document(where: { DocumentId: { _eq: $DocumentId } }) {
+    affected_rows
+  }
+}

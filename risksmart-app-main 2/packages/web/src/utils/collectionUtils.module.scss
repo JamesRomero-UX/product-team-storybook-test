@@ -1,0 +1,5 @@
+@use '@risk-smart/themed-design-tokens/visual-refresh' as awsui;
+
+.empty-cell {
+  color: awsui.$color-text-input-disabled;
+}

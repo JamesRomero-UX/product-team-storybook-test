@@ -1,0 +1,106 @@
+/*
+ * Form & dropdown styling — copied verbatim (translated to plain CSS)
+ * from the production SCSS modules in the dev repo. Applied globally so
+ * every Storybook page-template story uses the same form chrome as the
+ * live app.
+ *
+ * Sources:
+ *   - packages/web/src/components/form/form/style.module.scss            (form-wide)
+ *   - packages/web/src/components/form/multi-select/style.module.scss    (multiselect)
+ *   - packages/web/src/components/form/select/style.module.scss          (select)
+ *   - packages/web/src/components/form/controlled-group-and-user-multi-select/style.module.scss (people picker)
+ *   - packages/web/src/components/form/controlled-group-and-user-select/style.module.scss (single people picker)
+ *   - packages/web/src/components/form/tag-selector/style.module.scss    (tag picker)
+ *   - packages/web/src/components/form/department-selector/style.module.scss (department picker)
+ *
+ * Token equivalents (translated from Tailwind classes used in the SCSS):
+ *   text-teal       → #41D9CC  (Secondary 700)
+ *   text-navy       → #14143A  (Primary 900)
+ *   bg-grey150      → #E8E8EC  (Neutral 300)
+ */
+
+/* ─── Global Sora font ──────────────────────────────────────────────────
+   Production app loads @fontsource/sora at packages/web/src/index.tsx and
+   atomic-ui/src/theme/default.css scopes it to .atomic-ui. Storybook stories
+   render without the .atomic-ui wrapper, so apply Sora to body so every
+   non-Cloudscape element (chips, plain spans, headings outside organisms)
+   inherits it. Cloudscape components use --font-family-base (fallback Sora)
+   from their own scoped CSS — they're already covered. */
+body,
+#storybook-root,
+#storybook-docs {
+  font-family: 'Sora', system-ui, sans-serif;
+}
+
+/* ─── Form-wide styles ──────────────────────────────────────────────────
+   From form/form/style.module.scss. Applied to any <form> element. */
+form label {
+  font-weight: 600 !important;
+}
+
+form [class*='awsui_button-trigger'] {
+  min-height: 36px !important;
+}
+
+form [class*='awsui_button-trigger'] span[class*='awsui_icon'] {
+  color: #41D9CC !important;
+}
+
+form span[class*='awsui_placeholder'],
+form ::placeholder {
+  font-style: normal !important;
+}
+
+/* ─── Select / Multiselect button-trigger border ────────────────────────
+   From form/select/style.module.scss + form/multi-select/style.module.scss */
+[class*='awsui_button-trigger'] {
+  border-width: 1.5px !important;
+}
+
+/* ─── Multiselect token (chip) styling ──────────────────────────────────
+   From form/multi-select/style.module.scss */
+[class*='awsui_tokens_'] [class*='awsui_token-box'] {
+  background: #E8E8EC !important;
+  border: none !important;
+  border-radius: 17px !important;
+}
+
+[class*='awsui_tokens_'] [class*='awsui_token-box'] [class*='awsui_label'] {
+  color: #14143A;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* ─── Group-header (parent option) styling ──────────────────────────────
+   From form/multi-select/style.module.scss
+   Headers like "Recents" / "Users" — bold navy text */
+[class*='awsui_dropdown-content'] [class*='awsui_parent'] [class*='awsui_label'] {
+  color: #14143A;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* ─── People picker dropdown overrides ──────────────────────────────────
+   From controlled-group-and-user-multi-select/style.module.scss */
+
+/* 1. Hide checkboxes on group-header rows */
+[class*='awsui_dropdown-content'] [class*='awsui_parent'] [class*='awsui_checkbox'] {
+  display: none;
+}
+
+/* 2. Style tag labels (the role badge) */
+[class*='awsui_dropdown-content'] [class*='awsui_label-tag'] {
+  color: #8f8fac !important;
+  font-weight: 400 !important;
+  font-size: 12px !important;
+}
+
+/* 3. Stack tags vertically instead of inline */
+[class*='awsui_dropdown-content'] [class*='awsui_tags'] {
+  flex-direction: column;
+}
+
+/* 4. Vertically center the option icon next to the name */
+[class*='awsui_dropdown-content'] [class*='awsui_option'] {
+  align-items: center !important;
+}

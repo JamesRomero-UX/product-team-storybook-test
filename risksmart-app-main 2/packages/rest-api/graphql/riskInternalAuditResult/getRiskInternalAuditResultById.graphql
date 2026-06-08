@@ -1,0 +1,31 @@
+query getControlledRiskInternalAuditResultById($Id: uuid) {
+  risk_controlled_internal_audit_result(where: { Id: { _eq: $Id } }) {
+    Id
+    Impact
+    Likelihood
+    Rating
+    TestDate
+    parents {
+      ParentType
+      risk {
+        Id
+      }
+    }
+  }
+}
+
+query getUncontrolledRiskInternalAuditResultById($Id: uuid) {
+  risk_uncontrolled_internal_audit_result(where: { Id: { _eq: $Id } }) {
+    Id
+    Impact
+    Likelihood
+    Rating
+    TestDate
+    parents {
+      ParentType
+      risk {
+        Id
+      }
+    }
+  }
+}

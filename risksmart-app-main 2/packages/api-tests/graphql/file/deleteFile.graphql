@@ -1,0 +1,5 @@
+mutation deleteFile($Id: uuid!) {
+  delete_file(where: { Id: { _eq: $Id } }) {
+    affected_rows
+  }
+}

@@ -1,0 +1,7 @@
+mutation DeleteObligationChangeAttestation(
+  $object: DeleteChildObligationChangeAttestationInput!
+) {
+  deleteChildObligationChangeAttestation(object: $object) {
+    Id
+  }
+}

@@ -1,0 +1,9 @@
+query getAllIssueUpdateSummaries {
+  issue_update_summary {
+    IssueId
+    LatestDescription
+    LatestTitle
+    Count
+    LatestCreatedAtTimestamp
+  }
+}

@@ -1,0 +1,7 @@
+mutation insertIngestionConfig(
+  $object: InsertIngestionConfigInput!
+) {
+  insertChildIngestionConfig(object: $object) {
+    Id
+  }
+}

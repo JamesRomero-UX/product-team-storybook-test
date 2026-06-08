@@ -1,0 +1,1 @@
+CREATE INDEX "idx_risk_uncontrolled_internal_audit_result_orgkey" on risksmart.risk_uncontrolled_internal_audit_result("OrgKey");

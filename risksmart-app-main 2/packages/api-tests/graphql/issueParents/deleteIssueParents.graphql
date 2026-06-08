@@ -1,0 +1,5 @@
+mutation deleteIssueParents($issueId: uuid!) {
+  delete_issue_parent(where: { IssueId: { _eq: $issueId } }) {
+    affected_rows
+  }
+}

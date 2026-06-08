@@ -1,0 +1,27 @@
+query getGlobalApprovals($global: Boolean = true, $parentId: uuid) {
+  approval(
+    where: {
+      _or: [
+        {
+          _and: [
+            { ParentId: { _is_null: $global } }
+            { _not: { Workflow: { _is_null: $global } } }
+          ]
+        }
+        { ParentId: { _eq: $parentId } }
+      ]
+    }
+  ) {
+    Id
+    Workflow
+    ModifiedAtTimestamp
+    CreatedAtTimestamp
+    createdBy {
+      Id
+      FriendlyName
+    }
+    levels(order_by: { SequenceOrder: asc }) {
+      Id
+    }
+  }
+}

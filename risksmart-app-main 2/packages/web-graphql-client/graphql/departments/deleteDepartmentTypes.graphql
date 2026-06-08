@@ -1,0 +1,5 @@
+mutation deleteDepartmentTypes($Ids: [uuid!]!) {
+  deleteDepartmentTypeApi(Ids: $Ids) {
+    affected_rows
+  }
+}

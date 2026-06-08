@@ -1,0 +1,17 @@
+mutation InsertUserGroup(
+  $Name: String!
+  $Email: String
+  $Description: String
+  $OwnerContributor: Boolean
+) {
+  insert_user_group_one(
+    object: {
+      Name: $Name
+      Email: $Email
+      Description: $Description
+      OwnerContributor: $OwnerContributor
+    }
+  ) {
+    Id
+  }
+}

@@ -1,0 +1,49 @@
+.hideTools {
+  aside[data-testid='side-split-panel-drawer'] {
+    visibility: hidden !important;
+  }
+}
+
+.rsContent {
+  [class*='awsui-context-content-header'] {
+    @apply relative;
+    @apply border-grey250  #{!important};
+    border-bottom: 1px solid;
+  }
+}
+
+.layout {
+  [class*='awsui_mobile-toolbar'] {
+    display: none !important;
+  }
+}
+
+.chatOverlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 400px;
+  height: 100vh;
+  z-index: 1000;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.15);
+}
+
+.sidePanelClosed {
+  --side-panel-width: 0;
+}
+
+.sidePanelStandard {
+  --side-panel-width: 400px;
+}
+
+.sidePanelWide {
+  --side-panel-width: 500px;
+}
+
+.navigationCollapsed {
+  --navigation-width: 68px;
+}
+
+.sidePanel {
+  grid-template-columns: var(--navigation-width, 300px) auto var(--side-panel-width, 0);
+}

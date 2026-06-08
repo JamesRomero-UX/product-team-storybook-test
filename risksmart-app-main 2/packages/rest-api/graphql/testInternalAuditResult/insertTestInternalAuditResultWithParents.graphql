@@ -1,0 +1,10 @@
+mutation insertTestInternalAuditResultsWithParents(
+  $results: [control_test_internal_audit_result_insert_input!]!
+) {
+  insert_control_test_internal_audit_result(objects: $results) {
+    affected_rows
+    returning {
+      Id
+    }
+  }
+}

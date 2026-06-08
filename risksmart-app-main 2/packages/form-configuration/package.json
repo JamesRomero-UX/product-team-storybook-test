@@ -1,0 +1,33 @@
+{
+  "name": "@risksmart-app/form-configuration",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "tsc": "tsc --noEmit",
+    "build": "tsup",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix",
+    "test:unit": "vitest --run",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@risksmart-app/domain": "workspace:*",
+    "zod": "catalog:",
+    "@jsonforms/core": "catalog:",
+    "lodash": "catalog:",
+    "sanitize-html": "catalog:"
+  },
+  "devDependencies": {
+    "@risksmart-app/eslint-config": "workspace:*",
+    "@tsconfig/node22": "catalog:",
+    "@types/node": "catalog:",
+    "esbuild-plugin-file-path-extensions": "catalog:",
+    "eslint": "catalog:",
+    "eslint-import-resolver-typescript": "catalog:",
+    "eslint-plugin-import": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

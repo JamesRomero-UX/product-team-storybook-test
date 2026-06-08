@@ -1,0 +1,5 @@
+mutation deleteFormField($object: DeleteFormFieldInput!) {
+  deleteFormField(object: $object) {
+    Id
+  }
+}

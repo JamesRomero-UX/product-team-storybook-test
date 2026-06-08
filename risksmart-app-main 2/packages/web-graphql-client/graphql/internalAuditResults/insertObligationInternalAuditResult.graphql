@@ -1,0 +1,19 @@
+mutation insertObligationInternalAuditResult(
+  $Rating: Int
+  $InternalAuditReportId: uuid!
+  $ObligationIds: [uuid!]!
+  $CustomAttributeData: jsonb
+  $TestDate: timestamptz
+  $Rationale: String
+) {
+  insertChildObligationInternalAuditResult(
+    Rating: $Rating
+    InternalAuditReportId: $InternalAuditReportId
+    ObligationIds: $ObligationIds
+    CustomAttributeData: $CustomAttributeData
+    TestDate: $TestDate
+    Rationale: $Rationale
+  ) {
+    Ids
+  }
+}

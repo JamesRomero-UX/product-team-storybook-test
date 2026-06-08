@@ -1,0 +1,17 @@
+table:
+  name: relation_file_audit
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: relation_file_audit
+  custom_root_fields: {}
+select_permissions:
+  - role: read:audit
+    permission:
+      columns:
+        - FileId
+        - ParentId
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id

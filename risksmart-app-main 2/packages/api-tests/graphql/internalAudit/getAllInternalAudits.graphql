@@ -1,0 +1,17 @@
+query getAllInternalAudits {
+  internal_audit_entity {
+    Id
+    SequentialId
+    Title
+    Description
+    CreatedByUser
+    ModifiedByUser
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    CustomAttributeData
+    businessArea {
+      Title
+      Id
+    }
+  }
+}

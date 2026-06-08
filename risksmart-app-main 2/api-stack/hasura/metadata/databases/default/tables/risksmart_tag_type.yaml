@@ -1,0 +1,104 @@
+table:
+  name: tag_type
+  schema: risksmart
+configuration:
+  column_config:
+    Id:
+      custom_name: TagTypeId
+  custom_column_names:
+    Id: TagTypeId
+  custom_name: tag_type
+  custom_root_fields: {}
+object_relationships:
+  - name: createdByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          CreatedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: modifiedByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          ModifiedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: organisation
+    using:
+      foreign_key_constraint_on: OrgKey
+  - name: tag_type_group
+    using:
+      foreign_key_constraint_on: TagTypeGroupId
+insert_permissions:
+  - role: insert:tag-type
+    permission:
+      check:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - _or:
+              - TagTypeGroupId:
+                  _is_null: true
+              - tag_type_group:
+                  OrgKey:
+                    _eq: X-Hasura-org-id
+      set:
+        CreatedByUser: x-hasura-User-Id
+        ModifiedByUser: x-hasura-User-Id
+        OrgKey: x-hasura-Org-Id
+      columns:
+        - Description
+        - Name
+        - TagTypeGroupId
+    comment: ""
+select_permissions:
+  - role: read:tag-type
+    permission:
+      columns:
+        - Id
+        - ModifiedAtTimestamp
+        - Name
+        - Description
+        - ModifiedByUser
+        - CreatedByUser
+        - CreatedAtTimestamp
+        - TagTypeGroupId
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+update_permissions:
+  - role: update:tag-type
+    permission:
+      columns:
+        - Description
+        - Name
+        - TagTypeGroupId
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      check:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - _or:
+              - TagTypeGroupId:
+                  _is_null: true
+              - tag_type_group:
+                  OrgKey:
+                    _eq: X-Hasura-org-id
+      set:
+        ModifiedAtTimestamp: now()
+        ModifiedByUser: x-hasura-User-Id
+    comment: ""
+delete_permissions:
+  - role: delete:tag-type
+    permission:
+      backend_only: true
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id

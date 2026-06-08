@@ -1,0 +1,5 @@
+mutation insertTaxonomy($objects: [taxonomy_insert_input!]!) {
+  insert_taxonomy(objects: $objects) {
+    affected_rows
+  }
+}

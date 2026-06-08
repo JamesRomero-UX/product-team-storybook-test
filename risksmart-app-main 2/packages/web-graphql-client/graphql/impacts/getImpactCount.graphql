@@ -1,0 +1,7 @@
+query getImpactCount {
+  impact_aggregate {
+    aggregate {
+      count
+    }
+  }
+}

@@ -1,0 +1,25 @@
+mutation updateCause(
+  $Id: uuid
+  $Title: String
+  $Description: String
+  $Significance: Int
+  $ParentIssueId: uuid
+  $OriginalTimestamp: timestamptz
+  $CustomAttributeData: jsonb
+) {
+  update_cause(
+    _set: {
+      Description: $Description
+      ParentIssueId: $ParentIssueId
+      Significance: $Significance
+      Title: $Title
+      CustomAttributeData: $CustomAttributeData
+    }
+    where: {
+      ModifiedAtTimestamp: { _eq: $OriginalTimestamp }
+      Id: { _eq: $Id }
+    }
+  ) {
+    affected_rows
+  }
+}

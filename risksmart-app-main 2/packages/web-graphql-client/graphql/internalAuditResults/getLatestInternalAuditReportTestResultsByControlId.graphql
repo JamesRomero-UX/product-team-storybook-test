@@ -1,0 +1,23 @@
+query getLatestInternalAuditReportTestResultsByControlId($controlId: uuid) {
+  control_test_internal_audit_result(
+    where: { ParentControlId: { _eq: $controlId } }
+    order_by: [{ TestDate: desc_nulls_last }, { CreatedAtTimestamp: desc }]
+    limit: 1
+  ) {
+    ...ControlTestInternalAuditResultParts
+    submitter {
+      FriendlyName
+    }
+    files {
+      ...RelationFileParts
+    }
+    parents(where: { ParentType: { _eq: internal_audit_report } }) {
+      internalAuditReport {
+        ...InternalAuditReportParts
+        completedByUser {
+          FriendlyName
+        }
+      }
+    }
+  }
+}

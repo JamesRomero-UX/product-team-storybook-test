@@ -1,0 +1,12 @@
+query getObligations {
+  obligation(order_by: { Title: asc }) {
+    Adherence
+    Description
+    Id
+    Interpretation
+    ParentId
+    Title
+    Type
+    CustomAttributeData
+  }
+}

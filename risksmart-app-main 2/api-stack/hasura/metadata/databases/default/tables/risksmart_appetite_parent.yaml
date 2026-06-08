@@ -1,0 +1,177 @@
+table:
+  name: appetite_parent
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: appetite_parent
+  custom_root_fields: {}
+object_relationships:
+  - name: createdByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          CreatedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: appetite
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: Id
+        insertion_order: null
+        remote_table:
+          name: appetite
+          schema: risksmart
+  - name: modifiedByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          ModifiedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: organisation
+    using:
+      foreign_key_constraint_on: OrgKey
+  - name: parent
+    using:
+      manual_configuration:
+        column_mapping:
+          ParentId: Id
+        insertion_order: null
+        remote_table:
+          name: node
+          schema: risksmart
+  - name: risk
+    using:
+      manual_configuration:
+        column_mapping:
+          ParentId: Id
+        insertion_order: null
+        remote_table:
+          name: risk
+          schema: risksmart
+insert_permissions:
+  - role: Standard
+    permission:
+      check:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - appetite:
+              OrgKey:
+                _eq: X-Hasura-org-id
+          - parent:
+              OrgKey:
+                _eq: X-Hasura-org-id
+      set:
+        CreatedByUser: x-hasura-user-id
+        ModifiedByUser: x-hasura-user-id
+        OrgKey: x-hasura-org-id
+      columns:
+        - ParentId
+        - Id
+      backend_only: true
+  - role: insert:appetite-parent
+    permission:
+      check:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - appetite:
+              OrgKey:
+                _eq: X-Hasura-org-id
+          - parent:
+              OrgKey:
+                _eq: X-Hasura-org-id
+      backend_only: true
+      set:
+        CreatedByUser: x-hasura-user-id
+        ModifiedByUser: x-hasura-user-id
+        OrgKey: x-hasura-org-id
+      columns:
+        - ParentId
+        - Id
+select_permissions:
+  - role: Standard
+    permission:
+      columns:
+        - ParentId
+        - Id
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - CreatedByUser
+        - CreatedAtTimestamp
+        - Status
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - parent:
+              permissions:
+                _and:
+                  - UserId:
+                      _eq: X-Hasura-User-Id
+                  - OrgKey:
+                      _eq: X-Hasura-org-Id
+                  - AccessType:
+                      _eq: read
+      allow_aggregations: true
+  - role: read:appetite-parent
+    permission:
+      columns:
+        - ParentId
+        - Id
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - CreatedByUser
+        - CreatedAtTimestamp
+        - Status
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      allow_aggregations: true
+delete_permissions:
+  - role: Standard
+    permission:
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - parent:
+              permissions:
+                _and:
+                  - UserId:
+                      _eq: X-Hasura-User-Id
+                  - OrgKey:
+                      _eq: X-Hasura-org-Id
+                  - AccessType:
+                      _eq: update
+      allow_aggregations: true
+  - role: delete:appetite-parent
+    permission:
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+event_triggers:
+  - name: appetite_parent
+    definition:
+      delete:
+        columns: '*'
+      enable_manual: true
+      insert:
+        columns: '*'
+      update:
+        columns: '*'
+    retry_conf:
+      interval_sec: 10
+      num_retries: 3
+      timeout_sec: 60
+    webhook: https://{{REST_API_DOMAIN}}/events
+    headers:
+      - name: RestApiKey
+        value_from_env: REST_API_KEY

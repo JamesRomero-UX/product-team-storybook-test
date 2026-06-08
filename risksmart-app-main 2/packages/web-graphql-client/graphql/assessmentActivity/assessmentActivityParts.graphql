@@ -1,0 +1,38 @@
+fragment AssessmentActivityParts on assessment_activity {
+  Title
+  Id
+  ParentId
+  Summary
+  Status
+  ActivityType
+  CompletionDate
+  AssignedUser
+  CreatedByUser
+  CreatedAtTimestamp
+  ModifiedByUser
+  ModifiedAtTimestamp
+  CustomAttributeData
+  ownerGroups {
+    UserGroupId
+    group {
+      Name
+      users{
+        UserId
+      }
+    }
+  }
+  owners {
+    UserId
+    user {
+      FriendlyName
+    }
+  }
+  createdByUser {
+    FriendlyName
+  }
+  modifiedByUser {
+    FriendlyName
+  }
+  IsRCSA
+  RiskId
+}

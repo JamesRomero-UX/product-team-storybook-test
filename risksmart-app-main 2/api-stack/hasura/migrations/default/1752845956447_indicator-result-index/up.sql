@@ -1,0 +1,1 @@
+create index "idx_indicator_result_indicatorid_resultdate" on risksmart.indicator_result ("IndicatorId", "ResultDate" desc);

@@ -1,0 +1,5 @@
+mutation deleteRisk($Id: uuid!) {
+  deleteRiskById(Id: $Id) {
+    affected_rows
+  }
+}

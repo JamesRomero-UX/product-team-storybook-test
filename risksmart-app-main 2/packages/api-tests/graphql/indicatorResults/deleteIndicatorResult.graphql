@@ -1,0 +1,5 @@
+mutation deleteIndicatorResult($Id: uuid!) {
+  delete_indicator_result(where: { Id: { _eq: $Id } }) {
+    affected_rows
+  }
+}

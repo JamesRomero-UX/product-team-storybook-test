@@ -1,0 +1,9 @@
+query getIssueById($Id: uuid!) {
+  issue_by_pk(Id: $Id) {
+    Title
+    SequentialId
+    Id
+    OrgKey
+    Type
+  }
+}

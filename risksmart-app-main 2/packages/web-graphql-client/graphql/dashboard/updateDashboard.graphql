@@ -1,0 +1,21 @@
+mutation updateDashboard(
+  $Id: uuid!
+  $Name: String!
+  $Description: String
+  $Sharing: dashboard_sharing_type_enum_action!
+  $Content: jsonb!
+  $ContributorUserIds: [String!]!
+  $ContributorGroupIds: [uuid!]!
+) {
+  updateChildDashboard(
+    Id: $Id
+    Content: $Content
+    Description: $Description
+    Name: $Name
+    Sharing: $Sharing
+    ContributorUserIds: $ContributorUserIds
+    ContributorGroupIds: $ContributorGroupIds
+  ) {
+    Id
+  }
+}

@@ -1,0 +1,351 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2025-07-31T13:45:00.000Z",
+  "__export_source": "insomnia.desktop.app:v8.6.1",
+  "resources": [
+    {
+      "_id": "wrk_socketio_chat_agent",
+      "_type": "workspace",
+      "name": "RiskSmart Socket.IO Chat Agent",
+      "description": "Testing collection for Socket.IO chat agent implementation with authentication, real-time messaging, and room management",
+      "scope": "collection"
+    },
+    {
+      "_id": "env_base",
+      "_type": "environment",
+      "name": "Base Environment",
+      "data": {
+        "BASE_URL": "http://localhost:8427",
+        "SOCKETIO_URL": "ws://localhost:8427",
+        "AUTH_TOKEN": "your_jwt_token_here",
+        "SESSION_ID": "test-session-123",
+        "USER_ID": "test-user-456"
+      },
+      "parentId": "wrk_socketio_chat_agent"
+    },
+    {
+      "_id": "fld_rest_api",
+      "_type": "request_group",
+      "name": "REST API Endpoints",
+      "description": "Standard HTTP endpoints for health checks and service information",
+      "parentId": "wrk_socketio_chat_agent"
+    },
+    {
+      "_id": "fld_socketio_events",
+      "_type": "request_group",
+      "name": "Socket.IO Events",
+      "description": "Socket.IO event testing using WebSocket connections",
+      "parentId": "wrk_socketio_chat_agent"
+    },
+    {
+      "_id": "fld_auth_tests",
+      "_type": "request_group",
+      "name": "Authentication Tests",
+      "description": "Testing authentication scenarios and error cases",
+      "parentId": "wrk_socketio_chat_agent"
+    },
+    {
+      "_id": "req_health_check",
+      "_type": "request",
+      "name": "Health Check",
+      "description": "Basic health check endpoint",
+      "url": "{{ _.BASE_URL }}/ai-engine/chat-agent/health",
+      "method": "GET",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parentId": "fld_rest_api"
+    },
+    {
+      "_id": "req_health_detailed",
+      "_type": "request",
+      "name": "Detailed Health Check",
+      "description": "Detailed health check for Socket.IO service",
+      "url": "{{ _.BASE_URL }}/ai-engine/chat-agent/health/detailed",
+      "method": "GET",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parentId": "fld_rest_api"
+    },
+    {
+      "_id": "req_openapi_docs",
+      "_type": "request",
+      "name": "OpenAPI Documentation",
+      "description": "Get OpenAPI schema",
+      "url": "{{ _.BASE_URL }}/ai-engine/chat-agent/openapi.json",
+      "method": "GET",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "parentId": "fld_rest_api"
+    },
+    {
+      "_id": "ws_socketio_basic",
+      "_type": "websocket_request",
+      "name": "Socket.IO Connection (Basic)",
+      "description": "Basic Socket.IO connection with authentication via query parameter",
+      "url": "{{ _.SOCKETIO_URL }}/socket.io/?transport=websocket&token={{ _.AUTH_TOKEN }}&EIO=4",
+      "headers": [],
+      "parentId": "fld_socketio_events"
+    },
+    {
+      "_id": "ws_socketio_polling",
+      "_type": "websocket_request",
+      "name": "Socket.IO Connection (Polling First)",
+      "description": "Socket.IO connection starting with polling transport",
+      "url": "{{ _.SOCKETIO_URL }}/socket.io/?transport=polling&token={{ _.AUTH_TOKEN }}&EIO=4",
+      "headers": [],
+      "parentId": "fld_socketio_events"
+    },
+    {
+      "_id": "ws_socketio_v3",
+      "_type": "websocket_request",
+      "name": "Socket.IO Connection (Protocol v3)",
+      "description": "Socket.IO connection with Engine.IO v3 protocol",
+      "url": "{{ _.SOCKETIO_URL }}/socket.io/?transport=websocket&token={{ _.AUTH_TOKEN }}&EIO=3",
+      "headers": [],
+      "parentId": "fld_socketio_events"
+    },
+    {
+      "_id": "ws_socketio_header_auth",
+      "_type": "websocket_request",
+      "name": "Socket.IO Connection (Header Auth)",
+      "description": "Socket.IO connection with authentication via custom header",
+      "url": "{{ _.SOCKETIO_URL }}/socket.io/?transport=websocket&EIO=4",
+      "headers": [
+        {
+          "name": "X-SocketIO-Auth",
+          "value": "{{ _.AUTH_TOKEN }}"
+        }
+      ],
+      "parentId": "fld_socketio_events"
+    },
+    {
+      "_id": "ws_socketio_bearer_auth",
+      "_type": "websocket_request",
+      "name": "Socket.IO Connection (Bearer Auth)",
+      "description": "Socket.IO connection with Bearer token authentication",
+      "url": "{{ _.SOCKETIO_URL }}/socket.io/?transport=websocket&EIO=4",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.AUTH_TOKEN }}"
+        }
+      ],
+      "parentId": "fld_socketio_events"
+    },
+    {
+      "_id": "ws_socketio_no_auth",
+      "_type": "websocket_request",
+      "name": "Socket.IO Connection (No Auth)",
+      "description": "Socket.IO connection without authentication - should fail",
+      "url": "{{ _.SOCKETIO_URL }}/socket.io/?transport=websocket",
+      "headers": [],
+      "parentId": "fld_auth_tests"
+    },
+    {
+      "_id": "ws_socketio_invalid_token",
+      "_type": "websocket_request",
+      "name": "Socket.IO Connection (Invalid Token)",
+      "description": "Socket.IO connection with invalid token - should fail",
+      "url": "{{ _.SOCKETIO_URL }}/socket.io/?transport=websocket&token=invalid_token_here",
+      "headers": [],
+      "parentId": "fld_auth_tests"
+    }
+  ],
+  "socketio_events": {
+    "join_conversation": {
+      "event": "join_conversation",
+      "description": "Join a conversation room",
+      "data": {
+        "session_id": "{{ _.SESSION_ID }}",
+        "user_id": "{{ _.USER_ID }}",
+        "context": {
+          "source": "insomnia_test",
+          "timestamp": "2025-07-31T13:45:00Z"
+        }
+      }
+    },
+    "send_message": {
+      "event": "send_message",
+      "description": "Send a message to the AI agent",
+      "data": {
+        "session_id": "{{ _.SESSION_ID }}",
+        "message": {
+          "role": "user",
+          "content": "Hello, can you help me with a question about risk management?",
+          "timestamp": "2025-07-31T13:45:00Z",
+          "metadata": {
+            "source": "insomnia_test"
+          }
+        },
+        "context": {
+          "conversation_history": [],
+          "user_preferences": {}
+        }
+      }
+    },
+    "typing_start": {
+      "event": "typing_start",
+      "description": "Indicate user started typing",
+      "data": {
+        "session_id": "{{ _.SESSION_ID }}",
+        "user_id": "{{ _.USER_ID }}"
+      }
+    },
+    "typing_stop": {
+      "event": "typing_stop",
+      "description": "Indicate user stopped typing",
+      "data": {
+        "session_id": "{{ _.SESSION_ID }}",
+        "user_id": "{{ _.USER_ID }}"
+      }
+    },
+    "leave_conversation": {
+      "event": "leave_conversation",
+      "description": "Leave the conversation room",
+      "data": {
+        "session_id": "{{ _.SESSION_ID }}",
+        "user_id": "{{ _.USER_ID }}"
+      }
+    }
+  },
+  "expected_responses": {
+    "connection_established": {
+      "event": "connection_established",
+      "description": "Server confirms connection is established",
+      "example_data": {
+        "connection_id": "socket_id_123",
+        "user_id": "test-user-456",
+        "server_timestamp": "2025-07-31T13:45:00Z",
+        "server_info": {
+          "version": "1.0.0",
+          "features": ["real_time_chat", "streaming_responses"],
+          "node_type": "single_node"
+        }
+      }
+    },
+    "conversation_joined": {
+      "event": "conversation_joined",
+      "description": "Confirms user joined conversation room",
+      "example_data": {
+        "session_id": "test-session-123",
+        "user_id": "test-user-456",
+        "room_id": "test-session-123",
+        "participants": ["test-user-456"],
+        "timestamp": "2025-07-31T13:45:00Z"
+      }
+    },
+    "message_chunk": {
+      "event": "message_chunk",
+      "description": "Streaming message chunks from AI agent",
+      "example_data": {
+        "session_id": "test-session-123",
+        "chunk_id": "chunk_001",
+        "content": "Hello! I'd be happy to help you with risk management questions.",
+        "chunk_index": 0,
+        "is_final": false,
+        "metadata": {
+          "model": "gpt-4",
+          "processing_time_ms": 150
+        }
+      }
+    },
+    "message_complete": {
+      "event": "message_complete",
+      "description": "Complete AI response message",
+      "example_data": {
+        "session_id": "test-session-123",
+        "message": {
+          "role": "assistant",
+          "content": "Hello! I'd be happy to help you with risk management questions. What specific area would you like to explore?",
+          "timestamp": "2025-07-31T13:45:00Z",
+          "metadata": {
+            "model": "gpt-4",
+            "total_tokens": 45
+          }
+        },
+        "response_id": "resp_123",
+        "total_chunks": 3,
+        "metadata": {
+          "processing_time_ms": 1500,
+          "model": "gpt-4"
+        }
+      }
+    },
+    "user_typing": {
+      "event": "user_typing",
+      "description": "Another user is typing",
+      "example_data": {
+        "session_id": "test-session-123",
+        "user_id": "other-user-789",
+        "username": "John Doe",
+        "timestamp": "2025-07-31T13:45:00Z"
+      }
+    },
+    "error": {
+      "event": "error",
+      "description": "Error response from server",
+      "example_data": {
+        "error": "Authentication required",
+        "error_code": "AUTH_REQUIRED",
+        "session_id": null,
+        "details": {
+          "required_permission": "AIE_CHAT"
+        },
+        "timestamp": "2025-07-31T13:45:00Z"
+      }
+    }
+  },
+  "testing_instructions": {
+    "setup": [
+      "1. Update the AUTH_TOKEN environment variable with a valid JWT token from your Auth0 system",
+      "2. Ensure the chat agent is running on localhost:8427",
+      "3. The JWT token must include the 'AIE_CHAT' feature in x-hasura-features claim"
+    ],
+    "test_flow": [
+      "1. Start with REST API health check to verify service is running",
+      "2. Test Socket.IO connection with authentication",
+      "3. Send join_conversation event",
+      "4. Send send_message event and observe streaming responses",
+      "5. Test typing indicators",
+      "6. Test leaving conversation",
+      "7. Test authentication failures with invalid tokens"
+    ],
+    "expected_events": [
+      "connection_established - immediately after successful connection",
+      "conversation_joined - after sending join_conversation",
+      "message_chunk - multiple chunks during AI response streaming",
+      "message_complete - final complete message after streaming",
+      "user_typing - when other users are typing",
+      "error - for authentication or validation failures"
+    ]
+  },
+  "jwt_token_structure": {
+    "description": "Your JWT token should contain these claims for successful authentication",
+    "required_claims": {
+      "sub": "auth0|user_id_here",
+      "aud": "your_auth0_audience",
+      "iss": "https://your-domain.auth0.com/",
+      "exp": 1234567890,
+      "iat": 1234567890,
+      "x-hasura-features": ["AIE_CHAT"],
+      "x-hasura-allowed-roles": ["user"],
+      "x-hasura-default-role": "user",
+      "name": "Test User",
+      "email": "test@example.com"
+    },
+    "note": "The x-hasura-features must include 'AIE_CHAT' for chat access"
+  }
+}

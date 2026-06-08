@@ -1,0 +1,6 @@
+fragment ContributorGroupParts on contributor_group {
+  UserGroupId
+  group {
+    Name
+  }
+}

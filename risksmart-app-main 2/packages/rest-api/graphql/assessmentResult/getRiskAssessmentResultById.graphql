@@ -1,0 +1,17 @@
+query getRiskAssessmentResultById($Id: uuid) {
+  risk_assessment_result(where: { Id: { _eq: $Id } }) {
+    Id
+    Impact
+    Likelihood
+    Rating
+    ControlType
+    TestDate
+    RatingType
+    parents {
+      ParentType
+      risk {
+        Id
+      }
+    }
+  }
+}

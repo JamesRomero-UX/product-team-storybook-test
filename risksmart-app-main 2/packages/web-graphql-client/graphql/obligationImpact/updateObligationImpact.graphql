@@ -1,0 +1,17 @@
+mutation updateObligationImpact(
+  $id: uuid!
+  $ImpactRating: smallint!
+  $Description: String!
+  $CustomAttributeData: jsonb
+) {
+  update_obligation_impact(
+    where: { Id: { _eq: $id } }
+    _set: {
+      Description: $Description
+      ImpactRating: $ImpactRating
+      CustomAttributeData: $CustomAttributeData
+    }
+  ) {
+    affected_rows
+  }
+}

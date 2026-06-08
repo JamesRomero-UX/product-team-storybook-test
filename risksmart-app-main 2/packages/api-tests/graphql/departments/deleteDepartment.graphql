@@ -1,0 +1,5 @@
+mutation deleteDepartment($parentId: uuid!) {
+  delete_department(where: { ParentId: { _eq: $parentId } }) {
+    affected_rows
+  }
+}

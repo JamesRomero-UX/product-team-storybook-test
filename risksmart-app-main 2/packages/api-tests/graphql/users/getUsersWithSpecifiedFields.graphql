@@ -1,0 +1,55 @@
+query getUsersWithSpecifiedFields(
+  $Id: Boolean = false
+  $FirstName: Boolean = false
+  $LastName: Boolean = false
+  $FriendlyName: Boolean = false
+  $Email: Boolean = false
+  $RoleKey: Boolean = false
+  $Status: Boolean = false
+  $CreatedOn: Boolean = false
+  $LastSeen: Boolean = false
+  $DisplayName: Boolean = false
+  $JobTitle: Boolean = false
+  $Department: Boolean = false
+  $OfficeLocation: Boolean = false
+  $CreatedByUser: Boolean = false
+  $ModifiedByUser: Boolean = false
+  $ModifiedAtTimestamp: Boolean = false
+  $organisationusers: Boolean = false
+  $userRoles: Boolean = false
+  $userGroups: Boolean = false
+  $IsCustomerSupport: Boolean = false
+) {
+  auth_user {
+    Id @include(if: $Id)
+    FirstName @include(if: $FirstName)
+    LastName @include(if: $LastName)
+    FriendlyName @include(if: $FriendlyName)
+    Email @include(if: $Email)
+    RoleKey @include(if: $RoleKey)
+    Status @include(if: $Status)
+    CreatedOn @include(if: $CreatedOn)
+    LastSeen @include(if: $LastSeen)
+    DisplayName @include(if: $DisplayName)
+    JobTitle @include(if: $JobTitle)
+    Department @include(if: $Department)
+    OfficeLocation @include(if: $OfficeLocation)
+    CreatedByUser @include(if: $CreatedByUser)
+    ModifiedByUser @include(if: $ModifiedByUser)
+    ModifiedAtTimestamp @include(if: $ModifiedAtTimestamp)
+    organisationusers @include(if: $organisationusers) {
+      RoleKey
+      LastSeen
+    }
+    userGroupUsers {
+      userGroups @include(if: $userGroups) {
+        Id
+        Name
+      }
+    }
+    userRoles @include(if: $userRoles) {
+      RoleKey
+    }
+    IsCustomerSupport @include(if: $IsCustomerSupport)
+  }
+}

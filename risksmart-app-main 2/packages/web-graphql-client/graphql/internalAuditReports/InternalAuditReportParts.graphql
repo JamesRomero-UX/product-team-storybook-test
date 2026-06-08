@@ -1,0 +1,19 @@
+fragment InternalAuditReportParts on internal_audit_report {
+  ActualCompletionDate
+  CompletedByUser
+  CreatedAtTimestamp
+  CreatedByUser
+  CustomAttributeData
+  Id
+  ModifiedAtTimestamp
+  ModifiedByUser
+  NextTestDate
+  OriginatingItemId
+  SequentialId
+  StartDate
+  Summary
+  TargetCompletionDate
+  Title
+  Status
+  Outcome
+}

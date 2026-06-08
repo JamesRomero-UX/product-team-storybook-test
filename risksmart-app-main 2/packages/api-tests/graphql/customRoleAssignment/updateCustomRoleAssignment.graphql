@@ -1,0 +1,8 @@
+mutation updateCustomRoleAssignment(
+  $filter: custom_role_assignment_bool_exp!
+  $updateInput: custom_role_assignment_set_input!
+) {
+  update_custom_role_assignment(where: $filter, _set: $updateInput) {
+    affected_rows
+  }
+}

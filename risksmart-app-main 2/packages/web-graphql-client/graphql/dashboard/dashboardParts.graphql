@@ -1,0 +1,8 @@
+fragment DashboardParts on dashboard {
+  Id
+  Name
+  Description
+  Sharing
+  Content
+  CreatedByUser
+}

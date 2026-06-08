@@ -1,0 +1,571 @@
+table:
+  name: linked_item
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: linked_item
+  custom_root_fields: {}
+object_relationships:
+  - name: source_node
+    using:
+      manual_configuration:
+        column_mapping:
+          Source: Id
+        insertion_order: null
+        remote_table:
+          name: node
+          schema: risksmart
+  - name: source_acceptance
+    using:
+      manual_configuration:
+        column_mapping:
+          Source: Id
+        insertion_order: null
+        remote_table:
+          name: acceptance
+          schema: risksmart
+  - name: source_action
+    using:
+      manual_configuration:
+        column_mapping:
+          Source: Id
+        insertion_order: null
+        remote_table:
+          name: action
+          schema: risksmart
+  - name: source_appetite
+    using:
+      manual_configuration:
+        column_mapping:
+          Source: Id
+        insertion_order: null
+        remote_table:
+          name: appetite
+          schema: risksmart
+  - name: source_assessment
+    using:
+      manual_configuration:
+        column_mapping:
+          Source: Id
+        insertion_order: null
+        remote_table:
+          name: assessment
+          schema: risksmart
+  - name: source_assessment_activity
+    using:
+      manual_configuration:
+        column_mapping:
+          Source: Id
+        insertion_order: null
+        remote_table:
+          name: assessment_activity
+          schema: risksmart
+  - name: source_cause
+    using:
+      manual_configuration:
+        column_mapping:
+          Source: Id
+        insertion_order: null
+        remote_table:
+          name: cause
+          schema: risksmart
+  - name: source_consequence
+    using:
+      manual_configuration:
+        column_mapping:
+          Source: Id
+        insertion_order: null
+        remote_table:
+          name: consequence
+          schema: risksmart
+  - name: source_control
+    using:
+      manual_configuration:
+        column_mapping:
+          Source: Id
+        insertion_order: null
+        remote_table:
+          name: control
+          schema: risksmart
+  - name: source_control_group
+    using:
+      manual_configuration:
+        column_mapping:
+          Source: Id
+        insertion_order: null
+        remote_table:
+          name: control_group
+          schema: risksmart
+  - name: source_document
+    using:
+      manual_configuration:
+        column_mapping:
+          Source: Id
+        insertion_order: null
+        remote_table:
+          name: document
+          schema: risksmart
+  - name: source_impact
+    using:
+      manual_configuration:
+        column_mapping:
+          Source: Id
+        insertion_order: null
+        remote_table:
+          name: impact
+          schema: risksmart
+  - name: source_indicator
+    using:
+      manual_configuration:
+        column_mapping:
+          Source: Id
+        insertion_order: null
+        remote_table:
+          name: indicator
+          schema: risksmart
+  - name: source_issue
+    using:
+      manual_configuration:
+        column_mapping:
+          Source: Id
+        insertion_order: null
+        remote_table:
+          name: issue
+          schema: risksmart
+  - name: source_obligation
+    using:
+      manual_configuration:
+        column_mapping:
+          Source: Id
+        insertion_order: null
+        remote_table:
+          name: obligation
+          schema: risksmart
+  - name: source_obligation_change
+    using:
+      manual_configuration:
+        column_mapping:
+          Source: Id
+        insertion_order: null
+        remote_table:
+          name: obligation_change
+          schema: risksmart
+  - name: source_risk
+    using:
+      manual_configuration:
+        column_mapping:
+          Source: Id
+        insertion_order: null
+        remote_table:
+          name: risk
+          schema: risksmart
+  - name: source_internal_audit_entity
+    using:
+      manual_configuration:
+        column_mapping:
+          Source: Id
+        insertion_order: null
+        remote_table:
+          name: internal_audit_entity
+          schema: risksmart
+  - name: source_internal_audit_report
+    using:
+      manual_configuration:
+        column_mapping:
+          Source: Id
+        insertion_order: null
+        remote_table:
+          name: internal_audit_report
+          schema: risksmart
+  - name: source_compliance_monitoring_assessment
+    using:
+      manual_configuration:
+        column_mapping:
+          Source: Id
+        insertion_order: null
+        remote_table:
+          name: compliance_monitoring_assessment
+          schema: risksmart
+  - name: source_third_party
+    using:
+      manual_configuration:
+        column_mapping:
+          Source: Id
+        insertion_order: null
+        remote_table:
+          name: third_party
+          schema: risksmart
+  - name: target_acceptance
+    using:
+      manual_configuration:
+        column_mapping:
+          Target: Id
+        insertion_order: null
+        remote_table:
+          name: acceptance
+          schema: risksmart
+  - name: target_action
+    using:
+      manual_configuration:
+        column_mapping:
+          Target: Id
+        insertion_order: null
+        remote_table:
+          name: action
+          schema: risksmart
+  - name: target_appetite
+    using:
+      manual_configuration:
+        column_mapping:
+          Target: Id
+        insertion_order: null
+        remote_table:
+          name: appetite
+          schema: risksmart
+  - name: target_assessment
+    using:
+      manual_configuration:
+        column_mapping:
+          Target: Id
+        insertion_order: null
+        remote_table:
+          name: assessment
+          schema: risksmart
+  - name: target_assessment_activity
+    using:
+      manual_configuration:
+        column_mapping:
+          Target: Id
+        insertion_order: null
+        remote_table:
+          name: assessment_activity
+          schema: risksmart
+  - name: target_cause
+    using:
+      manual_configuration:
+        column_mapping:
+          Target: Id
+        insertion_order: null
+        remote_table:
+          name: cause
+          schema: risksmart
+  - name: target_consequence
+    using:
+      manual_configuration:
+        column_mapping:
+          Target: Id
+        insertion_order: null
+        remote_table:
+          name: consequence
+          schema: risksmart
+  - name: target_node
+    using:
+      manual_configuration:
+        column_mapping:
+          Target: Id
+        insertion_order: null
+        remote_table:
+          name: node
+          schema: risksmart
+  - name: target_control
+    using:
+      manual_configuration:
+        column_mapping:
+          Target: Id
+        insertion_order: null
+        remote_table:
+          name: control
+          schema: risksmart
+  - name: target_control_group
+    using:
+      manual_configuration:
+        column_mapping:
+          Target: Id
+        insertion_order: null
+        remote_table:
+          name: control_group
+          schema: risksmart
+  - name: target_document
+    using:
+      manual_configuration:
+        column_mapping:
+          Target: Id
+        insertion_order: null
+        remote_table:
+          name: document
+          schema: risksmart
+  - name: target_impact
+    using:
+      manual_configuration:
+        column_mapping:
+          Target: Id
+        insertion_order: null
+        remote_table:
+          name: impact
+          schema: risksmart
+  - name: target_obligation_impact
+    using:
+      manual_configuration:
+        column_mapping:
+          Target: Id
+        insertion_order: null
+        remote_table:
+          name: obligation_impact
+          schema: risksmart
+  - name: target_obligation_change
+    using:
+      manual_configuration:
+        column_mapping:
+          Target: Id
+        insertion_order: null
+        remote_table:
+          name: obligation_change
+          schema: risksmart
+  - name: target_impact_rating
+    using:
+      manual_configuration:
+        column_mapping:
+          Target: Id
+        insertion_order: null
+        remote_table:
+          name: impact_rating
+          schema: risksmart
+  - name: target_indicator
+    using:
+      manual_configuration:
+        column_mapping:
+          Target: Id
+        insertion_order: null
+        remote_table:
+          name: indicator
+          schema: risksmart
+  - name: target_issue
+    using:
+      manual_configuration:
+        column_mapping:
+          Target: Id
+        insertion_order: null
+        remote_table:
+          name: issue
+          schema: risksmart
+  - name: target_obligation
+    using:
+      manual_configuration:
+        column_mapping:
+          Target: Id
+        insertion_order: null
+        remote_table:
+          name: obligation
+          schema: risksmart
+  - name: target_risk
+    using:
+      manual_configuration:
+        column_mapping:
+          Target: Id
+        insertion_order: null
+        remote_table:
+          name: risk
+          schema: risksmart
+  - name: target_test_result
+    using:
+      manual_configuration:
+        column_mapping:
+          Target: Id
+        insertion_order: null
+        remote_table:
+          name: test_result
+          schema: risksmart
+  - name: target_action_update
+    using:
+      manual_configuration:
+        column_mapping:
+          Target: Id
+        insertion_order: null
+        remote_table:
+          name: action_update
+          schema: risksmart
+  - name: target_issue_update
+    using:
+      manual_configuration:
+        column_mapping:
+          Target: Id
+        insertion_order: null
+        remote_table:
+          name: issue_update
+          schema: risksmart
+  - name: target_internal_audit_entity
+    using:
+      manual_configuration:
+        column_mapping:
+          Target: Id
+        insertion_order: null
+        remote_table:
+          name: internal_audit_entity
+          schema: risksmart
+  - name: target_internal_audit_report
+    using:
+      manual_configuration:
+        column_mapping:
+          Target: Id
+        insertion_order: null
+        remote_table:
+          name: internal_audit_report
+          schema: risksmart
+  - name: target_compliance_monitoring_assessment
+    using:
+      manual_configuration:
+        column_mapping:
+          Target: Id
+        insertion_order: null
+        remote_table:
+          name: compliance_monitoring_assessment
+          schema: risksmart
+  - name: target_third_party
+    using:
+      manual_configuration:
+        column_mapping:
+          Target: Id
+        insertion_order: null
+        remote_table:
+          name: third_party
+          schema: risksmart
+array_relationships:
+  - name: source_permissions
+    using:
+      manual_configuration:
+        column_mapping:
+          Source: Id
+        insertion_order: null
+        remote_table:
+          name: permission_view
+          schema: risksmart
+  - name: target_permissions
+    using:
+      manual_configuration:
+        column_mapping:
+          Target: Id
+        insertion_order: null
+        remote_table:
+          name: permission_view
+          schema: risksmart
+insert_permissions:
+  - role: Standard
+    permission:
+      check:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      set:
+        CreatedByUser: x-hasura-user-id
+        ModifiedByUser: x-hasura-user-id
+        OrgKey: x-hasura-org-id
+      columns:
+        - Source
+        - SourceType
+        - Target
+        - TargetType
+        - RelationshipType
+      backend_only: true
+  - role: insert:linked-item
+    permission:
+      check:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      set:
+        CreatedByUser: x-hasura-user-id
+        ModifiedByUser: x-hasura-user-id
+        OrgKey: x-hasura-org-id
+      columns:
+        - Source
+        - SourceType
+        - Target
+        - TargetType
+        - RelationshipType
+      backend_only: true
+select_permissions:
+  - role: Standard
+    permission:
+      columns:
+        - Id
+        - Source
+        - SourceType
+        - Target
+        - TargetType
+        - RelationshipType
+      filter:
+        _and:
+          - OrgKey:
+              _eq: x-hasura-org-id
+          - source_permissions:
+              _and:
+                - UserId:
+                    _eq: X-Hasura-User-Id
+                - OrgKey:
+                    _eq: X-Hasura-org-Id
+                - AccessType:
+                    _eq: read
+          - target_permissions:
+              _and:
+                - UserId:
+                    _eq: X-Hasura-User-Id
+                - OrgKey:
+                    _eq: X-Hasura-org-Id
+                - AccessType:
+                    _eq: read
+      allow_aggregations: true
+  - role: read:linked-item
+    permission:
+      columns:
+        - Id
+        - Source
+        - SourceType
+        - Target
+        - TargetType
+        - RelationshipType
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+delete_permissions:
+  - role: Standard
+    permission:
+      filter:
+        _and:
+          - OrgKey:
+              _eq: x-hasura-org-id
+          # Do not remove, parent child links are deleted by the DB trigger
+          - RelationshipType:
+              _neq: parent_child
+          - source_permissions:
+              _and:
+                - UserId:
+                    _eq: X-Hasura-User-Id
+                - OrgKey:
+                    _eq: X-Hasura-org-Id
+                - AccessType:
+                    _eq: update
+  - role: delete:linked-item
+    permission:
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+        # Do not remove, parent child links are deleted by the DB trigger
+        RelationshipType:
+          _neq: parent_child
+event_triggers:
+  - name: linked-item
+    definition:
+      delete:
+        columns: '*'
+      enable_manual: true
+      insert:
+        columns: '*'
+      update:
+        columns: '*'
+    retry_conf:
+      interval_sec: 10
+      num_retries: 3
+      timeout_sec: 60
+    webhook: https://{{REST_API_DOMAIN}}/events
+    headers:
+      - name: RestApiKey
+        value_from_env: REST_API_KEY

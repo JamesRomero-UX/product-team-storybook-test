@@ -1,0 +1,6 @@
+query getDocumentSecondLineResultsByParentId($Id: uuid) {
+  document_second_line_result(where: { parents: { ParentId: { _eq: $Id } } }) {
+    Id
+    TestDate
+  }
+}

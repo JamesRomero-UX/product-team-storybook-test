@@ -1,0 +1,20 @@
+{
+    "pk": {
+        "S": "ORG/org_Wry1ylTIzMeSDBkT"
+    },
+    "sk": {
+        "S": "REGION/eu-west-2/TENANT/multitenant"
+    },
+    "GSI1PK": {
+        "S": "REGION/eu-west-2/ORG"
+    },
+    "GSI1SK": {
+        "S": "TENANT/multitenant"
+    },
+    "orgKey": {
+        "S": "org_Wry1ylTIzMeSDBkT"
+    },
+    "organisation": {
+        "S": "Test Org 3"
+    }
+}

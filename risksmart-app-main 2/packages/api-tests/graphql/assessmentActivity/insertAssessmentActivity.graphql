@@ -1,0 +1,7 @@
+mutation insertAssessmentActivity(
+  $objects: [assessment_activity_insert_input!]!
+) {
+  insert_assessment_activity(objects: $objects) {
+    affected_rows
+  }
+}

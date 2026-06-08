@@ -1,0 +1,44 @@
+query getRiskScoresByRiskId($RiskId: uuid!) {
+  risk(where: { Id: { _eq: $RiskId } }) {
+    Tier
+  }
+
+  inherent: risk_assessment_result(
+    where: {
+      parents: { ParentId: { _eq: $RiskId } }
+      ControlType: { _eq: Uncontrolled }
+      RatingType: { _in: ["assessment", "rating"] }
+    }
+    order_by: [{ TestDate: desc_nulls_last }, { CreatedAtTimestamp: desc }]
+    limit: 1
+  ) {
+    ...RiskAssessmentResultParts
+    ancestorContributors {
+      ...AncestorContributorParts
+    }
+    parents(where: { ParentType: { _eq: assessment } }) {
+      assessment {
+        ...AssessmentParts
+      }
+    }
+  }
+  residual: risk_assessment_result(
+    where: {
+      parents: { ParentId: { _eq: $RiskId } }
+      ControlType: { _eq: Controlled }
+      RatingType: { _in: ["assessment", "rating"] }
+    }
+    order_by: [{ TestDate: desc_nulls_last }, { CreatedAtTimestamp: desc }]
+    limit: 1
+  ) {
+    ...RiskAssessmentResultParts
+    ancestorContributors {
+      ...AncestorContributorParts
+    }
+    parents(where: { ParentType: { _eq: assessment } }) {
+      assessment {
+        ...AssessmentParts
+      }
+    }
+  }
+}

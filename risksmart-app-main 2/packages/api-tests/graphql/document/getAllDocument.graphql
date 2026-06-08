@@ -1,0 +1,14 @@
+query getAllDocuments {
+  document {
+    Id
+    Title
+    DocumentType
+    Purpose
+    ParentDocument
+    CreatedByUser
+    ModifiedByUser
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    CustomAttributeData
+  }
+}

@@ -1,0 +1,9 @@
+table:
+  name: action_status
+  schema: risksmart
+is_enum: true
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: action_status
+  custom_root_fields: {}

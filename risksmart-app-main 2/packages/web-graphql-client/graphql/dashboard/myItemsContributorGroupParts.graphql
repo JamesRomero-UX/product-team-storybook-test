@@ -1,0 +1,8 @@
+fragment MyItemsContributorGroupParts on contributor_group {
+  UserGroupId
+  group {
+    users {
+      UserId
+    }
+  }
+}

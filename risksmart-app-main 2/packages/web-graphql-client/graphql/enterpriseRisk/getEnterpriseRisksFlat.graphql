@@ -1,0 +1,35 @@
+query getEnterpriseRisksFlat($where: enterprise_risk_bool_exp! = {}) {
+  enterprise_risk(where: $where) {
+    Id
+    SequentialId
+    Title
+    Tier
+    Treatment
+    ParentId
+    CustomAttributeData
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    Description
+    score {
+      InherentScoreMean
+      InherentScoreMedian
+      InherentScoreWorstCase
+      ResidualScoreMean
+      ResidualScoreMedian
+      ResidualScoreWorstCase
+      InherentRatingMean
+      InherentRatingMedian
+      InherentRatingWorstCase
+      ResidualRatingMean
+      ResidualRatingMedian
+      ResidualRatingWorstCase
+    }
+    createdByUser {
+      FriendlyName
+    }
+
+    modifiedByUser {
+      FriendlyName
+    }
+  }
+}

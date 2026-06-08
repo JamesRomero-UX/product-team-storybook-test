@@ -1,0 +1,50 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "incremental": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["./src/*"],
+      "@pages": ["./src/pages/index.ts"],
+      "@/generated/*": ["./src/generated/*"],
+      "@/mocks/*": ["./src/mocks/*"],
+      "@/types/*": ["./src/@types/*"],
+      "@/hooks/*": ["./src/hooks/*"],
+      "@/utils/*": ["./src/utils/*"],
+      "@/ratings/*": ["./src/ratings/*"],
+      "@risksmart-app/shared/*": ["../shared/src/*"],
+      "@risksmart-app/trpc/*": ["../trpc/src/*"],
+      "@/components/*": ["./src/components/*"],
+      "@risksmart-app/components/*": ["../components/*"],
+      "@risksmart-app/web-graphql-client": ["../web-graphql-client"]
+    },
+    "types": ["vite/client", "@risksmart-app/i18n/src/@types/i18next.d.ts"]
+  },
+  "include": [
+    "src",
+    "tests",
+    "setup.ts",
+    "*.config.mts",
+    "vitePwa.ts",
+    "codegen.ts",
+    ".storybook/preview.tsx",
+    ".storybook/main.ts",
+    ".storybook/manager.ts",
+    ".storybook/vitest.setup.ts"
+  ]
+}

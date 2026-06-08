@@ -1,0 +1,88 @@
+table:
+  name: organisation_module
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: organisation_module
+  custom_root_fields: {}
+select_permissions:
+  - role: app-user
+    permission:
+      columns:
+        - ModuleSettings
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+insert_permissions:
+  - role: app-user
+    permission:
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - _exists:
+              _table:
+                name: user_role_access
+                schema: risksmart
+              _where:
+                _and:
+                  - AccessType:
+                      _eq: insert
+                  - ObjectType:
+                      _eq: organisation_module
+                  - UserId:
+                      _eq: X-Hasura-User-Id
+      check:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      set:
+        CreatedByUser: x-hasura-user-id
+        ModifiedByUser: x-hasura-user-id
+        OrgKey: x-hasura-org-id
+      columns:
+        - ModuleSettings
+update_permissions:
+  - role: app-user
+    permission:
+      columns:
+        - ModuleSettings
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - _exists:
+              _table:
+                name: user_role_access
+                schema: risksmart
+              _where:
+                _and:
+                  - AccessType:
+                      _eq: update
+                  - ObjectType:
+                      _eq: organisation_module
+                  - UserId:
+                      _eq: X-Hasura-User-Id
+      set:
+        ModifiedAtTimestamp: now()
+        ModifiedByUser: x-hasura-user-id
+delete_permissions:
+  - role: app-user
+    permission:
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - _exists:
+              _table:
+                name: user_role_access
+                schema: risksmart
+              _where:
+                _and:
+                  - AccessType:
+                      _eq: delete
+                  - ObjectType:
+                      _eq: organisation_module
+                  - UserId:
+                      _eq: X-Hasura-User-Id
+

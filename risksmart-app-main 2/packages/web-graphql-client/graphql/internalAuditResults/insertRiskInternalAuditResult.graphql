@@ -1,0 +1,25 @@
+mutation insertRiskInternalAuditResult(
+  $Rating: Int
+  $Likelihood: Int
+  $Impact: Int
+  $ControlType: risk_assessment_result_control_type_enum
+  $InternalAuditReportId: uuid!
+  $RiskIds: [uuid!]!
+  $CustomAttributeData: jsonb
+  $TestDate: timestamptz
+  $Rationale: String
+) {
+  insertChildRiskInternalAuditResult(
+    Rating: $Rating
+    InternalAuditReportId: $InternalAuditReportId
+    RiskIds: $RiskIds
+    Impact: $Impact
+    Likelihood: $Likelihood
+    ControlType: $ControlType
+    CustomAttributeData: $CustomAttributeData
+    TestDate: $TestDate
+    Rationale: $Rationale
+  ) {
+    Ids
+  }
+}

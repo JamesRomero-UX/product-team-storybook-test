@@ -1,0 +1,5 @@
+mutation insertTestResults($testResults: [test_result_insert_input!]!) {
+  insert_test_result(objects: $testResults) {
+    affected_rows
+  }
+}

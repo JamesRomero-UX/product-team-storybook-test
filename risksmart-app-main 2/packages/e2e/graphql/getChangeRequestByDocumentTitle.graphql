@@ -1,0 +1,10 @@
+query getChangeRequestByDocumentTitle($documentTitle: String!) {
+  change_request(
+    where: { parent: { document: { Title: { _eq: $documentTitle } } } }
+  ) {
+    Id
+    parent {
+      Id
+    }
+  }
+}

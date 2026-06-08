@@ -1,0 +1,31 @@
+subscription tppGetResponseById($Id: uuid!) {
+  third_party_response_by_pk(Id: $Id) {
+    ...TppThirdPartyResponseParts
+
+    questionnaireTemplateVersion {
+      Id
+      Version
+      Schema
+      UISchema
+
+      parent {
+        Id
+        Title
+      }
+    }
+
+    files {
+      file {
+        ContentType
+        FileName
+        FileSize
+        Id
+        CreatedAtTimestamp
+        CreatedByUser
+        ModifiedAtTimestamp
+        ModifiedByUser
+        Meta
+      }
+    }
+  }
+}

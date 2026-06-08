@@ -1,0 +1,158 @@
+name: Template / Auth0 Deploy
+
+permissions:
+  actions: write
+  contents: read
+  id-token: write
+  packages: read
+
+on:
+  workflow_call:
+    inputs:
+      runner_label:
+        required: false
+        type: string
+        default: "sprinters:aws:eu-west-2:ubuntu-latest:m7i.4xlarge:spot=false:temp=16"
+      env:
+        required: true
+        type: string
+      domain_prefix:
+        required: true
+        type: string
+      app_or_risksmart_app:
+        required: true
+        type: string
+      auth0_region_identifier:
+        required: true
+        type: string
+      hasura_admin_secret_name:
+        required: true
+        type: string
+      auth0_tenant_client_id:
+        required: true
+        type: string
+      auth0_client_secret_name:
+        required: true
+        type: string
+      auth0_tenant_name:
+        required: true
+        type: string
+      # Tenant ID secrets for MFA bypass (UK-1 only, optional for other regions)
+      dev_tenant_id_secret_name:
+        required: false
+        type: string
+        default: ""
+      dev_cloud_tenant_id_secret_name:
+        required: false
+        type: string
+        default: ""
+      staging_tenant_id_secret_name:
+        required: false
+        type: string
+        default: ""
+    secrets:
+      SES_ACCESS_SECRET_KEY:
+        required: true
+      SES_ACCESS_KEY_ID:
+        required: true
+      AUTH0_DATADOG_API_KEY:
+        required: true
+      ARCHBEE_PROTECTED_PUBLIC_JWT_SECRET: # protected public docs in Auth0
+        required: true
+      ARCHBEE_PROTECTED_PRIVATE_JWT_SECRET: # protected private docs in Auth0
+        required: true
+
+jobs:
+  Auth0ConfigDeploy:
+    name: Auth0 Deploy - ${{ inputs.auth0_region_identifier }}
+    runs-on:
+      - ${{ inputs.runner_label }}
+      - ${{ github.run_id }}-${{ github.run_attempt }}-Auth0ConfigDeploy-${{ inputs.auth0_region_identifier }}
+    environment: ${{ inputs.env }}
+    steps:
+      - name: Collect Workflow Telemetry
+        uses: catchpoint/workflow-telemetry-action@94c3c3d9567a0205de6da68a76c428ce4e769af1 # v2.0.0
+
+      - name: Setup Turbo cache
+        uses: rharkor/caching-for-turbo@d124d2921c97c169010f6a7a624a36e9831472e1 # v 1.8
+
+      - name: Checkout repository
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@a3252b78c470c02df07e9d59298aecedc3ccdd6d # v3
+        with:
+          version: 10.28.2
+
+      - name: Setup node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: '.nvmrc'
+          cache: "pnpm"
+          registry-url: "https://npm.pkg.github.com"
+
+      - name: Configure pnpm for GitHub Packages
+        run: |
+          pnpm config set @risk-smart:registry https://npm.pkg.github.com
+          pnpm config set //npm.pkg.github.com/:_authToken ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Start API containers
+        run: docker compose up graphql-engine postgres --detach
+        working-directory: api-stack
+
+      - name: Wait for API
+        timeout-minutes: 10
+        run: bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' 127.0.0.1:8080/v1/version)" != "200" ]]; do sleep 1; done'
+
+      - name: Apply Hasura migrations
+        run: pnpm run hasura-migrate:for-type-gen
+
+      - name: Generate GraphQL types
+        run: pnpm run generate-graphql
+
+      - name: Run lint checks
+        run: pnpm run lint
+        env:
+          NODE_OPTIONS: --max-old-space-size=8192
+
+      - name: Run unit tests
+        run: pnpm run test:unit
+        working-directory: packages/auth
+
+      - name: Run TypeScript build
+        run: pnpm run tsc:auth
+        env:
+          NODE_OPTIONS: --max-old-space-size=8192
+
+      - name: Install Auth0 Deploy CLI
+        run: npm install -g auth0-deploy-cli
+
+      - name: Deploy Auth0 configuration
+        env:
+          AUTH0_TENANT_ID: ${{ inputs.auth0_tenant_name }}
+          AUTH0_CLIENT_SECRET: ${{ secrets[inputs.auth0_client_secret_name] }}
+          HASURA_ADMIN_SECRET: ${{ secrets[inputs.hasura_admin_secret_name] }}
+          HASURA_API_ENDPOINT: https://${{ inputs.domain_prefix }}${{ vars.STAGE }}-${{ inputs.app_or_risksmart_app }}-api.${{ vars.AWS_ACCOUNT_ID }}.risksmart.link
+          HASURA_TENANT_API_ENDPOINT: https://${{ inputs.domain_prefix }}${{ vars.STAGE }}-${{ inputs.app_or_risksmart_app }}-api-tenant.${{ vars.AWS_ACCOUNT_ID }}.risksmart.link
+          AWS_ACCOUNT_ID: ${{ vars.AWS_ACCOUNT_ID }}
+          AWS_EVENTBRIDGE_SOURCE_NAME: auth0.partner/${{ inputs.auth0_tenant_name }}/eventbridge
+          SES_ACCESS_SECRET_KEY: ${{ secrets.SES_ACCESS_SECRET_KEY }}
+          SES_ACCESS_KEY_ID: ${{ secrets.SES_ACCESS_KEY_ID }}
+          AUTH0_DATADOG_API_KEY: ${{ secrets.AUTH0_DATADOG_API_KEY }}
+          ARCHBEE_PROTECTED_PUBLIC_JWT_SECRET: ${{ secrets.ARCHBEE_PROTECTED_PUBLIC_JWT_SECRET }}
+          ARCHBEE_PROTECTED_PRIVATE_JWT_SECRET: ${{ secrets.ARCHBEE_PROTECTED_PRIVATE_JWT_SECRET }}
+          AUTH0_MANAGEMENT_CLIENT_ID: ${{ inputs.auth0_tenant_client_id }}
+          AUTH0_MANAGEMENT_CLIENT_SECRET: ${{ secrets[inputs.auth0_client_secret_name] }}
+          # Tenant ID secrets for MFA bypass (UK-1 only)
+          DEV_TENANT_ID: ${{ secrets[inputs.dev_tenant_id_secret_name] }}
+          DEV_CLOUD_TENANT_ID: ${{ secrets[inputs.dev_cloud_tenant_id_secret_name] }}
+          STAGING_TENANT_ID: ${{ secrets[inputs.staging_tenant_id_secret_name] }}
+        run: |
+          pnpm run --filter @risksmart-app/auth0-stack importBase ${{ vars.STAGE }} ${{ inputs.auth0_region_identifier }}
+          pnpm run --filter @risksmart-app/auth0-stack importClients ${{ vars.STAGE }} ${{ inputs.auth0_region_identifier }}
+          pnpm run --filter @risksmart-app/auth0-stack import ${{ vars.STAGE }} ${{ inputs.auth0_region_identifier }}

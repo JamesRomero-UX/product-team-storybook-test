@@ -1,0 +1,7 @@
+mutation insertQuestionnaireTemplate(
+  $objects: [questionnaire_template_insert_input!]!
+) {
+  insert_questionnaire_template(objects: $objects) {
+    affected_rows
+  }
+}

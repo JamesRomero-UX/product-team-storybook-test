@@ -1,0 +1,28 @@
+mutation insertThirdPartyContact(
+  $ThirdPartyId: uuid!
+  $Email: String!
+  $Name: String
+  $JobTitle: String
+  $UserId: String
+  $PasswordSetAtTimestamp: timestamptz
+) {
+  insert_third_party_contact_one(
+    object: {
+      ThirdPartyId: $ThirdPartyId
+      Email: $Email
+      Name: $Name
+      JobTitle: $JobTitle
+      UserId: $UserId
+      PasswordSetAtTimestamp: $PasswordSetAtTimestamp
+    }
+  ) {
+    Id
+    ThirdPartyId
+    Email
+    Name
+    JobTitle
+    IsRevoked
+    UserId
+    CreatedAtTimestamp
+  }
+}

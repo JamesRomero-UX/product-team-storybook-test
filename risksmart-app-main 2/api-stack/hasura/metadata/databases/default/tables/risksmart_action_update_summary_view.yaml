@@ -1,0 +1,54 @@
+table:
+  name: action_update_summary_view
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: action_update_summary
+  custom_root_fields: {}
+array_relationships:
+  - name: permissions
+    using:
+      manual_configuration:
+        column_mapping:
+          ActionId: Id
+        insertion_order: null
+        remote_table:
+          name: permission_view
+          schema: risksmart
+select_permissions:
+  - role: Standard
+    permission:
+      columns:
+        - ActionId
+        - LatestDescription
+        - LatestTitle
+        - Count
+        - LatestCreatedAtTimestamp
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - permissions:
+              _and:
+                - UserId:
+                    _eq: X-Hasura-User-Id
+                - OrgKey:
+                    _eq: X-Hasura-org-Id
+                - AccessType:
+                    _eq: read
+                - ObjectType:
+                    _eq: action
+      allow_aggregations: true
+  - role: read:action
+    permission:
+      columns:
+        - ActionId
+        - LatestDescription
+        - LatestTitle
+        - Count
+        - LatestCreatedAtTimestamp
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      allow_aggregations: true

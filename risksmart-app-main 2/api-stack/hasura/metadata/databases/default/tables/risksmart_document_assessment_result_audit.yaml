@@ -1,0 +1,26 @@
+table:
+  name: document_assessment_result_audit
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: document_assessment_result_audit
+  custom_root_fields: {}
+select_permissions:
+  - role: read:audit
+    permission:
+      columns:
+        - Id
+        - Rating
+        - CreatedByUser
+        - CreatedAtTimestamp
+        - CustomAttributeData
+        - TestDate
+        - Rationale
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - RatingType
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      allow_aggregations: true

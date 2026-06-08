@@ -1,0 +1,8 @@
+query getInternalAuditTestResultById($Id: uuid) {
+  control_test_internal_audit_result(where: { Id: { _eq: $Id } }) {
+    ...ControlTestInternalAuditResultParts
+    files {
+      ...RelationFileParts
+    }
+  }
+}

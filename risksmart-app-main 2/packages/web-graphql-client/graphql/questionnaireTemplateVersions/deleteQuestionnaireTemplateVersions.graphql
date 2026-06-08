@@ -1,0 +1,5 @@
+mutation deleteQuestionnaireTemplateVersions($questionnaireTemplateVersionIds: [uuid!]!) {
+  delete_questionnaire_template_version(where: { Id: { _in: $questionnaireTemplateVersionIds } }) {
+    affected_rows
+  }
+}

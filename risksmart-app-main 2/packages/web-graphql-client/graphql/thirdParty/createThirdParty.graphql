@@ -1,0 +1,5 @@
+mutation createThirdParty($object: InsertThirdPartyInput!) {
+  insertThirdPartyApi(object: $object) {
+    Id
+  }
+}

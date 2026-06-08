@@ -1,0 +1,142 @@
+{
+  "name": "Auth Test",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "9d9758eb-53b6-47c8-8067-62f514d2a4a3",
+      "name": "When clicking \"Test workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        460,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "curlImport": "",
+        "httpVariantWarning": "",
+        "method": "POST",
+        "url": "https://http-intake.logs.datadoghq.eu/api/v2/logs",
+        "": "",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "datadogApi",
+        "provideSslCertificates": false,
+        "sendQuery": false,
+        "sendHeaders": false,
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "=[\n  {\n    \"ddsource\": \"n8n\",\n    \"ddtags\": \"env:staging\",\n    \"hostname\": \"staging-int.629531182017.risksmart.link\",\n    \"message\": \"Auth Test Complete\",\n    \"service\": \"n8n\",\n    \"status\": \"Ok\"\n  }\n]",
+        "options": {},
+        "infoMessage": ""
+      },
+      "id": "c4e3de62-63e4-468f-b764-3c2d3d3469fc",
+      "name": "Datadog HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        960,
+        560
+      ],
+      "extendsCredential": "datadogApi",
+      "credentials": {
+        "datadogApi": {
+          "id": "psbMdjlG2IDgbl8i",
+          "name": "Datadog account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "issueId": "abb02f23-56a4-4f8e-b36f-dcd0bdb52cda"
+      },
+      "id": "b4b82a7a-76c4-4a9e-aa55-b4eaa1c400ee",
+      "name": "Get Issue",
+      "type": "CUSTOM.getIssue",
+      "typeVersion": 1,
+      "position": [
+        700,
+        560
+      ],
+      "executeOnce": true,
+      "notesInFlow": false,
+      "credentials": {
+        "riskSmartAuthApi": {
+          "id": "XrB4cAYbwsZcMCrE",
+          "name": "RiskSmart Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours"
+            }
+          ]
+        }
+      },
+      "id": "13dd07b1-e35c-4fa3-b97e-b84185c38069",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        460,
+        460
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking \"Test workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Get Issue",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Issue": {
+      "main": [
+        [
+          {
+            "node": "Datadog HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Issue",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "executionTimeout": 30,
+    "errorWorkflow": "9pwkJuwFFVhC4N5K"
+  },
+  "versionId": "8593561e-cbc0-4d60-90d7-8ae4a549a94f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "14a41d894e1978476fcb397235e71d5266e27633af60a132a1035dca463c679f"
+  },
+  "id": "KSKYrblvZ68SJ5wf",
+  "tags": []
+}

@@ -1,0 +1,1276 @@
+{
+  "name": "Ecommpay - Jira to RiskSmart - Create / Update Issue",
+  "nodes": [
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "2526b8f9-06d1-47f9-bfdd-26150f241f53",
+              "leftValue": "={{ $('Reduce Fields').item.json.risksmartRef }}",
+              "rightValue": "=",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "ignoreCase": true
+        }
+      },
+      "id": "047e1540-3a74-4294-9d43-28575c956148",
+      "name": "If RiskSmart Ref Present",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1020,
+        920
+      ]
+    },
+    {
+      "parameters": {
+        "issueId": "={{ $('Reduce Fields').item.json.risksmartRef }}",
+        "title": "={{ $('Reduce Fields').item.json.summary }}",
+        "details": "={{ $('Reduce Fields').item.json.description }}",
+        "dateOccurred": "={{ $('Reduce Fields').item.json.detectionTime }}",
+        "dateIdentified": "={{ $('Reduce Fields').item.json.detectionTime }}",
+        "OriginalTimestamp": "={{ $json.ModifiedAtTimestamp }}",
+        "assignees": "={{ $('Jira Issue Transitioned / Updated').item.json.body.fields.assignee.displayName }}",
+        "assigneeFieldName": "1720175166976_text",
+        "reporters": "={{ $('Jira Issue Transitioned / Updated').item.json.body.fields.reporter.displayName }}",
+        "reporterFieldName": "1720174596854_text"
+      },
+      "id": "7cb97aa9-9669-4555-95c4-09338c71b066",
+      "name": "Update Issue",
+      "type": "CUSTOM.updateIssue",
+      "typeVersion": 1,
+      "position": [
+        1780,
+        800
+      ],
+      "retryOnFail": false,
+      "credentials": {
+        "riskSmartAuthApi": {
+          "id": "xKvmnZdTSBjxSGN5",
+          "name": "Ecommpay"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "title": "={{ $('Reduce Fields').item.json.summary }}",
+        "details": "={{ $('Reduce Fields').item.json.description }}",
+        "dateOccurred": "={{ $('Reduce Fields').item.json.detectionTime || DateTime.now().toISO() }}",
+        "dateIdentified": "={{ $('Reduce Fields').item.json.detectionTime || DateTime.now().toISO() }}",
+        "jiraReference": "=https://jira.ecommpay.com/browse/{{ $('Reduce Fields').item.json.jiraKey }}",
+        "jiraReferenceCustomFieldName": "1723555541388_link",
+        "assignees": "={{ $('Jira Issue Transitioned / Updated').item.json.body.fields.assignee.displayName }}",
+        "assigneeFieldName": "1720175166976_text",
+        "reporters": "={{ $('Jira Issue Transitioned / Updated').item.json.body.fields.reporter.displayName }}",
+        "reporterFieldName": "1720174596854_text"
+      },
+      "id": "17426884-2d55-4113-86be-e2581b44b41f",
+      "name": "Insert Issue",
+      "type": "CUSTOM.insertIssue",
+      "typeVersion": 1,
+      "position": [
+        1560,
+        1100
+      ],
+      "credentials": {
+        "riskSmartAuthApi": {
+          "id": "xKvmnZdTSBjxSGN5",
+          "name": "Ecommpay"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jiraVersion": "server",
+        "operation": "update",
+        "issueKey": "={{ $('Reduce Fields').item.json.jiraKey }}",
+        "updateFields": {
+          "customFieldsUi": {
+            "customFieldsValues": [
+              {
+                "fieldId": {
+                  "__rl": true,
+                  "value": "customfield_19513",
+                  "mode": "id"
+                },
+                "fieldValue": "={{ $('Insert Issue').item.json.data.insertChildIssue.Id }}"
+              }
+            ]
+          }
+        }
+      },
+      "id": "9c745b72-0bd5-4eaa-9a3f-da7fd6eeedba",
+      "name": "Update Jira Issue with Ref",
+      "type": "n8n-nodes-base.jira",
+      "typeVersion": 1,
+      "position": [
+        1960,
+        1100
+      ],
+      "credentials": {
+        "jiraSoftwareServerApi": {
+          "id": "AqBdlE2JjyPAWdRO",
+          "name": "Ecommpay Jira"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9ec1d9ab-f2c7-48d2-b6c8-0a1da93b5c16",
+              "name": "status",
+              "value": "={{ $json.body.fields.status.name }}",
+              "type": "string"
+            },
+            {
+              "id": "ff8ff2c8-6c38-49fd-89e5-118aca76818b",
+              "name": "description",
+              "value": "={{ $json.body.fields.description || 'No description found in Jira item'}}",
+              "type": "string"
+            },
+            {
+              "id": "71fcb7c0-574c-4ad8-a043-e32d0a0f3b13",
+              "name": "summary",
+              "value": "={{ $json.body.fields.summary || 'No summary found in Jira item'}}",
+              "type": "string"
+            },
+            {
+              "id": "8dd83209-c9d7-4142-a19d-acc3250773bf",
+              "name": "reporterAccountId",
+              "value": "={{ $json.body.fields.reporter.self }}",
+              "type": "string"
+            },
+            {
+              "id": "c50267d9-a072-48fb-9e24-352db1ead4cd",
+              "name": "assigneeAccountId",
+              "value": "={{ $json.body.fields.assignee.self }}",
+              "type": "string"
+            },
+            {
+              "id": "795f4723-7002-46e8-b038-7566b06c3052",
+              "name": "risksmartRef",
+              "value": "={{ $json.body.fields.customfield_19513 }}",
+              "type": "string"
+            },
+            {
+              "id": "59676373-1305-4514-8a84-2198ab9dc6a8",
+              "name": "detectionTime",
+              "value": "={{ new Date($json.body.fields.created).toISOString() }}",
+              "type": "string"
+            },
+            {
+              "id": "838a9f40-1d40-4294-ae8b-f9275ecfbe8c",
+              "name": "jiraKey",
+              "value": "={{ $json.body.key }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0f8663d4-36db-4e89-a674-ec7360f71083",
+      "name": "Reduce Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        -1320,
+        900
+      ]
+    },
+    {
+      "parameters": {
+        "action": "generate",
+        "dataPropertyName": "newRiskSmartID"
+      },
+      "id": "763e4b81-1aa5-4e9a-92c7-058d72d13c66",
+      "name": "Crypto",
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [
+        1380,
+        1100
+      ]
+    },
+    {
+      "parameters": {
+        "issueId": "={{ $('Reduce Fields').item.json.risksmartRef }}"
+      },
+      "id": "78c94965-06d5-4793-adcf-3ed6e038e2e3",
+      "name": "Get Issue",
+      "type": "CUSTOM.getIssue",
+      "typeVersion": 1,
+      "position": [
+        1380,
+        800
+      ],
+      "credentials": {
+        "riskSmartAuthApi": {
+          "id": "xKvmnZdTSBjxSGN5",
+          "name": "Ecommpay"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b3111f95-14a4-488b-b948-65ec42c535b4",
+              "name": "ModifiedAtTimestamp",
+              "value": "={{ $json.data.issue[0].ModifiedAtTimestamp }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "00ed42b2-c48f-4b3b-8fe0-4de3db8ef966",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        1580,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "issueId": "={{ $json.data.insertChildIssue.Id }}",
+        "status": "open"
+      },
+      "id": "4b626963-361c-4287-8ce5-2f03ded4ee9d",
+      "name": "Insert Issue Assessment",
+      "type": "CUSTOM.insertIssueAssessment",
+      "typeVersion": 1,
+      "position": [
+        1760,
+        1100
+      ],
+      "credentials": {
+        "riskSmartAuthApi": {
+          "id": "xKvmnZdTSBjxSGN5",
+          "name": "Ecommpay"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "issueId": "={{ $('Reduce Fields').item.json.risksmartRef }}"
+      },
+      "id": "f3759194-4b37-4055-94ab-826be5702f0a",
+      "name": "Get Issue Assessment",
+      "type": "CUSTOM.getIssueAssessment",
+      "typeVersion": 1,
+      "position": [
+        2320,
+        800
+      ],
+      "credentials": {
+        "riskSmartAuthApi": {
+          "id": "xKvmnZdTSBjxSGN5",
+          "name": "Ecommpay"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "02afd5ae-02ad-4dca-a513-cefea8e8d985",
+              "leftValue": "={{ $json.data.issue_assessment[0].Id }}",
+              "rightValue": "=",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "e71d9705-019f-4cf8-b061-340cddd5daa8",
+              "leftValue": "={{ $json.data.issue_assessment[0].Id }}",
+              "rightValue": "=",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "a3ac9e5e-7b0b-40a6-a36a-107674cbd24c",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        2520,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "issueAssessmentId": "={{ $json.data.issue_assessment[0].Id }}",
+        "status": "open",
+        "timestamp": "={{ $json.data.issue_assessment[0].ModifiedAtTimestamp }}"
+      },
+      "id": "3b9272be-f2e3-4c33-8868-13bc3c389b3b",
+      "name": "Update Issue Assessment",
+      "type": "CUSTOM.updateIssueAssessment",
+      "typeVersion": 1,
+      "position": [
+        2760,
+        780
+      ],
+      "retryOnFail": true,
+      "credentials": {
+        "riskSmartAuthApi": {
+          "id": "xKvmnZdTSBjxSGN5",
+          "name": "Ecommpay"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "ea2fff7a-e883-445b-9212-21c79daf4aa4",
+      "name": "Wait",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2060,
+        800
+      ],
+      "webhookId": "1d16b2b7-f77c-4c71-942f-ea260e1b9df9"
+    },
+    {
+      "parameters": {
+        "issueId": "={{ $('Reduce Fields').item.json.risksmartRef }}",
+        "title": "Jira Issue Integration",
+        "description": "Successfully Updated Issue"
+      },
+      "id": "47b7adb7-807d-49d5-857b-bf97c54c605d",
+      "name": "Insert Issue Update1",
+      "type": "CUSTOM.insertIssueUpdate",
+      "typeVersion": 1,
+      "position": [
+        2060,
+        580
+      ],
+      "credentials": {
+        "riskSmartAuthApi": {
+          "id": "xKvmnZdTSBjxSGN5",
+          "name": "Ecommpay"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "a1b26d31-ba02-4ac4-9f8f-f4596a942953",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "=Open",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "fc30553b-01cd-43f5-8500-e5cde66b89f5",
+      "name": "Filter Open Issues",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2,
+      "position": [
+        -1080,
+        900
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "=mergeByPosition",
+        "mergeByFields": {
+          "values": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "id": "13b8cc97-fd63-4f75-bd53-3e9ed4fd60de",
+      "name": "Merge Owner and Contributor",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        780,
+        920
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0641a530-6373-4ffe-8375-a4f6fed11bb7",
+              "name": "OwnerId",
+              "value": "={{ $json.data.insertReferenceUser.Id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9b9c16cd-db1c-4507-aad6-a7e984f31b43",
+      "name": "Reduce Insert Owner Output",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        460,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0641a530-6373-4ffe-8375-a4f6fed11bb7",
+              "name": "ContributorId",
+              "value": "={{ $json.data.insertReferenceUser.Id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "390c178b-078e-40da-90bc-25e37c6ed6e4",
+      "name": "Reduce Insert Contributor Output",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        460,
+        1320
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0641a530-6373-4ffe-8375-a4f6fed11bb7",
+              "name": "OwnerId",
+              "value": "={{ $json.data.auth_user[0].Id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "462f3883-1cb6-490f-9a14-43310f65b3c0",
+      "name": "Reduce Owner Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        460,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "16196891-6206-42b4-a0fb-0497ff292692",
+              "leftValue": "={{ $json.data.auth_user[0].Id }}",
+              "rightValue": "=",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "9db72254-ddc1-495d-8e47-cdce7e78de8f",
+              "leftValue": "={{ $json.data.auth_user[0].Id }}",
+              "rightValue": "=",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "23ab8012-84c7-4eb4-b426-597cfef934b6",
+      "name": "If Assignee Exists",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -40,
+        1100
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "16196891-6206-42b4-a0fb-0497ff292692",
+              "leftValue": "={{ $json.data.auth_user[0].Id }}",
+              "rightValue": "=",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "9db72254-ddc1-495d-8e47-cdce7e78de8f",
+              "leftValue": "={{ $json.data.auth_user[0].Id }}",
+              "rightValue": "=",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "a7e7372d-f7b5-4a1a-b1d6-531ed380ac1e",
+      "name": "If Reporter Exists",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        40,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "16196891-6206-42b4-a0fb-0497ff292692",
+              "leftValue": "={{ $json.assigneeAccountId }}",
+              "rightValue": "=",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "9db72254-ddc1-495d-8e47-cdce7e78de8f",
+              "leftValue": "={{ $json.assigneeAccountId }}",
+              "rightValue": "=",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "54b3739c-b928-4211-91ff-a02272d274d3",
+      "name": "If there's an assignee",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -820,
+        1040
+      ]
+    },
+    {
+      "parameters": {
+        "userName": "={{ $('Get Jira Reporter Http').item.json.displayName }}",
+        "email": "={{ $('Get Jira Reporter Http').item.json.emailAddress }}"
+      },
+      "id": "06610b14-b169-4d74-983e-ea31d5085669",
+      "name": "Insert Reference User (reporter)",
+      "type": "CUSTOM.insertReferenceUser",
+      "typeVersion": 1,
+      "position": [
+        280,
+        640
+      ],
+      "credentials": {
+        "riskSmartAuthApi": {
+          "id": "xKvmnZdTSBjxSGN5",
+          "name": "Ecommpay"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "userName": "={{ $('Get Jira Assignee Http').item.json.displayName }}",
+        "email": "={{ $('Get Jira Assignee Http').item.json.emailAddress }}"
+      },
+      "id": "38fc5bb4-2013-4d82-81fb-588a9dc741fd",
+      "name": "Insert Reference User (assignee)",
+      "type": "CUSTOM.insertReferenceUser",
+      "typeVersion": 1,
+      "position": [
+        240,
+        1320
+      ],
+      "credentials": {
+        "riskSmartAuthApi": {
+          "id": "xKvmnZdTSBjxSGN5",
+          "name": "Ecommpay"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0641a530-6373-4ffe-8375-a4f6fed11bb7",
+              "name": "ContributorId",
+              "value": "={{ $json.data.auth_user[0].Id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "570c2c92-3dd1-4bf9-bee2-554d08d1f383",
+      "name": "Reduce Contributor Fileds",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        460,
+        1080
+      ]
+    },
+    {
+      "parameters": {
+        "lookupType": "emailType",
+        "email": "={{ $json.emailAddress }}"
+      },
+      "id": "fdfd0763-d8db-41d5-bb1d-d9b27d48fa12",
+      "name": "Get User Reporter",
+      "type": "CUSTOM.GetUser",
+      "typeVersion": 1,
+      "position": [
+        -140,
+        480
+      ],
+      "credentials": {
+        "riskSmartAuthApi": {
+          "id": "xKvmnZdTSBjxSGN5",
+          "name": "Ecommpay"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "lookupType": "emailType",
+        "email": "={{ $json.emailAddress }}"
+      },
+      "id": "27892994-2bbd-426c-974e-fce90f36df11",
+      "name": "Get User Assignee",
+      "type": "CUSTOM.GetUser",
+      "typeVersion": 1,
+      "position": [
+        -200,
+        1100
+      ],
+      "credentials": {
+        "riskSmartAuthApi": {
+          "id": "xKvmnZdTSBjxSGN5",
+          "name": "Ecommpay"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "dcc61b1c-0d08-415e-ab44-51d38437457a",
+              "leftValue": "={{ $json.emailAddress }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "d80001cb-7be0-455a-b291-023127d93710",
+      "name": "Email check - assignee",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -400,
+        1240
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "dcc61b1c-0d08-415e-ab44-51d38437457a",
+              "leftValue": "={{ $json.emailAddress }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "381c0422-95e4-41a2-a80d-38ec3af92953",
+      "name": "Email check - reporter",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -400,
+        600
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Reduce Fields').item.json.reporterAccountId }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "jiraSoftwareServerApi",
+        "options": {}
+      },
+      "id": "6309f5aa-fdb4-4efe-bb47-a09bc5b8dc6c",
+      "name": "Get Jira Reporter Http",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -620,
+        600
+      ],
+      "credentials": {
+        "jiraSoftwareServerApi": {
+          "id": "AqBdlE2JjyPAWdRO",
+          "name": "Ecommpay Jira"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Reduce Fields').item.json.assigneeAccountId }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "jiraSoftwareServerApi",
+        "options": {}
+      },
+      "id": "6cc0a343-877e-4952-9bce-48d34c9bee1e",
+      "name": "Get Jira Assignee Http",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -620,
+        1240
+      ],
+      "credentials": {
+        "jiraSoftwareServerApi": {
+          "id": "AqBdlE2JjyPAWdRO",
+          "name": "Ecommpay Jira"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "45030a32-15f0-4e7a-b5cb-2611c9617faa",
+        "authentication": "headerAuth",
+        "options": {}
+      },
+      "id": "e8740743-5319-4e44-86b9-81dc20f8dd4d",
+      "name": "Jira Issue Transitioned / Updated",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        -1560,
+        900
+      ],
+      "webhookId": "a9467d87-2f1e-4f65-aac8-213743548515",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "54ATgPjXNPXQuplz",
+          "name": "Ecommpay Jira Header Auth"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "If RiskSmart Ref Present": {
+      "main": [
+        [
+          {
+            "node": "Get Issue",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Crypto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert Issue": {
+      "main": [
+        [
+          {
+            "node": "Insert Issue Assessment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reduce Fields": {
+      "main": [
+        [
+          {
+            "node": "Filter Open Issues",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crypto": {
+      "main": [
+        [
+          {
+            "node": "Insert Issue",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Issue": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Update Issue",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Issue": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Insert Issue Update1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Issue Assessment": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Update Issue Assessment",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Get Issue Assessment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert Issue Assessment": {
+      "main": [
+        [
+          {
+            "node": "Update Jira Issue with Ref",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Open Issues": {
+      "main": [
+        [
+          {
+            "node": "If there's an assignee",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get Jira Reporter Http",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Owner and Contributor": {
+      "main": [
+        [
+          {
+            "node": "If RiskSmart Ref Present",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reduce Insert Owner Output": {
+      "main": [
+        [
+          {
+            "node": "Merge Owner and Contributor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reduce Insert Contributor Output": {
+      "main": [
+        [
+          {
+            "node": "Merge Owner and Contributor",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Reduce Owner Fields": {
+      "main": [
+        [
+          {
+            "node": "Merge Owner and Contributor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Reporter Exists": {
+      "main": [
+        [
+          {
+            "node": "Reduce Owner Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Insert Reference User (reporter)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If there's an assignee": {
+      "main": [
+        [
+          {
+            "node": "Get Jira Assignee Http",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Merge Owner and Contributor",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Insert Reference User (reporter)": {
+      "main": [
+        [
+          {
+            "node": "Reduce Insert Owner Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert Reference User (assignee)": {
+      "main": [
+        [
+          {
+            "node": "Reduce Insert Contributor Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Assignee Exists": {
+      "main": [
+        [
+          {
+            "node": "Reduce Contributor Fileds",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Insert Reference User (assignee)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reduce Contributor Fileds": {
+      "main": [
+        [
+          {
+            "node": "Merge Owner and Contributor",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Get User Reporter": {
+      "main": [
+        [
+          {
+            "node": "If Reporter Exists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get User Assignee": {
+      "main": [
+        [
+          {
+            "node": "If Assignee Exists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email check - assignee": {
+      "main": [
+        [
+          {
+            "node": "Get User Assignee",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Merge Owner and Contributor",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Email check - reporter": {
+      "main": [
+        [
+          {
+            "node": "Get User Reporter",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Merge Owner and Contributor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Jira Reporter Http": {
+      "main": [
+        [
+          {
+            "node": "Email check - reporter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Jira Assignee Http": {
+      "main": [
+        [
+          {
+            "node": "Email check - assignee",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Jira Issue Transitioned / Updated": {
+      "main": [
+        [
+          {
+            "node": "Reduce Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "aee22d3a-b545-4b8c-9d0c-69bdf168ea52",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9a9600123b681613dd33ee58d152d21f6875a66466ebf097b76570028c33e7c8"
+  },
+  "id": "daJ0G9SjlGwjtOlu",
+  "tags": [
+    {
+      "createdAt": "2024-06-19T09:39:28.782Z",
+      "updatedAt": "2024-06-19T09:39:28.782Z",
+      "id": "N1RxyZc1yh7EF1LO",
+      "name": "Jira"
+    }
+  ]
+}

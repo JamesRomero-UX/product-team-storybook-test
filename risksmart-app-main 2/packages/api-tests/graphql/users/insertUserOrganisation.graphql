@@ -1,0 +1,7 @@
+mutation insertOrganisationUser(
+  $objects: [auth_organisationuser_insert_input!]!
+) {
+  insert_auth_organisationuser(objects: $objects) {
+    affected_rows
+  }
+}

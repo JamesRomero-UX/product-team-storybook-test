@@ -1,0 +1,5 @@
+mutation unlinkItems($Ids: [uuid!]!) {
+  unlinkItems(Ids: $Ids) {
+    Ids
+  }
+}

@@ -1,0 +1,5 @@
+mutation deleteTestResult($Id: uuid!) {
+  delete_test_result(where: { Id: { _eq: $Id } }) {
+    affected_rows
+  }
+}

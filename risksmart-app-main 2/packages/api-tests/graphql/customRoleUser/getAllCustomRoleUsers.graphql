@@ -1,0 +1,11 @@
+query getAllCustomRoleUsers {
+  custom_role_user {
+    CreatedByUser
+    CreatedAtTimestamp
+    Id
+    ModifiedByUser
+    ModifiedAtTimestamp
+    UserId
+    CustomRoleId
+  }
+}

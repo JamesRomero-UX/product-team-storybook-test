@@ -1,0 +1,3 @@
+table:
+  name: approver_response_audit
+  schema: risksmart

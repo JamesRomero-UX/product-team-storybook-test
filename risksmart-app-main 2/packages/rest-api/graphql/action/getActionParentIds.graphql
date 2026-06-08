@@ -1,0 +1,5 @@
+query getActionParentIds($ActionId: uuid!) {
+  action_parent(where: { ActionId: { _eq: $ActionId } }) {
+    ParentId
+  }
+}

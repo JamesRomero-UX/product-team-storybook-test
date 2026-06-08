@@ -1,0 +1,5 @@
+mutation updateComplianceMonitoringAssessment($object: UpdateAssessmentInput!) {
+  updateComplianceMonitoringAssessmentApi(object: $object) {
+    affected_rows
+  }
+}

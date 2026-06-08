@@ -1,0 +1,14 @@
+fragment ControlParts on control {
+  Id
+  Title
+  Description
+  SequentialId
+  Type
+  schedule {
+    ...ScheduleParts
+  }
+  parents {
+    ParentId
+  }
+  ModifiedAtTimestamp
+}

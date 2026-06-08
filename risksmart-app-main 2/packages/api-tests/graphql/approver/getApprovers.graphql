@@ -1,0 +1,11 @@
+query getApprovers {
+  approver {
+    CreatedByUser
+    ModifiedByUser
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    Id
+    UserId
+    LevelId
+  }
+}

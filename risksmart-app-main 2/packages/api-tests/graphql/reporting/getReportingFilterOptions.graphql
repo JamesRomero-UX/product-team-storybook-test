@@ -1,0 +1,5 @@
+query getReportingFilterOptions($Input: ReportingFilterOptionsInput!) {
+  reportingFilterOptions(Input: $Input) {
+    value
+  }
+}

@@ -1,0 +1,12 @@
+query getChangeRequests {
+  change_request {
+    Id
+    ParentId
+    ChangeRequestStatus
+    RequestedChanges
+    Comment
+    CreatedAtTimestamp
+    CreatedByUser
+    ModifiedAtTimestamp
+  }
+}

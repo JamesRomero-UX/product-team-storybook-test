@@ -1,0 +1,7 @@
+query getIssueAssessment($Id: uuid!) {
+  issue_assessment(where: { Id: { _eq: $Id } }) {
+    Id
+    ParentIssueId
+    Status
+  }
+}

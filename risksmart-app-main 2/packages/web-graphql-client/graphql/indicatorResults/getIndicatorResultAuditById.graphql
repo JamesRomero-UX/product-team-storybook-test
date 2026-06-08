@@ -1,0 +1,14 @@
+query getIndicatorResultAuditById($id: uuid!) {
+  indicator_result_audit(where: { Id: { _eq: $id } }) {
+    Description
+    Id
+    ResultDate
+    TargetValueNum
+    TargetValueTxt
+    CustomAttributeData
+    ModifiedByUser
+    ModifiedAtTimestamp
+    CreatedByUser
+    CreatedAtTimestamp
+  }
+}

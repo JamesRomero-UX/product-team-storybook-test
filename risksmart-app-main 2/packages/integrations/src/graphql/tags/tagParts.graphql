@@ -1,0 +1,8 @@
+fragment TagParts on tag {
+  type {
+    Description
+    Name
+  }
+  ParentId
+  TagTypeId
+}

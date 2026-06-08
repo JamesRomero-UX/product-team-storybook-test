@@ -1,0 +1,15 @@
+mutation insertAttestationCycle(
+  $AllowCarryForward: Boolean!
+  $DocumentId: uuid!
+  $attestationConfig: InsertAttestationConfigInput
+) {
+  insertChildAttestationCycle(
+    object: { AllowCarryForward: $AllowCarryForward, DocumentId: $DocumentId }
+  ) {
+    Id
+  }
+
+  insertChildAttestationConfig(object: $attestationConfig) {
+    Id
+  }
+}

@@ -1,0 +1,19 @@
+query getAppetiteById($_eq: uuid) {
+  appetite(where: { Id: { _eq: $_eq } }) {
+    ...AppetiteParts
+    files {
+      ...RelationFileParts
+    }
+    impact {
+      Id
+    }
+    parents {
+      risk {
+        Id
+      }
+    }
+    ancestorContributors {
+      ...AncestorContributorParts
+    }
+  }
+}

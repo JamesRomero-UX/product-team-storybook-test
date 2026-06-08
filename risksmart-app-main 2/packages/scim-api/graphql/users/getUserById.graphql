@@ -1,0 +1,22 @@
+query GetAuthUserById($Id: String!) {
+  auth_user(where: { Id: { _eq: $Id } }) {
+    Id
+    FirstName
+    LastName
+    UserName
+    Email
+    Status
+    CreatedOn
+    AuthUser_Id
+    DisplayName
+    JobTitle
+    Department
+    OfficeLocation
+    organisationusers {
+      OrgKey
+      RoleKey
+      External_Id
+      LastSeen
+    }
+  }
+}

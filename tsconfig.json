@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "types": ["node", "@figma/code-connect/figma-types"],
+    "baseUrl": ".",
+    "paths": {
+      "@risksmart-app/atomic-ui": ["./risksmart-app-main 2/packages/atomic-ui/src/index.ts"],
+      "@atomic-ui-src/*": ["./risksmart-app-main 2/packages/atomic-ui/src/*"]
+    }
+  },
+  "include": ["src", ".storybook"]
+}

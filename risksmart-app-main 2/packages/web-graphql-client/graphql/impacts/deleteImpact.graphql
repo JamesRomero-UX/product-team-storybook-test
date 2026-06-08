@@ -1,0 +1,9 @@
+mutation deleteImpact($Id: uuid!) {
+  delete_impact_rating(where: { ImpactId: { _eq: $Id } }) {
+    affected_rows
+  }
+
+  delete_impact(where: { Id: { _eq: $Id } }) {
+    affected_rows
+  }
+}

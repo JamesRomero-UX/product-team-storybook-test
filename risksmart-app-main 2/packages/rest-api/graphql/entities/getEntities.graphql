@@ -1,0 +1,21 @@
+query getEntities($where: entity_bool_exp!) {
+  entity(where: $where) {
+    Id
+    descendants {
+      Id
+      descendants {
+        Id
+      }
+      owners {
+        user {
+          Id
+        }
+      }
+    }
+    owners {
+      user {
+        Id
+      }
+    }
+  }
+}

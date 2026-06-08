@@ -1,0 +1,52 @@
+query getPolicyAttestationRecords($where: attestation_record_bool_exp! = {}) {
+  attestation_record(
+    where: $where
+    order_by: { Active: desc, NodeId: desc, ExpiresAt: asc }
+  ) {
+    Id
+    ExpiresAt
+    Active
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    AttestationStatus
+    AttestedAt
+    UserId
+    NodeId
+    CycleId
+    carriedForwardFromRecord {
+      node {
+        documentFile {
+          Id
+          Version
+        }
+      }
+    }
+    attestationRecordStatus {
+      Status
+    }
+    user {
+      Id
+      FirstName
+      LastName
+      FriendlyName
+      Email
+      Department
+    }
+    node {
+      documentFile {
+        Id
+        Version
+        parent {
+          Id
+          Title
+          owners {
+            ...OwnerParts
+          }
+          ownerGroups {
+            ...OwnerGroupParts
+          }
+        }
+      }
+    }
+  }
+}

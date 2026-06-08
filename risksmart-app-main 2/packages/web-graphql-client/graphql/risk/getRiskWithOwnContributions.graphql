@@ -1,0 +1,10 @@
+query getRiskWithOwnContributions($currentUserId: String!) {
+  risk {
+    Id
+    SequentialId
+    Title
+    ancestorContributors(where: { UserId: { _eq: $currentUserId } }) {
+      ...AncestorContributorParts
+    }
+  }
+}

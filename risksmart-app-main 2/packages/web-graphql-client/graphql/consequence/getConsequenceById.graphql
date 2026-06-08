@@ -1,0 +1,5 @@
+query getConsequenceById($_eq: uuid!) {
+  consequence(where: { Id: { _eq: $_eq } }) {
+    ...ConsequenceParts
+  }
+}

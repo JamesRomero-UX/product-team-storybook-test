@@ -1,0 +1,39 @@
+$grey-a: #e0e0e0;
+$grey-b: #a4a4a4;
+$blue: #002340;
+$border-size: 2px;
+
+.placematCell div {
+  background: transparent;
+}
+.placematCell span {
+  color: unset !important;
+}
+
+.greyBackground {
+  background-color: $grey-b;
+}
+.blueBackground {
+  background-color: $blue;
+}
+
+.borderBottomDotted {
+  border-bottom: $border-size dotted $grey-a;
+}
+.borderBottomSolid {
+  border-bottom: $border-size solid $grey-a;
+}
+.borderBottomTransparent {
+  border-bottom: $border-size solid transparent;
+}
+
+.borderLeftSolid {
+  border-left: $border-size solid $grey-a;
+}
+.borderLeftTransparent {
+  border-left: $border-size solid transparent;
+}
+.borderXTransparent {
+  border-left: $border-size solid transparent;
+  border-right: $border-size solid transparent;
+}

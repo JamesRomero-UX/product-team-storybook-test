@@ -1,0 +1,39 @@
+.grabbable,
+.grabbing {
+  .fieldControl * {
+    cursor: pointer;
+    pointer-events: auto;
+  }
+}
+
+.grabbable {
+  cursor: grab;
+  touch-action: none;
+
+  * {
+    cursor: grab;
+  }
+
+  .children,
+  .children *:not(.fieldControl *) {
+    pointer-events: none;
+    user-select: none;
+  }
+}
+
+.grabbing {
+  cursor: grabbing;
+  background: white;
+  z-index: 9999;
+  touch-action: none;
+
+  * {
+    cursor: grabbing;
+  }
+
+  .children,
+  .children * {
+    pointer-events: none;
+    user-select: none;
+  }
+}

@@ -1,0 +1,50 @@
+query getNotificationListDetails(
+  $issueIds: [uuid!]!
+  $actionIds: [uuid!]!
+  $riskIds: [uuid!]!
+  $controlIds: [uuid!]!
+  $documentFileIds: [uuid!]!
+  $documentIds: [uuid!]!
+  $indicatorIds: [uuid!]!
+) {
+  action(where: { Id: { _in: $actionIds } }) {
+    Id
+    SequentialId
+    Title
+  }
+
+  issue(where: { Id: { _in: $issueIds } }) {
+    Id
+    SequentialId
+    Title
+  }
+
+  risk(where: { Id: { _in: $riskIds } }) {
+    Id
+    SequentialId
+    Title
+  }
+
+  control(where: { Id: { _in: $controlIds } }) {
+    Id
+    SequentialId
+    Title
+  }
+
+  document_file(where: { Id: { _in: $documentFileIds } }) {
+    Id
+    ParentDocumentId
+  }
+
+  document(where: { Id: { _in: $documentIds } }) {
+    Id
+    SequentialId
+    Title
+  }
+
+  indicator(where: { Id: { _in: $indicatorIds } }) {
+    Id
+    SequentialId
+    Title
+  }
+}

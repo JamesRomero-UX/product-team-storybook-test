@@ -1,0 +1,86 @@
+query getControls($where: control_bool_exp! = {}) {
+  control(where: $where) {
+    ...ControlParts
+    scheduleState {
+      LatestDate
+      DueDate
+      OverdueDate
+    }
+    actions_aggregate(where: { action: { Status: { _eq: open } } }) {
+      aggregate {
+        count
+      }
+    }
+    open_issue_aggregate: issues_aggregate(
+      where: { issue: { assessment: { Status: { _eq: open } } } }
+    ) {
+      aggregate {
+        count
+      }
+    }
+    issues_aggregate {
+      aggregate {
+        count
+      }
+    }
+    indicators_aggregate {
+      aggregate {
+        count
+      }
+    }
+    testResults(
+      where: { RatingType: { _in: ["assessment", "rating"] } }
+      order_by: { TestDate: desc, ModifiedAtTimestamp: desc }
+    ) {
+      OverallEffectiveness
+      DesignEffectiveness
+      PerformanceEffectiveness
+      TestDate
+      Id
+    }
+    owners {
+      ...OwnerParts
+    }
+    ownerGroups {
+      ...OwnerGroupParts
+    }
+    contributors {
+      ...ContributorParts
+    }
+    contributorGroups {
+      ...ContributorGroupParts
+    }
+    parents {
+      parent {
+        Id
+        ObjectType
+        SequentialId
+      }
+      obligation {
+        Title
+      }
+      risk {
+        Title
+      }
+      thirdParty {
+        Title
+      }
+      group {
+        Id
+        Title
+      }
+    }
+    modifiedByUser {
+      FriendlyName
+    }
+    createdByUser {
+      FriendlyName
+    }
+    tags {
+      ...TagParts
+    }
+    departments {
+      ...DepartmentParts
+    }
+  }
+}

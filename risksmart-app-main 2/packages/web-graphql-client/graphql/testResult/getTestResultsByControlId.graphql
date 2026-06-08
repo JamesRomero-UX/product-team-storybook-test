@@ -1,0 +1,24 @@
+query getTestResultsByControlId($controlId: uuid) {
+  test_result(
+    where: {
+      ParentControlId: { _eq: $controlId }
+      RatingType: { _in: ["assessment", "rating"] }
+    }
+  ) {
+    ...TestResultParts
+    submitter {
+      FriendlyName
+    }
+    files {
+      ...RelationFileParts
+    }
+    assessmentParents(where: { ParentType: { _eq: assessment } }) {
+      assessment {
+        ...AssessmentParts
+        completedByUser {
+          FriendlyName
+        }
+      }
+    }
+  }
+}

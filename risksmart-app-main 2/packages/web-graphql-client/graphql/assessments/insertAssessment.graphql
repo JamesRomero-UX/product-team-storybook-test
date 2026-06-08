@@ -1,0 +1,5 @@
+mutation insertAssessment($object: InsertAssessmentInput!) {
+  insertAssessmentApi(object: $object) {
+    Id
+  }
+}

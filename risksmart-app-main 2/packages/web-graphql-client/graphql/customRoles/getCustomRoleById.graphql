@@ -1,0 +1,19 @@
+query getCustomRoleById($Id: uuid) {
+  custom_role(where: { Id: { _eq: $Id } }) {
+    Id
+    RoleName
+    Description
+    CreatedAtTimestamp
+    CreatedByUser
+    ModifiedByUser
+    ModifiedAtTimestamp
+    customRoleUsers {
+      UserId
+      Id
+    }
+    customRoleAssignments {
+      RoleTypeKey
+      Id
+    }
+  }
+}

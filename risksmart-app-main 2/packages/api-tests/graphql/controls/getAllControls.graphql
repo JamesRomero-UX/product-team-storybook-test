@@ -1,0 +1,13 @@
+query getAllControls {
+  control {
+    Description
+    Id
+    CreatedAtTimestamp
+    ModifiedByUser
+    Title
+    Type
+    CreatedByUser
+    ModifiedByUser
+    ModifiedAtTimestamp
+  }
+}

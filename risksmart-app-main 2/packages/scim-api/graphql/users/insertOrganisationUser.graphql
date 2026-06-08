@@ -1,0 +1,19 @@
+mutation InsertOrganisationUser(
+  $OrgKey: String!
+  $User_Id: String!
+  $External_Id: String = null
+  $RoleKey: String = null
+) {
+  insert_auth_organisationuser_one(
+    object: {
+      OrgKey: $OrgKey
+      User_Id: $User_Id
+      CreatedByUser: "SCIM"
+      RoleKey: $RoleKey
+      External_Id: $External_Id
+    }
+    on_conflict: { constraint: organisationUser_pkey, update_columns: [] }
+  ) {
+    OrgKey
+  }
+}

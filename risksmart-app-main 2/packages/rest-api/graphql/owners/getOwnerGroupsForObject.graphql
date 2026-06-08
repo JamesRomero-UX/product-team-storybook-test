@@ -1,0 +1,9 @@
+query getOwnerGroupsForObject($Id: uuid!) {
+  owner_group(where: { ParentId: { _eq: $Id } }) {
+    group {
+      Name
+      Id
+      Email
+    }
+  }
+}

@@ -1,0 +1,933 @@
+query getNormalisedExportData($orgKey: String!) {
+  acceptance_parent(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    ParentId
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  action_parent(where: { OrgKey: { _eq: $orgKey } }) {
+    ActionId
+    ParentId
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  appetite_parent(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    ParentId
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  attestation_group(where: { OrgKey: { _eq: $orgKey } }) {
+    GroupId
+    OrgKey
+    CreatedByUser
+    ModifiedByUser
+    ModifiedAtTimestamp
+    CreatedAtTimestamp
+    ConfigId
+  }
+
+  attestation_record(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    UserId
+    Active
+    AttestationStatus
+    AttestedAt
+    ExpiresAt
+    OrgKey
+    CreatedByUser
+    ModifiedByUser
+    ModifiedAtTimestamp
+    CreatedAtTimestamp
+    NodeId
+    ConfigId
+    attestationRecordStatus {
+      Status
+    }
+  }
+
+  control_parent(where: { OrgKey: { _eq: $orgKey } }) {
+    ControlId
+    ParentId
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  control_group(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    Title
+    Owner
+    ModifiedAtTimestamp
+    ModifiedByUser
+    OrgKey
+    Meta
+    Description
+    CreatedByUser
+    CreatedAtTimestamp
+    CustomAttributeData
+  }
+
+  indicator_parent(where: { OrgKey: { _eq: $orgKey } }) {
+    IndicatorId
+    ParentId
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  issue_parent(where: { OrgKey: { _eq: $orgKey } }) {
+    IssueId
+    ParentId
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  impact_parent(where: { OrgKey: { _eq: $orgKey } }) {
+    ImpactId
+    ParentId
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  assessment_result_parent(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    ParentId
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  document_assessment_result(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+    TestDate
+    CustomAttributeData
+    Rating
+    RatingType
+    Rationale
+  }
+
+  obligation_assessment_result(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+    TestDate
+    CustomAttributeData
+    Rating
+    RatingType
+    Rationale
+  }
+
+  risk_assessment_result(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+    TestDate
+    CustomAttributeData
+    Rating
+    RatingType
+    Rationale
+    ControlType
+    Likelihood
+    Impact
+  }
+
+  owner(where: { OrgKey: { _eq: $orgKey } }) {
+    UserId
+    ParentId
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  owner_group(where: { OrgKey: { _eq: $orgKey } }) {
+    UserGroupId
+    ParentId
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  contributor(where: { OrgKey: { _eq: $orgKey } }) {
+    UserId
+    ParentId
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  contributor_group(where: { OrgKey: { _eq: $orgKey } }) {
+    UserGroupId
+    ParentId
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  department_type(where: { OrgKey: { _eq: $orgKey } }) {
+    DepartmentTypeId
+    Name
+    DepartmentTypeGroupId
+    Description
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  department(where: { OrgKey: { _eq: $orgKey } }) {
+    DepartmentTypeId
+    ParentId
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  tag_type(where: { OrgKey: { _eq: $orgKey } }) {
+    TagTypeId
+    TagTypeGroupId
+    Name
+    Description
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  tag_type_group(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    Name
+    OrgKey
+    CreatedByUser
+    CreatedAtTimestamp
+    ModifiedByUser
+    ModifiedAtTimestamp
+  }
+
+  tag(where: { OrgKey: { _eq: $orgKey } }) {
+    TagTypeId
+    ParentId
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  file(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    ContentType
+    FileName
+    FileSize
+    Meta
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  relation_file(where: { OrgKey: { _eq: $orgKey } }) {
+    ParentId
+    ParentType
+    FileId
+    Meta
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  acceptance(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    Title
+    Details
+    CustomAttributeData
+    ApprovedByUser
+    RequestedByUser
+    RequestedByUserGroup
+    SequentialId
+    Status
+    DateAcceptedFrom
+    DateAcceptedTo
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  action_update(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    Title
+    Description
+    CustomAttributeData
+    ParentActionId
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  action(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    Title
+    Description
+    CustomAttributeData
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+    ClosedDate
+    Priority
+    SequentialId
+    Status
+    DateDue
+    DateRaised
+  }
+
+  appetite(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    CustomAttributeData
+    SequentialId
+    AppetiteType
+    Statement
+    UpperAppetite
+    LowerAppetite
+    ImpactAppetite
+    LikelihoodAppetite
+    EffectiveDate
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  test_result(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    Title
+    Description
+    OverallEffectiveness
+    ParentControlId
+    PerformanceEffectiveness
+    RatingType
+    SequentialId
+    Submitter
+    TestDate
+    TestType
+    DesignEffectiveness
+    NextTestDate
+    CustomAttributeData
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  approval_level(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    Description
+    ApprovalId
+    SequenceOrder
+    ApprovalRuleType
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  approver(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    UserId
+    UserGroupId
+    LevelId
+    OwnerApprover
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  approval(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    InFlightEditRule
+    ParentId
+    Workflow
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  change_request(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    ActionUserId
+    OverriddenByUser
+    ParentId
+    RequestedChanges
+    SequentialId
+    Type
+    ChangeRequestStatus
+    Comment
+    OverriddenAtTimestamp
+    ParentId
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  assessment_activity(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    Title
+    CustomAttributeData
+    ActivityType
+    ParentId
+    Status
+    Summary
+    AssignedUser
+    CompletionDate
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  assessment(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    Title
+    CustomAttributeData
+    ActualCompletionDate
+    OriginatingItemId
+    Outcome
+    SequentialId
+    StartDate
+    Status
+    Summary
+    TargetCompletionDate
+    NextTestDate
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  cause(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    Title
+    Description
+    Significance
+    ParentIssueId
+    CustomAttributeData
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  comment(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    Content
+    ConversationId
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  consequence(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    Title
+    Description
+    ParentIssueId
+    CostType
+    Type
+    CostValue
+    Criticality
+    CustomAttributeData
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  conversation(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    IsResolved
+    ParentId
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  control(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    Title
+    Description
+    CustomAttributeData
+    Type
+    SequentialId
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  document_file(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    FileId
+    Content
+    NextReviewDate
+    ParentDocumentId
+    PublishedDate
+    ReasonForReview
+    ReviewDate
+    ReviewedBy
+    Status
+    Summary
+    Type
+    Version
+    CustomAttributeData
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  document_linked_document(where: { OrgKey: { _eq: $orgKey } }) {
+    LinkedDocumentId
+    DocumentId
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  document(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    Title
+    Purpose
+    SequentialId
+    ParentDocument
+    DocumentType
+    CustomAttributeData
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  enterprise_risk(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    Title
+    Description
+    Tier
+    ParentId
+    Meta
+    Treatment
+    SequentialId
+    CustomAttributeData
+    OrgKey
+    CreatedByUser
+    ModifiedByUser
+    ModifiedAtTimestamp
+    CreatedAtTimestamp
+  }
+
+  enterprise_risk_instance(where: { OrgKey: { _eq: $orgKey } }) {
+    EnterpriseRiskId
+    RiskId
+    OrgKey
+    CreatedByUser
+    ModifiedByUser
+    ModifiedAtTimestamp
+    CreatedAtTimestamp
+    EntityId
+  }
+
+  enterprise_risk_score(where: { OrgKey: { _eq: $orgKey } }) {
+    EnterpriseRiskId
+    InherentScoreMean
+    InherentScoreMedian
+    InherentScoreWorstCase
+    ResidualScoreMean
+    ResidualScoreMedian
+    ResidualScoreWorstCase
+    InherentRatingMean
+    InherentRatingMedian
+    InherentRatingWorstCase
+    ResidualRatingMean
+    ResidualRatingMedian
+    ResidualRatingWorstCase
+    OrgKey
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    CreatedByUser
+    ModifiedByUser
+  }
+
+  impact_rating(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    CompletedBy
+    RatedItemId
+    Rating
+    RatingType
+    SequentialId
+    TestDate
+    ImpactId
+    Likelihood
+    CustomAttributeData
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  impact(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    RatingGuidance
+    Rationale
+    ImpactAppetite
+    LikelihoodAppetite
+    CustomAttributeData
+    SequentialId
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  indicator_result(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    Description
+    TargetValueNum
+    TargetValueTxt
+    IndicatorId
+    ResultDate
+    CustomAttributeData
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  indicator(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    Title
+    Description
+    TargetValueTxt
+    Type
+    Unit
+    UpperAppetiteNum
+    UpperToleranceNum
+    LowerAppetiteNum
+    LowerToleranceNum
+    CustomAttributeData
+    SequentialId
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  issue_update(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    Title
+    Description
+    CustomAttributeData
+    ParentIssueId
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  issue(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    Title
+    RaisedAtTimestamp
+    Type
+    DateIdentified
+    DateOccurred
+    Details
+    ImpactsCustomer
+    IsExternalIssue
+    CustomAttributeData
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+    SequentialId
+  }
+
+  issue_assessment(where: { OrgKey: { _eq: $orgKey } }) {
+    ParentIssueId
+    IssueType
+    Severity
+    TargetCloseDate
+    ActualCloseDate
+    Status
+    CertifiedIndividual
+    RegulatoryBreach
+    Reportable
+    Rationale
+    IssueCausedByThirdParty
+    ThirdPartyResponsible
+    IssueCausedBySystemIssue
+    SystemResponsible
+    PolicyBreach
+    PoliciesBreached
+    PolicyOwner
+    PolicyOwnerCommentary
+    ModifiedByUser
+    ModifiedAtTimestamp
+    Meta
+    CreatedByUser
+    CreatedAtTimestamp
+    Id
+    CustomAttributeData
+    Type
+  }
+
+  issue_status_view(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    Status
+  }
+
+  questionnaire_template_version(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    Version
+    UISchema
+    Schema
+    ParentId
+    Status
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  questionnaire_template(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    Title
+    Description
+    CustomAttributeData
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  third_party(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    Title
+    Address
+    Criticality
+    Description
+    Postcode
+    PrimaryContactName
+    CityTown
+    Status
+    CompanyName
+    ContactName
+    Country
+    CompanyDomain
+    SequentialId
+    Description
+    CustomAttributeData
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  obligation_impact(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    Description
+    ImpactRating
+    ParentObligationId
+    CustomAttributeData
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  third_party_response(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    ResponseData
+    StartDate
+    Status
+    ParentId
+    QuestionnaireTemplateVersionId
+    RecallReason
+    ExpiresAt
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+  questionnaire_invite(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    UserEmail
+    UserId
+    Message
+    ThirdPartyResponseId: ParentId
+    QuestionnaireTemplateVersionId
+    ThirdPartyId
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  obligation(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    Title
+    Description
+    Adherence
+    SequentialId
+    Type
+    Interpretation
+    CustomAttributeData
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  risk_score(where: { OrgKey: { _eq: $orgKey } }) {
+    RiskId
+    ResidualScore
+    InherentScore
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  risk(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    Title
+    Description
+    Status
+    Tier
+    Treatment
+    ParentRiskId
+    CustomAttributeData
+    SequentialId
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  schedule_state(where: { OrgKey: { _eq: $orgKey } }) {
+    ParentId: Id
+    DueDate
+    LatestDate
+    OverdueDate
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  schedule(where: { OrgKey: { _eq: $orgKey } }) {
+    ParentId: Id
+    TimeToCompleteValue
+    Frequency
+    ManualDueDate
+    StartDate
+    TimeToCompleteUnit
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  auth_organisationuser(where: { OrgKey: { _eq: $orgKey } }) {
+    User_Id
+    Status
+    RoleKey
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  auth_user(where: { organisationusers: { OrgKey: { _eq: $orgKey } } }) {
+    Id
+    DisplayName
+    Email
+    FirstName
+    FriendlyName
+    LastName
+    LastSeen
+    CreatedByUser
+    CreatedOn
+    ModifiedAtTimestamp
+    ModifiedByUser
+  }
+
+  user_group(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    Name
+    Description
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  user_group_user(where: { OrgKey: { _eq: $orgKey } }) {
+    UserGroupId
+    UserId
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+  }
+
+  form_configuration(where: { OrgKey: { _eq: $orgKey } }) {
+    ParentType
+    customAttributeSchema {
+      Id
+      Schema
+      UiSchema
+    }
+  }
+
+  node(where: { OrgKey: { _eq: $orgKey } }) {
+    Id
+    SequentialId
+    ObjectType
+  }
+}

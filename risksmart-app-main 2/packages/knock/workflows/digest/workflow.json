@@ -1,0 +1,73 @@
+{
+  "categories": [
+    "digest"
+  ],
+  "name": "digest",
+  "steps": [
+    {
+      "branches": [
+        {
+          "conditions": {
+            "all": [
+              {
+                "argument": null,
+                "operator": "empty",
+                "variable": "recipient.email"
+              }
+            ]
+          },
+          "name": "No Email then not a real notification user",
+          "steps": [],
+          "terminates": true
+        },
+        {
+          "name": "Default",
+          "steps": [],
+          "terminates": false
+        }
+      ],
+      "name": "Check User",
+      "ref": "branch_2",
+      "type": "branch"
+    },
+    {
+      "ref": "batch_1",
+      "settings": {
+        "batch_execution_mode": "accumulate",
+        "batch_items_max_limit": 1000,
+        "batch_items_render_limit": 100,
+        "batch_order": "asc",
+        "batch_window": {
+          "unit": "hours",
+          "value": 24
+        },
+        "batch_window_type": "fixed"
+      },
+      "type": "batch"
+    },
+    {
+      "channel_key": "aws-ses-risksmart-dev-cloud",
+      "channel_type": "email",
+      "ref": "email_1",
+      "template": {
+        "is_mjml": false,
+        "settings": {
+          "attachment_key": "attachments",
+          "layout_key": "default"
+        },
+        "subject": "RiskSmart: Your daily digest",
+        "html_body@": "email_1/html_body.html"
+      },
+      "type": "channel"
+    }
+  ],
+  "trigger_frequency": "every_trigger",
+  "__readonly": {
+    "environment": "development",
+    "key": "digest",
+    "active": true,
+    "valid": true,
+    "created_at": "2025-10-11T15:04:34.555614Z"
+  },
+  "$schema": "https://schemas.knock.app/cli/workflow.json"
+}

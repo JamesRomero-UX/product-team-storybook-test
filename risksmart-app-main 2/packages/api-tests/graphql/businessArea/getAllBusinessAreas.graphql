@@ -1,0 +1,6 @@
+query getAllBusinessAreas {
+  business_area {
+    Title
+    Id
+  }
+}

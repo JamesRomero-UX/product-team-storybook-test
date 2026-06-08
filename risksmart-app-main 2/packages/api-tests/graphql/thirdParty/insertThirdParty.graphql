@@ -1,0 +1,8 @@
+mutation insertThirdParty($objects: [third_party_insert_input!]!) {
+  insert_third_party(objects: $objects) {
+    affected_rows
+    returning {
+      Id
+    }
+  }
+}

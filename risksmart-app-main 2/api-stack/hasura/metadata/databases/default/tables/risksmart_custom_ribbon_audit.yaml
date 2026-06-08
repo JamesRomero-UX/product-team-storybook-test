@@ -1,0 +1,22 @@
+table:
+  name: custom_ribbon_audit
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: custom_ribbon_audit
+  custom_root_fields: {}
+select_permissions:
+  - role: read:audit
+    permission:
+      columns:
+        - CreatedAtTimestamp
+        - CreatedByUser
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - Id
+        - ParentType
+        - Filters
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id

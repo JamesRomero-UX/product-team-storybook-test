@@ -1,0 +1,11 @@
+query getRisksWithAncestorContributorsAndEntities {
+  risk {
+    ...RiskParts
+    enterpriseRiskInstance {
+      ...EnterpriseRiskInstanceWithEntityHierarchyParts
+    }
+    ancestorContributors {
+      ...AncestorContributorParts
+    }
+  }
+}

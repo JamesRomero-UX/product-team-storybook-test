@@ -1,0 +1,12 @@
+.hideDateInput {
+  div:nth-last-child(2) {
+    display: none;
+  }
+  [class*='awsui_date-picker-trigger'] button {
+    height: 36px !important;
+    width: 36px !important;
+    text-align: center !important;
+    border-width: 1.5px !important;
+    @apply text-teal #{!important};
+  }
+}

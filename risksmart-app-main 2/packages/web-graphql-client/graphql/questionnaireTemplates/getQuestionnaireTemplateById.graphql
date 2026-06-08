@@ -1,0 +1,53 @@
+query getQuestionnaireTemplateById($Id: uuid!) {
+  questionnaire_template: questionnaire_template_by_pk(Id: $Id) {
+    ...QuestionnaireTemplateParts
+    owners {
+      ...OwnerParts
+    }
+    contributors {
+      ...ContributorParts
+    }
+    ownerGroups {
+      ...OwnerGroupParts
+    }
+    contributorGroups {
+      ...ContributorGroupParts
+    }
+    ancestorContributors {
+      ...AncestorContributorParts
+    }
+    tags {
+      ...TagParts
+    }
+    departments {
+      ...DepartmentParts
+    }
+    draftVersions: versions(
+      where: { Status: { _eq: draft } }
+      order_by: { CreatedAtTimestamp: desc }
+      limit: 1
+    ) {
+      Id
+      Version
+      Status
+    }
+    nonDraftVersions: versions(
+      where: { Status: { _neq: draft } }
+      order_by: { CreatedAtTimestamp: desc }
+      limit: 1
+    ) {
+      Id
+      Version
+      Status
+    }
+    publishedVersion: versions(
+      where: { Status: { _eq: published } }
+      order_by: { CreatedAtTimestamp: desc }
+      limit: 1
+    ) {
+      Id
+      Version
+      Status
+    }
+  }
+}

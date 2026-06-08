@@ -1,0 +1,219 @@
+mutation DeleteOrg($OrgKey: String = "") {
+  # Delete parent links
+
+  delete_acceptance_parent(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_action_parent(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_appetite_parent(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_control_parent(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_indicator_parent(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_issue_parent(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_impact_parent(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  # Delete assessment results
+
+  delete_assessment_result_parent(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+  delete_document_assessment_result(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+  delete_obligation_assessment_result(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+  delete_risk_assessment_result(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  # Delete owners and contributors
+
+  delete_owner(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_owner_group(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_contributor(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_contributor_group(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  # Delete tags, departments
+
+  delete_department(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_tag(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  # Delete files
+
+  delete_file(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_relation_file(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  # Delete the rest
+
+  delete_acceptance(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_action_update(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_action(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_appetite(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_test_result(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  # Uncomment if deleting workflows is also required
+  # delete_approval_level(where: { OrgKey: { _eq: $OrgKey } }) {
+  #   affected_rows
+  # }
+
+  # delete_approver(where: { OrgKey: { _eq: $OrgKey } }) {
+  #   affected_rows
+  # }
+
+  # delete_approval(where: { OrgKey: { _eq: $OrgKey } }) {
+  #   affected_rows
+  # }
+
+  delete_change_request(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_assessment_activity(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_assessment(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_cause(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_comment(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_consequence(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_conversation(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_control(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_dashboard(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_document_file(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_document_linked_document(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_document(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_impact_rating(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_impact(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_indicator_result(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_indicator(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_issue_update(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_issue(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_questionnaire_template_version(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_questionnaire_template(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_third_party(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_obligation_impact(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_obligation(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_risk_score(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+
+  delete_risk(where: { OrgKey: { _eq: $OrgKey } }) {
+    affected_rows
+  }
+}

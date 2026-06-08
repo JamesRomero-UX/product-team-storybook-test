@@ -1,0 +1,17 @@
+query getControlAuditById($Id: uuid) {
+  control_audit(
+    where: { Id: { _eq: $Id } }
+    order_by: { ModifiedAtTimestamp: desc }
+  ) {
+    CreatedByUser
+    ModifiedByUser
+    Description
+    Id
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    Title
+    Type
+    CustomAttributeData
+    SequentialId
+  }
+}

@@ -1,0 +1,13 @@
+query getControlsBasic {
+  # Note: Query is must faster for standard users when controls are queried separately to nodes
+  control {
+    Id
+    Title
+    SequentialId
+  }
+  # Get control nodes so we have IDs for even controls we don't have access to
+  node(where: { ObjectType: { _eq: control } }) {
+    Id
+    SequentialId
+  }
+}

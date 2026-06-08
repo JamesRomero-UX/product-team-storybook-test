@@ -1,0 +1,8 @@
+query getRibbonItemsByParentType($parentType: parent_type_enum!) {
+  custom_ribbon(where: { ParentType: { _eq: $parentType } }) {
+    Id
+    ParentType
+    Filters
+    ModifiedAtTimestamp
+  }
+}

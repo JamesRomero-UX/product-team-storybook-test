@@ -1,0 +1,73 @@
+table:
+  name: issue_assessment_audit
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: issue_assessment_audit
+  custom_root_fields: {}
+array_relationships:
+  - name: permissions
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: Id
+        insertion_order: null
+        remote_table:
+          name: permission_view
+          schema: risksmart
+select_permissions:
+  - role: Standard
+    permission:
+      columns:
+        - ParentIssueId
+        - Status
+        - ModifiedAtTimestamp
+        - Action
+        - Type
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - permissions:
+              _and:
+                - UserId:
+                    _eq: X-Hasura-User-Id
+                - OrgKey:
+                    _eq: X-Hasura-org-Id
+                - AccessType:
+                    _eq: read
+      allow_aggregations: true
+  - role: read:issue-assessment-audit
+    permission:
+      columns:
+        - ParentIssueId
+        - IssueType
+        - Severity
+        - TargetCloseDate
+        - ActualCloseDate
+        - Status
+        - CertifiedIndividual
+        - RegulatoryBreach
+        - RegulationsBreached
+        - Reportable
+        - Rationale
+        - IssueCausedByThirdParty
+        - ThirdPartyResponsible
+        - IssueCausedBySystemIssue
+        - SystemResponsible
+        - PolicyBreach
+        - PoliciesBreached
+        - PolicyOwner
+        - PolicyOwnerCommentary
+        - ModifiedByUser
+        - ModifiedAtTimestamp
+        - CreatedByUser
+        - CreatedAtTimestamp
+        - Action
+        - Id
+        - Type
+        - CustomAttributeData
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id

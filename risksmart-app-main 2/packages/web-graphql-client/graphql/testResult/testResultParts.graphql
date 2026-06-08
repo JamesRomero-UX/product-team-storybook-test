@@ -1,0 +1,56 @@
+fragment TestResultParts on test_result {
+  Description
+  DesignEffectiveness
+  Id
+  OverallEffectiveness
+  ParentControlId
+  PerformanceEffectiveness
+  Submitter
+  TestDate
+  TestType
+  CreatedAtTimestamp
+  ModifiedAtTimestamp
+  Title
+  CreatedByUser
+  ModifiedByUser
+  CustomAttributeData
+  SequentialId
+}
+
+fragment ControlTestInternalAuditResultParts on control_test_internal_audit_result {
+  Description
+  DesignEffectiveness
+  Id
+  OverallEffectiveness
+  ParentControlId
+  PerformanceEffectiveness
+  Submitter
+  TestDate
+  TestType
+  CreatedAtTimestamp
+  ModifiedAtTimestamp
+  Title
+  CreatedByUser
+  ModifiedByUser
+  CustomAttributeData
+  SequentialId
+}
+
+fragment ControlTestSecondLineResultParts on control_test_second_line_result {
+  Description
+  DesignEffectiveness
+  Id
+  OverallEffectiveness
+  ParentControlId
+  PerformanceEffectiveness
+  Submitter
+  TestDate
+  TestType
+  CreatedAtTimestamp
+  ModifiedAtTimestamp
+  Title
+  CreatedByUser
+  ModifiedByUser
+  CustomAttributeData
+  SequentialId
+}

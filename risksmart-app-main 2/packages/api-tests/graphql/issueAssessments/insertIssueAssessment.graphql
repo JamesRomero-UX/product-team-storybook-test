@@ -1,0 +1,5 @@
+mutation insertIssueAssessment($objects: [issue_assessment_insert_input!]!) {
+  insert_issue_assessment(objects: $objects) {
+    affected_rows
+  }
+}

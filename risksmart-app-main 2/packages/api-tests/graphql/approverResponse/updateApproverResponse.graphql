@@ -1,0 +1,22 @@
+mutation updateApproverResponse(
+  $changeRequestId: uuid!
+  $response: Boolean!
+  $comment: String!
+) {
+  update_approver_response(
+    _set: { Approved: $response, Comment: $comment }
+    where: { changeRequest: { Id: { _eq: $changeRequestId } } }
+  ) {
+    returning {
+      Approved
+      Comment
+      changeRequest {
+        Id
+      }
+      approver {
+        OwnerApprover
+        UserId
+      }
+    }
+  }
+}

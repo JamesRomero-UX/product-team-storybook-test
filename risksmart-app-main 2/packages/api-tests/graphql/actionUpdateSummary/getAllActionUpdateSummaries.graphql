@@ -1,0 +1,9 @@
+query getAllActionUpdateSummaries {
+  action_update_summary {
+    ActionId
+    LatestDescription
+    LatestTitle
+    Count
+    LatestCreatedAtTimestamp
+  }
+}

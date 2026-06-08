@@ -1,0 +1,62 @@
+volumes:
+  db_storage:
+  n8n_storage:
+
+services:
+  postgres:
+    image: postgres:16.11
+    restart: always
+    ports:
+      - 5431:5432
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+      - POSTGRES_NON_ROOT_USER
+      - POSTGRES_NON_ROOT_PASSWORD
+    volumes:
+      - db_storage:/var/lib/postgresql/data
+      - ./init-data.sh:/docker-entrypoint-initdb.d/init-data.sh
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -h localhost -U ${POSTGRES_USER} -d ${POSTGRES_DB}",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  n8n:
+    build:
+      context: .
+      args:
+        - N8N_VERSION=1.123.23
+    restart: unless-stopped
+    environment:
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=${POSTGRES_DB}
+      - DB_POSTGRESDB_USER=${POSTGRES_NON_ROOT_USER}
+      - DB_POSTGRESDB_PASSWORD=${POSTGRES_NON_ROOT_PASSWORD}
+      - N8N_LOG_LEVEL=debug
+      - N8N_LOG_FORMAT=json
+      - WEBHOOK_URL=$WEBHOOK_URL
+      - N8N_HOST=$N8N_HOST
+      - N8N_PORT=$N8N_PORT
+      - N8N_PROTOCOL=$N8N_PROTOCOL
+      - RS_INTEGRATIONS_API_DOMAIN=$RS_INTEGRATIONS_API_DOMAIN
+      - N8N_RUNNERS_ENABLED=true
+      - N8N_RUNNERS_MODE=internal
+    links:
+      - postgres
+    volumes:
+      - n8n_storage:/home/node/.n8n
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - 8090:8090
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

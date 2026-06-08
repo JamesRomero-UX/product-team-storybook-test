@@ -1,0 +1,9 @@
+query getTestResultWithParentsById($Id: uuid!) {
+  test_result(where: { Id: { _eq: $Id } }) {
+    TestDate
+    Id
+    assessmentParents {
+      ParentType
+    }
+  }
+}

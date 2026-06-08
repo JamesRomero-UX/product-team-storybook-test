@@ -1,0 +1,30 @@
+query getFormCustomisation($parentTypes: [parent_type_enum!]!) {
+  # This contains the custom attribute configuration for the form (json forms schema)
+  form_configuration(where: { ParentType: { _in: $parentTypes } }) {
+    ...FormConfigurationParts
+  }
+  ## todo: try and remove this as lives as also returned in query above
+  # This contains customisation for both standard and custom attributes
+  form_field_configuration(
+    where: { FormConfigurationParentType: { _in: $parentTypes } }
+  ) {
+    FieldId
+    Hidden
+    Required
+    ReadOnly
+    DefaultValue
+    FormConfigurationParentType
+    Label
+    Description
+    Conditions
+  }
+
+  # This contains the order of both standard and custom attributes within a form
+  form_field_ordering(
+    where: { FormConfigurationParentType: { _in: $parentTypes } }
+  ) {
+    FieldId
+    Position
+    FormConfigurationParentType
+  }
+}

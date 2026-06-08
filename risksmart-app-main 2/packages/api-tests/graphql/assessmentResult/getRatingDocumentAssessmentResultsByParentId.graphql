@@ -1,0 +1,11 @@
+query getRatingDocumentAssessmentResultsByParentId($Id: uuid) {
+  document_assessment_result(
+    where: {
+      RatingType: { _in: ["assessment", "rating"] }
+      parents: { ParentId: { _eq: $Id } }
+    }
+  ) {
+    Id
+    TestDate
+  }
+}

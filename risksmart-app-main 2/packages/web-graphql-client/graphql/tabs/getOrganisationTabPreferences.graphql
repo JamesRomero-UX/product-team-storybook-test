@@ -1,0 +1,6 @@
+query getOrganisationTabPreferences {
+  organisation_tab_preference {
+    ObjectType
+    Preferences
+  }
+}

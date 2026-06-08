@@ -1,0 +1,22 @@
+query GetUsersByGroupId($GroupId: uuid!) {
+  user_group(where: { Id: { _eq: $GroupId } }) {
+    users(order_by: { CreatedAtTimestamp: desc }) {
+      authUsers {
+        Id
+        FirstName
+        LastName
+        Email
+        RoleKey
+        Status
+        FriendlyName
+        organisationusers {
+          Status
+        }
+      }
+      CreatedAtTimestamp
+      createdByUser {
+        FriendlyName
+      }
+    }
+  }
+}

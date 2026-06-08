@@ -1,0 +1,6 @@
+query getTierThreeRisks($OrgKey: String!) {
+  risk(where: { Tier: { _eq: 3 }, OrgKey: { _eq: $OrgKey } }) {
+    Id
+    OrgKey
+  }
+}

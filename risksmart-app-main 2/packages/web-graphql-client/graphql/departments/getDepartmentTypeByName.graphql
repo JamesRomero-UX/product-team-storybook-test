@@ -1,0 +1,6 @@
+query getDepartmentTypesByName($Name: String!) {
+  department_type(where: { Name: { _eq: $Name } }) {
+    Name
+    DepartmentTypeId
+  }
+}

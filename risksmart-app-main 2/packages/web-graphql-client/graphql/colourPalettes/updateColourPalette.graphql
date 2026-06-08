@@ -1,0 +1,8 @@
+mutation UpdateColourPalette($Id: uuid!, $Name: String!, $Settings: jsonb!) {
+  update_colour_palette_by_pk(
+    pk_columns: { Id: $Id }
+    _set: { Name: $Name, Settings: $Settings }
+  ) {
+    Id
+  }
+}

@@ -1,0 +1,64 @@
+query getInternalAuditReports {
+  internal_audit_report {
+    ...InternalAuditReportParts
+    owners {
+      ...OwnerParts
+    }
+    ownerGroups {
+      ...OwnerGroupParts
+    }
+    contributors {
+      ...ContributorParts
+    }
+    contributorGroups {
+      ...ContributorGroupParts
+    }
+    tags {
+      ...TagParts
+    }
+    departments {
+      ...DepartmentParts
+    }
+    completedByUser {
+      FriendlyName
+    }
+    assessedItems: assessmentResults {
+      controlledRiskAssessmentResult {
+        Id
+        parents(where: { ParentType: { _eq: risk } }) {
+          risk {
+            Id
+            Title
+          }
+        }
+      }
+      uncontrolledRiskAssessmentResult {
+        Id
+        parents(where: { ParentType: { _eq: risk } }) {
+          risk {
+            Id
+            Title
+          }
+        }
+      }
+      obligationAssessmentResult {
+        Id
+        parents(where: { ParentType: { _eq: obligation } }) {
+          obligation {
+            Id
+            Title
+          }
+        }
+      }
+      documentAssessmentResult {
+        Id
+        parents(where: { ParentType: { _eq: document } }) {
+          document {
+            Id
+            Title
+          }
+        }
+      }
+    }
+  }
+}

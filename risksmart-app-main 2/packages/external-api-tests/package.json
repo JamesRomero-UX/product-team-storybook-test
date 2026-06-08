@@ -1,0 +1,29 @@
+{
+  "name": "@risksmart-app/external-api-tests",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "tsc": "tsc --noEmit",
+    "test": "vitest run",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix",
+    "docker:compose:api-test:external-api": "docker compose --profile v3 up -d --wait"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "ts-node": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:",
+    "zod": "catalog:"
+  },
+  "dependencies": {
+    "@risksmart-app/domain": "workspace:*",
+    "@risksmart-app/drizzle": "workspace:*",
+    "@risksmart-app/eslint-config": "workspace:*",
+    "@risksmart-app/test-data": "workspace:*",
+    "dotenv": "catalog:",
+    "eslint": "catalog:",
+    "prettier": "catalog:"
+  }
+}

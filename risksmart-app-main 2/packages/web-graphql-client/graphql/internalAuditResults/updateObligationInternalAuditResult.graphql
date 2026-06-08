@@ -1,0 +1,19 @@
+mutation updateObligationInternalAuditResult(
+  $Id: uuid!
+  $Rating: Int
+  $Rationale: String
+  $TestDate: timestamptz
+  $CustomAttributeData: jsonb
+) {
+  update_obligation_internal_audit_result(
+    where: { Id: { _eq: $Id } }
+    _set: {
+      CustomAttributeData: $CustomAttributeData
+      Rating: $Rating
+      Rationale: $Rationale
+      TestDate: $TestDate
+    }
+  ) {
+    affected_rows
+  }
+}

@@ -1,0 +1,5 @@
+mutation tppUpdateThirdPartyResponse($Id: uuid!, $response: jsonb!, $status: third_party_response_status_enum!) {
+  update_third_party_response_by_pk(pk_columns: { Id: $Id }, _set: { ResponseData: $response, Status: $status }) {
+    Id
+  }
+}

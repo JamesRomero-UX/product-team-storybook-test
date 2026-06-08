@@ -1,0 +1,34 @@
+query getRiskInternalAuditResultById($Id: uuid!) {
+  risk_controlled_internal_audit_result(where: { Id: { _eq: $Id } }) {
+    ...RiskControlledInternalAuditResultParts
+    parents {
+      risk {
+        Id
+        Title
+      }
+      internalAuditReport {
+        Id
+        Title
+      }
+    }
+    files {
+      ...RelationFileParts
+    }
+  }
+  risk_uncontrolled_internal_audit_result(where: { Id: { _eq: $Id } }) {
+    ...RiskUncontrolledInternalAuditResultParts
+    parents {
+      risk {
+        Id
+        Title
+      }
+      internalAuditReport {
+        Id
+        Title
+      }
+    }
+    files {
+      ...RelationFileParts
+    }
+  }
+}

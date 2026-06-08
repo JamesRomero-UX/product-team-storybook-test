@@ -1,0 +1,5 @@
+mutation updateIssue($object: UpdateIssueInput!) {
+  updateIssueApi(object: $object) {
+    affected_rows
+  }
+}

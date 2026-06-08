@@ -1,0 +1,7 @@
+mutation insertConversation($Content: String!, $ParentId: uuid!) {
+  insert_conversation_one(
+    object: { ParentId: $ParentId, comments: { data: { Content: $Content } } }
+  ) {
+    Id
+  }
+}

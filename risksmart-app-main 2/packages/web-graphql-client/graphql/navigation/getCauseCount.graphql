@@ -1,0 +1,7 @@
+query getCauseCount($where: cause_bool_exp! = {}) {
+  cause_aggregate(where: $where) {
+    aggregate {
+      count
+    }
+  }
+}

@@ -1,0 +1,20 @@
+query getTestResultAuditById($Id: uuid) {
+  test_result_audit(where: { Id: { _eq: $Id } }) {
+    Description
+    DesignEffectiveness
+    Id
+    OverallEffectiveness
+    ParentControlId
+    PerformanceEffectiveness
+    Submitter
+    TestDate
+    TestType
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    Title
+    CreatedByUser
+    ModifiedByUser
+    CustomAttributeData
+    SequentialId
+  }
+}

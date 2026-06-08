@@ -1,0 +1,28 @@
+{
+  "runId": "019cdca8-6565-763d-b392-baa455a27db1",
+  "providerName": "ascent",
+  "regulators": [
+    {
+      "id": "0e1b6f1c-0aa8-4254-9b59-3b6bfae72a5a",
+      "name": "Mock FCA",
+      "location": "s3://tech-admin-rulebook-changes/019cdca8-6565-763d-b392-baa455a27db1/regulators/0e1b6f1c-0aa8-4254-9b59-3b6bfae72a5a.json",
+      "obligations": { "added": 515, "updated": 0, "removed": 0 },
+      "obligationChanges": { "added": 250, "updated": 0, "removed": 0 }
+    },
+    {
+      "id": "3052c9d5-21f9-4359-984b-1d96f163c6ef",
+      "name": "Mock PRA",
+      "location": "s3://tech-admin-rulebook-changes/019cdca8-6565-763d-b392-baa455a27db1/regulators/3052c9d5-21f9-4359-984b-1d96f163c6ef.json",
+      "obligations": { "added": 515, "updated": 0, "removed": 0 },
+      "obligationChanges": { "added": 250, "updated": 0, "removed": 0 }
+    },
+    {
+      "id": "e7bbfb26-c7f5-4ddf-b6f6-1cc326eea74e",
+      "name": "Mock Empty Regulator",
+      "location": "s3://tech-admin-rulebook-changes/019cdca8-6565-763d-b392-baa455a27db1/regulators/e7bbfb26-c7f5-4ddf-b6f6-1cc326eea74e.json",
+      "obligations": { "added": 0, "updated": 0, "removed": 0 },
+      "obligationChanges": { "added": 0, "updated": 0, "removed": 0 }
+    }
+  ],
+  "completedAtTimestamp": "2026-03-11T11:29:11.984Z"
+}

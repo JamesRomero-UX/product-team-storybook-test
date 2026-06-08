@@ -1,0 +1,7 @@
+query GetOverdueActionCount($where: action_bool_exp) {
+  action_aggregate(where: $where) {
+    aggregate {
+      count
+    }
+  }
+}

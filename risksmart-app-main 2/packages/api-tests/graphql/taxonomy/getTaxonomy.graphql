@@ -1,0 +1,10 @@
+query getTaxonomy {
+  taxonomy {
+    Description
+    Id
+    Common
+    Library
+    Rating
+    Taxonomy
+  }
+}

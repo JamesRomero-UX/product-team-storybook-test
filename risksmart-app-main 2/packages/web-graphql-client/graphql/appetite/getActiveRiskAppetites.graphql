@@ -1,0 +1,57 @@
+query getActiveRiskAppetites($where: appetite_parent_bool_exp! = {}) {
+  appetite_parent(where: $where) {
+    Status
+    appetite {
+      ...AppetiteParts
+      modifiedByUser {
+        FriendlyName
+      }
+    }
+    risk {
+      Id
+      Tier
+      Title
+      SequentialId
+      owners {
+        ...OwnerParts
+      }
+      ownerGroups {
+        ...OwnerGroupParts
+      }
+      contributors {
+        ...ContributorParts
+      }
+      contributorGroups {
+        ...ContributorGroupParts
+      }
+      assessmentResults(
+        where: {
+          riskAssessmentResult: {
+            ControlType: { _eq: Controlled }
+            RatingType: { _in: ["assessment", "rating"] }
+          }
+        }
+        order_by: [
+          { riskAssessmentResult: { TestDate: desc_nulls_last } }
+          { riskAssessmentResult: { CreatedAtTimestamp: desc_nulls_last } }
+        ]
+      ) {
+        riskAssessmentResult {
+          Rating
+          Likelihood
+          Impact
+        }
+      }
+      riskScore {
+        InherentScore
+        ResidualScore
+        InherentRating
+        ResidualRating
+        InherentLikelihood
+        InherentImpact
+        ResidualLikelihood
+        ResidualImpact
+      }
+    }
+  }
+}

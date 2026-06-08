@@ -1,0 +1,45 @@
+query getQuestionnaireInvites(
+  $where: questionnaire_invite_bool_exp
+  $limit: Int
+  $orderBy: [questionnaire_invite_order_by!]
+) {
+  questionnaire_invite(where: $where, limit: $limit, order_by: $orderBy) {
+    ...QuestionnaireInviteParts
+    questionnaireTemplateVersion {
+      Id
+      Version
+      parent {
+        Title
+      }
+    }
+  }
+}
+
+mutation insertQuestionnaireInvite(
+  $objects: [questionnaire_invite_insert_input!]!
+) {
+  insert_questionnaire_invite(objects: $objects) {
+    returning {
+      Id
+      ThirdPartyId
+      UserEmail
+      Message
+      QuestionnaireTemplateVersionId
+    }
+  }
+}
+
+mutation updateQuestionnaireInvite(
+  $Id: uuid!
+  $set: questionnaire_invite_set_input
+) {
+  update_questionnaire_invite_by_pk(pk_columns: { Id: $Id }, _set: $set) {
+    ...QuestionnaireInviteParts
+  }
+}
+
+mutation deleteQuestionnaireInvite($Id: uuid!) {
+  delete_questionnaire_invite_by_pk(Id: $Id) {
+    Id
+  }
+}

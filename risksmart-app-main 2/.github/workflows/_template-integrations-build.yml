@@ -1,0 +1,87 @@
+name: Template / Integrations Build
+
+permissions:
+  actions: write
+  contents: read
+  id-token: write
+
+on:
+  workflow_call:
+    inputs:
+      runner_label:
+        required: false
+        type: string
+        default: 'sprinters:aws:eu-west-2:ubuntu-24.04-arm:c6g.xlarge:spot=false:temp=64'
+      env:
+        required: true
+        type: string
+      enable_turbo_cache:
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  IntegrationsBuild:
+    name: Build Integrations
+    runs-on:
+      - ${{ inputs.runner_label }}
+      - ${{ github.run_id }}-${{ github.run_attempt }}-IntegrationsBuild
+    environment:
+      name: ${{ inputs.env }}
+      url: https://github.com
+    permissions:
+      actions: write
+      contents: read
+      id-token: write
+      packages: read
+    steps:
+      - name: Setup Turbo cache
+        uses: rharkor/caching-for-turbo@d124d2921c97c169010f6a7a624a36e9831472e1 # v 1.8
+        if: ${{ inputs.enable_turbo_cache }}
+
+      - name: Checkout repository
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@a3252b78c470c02df07e9d59298aecedc3ccdd6d # v3
+        with:
+          version: 10.28.2
+
+      - name: Setup node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+          registry-url: 'https://npm.pkg.github.com'
+
+      - name: Configure pnpm for GitHub Packages
+        run: |
+          pnpm config set @risk-smart:registry https://npm.pkg.github.com
+          pnpm config set //npm.pkg.github.com/:_authToken ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Start API containers
+        run: docker compose up graphql-engine postgres --detach
+        working-directory: api-stack
+
+      - name: Wait for API
+        timeout-minutes: 10
+        run: bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' 127.0.0.1:8080/v1/version)" != "200" ]]; do sleep 1; done'
+
+      - name: Apply Hasura migrations
+        run: pnpm run hasura-migrate:for-type-gen
+
+      - name: Generate GraphQL types
+        run: pnpm run --filter n8n-nodes-risksmart generate-graphql
+
+      - name: Build integrations
+        run: pnpm run --filter n8n-nodes-risksmart build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: integrations-build
+          path: packages/integrations
+          retention-days: 5

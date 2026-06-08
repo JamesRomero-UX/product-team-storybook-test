@@ -1,0 +1,671 @@
+query getAsosData {
+  action {
+    DateDue
+    DateRaised
+    Description
+    Id
+    Priority
+    Status
+    ModifiedAtTimestamp
+    CreatedAtTimestamp
+    Title
+    CreatedByUser
+    ModifiedByUser
+    ClosedDate
+    CustomAttributeData
+    SequentialId
+    updates {
+      Description
+      Id
+      ParentActionId
+      CreatedAtTimestamp
+      ModifiedAtTimestamp
+      Title
+      CreatedByUser
+      ModifiedByUser
+      CustomAttributeData
+    }
+    ownerGroups {
+      UserGroupId
+      group {
+        Name
+      }
+    }
+    owners {
+      UserId
+      user {
+        Id
+        Email
+        FriendlyName
+      }
+    }
+    contributorGroups {
+      UserGroupId
+      group {
+        Name
+      }
+    }
+    contributors {
+      UserId
+      user {
+        Id
+        Email
+        FriendlyName
+      }
+    }
+    parents {
+      risk {
+        Id
+        Title
+        Tier
+        Description
+        ParentRiskId
+        CreatedByUser
+        Treatment
+        Status
+        ModifiedByUser
+        CreatedAtTimestamp
+        ModifiedAtTimestamp
+        CustomAttributeData
+        SequentialId
+        ownerGroups {
+          UserGroupId
+          group {
+            Name
+          }
+        }
+        owners {
+          UserId
+          user {
+            Id
+            Email
+            FriendlyName
+          }
+        }
+        contributorGroups {
+          UserGroupId
+          group {
+            Name
+          }
+        }
+        contributors {
+          UserId
+          user {
+            Id
+            Email
+            FriendlyName
+          }
+        }
+      }
+      control {
+        CreatedByUser
+        ModifiedByUser
+        Description
+        Id
+        CreatedAtTimestamp
+        ModifiedAtTimestamp
+        Title
+        Type
+        CustomAttributeData
+        SequentialId
+        ownerGroups {
+          UserGroupId
+          group {
+            Name
+          }
+        }
+        owners {
+          UserId
+          user {
+            Id
+            Email
+            FriendlyName
+          }
+        }
+        contributorGroups {
+          UserGroupId
+          group {
+            Name
+          }
+        }
+        contributors {
+          UserId
+          user {
+            Id
+            Email
+            FriendlyName
+          }
+        }
+      }
+    }
+  }
+  control {
+    CreatedByUser
+    ModifiedByUser
+    Description
+    Id
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    Title
+    Type
+    CustomAttributeData
+    SequentialId
+    ownerGroups {
+      UserGroupId
+      group {
+        Name
+      }
+    }
+    owners {
+      UserId
+      user {
+        Id
+        Email
+        FriendlyName
+      }
+    }
+    contributorGroups {
+      UserGroupId
+      group {
+        Name
+      }
+    }
+    contributors {
+      UserId
+      user {
+        Id
+        Email
+        FriendlyName
+      }
+    }
+    testResults {
+      Description
+      DesignEffectiveness
+      Id
+      OverallEffectiveness
+      ParentControlId
+      PerformanceEffectiveness
+      Submitter
+      TestDate
+      TestType
+      CreatedAtTimestamp
+      ModifiedAtTimestamp
+      Title
+      CreatedByUser
+      ModifiedByUser
+      CustomAttributeData
+      SequentialId
+    }
+    actions {
+      action {
+        DateDue
+        DateRaised
+        Description
+        Id
+        Priority
+        Status
+        ModifiedAtTimestamp
+        CreatedAtTimestamp
+        Title
+        CreatedByUser
+        ModifiedByUser
+        ClosedDate
+        CustomAttributeData
+        updates {
+          Description
+          Id
+          ParentActionId
+          CreatedAtTimestamp
+          ModifiedAtTimestamp
+          Title
+          CreatedByUser
+          ModifiedByUser
+          CustomAttributeData
+        }
+        ownerGroups {
+          UserGroupId
+          group {
+            Name
+          }
+        }
+        owners {
+          UserId
+          user {
+            Id
+            Email
+            FriendlyName
+          }
+        }
+        contributorGroups {
+          UserGroupId
+          group {
+            Name
+          }
+        }
+        contributors {
+          UserId
+          user {
+            Id
+            Email
+            FriendlyName
+          }
+        }
+      }
+    }
+    parents {
+      risk {
+        Id
+        Title
+        Tier
+        Description
+        ParentRiskId
+        CreatedByUser
+        Treatment
+        Status
+        ModifiedByUser
+        CreatedAtTimestamp
+        ModifiedAtTimestamp
+        CustomAttributeData
+        SequentialId
+        ownerGroups {
+          UserGroupId
+          group {
+            Name
+          }
+        }
+        owners {
+          UserId
+          user {
+            Id
+            Email
+            FriendlyName
+          }
+        }
+        contributorGroups {
+          UserGroupId
+          group {
+            Name
+          }
+        }
+        contributors {
+          UserId
+          user {
+            Id
+            Email
+            FriendlyName
+          }
+        }
+      }
+    }
+  }
+  risk {
+    Id
+    Title
+    Tier
+    Description
+    ParentRiskId
+    CreatedByUser
+    Treatment
+    Status
+    ModifiedByUser
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    CustomAttributeData
+    SequentialId
+    ownerGroups {
+      UserGroupId
+      group {
+        Name
+      }
+    }
+    owners {
+      UserId
+      user {
+        Id
+        Email
+        FriendlyName
+      }
+    }
+    contributorGroups {
+      UserGroupId
+      group {
+        Name
+      }
+    }
+    contributors {
+      UserId
+      user {
+        Id
+        Email
+        FriendlyName
+      }
+    }
+    actions {
+      action {
+        DateDue
+        DateRaised
+        Description
+        Id
+        Priority
+        Status
+        ModifiedAtTimestamp
+        CreatedAtTimestamp
+        Title
+        CreatedByUser
+        ModifiedByUser
+        ClosedDate
+        CustomAttributeData
+        updates {
+          Description
+          Id
+          ParentActionId
+          CreatedAtTimestamp
+          ModifiedAtTimestamp
+          Title
+          CreatedByUser
+          ModifiedByUser
+          CustomAttributeData
+        }
+        ownerGroups {
+          UserGroupId
+          group {
+            Name
+          }
+        }
+        owners {
+          UserId
+          user {
+            Id
+            Email
+            FriendlyName
+          }
+        }
+        contributorGroups {
+          UserGroupId
+          group {
+            Name
+          }
+        }
+        contributors {
+          UserId
+          user {
+            Id
+            Email
+            FriendlyName
+          }
+        }
+      }
+    }
+    appetites {
+      appetite {
+        Id
+        LowerAppetite
+        UpperAppetite
+        ImpactAppetite
+        LikelihoodAppetite
+        Statement
+        EffectiveDate
+        AppetiteType
+        CreatedAtTimestamp
+        ModifiedAtTimestamp
+        CreatedByUser
+        ModifiedByUser
+        CustomAttributeData
+        SequentialId
+        ImpactId
+      }
+    }
+    acceptances {
+      acceptance {
+        DateAcceptedFrom
+        DateAcceptedTo
+        Details
+        Id
+        Status
+        ModifiedAtTimestamp
+        CreatedAtTimestamp
+        Title
+        CreatedByUser
+        ModifiedByUser
+        ApprovedByUser
+        ApprovedByUserGroup
+        RequestedByUser
+        RequestedByUserGroup
+        CustomAttributeData
+        SequentialId
+      }
+    }
+    controls {
+      control {
+        CreatedByUser
+        ModifiedByUser
+        Description
+        Id
+        CreatedAtTimestamp
+        ModifiedAtTimestamp
+        Title
+        Type
+        CustomAttributeData
+        SequentialId
+        ownerGroups {
+          UserGroupId
+          group {
+            Name
+          }
+        }
+        owners {
+          UserId
+          user {
+            Id
+            Email
+            FriendlyName
+          }
+        }
+        contributorGroups {
+          UserGroupId
+          group {
+            Name
+          }
+        }
+        contributors {
+          UserId
+          user {
+            Id
+            Email
+            FriendlyName
+          }
+        }
+        testResults {
+          Description
+          DesignEffectiveness
+          Id
+          OverallEffectiveness
+          ParentControlId
+          PerformanceEffectiveness
+          Submitter
+          TestDate
+          TestType
+          CreatedAtTimestamp
+          ModifiedAtTimestamp
+          Title
+          CreatedByUser
+          ModifiedByUser
+          CustomAttributeData
+          SequentialId
+        }
+        actions {
+          action {
+            DateDue
+            DateRaised
+            Description
+            Id
+            Priority
+            Status
+            ModifiedAtTimestamp
+            CreatedAtTimestamp
+            Title
+            CreatedByUser
+            ModifiedByUser
+            ClosedDate
+            CustomAttributeData
+            updates {
+              Description
+              Id
+              ParentActionId
+              CreatedAtTimestamp
+              ModifiedAtTimestamp
+              Title
+              CreatedByUser
+              ModifiedByUser
+              CustomAttributeData
+            }
+            ownerGroups {
+              UserGroupId
+              group {
+                Name
+              }
+            }
+            owners {
+              UserId
+              user {
+                Id
+                Email
+                FriendlyName
+              }
+            }
+            contributorGroups {
+              UserGroupId
+              group {
+                Name
+              }
+            }
+            contributors {
+              UserId
+              user {
+                Id
+                Email
+                FriendlyName
+              }
+            }
+          }
+        }
+        parents {
+          risk {
+            Id
+            Title
+            Tier
+            Description
+            ParentRiskId
+            CreatedByUser
+            Treatment
+            Status
+            ModifiedByUser
+            CreatedAtTimestamp
+            ModifiedAtTimestamp
+            CustomAttributeData
+            SequentialId
+            ownerGroups {
+              UserGroupId
+              group {
+                Name
+              }
+            }
+            owners {
+              UserId
+              user {
+                Id
+                Email
+                FriendlyName
+              }
+            }
+            contributorGroups {
+              UserGroupId
+              group {
+                Name
+              }
+            }
+            contributors {
+              UserId
+              user {
+                Id
+                Email
+                FriendlyName
+              }
+            }
+          }
+        }
+      }
+    }
+    riskScore {
+      ResidualScore
+      InherentScore
+      ResidualRating
+      InherentRating
+      ResidualImpact
+      ResidualLikelihood
+      InherentImpact
+      InherentLikelihood
+      ModifiedAtTimestamp
+    }
+    assessmentResults {
+      riskAssessmentResult {
+        Id
+        Likelihood
+        Impact
+        Rating
+        ControlType
+        CustomAttributeData
+        Rationale
+        TestDate
+      }
+    }
+  }
+  user {
+    Id
+    FriendlyName
+    Email
+  }
+  user_group {
+    Id
+    Name
+    users {
+      user {
+        Id
+        FriendlyName
+        Email
+      }
+    }
+  }
+  form_configuration(
+    where: {
+      ParentType: {
+        _in: [
+          risk
+          control
+          action
+          action_update
+          acceptance
+          appetite
+          test_result
+          controlled_risk_assessment_result
+          uncontrolled_risk_assessment_result
+        ]
+      }
+    }
+  ) {
+    ParentType
+    customAttributeSchema {
+      UiSchema
+      Schema
+      Id
+    }
+    fields_config {
+      Hidden
+      ReadOnly
+      Required
+      FieldId
+      Label
+      Description
+    }
+  }
+}

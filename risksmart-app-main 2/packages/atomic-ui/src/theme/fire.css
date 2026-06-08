@@ -1,0 +1,48 @@
+/* Theme applied via parent container (e.g., body.atomic-ui-fire, div.atomic-ui-fire) */
+.atomic-ui-fire .atomic-ui {
+  /* Primary: Vivid Red */
+  --color-primary-900: 0.3300 0.1206 25.00; /* #660d12 */
+  --color-primary-800: 0.4000 0.1458 25.00; /* #85151a */
+  --color-primary-700: 0.4800 0.1746 25.00; /* #aa1e25 */
+  --color-primary-600: 0.5600 0.2043 25.00; /* #d2272f */
+  --color-primary-500: 0.6400 0.2214 25.00; /* #f63b40 */
+  --color-primary-400: 0.7200 0.1575 25.00; /* #f87871 */
+  --color-primary-300: 0.8000 0.1035 25.00; /* #f9a39c */
+  --color-primary-200: 0.8800 0.0576 25.00; /* #fccac5 */
+  --color-primary-100: 0.9500 0.0225 25.00; /* #fde9e7 */
+
+  /* Secondary: Vivid Orange */
+  --color-secondary-900: 0.4200 0.0936 55.00; /* #733d10 */
+  --color-secondary-800: 0.4900 0.1089 55.00; /* #8e4d17 */
+  --color-secondary-700: 0.5600 0.1242 55.00; /* #ab5e1e */
+  --color-secondary-600: 0.6300 0.1404 55.00; /* #c86e24 */
+  --color-secondary-500: 0.7000 0.1557 55.00; /* #e6802c */
+  --color-secondary-400: 0.7700 0.1413 55.00; /* #f89a55 */
+  --color-secondary-300: 0.8400 0.0927 55.00; /* #fabb90 */
+  --color-secondary-200: 0.9100 0.0495 55.00; /* #fcd9c3 */
+  --color-secondary-100: 0.9700 0.0162 55.00; /* #fef3eb */
+
+  /* Neutral: Warm */
+  --color-neutral-900: 0.2006 0.0138 34.41; /* #1c1412 */
+  --color-neutral-800: 0.2888 0.0131 41.68; /* #312926 */
+  --color-neutral-700: 0.3748 0.0122 41.76; /* #473f3c */
+  --color-neutral-600: 0.4631 0.0123 48.47; /* #5f5753 */
+  --color-neutral-500: 0.5512 0.0118 48.54; /* #78706c */
+  --color-neutral-400: 0.6380 0.0112 58.14; /* #918a85 */
+  --color-neutral-300: 0.7255 0.0100 62.55; /* #aba5a0 */
+  --color-neutral-200: 0.8123 0.0097 52.13; /* #c7c0bc */
+  --color-neutral-100: 0.9001 0.0088 67.73; /* #e2ddd8 */
+  --color-neutral-000: 0.9876 0.0086 67.74; /* #fffaf5 */
+
+  font-weight: 800;
+
+  /* Other Overrides */
+  --radius-xs: 0rem;
+  --radius-sm: 0rem;
+  --radius-md: 0rem;
+  --radius-lg: 0rem;
+  --radius-xl: 0rem;
+  --radius-2xl: 0rem;
+  --radius-3xl: 0rem;
+  font-family: fantasy, system-ui, sans-serif;
+}

@@ -1,0 +1,51 @@
+table:
+  name: tag
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: tag
+  custom_root_fields: {}
+object_relationships:
+  - name: type
+    using:
+      manual_configuration:
+        column_mapping:
+          TagTypeId: Id
+        insertion_order: null
+        remote_table:
+          name: tag_type
+          schema: risksmart
+insert_permissions:
+  - role: app-user
+    permission:
+      backend_only: true
+      check:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+      set:
+        CreatedByUser: x-hasura-User-Id
+        ModifiedByUser: x-hasura-User-Id
+        OrgKey: x-hasura-org-id
+      columns:
+        - ParentId
+        - TagTypeId
+select_permissions:
+  - role: app-user
+    permission:
+      columns:
+        - ParentId
+        - TagTypeId
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      query_root_fields: []
+      subscription_root_fields: []
+delete_permissions:
+  - role: app-user
+    permission:
+      backend_only: true
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id

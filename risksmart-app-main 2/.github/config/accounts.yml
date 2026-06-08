@@ -1,0 +1,93 @@
+# AWS Account definitions for OpenTofu **account** pipelines (not workspaces!)
+#
+# Adding a new account:
+#   1. Add entry below with aws_account_id, role_name, and regions
+#   2. Create folder: infrastructure/aws/accounts/<account-name>/<region>/
+#   3. Update workflow_dispatch options in .github/workflows/auto-tofu-accounts.yml
+#      (GitHub Actions doesn't support dynamic choice options from external files)
+#
+# Structure:
+#   <account-name>: # must match folder name under infrastructure/aws/accounts
+#     aws_account_id: "123456789012"
+#     role_name: RiskSmart-GitHub-Deploy-Role
+#     regions:
+#       - eu-west-2
+#       - us-east-1
+
+audit:
+  aws_account_id: "060364747537"
+  role_name: RiskSmart-GitHub-Deploy-Role
+  regions:
+    - us-east-1
+
+ci:
+  aws_account_id: "437474201705"
+  role_name: RiskSmart-GitHub-Deploy-Role
+  regions:
+    - eu-west-2
+    - eu-west-1
+    - us-east-1
+    - ca-central-1
+    # - me-central-1 # currently excluded due to outage in UAE region
+
+dev-cloud:
+  aws_account_id: "640196420962"
+  role_name: RiskSmart-GitHub-Deploy-Role
+  regions:
+    - eu-west-2
+    - us-east-1
+
+dr:
+  aws_account_id: "134258997950"
+  role_name: RiskSmart-GitHub-Deploy-Role
+  regions:
+    - eu-west-1
+    - us-east-1
+
+integration:
+  aws_account_id: "381492091974"
+  role_name: RiskSmart-GitHub-Deploy-Role
+  regions:
+    - us-east-1
+
+log-archive:
+  aws_account_id: "950313787952"
+  role_name: RiskSmart-GitHub-Deploy-Role
+  regions:
+    - us-east-1
+
+prod:
+  aws_account_id: "826351825809"
+  role_name: RiskSmart-GitHub-Deploy-Role
+  regions:
+    - eu-west-2
+    - us-east-1
+    - ca-central-1
+    # - me-central-1 # currently excluded due to outage in UAE region
+
+shared-network:
+  aws_account_id: "623844863596"
+  role_name: RiskSmart-GitHub-Deploy-Role
+  regions:
+    - eu-west-2
+    - us-east-1
+
+staging:
+  aws_account_id: "629531182017"
+  role_name: RiskSmart-GitHub-Deploy-Role
+  regions:
+    - eu-west-2
+    - us-east-1
+
+tech-admin:
+  aws_account_id: "046657674620"
+  role_name: RiskSmart-GitHub-Deploy-Role
+  regions:
+    - eu-west-1
+    - us-east-1
+
+tech-admin-account-test:
+  aws_account_id: "250742062633"
+  role_name: RiskSmart-GitHub-Deploy-Role
+  regions:
+    - us-east-1

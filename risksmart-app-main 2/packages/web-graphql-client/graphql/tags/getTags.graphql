@@ -1,0 +1,19 @@
+query getTags {
+  tag_type(order_by: { Name: asc }) {
+    TagTypeId
+    Name
+    Description
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    createdByUser {
+      FriendlyName
+    }
+    modifiedByUser {
+      FriendlyName
+    }
+    tag_type_group {
+      Id
+      Name
+    }
+  }
+}

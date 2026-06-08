@@ -1,0 +1,1773 @@
+actions:
+  - name: deleteFormField
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/form/field
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: DELETE
+    permissions:
+      - role: RiskManager
+  - name: insertFormField
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/form/field
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: RiskManager
+  - name: updateFormField
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/form/field
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: PUT
+    permissions:
+      - role: RiskManager
+  - name: refreshScheduleState
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/schedule/refresh
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: CustomerSupport
+  - name: reportingFilterOptions
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/tenant/{{TENANT}}/reporting/filter-options
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: RiskManager
+  - name: reportingData
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/tenant/{{TENANT}}/reporting/data
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: RiskManager
+  - name: dataImportStartImport
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/data-import/start-import
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: CustomerSupport
+  - name: dataExportOneOffExport
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/data-export/one-off-export
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: RiskManager
+      - role: CustomerSupport
+  - name: dataExportCreateSchedule
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/data-export/create-schedule
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: POST
+    permissions:
+      - role: RiskManager
+      - role: CustomerSupport
+  - name: dataExportTestSchedule
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/data-export/test-schedule
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: POST
+    permissions:
+      - role: RiskManager
+      - role: CustomerSupport
+  - name: dataImportValidate
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/data-import/validate
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: CustomerSupport
+  - name: disconnectSlack
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/slack/disconnect
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: update:notification-preferences
+  - name: insertSsoConfig
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/sso-configuration
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: POST
+    permissions:
+      - role: TechnicalSupport
+      - role: CustomerSupport
+  - name: deleteSsoConfig
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/sso-configuration
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: DELETE
+    permissions:
+      - role: TechnicalSupport
+      - role: CustomerSupport
+  - name: attestRecord
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/attest
+      forward_client_headers: true
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: app-user
+  - name: attestationNotRequired
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/attestation/not-required
+      forward_client_headers: true
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: RiskManager
+  - name: updateApproverResponses
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/approver-response
+      forward_client_headers: true
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: PUT
+    permissions:
+      - role: app-user
+  - name: insertChildAction
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/action
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: insert:action
+      - role: Standard
+  - name: insertQuestionnaireInvites
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/questionnaire/invite
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: app-user
+  - name: updateThirdPartyResponseStatusAction
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/third-party-response/handle-update-status
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: PATCH
+    permissions:
+      - role: app-user
+  - name: insertChildAcceptance
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/acceptance
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: insert:acceptance
+      - role: Standard
+  - name: insertChildAppetite
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/appetite
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: insert:appetite
+      - role: Standard
+  - name: insertChildControl
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/control
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: insert:control
+      - role: Standard
+  - name: insertChildIndicator
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/indicator
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: insert:indicator
+      - role: Standard
+  - name: updateChildIndicator
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/indicator
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: PUT
+    permissions:
+      - role: update:indicator
+      - role: Standard
+
+  - name: insertChildIssue
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/issue
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: insert:issue
+      - role: Standard
+  - name: updateIssueApi
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/issue
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: PUT
+    permissions:
+      - role: app-user
+  - name: updateQuestionnaireTemplateApi
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/questionnaire-template
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: PUT
+    permissions:
+      - role: app-user
+  - name: insertQuestionnaireTemplateApi
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/questionnaire-template
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: app-user
+  - name: insertImpactApi
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/impact
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: app-user
+  - name: updateImpactApi
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/impact
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: PUT
+    permissions:
+      - role: app-user
+  - name: insertChildIngestionConfig
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/ingestion-config
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: RiskManager
+      - role: CustomerSupport
+  - name: updateChildIngestionConfig
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/ingestion-config
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: PUT
+    permissions:
+      - role: RiskManager
+      - role: CustomerSupport
+  - name: deleteChildIngestionConfig
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/ingestion-config
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: DELETE
+    permissions:
+      - role: RiskManager
+      - role: CustomerSupport
+  - name: insertChildIssueAssessment
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/issue-assessment
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: insert:issue-assessment
+      - role: Standard
+  - name: insertDocumentVersion
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/documentVersion
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: insert:document-file
+      - role: Standard
+  - name: insertChildAttestationConfig
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/attestation-config
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: app-user
+  - name: insertChildAttestationCycle
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/attestation-cycle
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: app-user
+  - name: linkItems
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/linked-item
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: insert:linked-item
+      - role: Standard
+  - name: unlinkItems
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/linked-item
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: DELETE
+    permissions:
+      - role: delete:linked-item
+      - role: Standard
+  - name: deleteDocumentById
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/document
+      forward_client_headers: true
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: DELETE
+    permissions:
+      - role: app-user
+  - name: deleteTagTypeApi
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/tag-type
+      forward_client_headers: true
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: DELETE
+    permissions:
+      - role: app-user
+  - name: deleteDepartmentTypeApi
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/department-type
+      forward_client_headers: true
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: DELETE
+    permissions:
+      - role: app-user
+  - name: deleteRiskById
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/risk
+      forward_client_headers: true
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: DELETE
+    permissions:
+      - role: delete:risk
+      - role: Standard
+  - name: deleteUserGroups
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/user-group
+      forward_client_headers: true
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: DELETE
+    permissions:
+      - role: delete:user_group
+  - name: deleteControlsById
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/control
+      forward_client_headers: true
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: DELETE
+    permissions:
+      - role: delete:control
+      - role: Standard
+  - name: deleteIssuesById
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/issue
+      forward_client_headers: true
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: DELETE
+    permissions:
+      - role: delete:issue
+      - role: Standard
+  - name: deleteAcceptancesById
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/acceptance
+      forward_client_headers: true
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: DELETE
+    permissions:
+      - role: delete:acceptance
+      - role: Standard
+  - name: deleteActionsById
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/action
+      forward_client_headers: true
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: DELETE
+    permissions:
+      - role: delete:action
+      - role: Standard
+  - name: insertAssessmentActivityWithLinkedItems
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/assessment-activity
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: insert:assessment-activity
+      - role: Standard
+  - name: updateAssessmentActivityWithLinkedItems
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/assessment-activity
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: PUT
+    permissions:
+      - role: update:assessment-activity
+      - role: Standard
+  - name: insertChildDashboard
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/dashboard
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: app-user
+  - name: updateChildDashboard
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/dashboard
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: PUT
+    permissions:
+      - role: app-user
+  - name: insertChildRiskAssessmentResult
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/risk-assessment-result
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: insert:risk-assessment-result
+      - role: Standard
+  - name: insertRiskAssessmentResultConfigApi
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/risk-assessment-result-config
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: insert:risk-assessment-result-config
+  - name: updateRiskAssessmentResultConfigApi
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/risk-assessment-result-config
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: PUT
+    permissions:
+      - role: update:risk-assessment-result-config
+  - name: insertChildRiskInternalAuditResult
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/risk-internal-audit-result
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: insert:risk-assessment-result
+      - role: Standard
+  - name: insertChildRiskSecondLineResult
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/risk-second-line-result
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: insert:risk-assessment-result
+      - role: Standard
+  - name: updateChildRiskAssessmentResult
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/risk-assessment-result
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: PUT
+    permissions:
+      - role: update:risk-assessment-result
+  - name: insertChildDocumentAssessmentResult
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/document-assessment-result
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: insert:document-assessment-result
+      - role: Standard
+  - name: insertChildDocumentInternalAuditResult
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/document-internal-audit-result
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: insert:document-assessment-result
+      - role: Standard
+  - name: insertChildDocumentSecondLineResult
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/document-second-line-result
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: insert:document-assessment-result
+      - role: Standard
+  - name: insertControlTestResult
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/assessment-test-result
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: insert:test-result
+      - role: Standard
+  - name: insertChildControlTestInternalAuditResult
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/control-test-internal-audit-result
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: insert:test-result
+      - role: Standard
+  - name: insertChildControlTestSecondLineResult
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/control-test-second-line-result
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: insert:test-result
+      - role: Standard
+  - name: updateTestResultApi
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/test-result
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      forward_client_headers: true
+      request_transform:
+        method: PUT
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: update:test-result
+      - role: Standard
+  - name: updateControlTestInternalAuditResultApi
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/control-test-internal-audit-result
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      forward_client_headers: true
+      request_transform:
+        method: PUT
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: update:test-result
+      - role: Standard
+  - name: updateControlTestSecondLineResultApi
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/test-result
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      forward_client_headers: true
+      request_transform:
+        method: PUT
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: update:test-result
+      - role: Standard
+  - name: insertChildImpactRating
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/assessment-impact-rating
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: app-user
+      - role: Standard
+  - name: insertChildImpactInternalAuditRating
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/internal-audit-impact-rating
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: app-user
+      - role: Standard
+  - name: insertChildImpactSecondLineRating
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/second-line-impact-rating
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: app-user
+      - role: Standard
+  - name: insertChildObligationAssessmentResult
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/obligation-assessment-result
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: insert:obligation-assessment-result
+      - role: Standard
+  - name: insertChildObligationInternalAuditResult
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/obligation-internal-audit-result
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: insert:obligation-assessment-result
+      - role: Standard
+  - name: insertChildObligationSecondLineResult
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/obligation-second-line-result
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: insert:obligation-assessment-result
+      - role: Standard
+  - name: insertReferenceUser
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/reference-user
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: RiskManager
+  - name: insertThirdPartyApi
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/third-party
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    comment: insertThirdPartyApi
+    permissions:
+      - role: app-user
+  - name: updateThirdPartyApi
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/third-party
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: PUT
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    comment: updateThirdPartyApi
+    permissions:
+      - role: app-user
+  - name: insertThirdPartyContactApi
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/third-party-contact
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    comment: insertThirdPartyContactApi
+    permissions:
+      - role: app-user
+  - name: revokeThirdPartyContactAccess
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/third-party-contact
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: PATCH
+    comment: revokeThirdPartyContactAccess
+    permissions:
+      - role: app-user
+  - name: insertAssessmentApi
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/assessment
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    comment: insertAssessmentApi
+    permissions:
+      - role: app-user
+  - name: updateAssessmentApi
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/assessment
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: PUT
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    comment: updateAssessmentApi
+    permissions:
+      - role: app-user
+  - name: updateInternalAuditReportApi
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/internal-audit-report
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: PUT
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    comment: updateInternalAuditReportApi
+    permissions:
+      - role: app-user
+  - name: updateComplianceMonitoringAssessmentApi
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/compliance-monitoring-assessment
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: PUT
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    comment: updateComplianceMonitoringAssessmentApi
+    permissions:
+      - role: app-user
+  - name: insertComplianceMonitoringAssessmentApi
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/compliance-monitoring-assessment
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    comment: insertComplianceMonitoringAssessmentApi
+    permissions:
+      - role: app-user
+  - name: insertInternalAuditReportApi
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/internal-audit-report
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    comment: insertInternalAuditReportApi
+    permissions:
+      - role: app-user
+  - name: insertChildRisk
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/risk
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    comment: insertChildRisk
+    permissions:
+      - role: app-user
+  - name: insertChildDocument
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/document
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    comment: insertChildDocument
+    permissions:
+      - role: app-user
+  - name: insertChildObligation
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/obligation
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    comment: insertChildObligation
+    permissions:
+      - role: app-user
+  - name: updateChildDocument
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/document
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      forward_client_headers: true
+      request_transform:
+        method: PUT
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: app-user
+  - name: notificationPreferences
+    definition:
+      kind: 'synchronous'
+      handler: https://{{REST_API_DOMAIN}}/notification-preferences
+      request_transform:
+        method: GET
+        template_engine: Kriti
+        version: 2
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: read:notification-preferences
+  - name: slackNotificationConnection
+    definition:
+      kind: ''
+      handler: https://{{REST_API_DOMAIN}}/slack/details
+      request_transform:
+        method: GET
+        query_params: {}
+        request_headers:
+          add_headers: {}
+          remove_headers:
+            - content-type
+        template_engine: Kriti
+        version: 2
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: read:notification-preferences
+  - name: overrideChangeRequest
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/change-request/override
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      forward_client_headers: true
+      request_transform:
+        method: PUT
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: read:change-request
+  - name: updateChildIssueAssessment
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/issue-assessment
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      forward_client_headers: true
+      request_transform:
+        method: PUT
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: update:issue-assessment
+      - role: Standard
+  - name: updateDocumentVersion
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/documentVersion
+      forward_client_headers: true
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: PUT
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: update:document-file
+      - role: Standard
+  - name: publishQuestionnaireTemplateVersion
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/questionnaire-template-version/publish
+      forward_client_headers: true
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: PUT
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: app-user
+  - name: updateChildAcceptance
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/acceptance
+      forward_client_headers: true
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: PUT
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: update:acceptance
+      - role: Standard
+  - name: updateChildAction
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/action
+      forward_client_headers: true
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: PUT
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: update:action
+      - role: Standard
+  - name: updateChildRisk
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/risk
+      forward_client_headers: true
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: PUT
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: update:risk
+      - role: Standard
+  - name: updateChildObligation
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/obligation
+      forward_client_headers: true
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: PUT
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: update:obligation
+      - role: Standard
+  - name: insertChildObligationChangeAttestation
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/obligation-change-attestation
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: app-user
+  - name: deleteChildObligationChangeAttestation
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/obligation-change-attestation
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: DELETE
+    permissions:
+      - role: app-user
+  - name: updateNotificationPreferences
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/notification-preferences
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: update:notification-preferences
+  - name: recalculateRiskScores
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/aggregate/risk/all
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: insert:risk-score
+  - name: recalculateAppetites
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/aggregate/appetite/all
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: insert:risk-score
+  - name: available_roles
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/roles
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: GET
+    permissions:
+      - role: RiskManager
+  - name: update_user_roles
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/user
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: PATCH
+    permissions:
+      - role: RiskManager
+  - name: insertInternalAudit
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/internal-audit
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: insert:internal-audit-entity
+  - name: updateInternalAudit
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/internal-audit
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: PUT
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: insert:internal-audit-entity
+  - name: customRoleInsert
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/custom-role
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+    permissions:
+      - role: insert:custom-role
+  - name: customRoleUpdate
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/custom-role
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: PUT
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: insert:custom-role
+  - name: customRoleUserUpdate
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/custom-role-user
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: PUT
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: insert:custom-role
+  - name: updateChildControl
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/control
+      forward_client_headers: true
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: PUT
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: update:control
+      - role: Standard
+  - name: insertChildEnterpriseRisk
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/enterprise-risk
+      forward_client_headers: true
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: app-user
+  - name: updateChildEnterpriseRisk
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/enterprise-risk
+      forward_client_headers: true
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: PUT
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: app-user
+  - name: deleteChildEnterpriseRisk
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/enterprise-risk
+      forward_client_headers: true
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: DELETE
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: app-user
+  - name: instantiateChildEnterpriseRisk
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/enterprise-risk/instantiate
+      forward_client_headers: true
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: app-user
+  - name: addRiskToEnterpriseRisk
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/enterprise-risk/link
+      forward_client_headers: true
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: app-user
+  - name: insertChildEntity
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/entity
+      forward_client_headers: true
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: app-user
+  - name: updateChildEntity
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/entity
+      forward_client_headers: true
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: PUT
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: app-user
+  - name: deleteChildEntity
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/entity
+      forward_client_headers: true
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: DELETE
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: app-user
+  - name: getScimConfig
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/scim/config
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: GET
+    permissions:
+      - role: CustomerSupport
+      - role: TechnicalSupport
+      - role: read:scim_configuration
+  - name: insert_scim_domain
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/scim/domains
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: POST
+    permissions:
+      - role: CustomerSupport
+      - role: TechnicalSupport
+      - role: insert:scim_configuration
+  - name: delete_scim_domain
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/scim/domains
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: DELETE
+    permissions:
+      - role: CustomerSupport
+      - role: TechnicalSupport
+      - role: delete:scim_configuration
+  - name: insert_scim_token
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/scim/tokens
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: POST
+    permissions:
+      - role: CustomerSupport
+      - role: TechnicalSupport
+      - role: insert:scim_configuration
+  - name: delete_scim_token
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/scim/tokens
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: DELETE
+    permissions:
+      - role: CustomerSupport
+      - role: TechnicalSupport
+      - role: delete:scim_configuration
+  - name: insertChildWizard
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/wizard
+      forward_client_headers: true
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: POST
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: app-user
+  - name: updateWizardById
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/wizard
+      forward_client_headers: true
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: PUT
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: app-user
+  - name: deleteWizardById
+    definition:
+      kind: synchronous
+      handler: https://{{REST_API_DOMAIN}}/wizard
+      forward_client_headers: true
+      headers:
+        - name: RestApiKey
+          value_from_env: REST_API_KEY
+      request_transform:
+        method: DELETE
+        query_params: {}
+        template_engine: Kriti
+        version: 2
+    permissions:
+      - role: app-user
+custom_types:
+  enums:
+    - name: dashboard_sharing_type_enum_action
+      values:
+        - description: Custom
+          is_deprecated: null
+          value: custom
+        - description: Organisation
+          is_deprecated: null
+          value: organisation
+        - description: Private
+          is_deprecated: null
+          value: user_only
+    - name: third_party_response_enum_action
+      values:
+        - description: Approve
+          is_deprecated: null
+          value: approve
+        - description: Recall
+          is_deprecated: null
+          value: recall
+        - description: Request More Information
+          is_deprecated: null
+          value: request_more_information
+        - description: Reject
+          is_deprecated: null
+          value: reject
+    - name: issue_assessment_status_enum
+      values:
+        - description: Awaitingclosure
+          is_deprecated: null
+          value: awaitingclosure
+        - description: Closed
+          is_deprecated: null
+          value: closed
+        - description: Declined
+          is_deprecated: null
+          value: declined
+        - description: Firstlineapproval
+          is_deprecated: null
+          value: firstlineapproval
+        - description: Open
+          is_deprecated: null
+          value: open
+        - description: Pending
+          is_deprecated: null
+          value: pending
+    - name: version_status_enum
+      values:
+        - description: Archived
+          is_deprecated: null
+          value: archived
+        - description: Draft
+          is_deprecated: null
+          value: draft
+        - description: Published
+          is_deprecated: null
+          value: published
+        - description: Pending Approval
+          is_deprecated: null
+          value: pending_approval
+    - name: document_file_type_enum
+      values:
+        - description: File
+          is_deprecated: null
+          value: file
+        - description: Html
+          is_deprecated: null
+          value: html
+        - description: Link
+          is_deprecated: null
+          value: link
+    - name: action_status_enum
+      values:
+        - description: Closed
+          is_deprecated: null
+          value: closed
+        - description: Open
+          is_deprecated: null
+          value: open
+        - description: Pending
+          is_deprecated: null
+          value: pending
+    - name: test_frequency_enum
+      values:
+        - description: Adhoc
+          is_deprecated: null
+          value: adhoc
+        - description: Daily
+          is_deprecated: null
+          value: daily
+        - description: Weekly
+          is_deprecated: null
+          value: weekly
+        - description: Fortnightly
+          is_deprecated: null
+          value: fortnightly
+        - description: Fourweekly
+          is_deprecated: null
+          value: fourweekly
+        - description: Monthly
+          is_deprecated: null
+          value: monthly
+        - description: Quarterly
+          is_deprecated: null
+          value: quarterly
+        - description: Bi-Annually
+          is_deprecated: null
+          value: biannually
+        - description: Annually
+          is_deprecated: null
+          value: annually
+    - name: indicator_type_enum
+      values:
+        - description: Boolean
+          is_deprecated: null
+          value: boolean
+        - description: Number
+          is_deprecated: null
+          value: number
+        - description: Text
+          is_deprecated: null
+          value: text
+    - name: risk_assessment_result_control_type_enum
+      values:
+        - description: Controlled
+          is_deprecated: null
+          value: Controlled
+        - description: Uncontrolled
+          is_deprecated: null
+          value: Uncontrolled
+    - name: appetite_type_enum
+      values:
+        - description: Risk
+          is_deprecated: null
+          value: risk
+        - description: Impact
+          is_deprecated: null
+          value: appetite
+        - description: Likelihood
+          is_deprecated: null
+          value: likelihood
+    - name: assessment_activity_type_enum
+      values:
+        - description: Task
+          is_deprecated: null
+          value: task
+        - description: Reminder
+          is_deprecated: null
+          value: reminder
+        - description: Review
+          is_deprecated: null
+          value: review
+        - description: Interview
+          is_deprecated: null
+          value: interview
+        - description: Meeting
+          is_deprecated: null
+          value: meeting
+    - name: assessment_activity_status_enum
+      values:
+        - description: Complete
+          is_deprecated: null
+          value: complete
+        - description: Not Started
+          is_deprecated: null
+          value: notstarted
+        - description: In Progress
+          is_deprecated: null
+          value: inprogress
+    - name: risk_treatment_type_enum
+      values:
+        - description: Terminate
+          is_deprecated: null
+          value: terminate
+        - description: Tolerate
+          is_deprecated: null
+          value: tolerate
+        - description: Transfer
+          is_deprecated: null
+          value: transfer
+        - description: Treat
+          is_deprecated: null
+          value: treat
+    - name: risk_status_type_enum
+      values:
+        - description: Active
+          is_deprecated: null
+          value: active
+        - description: Emerging
+          is_deprecated: null
+          value: emerging
+        - description: Monitored
+          is_deprecated: null
+          value: monitored
+        - description: Retired
+          is_deprecated: null
+          value: retired
+    - name: wizard_status_enum
+      values:
+        - description: Planned
+          is_deprecated: null
+          value: planned
+        - description: InProgress
+          is_deprecated: null
+          value: inProgress
+    - name: data_export_schedule_frequency_enum
+      values:
+        - description: Daily
+          is_deprecated: null
+          value: daily
+        - description: Weekly
+          is_deprecated: null
+          value: weekly
+        - description: Monthly
+          is_deprecated: null
+          value: monthly
+    - name: data_export_schedule_storage_type_enum
+      values:
+        - description: AzureBlobStorage
+          is_deprecated: null
+          value: azureBlobStorage
+        - description: AmazonS3
+          is_deprecated: null
+          value: amazonS3
+        - description: SFTP
+          is_deprecated: null
+          value: sftp
+        - description: MsSharePoint
+          is_deprecated: null
+          value: msSharePoint
+    - name: data_export_schedule_status_enum
+      values:
+        - description: Active
+          is_deprecated: null
+          value: active
+        - description: Inactive
+          is_deprecated: null
+          value: inactive
+  input_objects:
+    - name: UpdateNotificationPreferencesInput
+    - name: InsertInternalAuditInput
+    - name: InsertImpactRatingPairInput
+    - name: UpdateTestResultInput
+    - name: UpdateChildObligationInput
+    - name: DeleteSsoConfigInput
+    - name: InsertSsoConfigInput
+    - name: InsertIngestionConfigInput
+    - name: UpdateIngestionConfigInput
+    - name: DeleteIngestionConfigInput
+  objects:
+    - name: InsertChildRiskAssessmentResultOutput
+    - name: InsertChildDocumentAssessmentResultOutput
+    - name: InsertChildObligationAssessmentResultOutput
+    - name: InsertRiskAssessmentResultConfigApiOutput
+    - name: LinkItemsOutput
+    - name: NotificationPreferencesOutput
+    - name: UpdateNotificationPreferencesOutput
+    - name: DisconnectSlackOutput
+    - name: SlackNotificationConnectionOutput
+    - name: RecalculateRiskScoresOutput
+    - name: GenericMutationOutput
+    - name: RoleOutput
+    - name: UpdateUserRolesMutationOutput
+    - name: SsoConfigOutput
+    - name: DeleteSsoConfigOutput
+  scalars: [ ]

@@ -1,0 +1,6 @@
+query getConversations {
+  conversation {
+    Id
+    IsResolved
+  }
+}

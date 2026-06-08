@@ -1,0 +1,227 @@
+mutation reassignUser(
+  $OldUserId: String!
+  $NewUserId: String!
+  $ModifiedAtTimestamp1: timestamptz!
+  $ModifiedAtTimestamp2: timestamptz!
+  $OrgKey: String!
+) {
+  updateOwnerCreatedByUser: update_owner(
+    where: { CreatedByUser: { _eq: $OldUserId }, OrgKey: { _eq: $OrgKey } }
+    _set: {
+      CreatedByUser: $NewUserId
+      ModifiedAtTimestamp: $ModifiedAtTimestamp1
+      ModifiedByUser: "SYSTEM"
+    }
+  ) {
+    affected_rows
+  }
+
+  updateContributorCreatedByUser: update_contributor(
+    where: { CreatedByUser: { _eq: $OldUserId }, OrgKey: { _eq: $OrgKey } }
+    _set: {
+      CreatedByUser: $NewUserId
+      ModifiedAtTimestamp: $ModifiedAtTimestamp1
+      ModifiedByUser: "SYSTEM"
+    }
+  ) {
+    affected_rows
+  }
+
+  updateRiskCreatedByUser: update_risk(
+    where: { CreatedByUser: { _eq: $OldUserId }, OrgKey: { _eq: $OrgKey } }
+    _set: {
+      CreatedByUser: $NewUserId
+      ModifiedAtTimestamp: $ModifiedAtTimestamp1
+      ModifiedByUser: "SYSTEM"
+    }
+  ) {
+    affected_rows
+  }
+
+  updateAssessmentResultParentCreatedByUser: update_assessment_result_parent(
+    where: { CreatedByUser: { _eq: $OldUserId }, OrgKey: { _eq: $OrgKey } }
+    _set: {
+      CreatedByUser: $NewUserId
+      ModifiedAtTimestamp: $ModifiedAtTimestamp1
+      ModifiedByUser: "SYSTEM"
+    }
+  ) {
+    affected_rows
+  }
+
+  updateIssueParentCreatedByUser: update_issue_parent(
+    where: { CreatedByUser: { _eq: $OldUserId }, OrgKey: { _eq: $OrgKey } }
+    _set: {
+      CreatedByUser: $NewUserId
+      ModifiedAtTimestamp: $ModifiedAtTimestamp1
+      ModifiedByUser: "SYSTEM"
+    }
+  ) {
+    affected_rows
+  }
+
+  updateIssueAssessmentCreatedByUser: update_issue_assessment(
+    where: { CreatedByUser: { _eq: $OldUserId }, OrgKey: { _eq: $OrgKey } }
+    _set: {
+      CreatedByUser: $NewUserId
+      ModifiedAtTimestamp: $ModifiedAtTimestamp1
+      ModifiedByUser: "SYSTEM"
+    }
+  ) {
+    affected_rows
+  }
+
+  updateActionParentCreatedByUser: update_action_parent(
+    where: { CreatedByUser: { _eq: $OldUserId }, OrgKey: { _eq: $OrgKey } }
+    _set: {
+      CreatedByUser: $NewUserId
+      ModifiedAtTimestamp: $ModifiedAtTimestamp1
+      ModifiedByUser: "SYSTEM"
+    }
+  ) {
+    affected_rows
+  }
+
+  updateDocumentAssessmentResultCreatedByUser: update_document_assessment_result(
+    where: { CreatedByUser: { _eq: $OldUserId }, OrgKey: { _eq: $OrgKey } }
+    _set: {
+      CreatedByUser: $NewUserId
+      ModifiedAtTimestamp: $ModifiedAtTimestamp1
+      ModifiedByUser: "SYSTEM"
+    }
+  ) {
+    affected_rows
+  }
+
+  updateAssessmentCreatedByUser: update_assessment(
+    where: { CreatedByUser: { _eq: $OldUserId }, OrgKey: { _eq: $OrgKey } }
+    _set: {
+      CreatedByUser: $NewUserId
+      ModifiedAtTimestamp: $ModifiedAtTimestamp1
+      ModifiedByUser: "SYSTEM"
+    }
+  ) {
+    affected_rows
+  }
+
+  updatedAssessmentCompletedByUser: update_assessment(
+    where: { CompletedByUser: { _eq: $OldUserId }, OrgKey: { _eq: $OrgKey } }
+    _set: {
+      CompletedByUser: $NewUserId
+      ModifiedAtTimestamp: $ModifiedAtTimestamp2
+      ModifiedByUser: "SYSTEM"
+    }
+  ) {
+    affected_rows
+  }
+
+  updateActionCreatedByUser: update_action(
+    where: { CreatedByUser: { _eq: $OldUserId }, OrgKey: { _eq: $OrgKey } }
+    _set: {
+      CreatedByUser: $NewUserId
+      ModifiedAtTimestamp: $ModifiedAtTimestamp1
+      ModifiedByUser: "SYSTEM"
+    }
+  ) {
+    affected_rows
+  }
+
+  updateIssueCreatedByUser: update_issue(
+    where: { CreatedByUser: { _eq: $OldUserId }, OrgKey: { _eq: $OrgKey } }
+    _set: {
+      CreatedByUser: $NewUserId
+      ModifiedAtTimestamp: $ModifiedAtTimestamp1
+      ModifiedByUser: "SYSTEM"
+    }
+  ) {
+    affected_rows
+  }
+
+  updateDocumentCreatedByUser: update_document(
+    where: { CreatedByUser: { _eq: $OldUserId }, OrgKey: { _eq: $OrgKey } }
+    _set: {
+      CreatedByUser: $NewUserId
+      ModifiedAtTimestamp: $ModifiedAtTimestamp1
+      ModifiedByUser: "SYSTEM"
+    }
+  ) {
+    affected_rows
+  }
+
+  updateDocumentFileCreatedByUser: update_document_file(
+    where: { CreatedByUser: { _eq: $OldUserId }, OrgKey: { _eq: $OrgKey } }
+    _set: {
+      CreatedByUser: $NewUserId
+      ModifiedAtTimestamp: $ModifiedAtTimestamp1
+      ModifiedByUser: "SYSTEM"
+    }
+  ) {
+    affected_rows
+  }
+
+  updateRelationFileCreatedByUser: update_relation_file(
+    where: { CreatedByUser: { _eq: $OldUserId }, OrgKey: { _eq: $OrgKey } }
+    _set: {
+      CreatedByUser: $NewUserId
+      ModifiedAtTimestamp: $ModifiedAtTimestamp1
+      ModifiedByUser: "SYSTEM"
+    }
+  ) {
+    affected_rows
+  }
+
+  updateDocumentFileReviewedBy: update_document_file(
+    where: { ReviewedBy: { _eq: $OldUserId }, OrgKey: { _eq: $OrgKey } }
+    _set: {
+      ReviewedBy: $NewUserId
+      ModifiedAtTimestamp: $ModifiedAtTimestamp2
+      ModifiedByUser: "SYSTEM"
+    }
+  ) {
+    affected_rows
+  }
+
+  updateFileCreatedByUser: update_file(
+    where: { CreatedByUser: { _eq: $OldUserId }, OrgKey: { _eq: $OrgKey } }
+    _set: {
+      CreatedByUser: $NewUserId
+      ModifiedAtTimestamp: $ModifiedAtTimestamp2
+      ModifiedByUser: "SYSTEM"
+    }
+  ) {
+    affected_rows
+  }
+
+  updateTestResultSubmitter: update_test_result(
+    where: { Submitter: { _eq: $OldUserId }, OrgKey: { _eq: $OrgKey } }
+    _set: {
+      Submitter: $NewUserId
+      ModifiedAtTimestamp: $ModifiedAtTimestamp1
+      ModifiedByUser: "SYSTEM"
+    }
+  ) {
+    affected_rows
+  }
+
+  updateTestResultCreatedByUser: update_test_result(
+    where: { CreatedByUser: { _eq: $OldUserId }, OrgKey: { _eq: $OrgKey } }
+    _set: {
+      CreatedByUser: $NewUserId
+      ModifiedAtTimestamp: $ModifiedAtTimestamp2
+      ModifiedByUser: "SYSTEM"
+    }
+  ) {
+    affected_rows
+  }
+
+  updateUserSearchPreferencesCreatedByUser: update_user_search_preferences(
+    where: { CreatedByUser: { _eq: $OldUserId }, OrgKey: { _eq: $OrgKey } }
+    _set: {
+      CreatedByUser: $NewUserId
+      ModifiedAtTimestamp: $ModifiedAtTimestamp1
+      ModifiedByUser: "SYSTEM"
+    }
+  ) {
+    affected_rows
+  }
+}

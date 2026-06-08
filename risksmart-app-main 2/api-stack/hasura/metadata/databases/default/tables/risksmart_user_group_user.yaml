@@ -1,0 +1,99 @@
+table:
+  name: user_group_user
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: user_group_user
+  custom_root_fields: {}
+object_relationships:
+  - name: userGroups
+    using:
+      foreign_key_constraint_on: UserGroupId
+  - name: authUsers
+    using:
+      foreign_key_constraint_on: UserId
+  - name: user
+    using:
+      manual_configuration:
+        column_mapping:
+          UserId: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: createdByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          CreatedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+select_permissions:
+  - role: Standard
+    permission:
+      columns:
+        - UserId
+        - UserGroupId
+        - CreatedAtTimestamp
+        - CreatedByUser
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+      allow_aggregations: true
+  - role: read:user-group-user
+    permission:
+      columns:
+        - UserId
+        - UserGroupId
+        - CreatedAtTimestamp
+        - CreatedByUser
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      allow_aggregations: true
+insert_permissions:
+  - role: insert:user-group-user
+    permission:
+      check:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      set:
+        CreatedByUser: x-hasura-User-Id
+        ModifiedByUser: x-hasura-User-Id
+        OrgKey: x-hasura-Org-Id
+      columns:
+        - UserGroupId
+        - UserId
+    comment: ''
+delete_permissions:
+  - role: delete:user-group-user
+    permission:
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+event_triggers:
+  - name: user-group-users
+    definition:
+      delete:
+        columns: '*'
+      enable_manual: true
+      insert:
+        columns: '*'
+      update:
+        columns: '*'
+    retry_conf:
+      interval_sec: 10
+      num_retries: 3
+      timeout_sec: 60
+    webhook: https://{{REST_API_DOMAIN}}/events
+    headers:
+      - name: RestApiKey
+        value_from_env: REST_API_KEY

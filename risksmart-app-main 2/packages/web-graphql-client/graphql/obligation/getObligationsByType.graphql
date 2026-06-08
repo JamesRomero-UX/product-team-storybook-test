@@ -1,0 +1,7 @@
+query getObligationsByType($type: obligation_type_enum!) {
+  obligation(where: { Type: { _eq: $type } }) {
+    Title
+    SequentialId
+    Id
+  }
+}

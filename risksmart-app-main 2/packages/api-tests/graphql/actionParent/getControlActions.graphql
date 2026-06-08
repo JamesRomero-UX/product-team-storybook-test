@@ -1,0 +1,10 @@
+query getActionParents {
+  action_parent {
+    ParentId
+    ActionId
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+    CreatedAtTimestamp
+  }
+}

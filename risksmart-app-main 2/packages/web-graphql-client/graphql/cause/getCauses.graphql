@@ -1,0 +1,38 @@
+query getCauses($where: cause_bool_exp! = {}) {
+  cause(where: $where) {
+    ...CauseParts
+    createdByUser {
+      FriendlyName
+    }
+    modifiedByUser {
+      FriendlyName
+    }
+    issue {
+      Type
+      SequentialId
+      CreatedAtTimestamp
+      Title
+      owners {
+        ...OwnerParts
+      }
+      ownerGroups {
+        ...OwnerGroupParts
+      }
+      contributors {
+        ...ContributorParts
+      }
+      contributorGroups {
+        ...ContributorGroupParts
+      }
+      assessment {
+        IssueType
+        ActualCloseDate
+        Status
+        Severity
+        departments {
+          ...DepartmentParts
+        }
+      }
+    }
+  }
+}

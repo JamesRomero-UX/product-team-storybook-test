@@ -1,0 +1,8 @@
+table:
+  name: organisation_tab_preference_audit
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: organisation_tab_preference_audit
+  custom_root_fields: {}

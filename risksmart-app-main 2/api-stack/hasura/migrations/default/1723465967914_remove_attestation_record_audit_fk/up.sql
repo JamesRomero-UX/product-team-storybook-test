@@ -1,0 +1,1 @@
+ALTER TABLE risksmart.attestation_record_audit DROP CONSTRAINT "attestation_record_audit_NodeId_fkey";

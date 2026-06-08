@@ -1,0 +1,5 @@
+mutation deleteDocument($Id: uuid!) {
+  delete_document(where: { Id: { _eq: $Id } }) {
+    affected_rows
+  }
+}

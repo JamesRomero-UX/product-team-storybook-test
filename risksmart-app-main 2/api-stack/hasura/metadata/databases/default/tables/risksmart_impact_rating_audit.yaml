@@ -1,0 +1,29 @@
+table:
+  name: impact_rating_audit
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: impact_rating_audit
+  custom_root_fields: {}
+select_permissions:
+  - role: read:audit
+    permission:
+      columns:
+        - RatedItemId
+        - ImpactId
+        - Rating
+        - TestDate
+        - CreatedByUser
+        - CreatedAtTimestamp
+        - CustomAttributeData
+        - Id
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - SequentialId
+        - CompletedBy
+        - RatingType
+        - Likelihood
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id

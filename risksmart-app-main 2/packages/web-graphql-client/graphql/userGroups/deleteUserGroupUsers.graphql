@@ -1,0 +1,10 @@
+mutation DeleteUserGroupUsers(
+  $UserIds: [String!] = ""
+  $UserGroupId: uuid = ""
+) {
+  delete_user_group_user(
+    where: { UserId: { _in: $UserIds }, UserGroupId: { _eq: $UserGroupId } }
+  ) {
+    affected_rows
+  }
+}

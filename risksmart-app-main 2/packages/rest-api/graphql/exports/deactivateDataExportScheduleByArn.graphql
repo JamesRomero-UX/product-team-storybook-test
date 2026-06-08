@@ -1,0 +1,17 @@
+mutation deactivateDataExportScheduleByArn($CronArn: String!) {
+  update_data_export_schedule(
+    where: { CronArn: { _eq: $CronArn } }
+    _set: { Status: inactive }
+  ) {
+    affected_rows
+  }
+  update_data_export_schedule_execution(
+    where: {
+      dataExportSchedule: { CronArn: { _eq: $CronArn } }
+      Status: { _eq: scheduled }
+    }
+    _set: { Status: cancelled }
+  ) {
+    affected_rows
+  }
+}

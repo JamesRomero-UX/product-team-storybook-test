@@ -1,0 +1,14 @@
+query getUserSearch($email: String = "", $id: String = "") {
+  auth_user(
+    where: { _or: [{ Id: { _eq: $id } }, { Email: { _eq: $email } }] }
+    distinct_on: Id
+    limit: 1
+  ) {
+    Id
+    UserName
+    Status
+    Email
+    FirstName
+    LastName
+  }
+}

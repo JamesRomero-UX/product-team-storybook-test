@@ -1,0 +1,50 @@
+query getAcceptances(
+  $where: acceptance_bool_exp
+  $limit: Int
+  $orderBy: [acceptance_order_by!]
+) {
+  acceptance(where: $where, limit: $limit, order_by: $orderBy) {
+    ...AcceptanceParts
+  }
+}
+
+mutation deleteAcceptances($Ids: [uuid!]) {
+  delete_file(where: { relationFile: { ParentId: { _in: $Ids } } }) {
+    affected_rows
+  }
+
+  delete_relation_file(where: { ParentId: { _in: $Ids } }) {
+    affected_rows
+  }
+
+  delete_acceptance(where: { Id: { _in: $Ids } }) {
+    affected_rows
+  }
+}
+
+mutation insertAcceptances($objects: [acceptance_insert_input!]!) {
+  insert_acceptance(objects: $objects) {
+    returning {
+      ...AcceptanceParts
+    }
+  }
+}
+
+mutation insertAcceptanceParent($objects: [acceptance_parent_insert_input!]!) {
+  insert_acceptance_parent(objects: $objects) {
+    returning {
+      Id
+    }
+  }
+}
+
+mutation updateAcceptances(
+  $where: acceptance_bool_exp!
+  $set: acceptance_set_input!
+) {
+  update_acceptance(where: $where, _set: $set) {
+    returning {
+      ...AcceptanceParts
+    }
+  }
+}

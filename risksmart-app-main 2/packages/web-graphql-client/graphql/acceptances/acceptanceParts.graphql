@@ -1,0 +1,18 @@
+fragment AcceptanceParts on acceptance {
+  DateAcceptedFrom
+  DateAcceptedTo
+  Details
+  Id
+  Status
+  ModifiedAtTimestamp
+  CreatedAtTimestamp
+  Title
+  CreatedByUser
+  ModifiedByUser
+  ApprovedByUser
+  ApprovedByUserGroup
+  RequestedByUser
+  RequestedByUserGroup
+  CustomAttributeData
+  SequentialId
+}

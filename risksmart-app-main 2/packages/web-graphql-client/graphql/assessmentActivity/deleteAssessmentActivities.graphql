@@ -1,0 +1,5 @@
+mutation deleteAssessmentActivities($Ids: [uuid!]) {
+  delete_assessment_activity(where: { Id: { _in: $Ids } }) {
+    affected_rows
+  }
+}

@@ -1,0 +1,409 @@
+table:
+  name: document
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: document
+  custom_root_fields: {}
+object_relationships:
+  - name: schedule
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: Id
+        insertion_order: null
+        remote_table:
+          name: schedule
+          schema: risksmart   
+  - name: scheduleState
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: Id
+        insertion_order: null
+        remote_table:
+          name: schedule_state
+          schema: risksmart   
+  - name: attestationConfig
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: after_parent
+        remote_table:
+          name: attestation_config
+          schema: risksmart
+  - name: createdByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          CreatedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: modifiedByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          ModifiedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: organisation
+    using:
+      foreign_key_constraint_on: OrgKey
+  - name: parent
+    using:
+      manual_configuration:
+        column_mapping:
+          ParentDocument: Id
+        insertion_order: null
+        remote_table:
+          name: document
+          schema: risksmart
+array_relationships:
+  - name: ancestorContributors
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: Id
+        insertion_order: null
+        remote_table:
+          name: ancestor_contributor_view
+          schema: risksmart
+  - name: actions
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: action_parent
+          schema: risksmart
+  - name: approvals
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: approval
+          schema: risksmart
+  - name: contributorGroups
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: contributor_group
+          schema: risksmart
+  - name: contributors
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: contributor
+          schema: risksmart
+  - name: departments
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: department
+          schema: risksmart
+  - name: documentFiles
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentDocumentId
+        insertion_order: null
+        remote_table:
+          name: document_file
+          schema: risksmart
+  - name: insertPermissions
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: Id
+        insertion_order: null
+        remote_table:
+          name: insert_permission_view
+          schema: risksmart
+  - name: issues
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: issue_parent
+          schema: risksmart
+  - name: assessmentResults
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: assessment_result_parent
+          schema: risksmart
+  - name: linkedDocuments
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: DocumentId
+        insertion_order: null
+        remote_table:
+          name: document_linked_document
+          schema: risksmart
+  - name: ownerGroups
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: owner_group
+          schema: risksmart
+  - name: owners
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: owner
+          schema: risksmart
+  - name: permissions
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: Id
+        insertion_order: null
+        remote_table:
+          name: permission_view
+          schema: risksmart
+  - name: tags
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: tag
+          schema: risksmart
+insert_permissions:
+  - role: insert:document
+    permission:
+      backend_only: true
+      check:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - _or:
+              - ParentDocument:
+                  _is_null: true
+              - parent:
+                  OrgKey:
+                    _eq: X-Hasura-org-id
+      set:
+        CreatedByUser: x-hasura-user-id
+        ModifiedByUser: x-hasura-user-id
+        OrgKey: X-Hasura-org-id
+      columns:
+        - Id
+        - DocumentType
+        - ParentDocument
+        - Purpose
+        - Title
+        - CustomAttributeData
+select_permissions:
+  - role: Standard
+    permission:
+      columns:
+        - CreatedAtTimestamp
+        - CreatedByUser
+        - DocumentType
+        - Id
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - ParentDocument
+        - Purpose
+        - Title
+        - CustomAttributeData
+        - SequentialId
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - _or:
+              - _and:
+                  - documentFiles:
+                      Status:
+                        _eq: published
+                  - _exists:
+                      _table:
+                        name: user_role_access
+                        schema: risksmart
+                      _where:
+                        _and:
+                          - AccessType:
+                              _eq: read
+                          - ObjectType:
+                              _eq: public_policies
+                          - UserId:
+                              _eq: X-Hasura-User-Id
+              - permissions:
+                  _and:
+                    - UserId:
+                        _eq: X-Hasura-User-Id
+                    - OrgKey:
+                        _eq: X-Hasura-org-Id
+                    - AccessType:
+                        _eq: read
+                    - ObjectType:
+                        _eq: document
+  - role: read:document
+    permission:
+      columns:
+        - CreatedAtTimestamp
+        - CreatedByUser
+        - DocumentType
+        - Id
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - ParentDocument
+        - Purpose
+        - Title
+        - CustomAttributeData
+        - SequentialId
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+  - role: read:public-document
+    permission:
+      columns:
+        - CreatedAtTimestamp
+        - CreatedByUser
+        - DocumentType
+        - Id
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - ParentDocument
+        - Purpose
+        - Title
+        - CustomAttributeData
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+        documentFiles:
+          Status:
+            _eq: published
+update_permissions:
+  - role: Standard
+    permission:
+      backend_only: true
+      columns:
+        - DocumentType
+        - ParentDocument
+        - Purpose
+        - Title
+        - CustomAttributeData
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - permissions:
+              _and:
+                - UserId:
+                    _eq: X-Hasura-User-Id
+                - OrgKey:
+                    _eq: X-Hasura-org-Id
+                - AccessType:
+                    _eq: update
+      check:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - _or:
+              - ParentDocument:
+                  _is_null: true
+              - parent:
+                  OrgKey:
+                    _eq: X-Hasura-org-id
+      set:
+        ModifiedAtTimestamp: now()
+        ModifiedByUser: x-hasura-user-id
+  - role: update:document
+    permission:
+      backend_only: true
+      columns:
+        - DocumentType
+        - ParentDocument
+        - Purpose
+        - Title
+        - CustomAttributeData
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      check:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - _or:
+              - ParentDocument:
+                  _is_null: true
+              - parent:
+                  OrgKey:
+                    _eq: X-Hasura-org-id
+      set:
+        ModifiedAtTimestamp: now()
+        ModifiedByUser: x-hasura-user-id
+delete_permissions:
+  - role: Standard
+    permission:
+      backend_only: true
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - permissions:
+              _and:
+                - UserId:
+                    _eq: X-Hasura-User-Id
+                - OrgKey:
+                    _eq: X-Hasura-org-Id
+                - AccessType:
+                    _eq: delete
+  - role: delete:document
+    permission:
+      backend_only: true
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+event_triggers:
+  - name: document
+    definition:
+      delete:
+        columns: '*'
+      enable_manual: false
+      insert:
+        columns: '*'
+      update:
+        columns: '*'
+    retry_conf:
+      interval_sec: 10
+      num_retries: 3
+      timeout_sec: 60
+    webhook: https://{{REST_API_DOMAIN}}/events
+    headers:
+      - name: RestApiKey
+        value_from_env: REST_API_KEY

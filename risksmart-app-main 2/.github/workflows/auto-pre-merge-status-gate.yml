@@ -1,0 +1,63 @@
+# This workflow provides a unified status check for branch protection.
+# It monitors ALL checks/workflows that run on a PR and only passes when all have succeeded.
+# This prevents automerge from merging when any workflow (including Tofu pipelines) fails.
+#
+# Uses wechuli/allcheckspassed - a well-maintained action specifically designed for this purpose.
+# https://github.com/wechuli/allcheckspassed
+
+name: Auto / Pre-Merge Status Gate
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  # Re-trigger when commit statuses change (e.g., manual approvals like Chromatic)
+  # Only trigger on success, we don't need to re-check when things fail
+  status:
+
+# Only allow one status gate to run per commit at a time
+# When re-triggered by status event, cancel the previous run
+concurrency:
+  group: pr-status-gate-${{ github.event.pull_request.head.sha || github.sha }}
+  cancel-in-progress: true
+
+jobs:
+  pr-status-gate:
+    name: PR Status Gate
+    # For pull_request: always run
+    # For status: only run if it's a success state AND not from main branch
+    #             (we only care when things become ready, and only for PRs)
+    if: |
+      github.event_name == 'pull_request' ||
+      (github.event_name == 'status' &&
+       github.event.state == 'success' &&
+       github.event.branches[0].name != github.event.repository.default_branch)
+    runs-on:
+      - sprinters:aws:ubuntu-24.04-minimal
+      - ${{ github.run_id }}-${{ github.run_attempt }}-pr-status-gate
+    permissions:
+      checks: read
+      contents: read
+      statuses: read
+    steps:
+      - name: Wait for all checks to pass
+        uses: wechuli/allcheckspassed@1d00cf0c34c4b0805db8866d8913f22e7125301e # v2.3.0
+        with:
+          # Delay before first check (gives other workflows time to start)
+          # Shorter delay for status events since checks are already running
+          delay: ${{ github.event_name == 'pull_request' && '3' || '0' }}
+          # Number of times to poll for check status
+          # 30 retries × 2 min interval = 60 min max wait per trigger
+          # This is sufficient because we re-trigger on status changes
+          retries: "30"
+          # Minutes between each poll
+          polling_interval: "2"
+          # Exclude this workflow from the check (to avoid circular dependency)
+          checks_exclude: "PR Status Gate"
+          # Optional: Enable verbose logging for debugging
+          verbose: true
+          # Fail fast if any check fails (don't wait for others)
+          fail_fast: true
+          # Consider neutral checks as failing
+          treat_neutral_as_passed: false
+          # Include commits' statuses as well as checks (e.g., chromatic)
+          include_status_commits: true

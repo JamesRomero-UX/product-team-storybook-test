@@ -1,0 +1,44 @@
+{
+  "rules": [
+    {
+      "rulePriority": 1,
+      "description": "Keep last 500 alpha builds",
+      "selection": {
+        "tagStatus": "tagged",
+        "tagPatternList": ["*-alpha.*"],
+        "countType": "imageCountMoreThan",
+        "countNumber": 500
+      },
+      "action": {
+        "type": "expire"
+      }
+    },
+    {
+      "rulePriority": 2,
+      "description": "Keep release versions for 2 years",
+      "selection": {
+        "tagStatus": "tagged",
+        "tagPatternList": ["v*"],
+        "countType": "sinceImagePushed",
+        "countUnit": "days",
+        "countNumber": 730
+      },
+      "action": {
+        "type": "expire"
+      }
+    },
+    {
+      "rulePriority": 3,
+      "description": "Expire untagged images after 7 days",
+      "selection": {
+        "tagStatus": "untagged",
+        "countType": "sinceImagePushed",
+        "countUnit": "days",
+        "countNumber": 7
+      },
+      "action": {
+        "type": "expire"
+      }
+    }
+  ]
+}

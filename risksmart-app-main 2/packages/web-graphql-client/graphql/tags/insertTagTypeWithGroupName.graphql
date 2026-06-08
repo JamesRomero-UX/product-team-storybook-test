@@ -1,0 +1,18 @@
+mutation insertTagTypeWithGroupName(
+  $Name: String!
+  $Description: String
+  $TagGroupName: String
+) {
+  insert_tag_type_one(
+    object: {
+      Name: $Name
+      Description: $Description
+      tag_type_group: {
+        data: { Name: $TagGroupName }
+        on_conflict: { constraint: TagTypeGroup_pkey, update_columns: Name }
+      }
+    }
+  ) {
+    TagTypeId
+  }
+}

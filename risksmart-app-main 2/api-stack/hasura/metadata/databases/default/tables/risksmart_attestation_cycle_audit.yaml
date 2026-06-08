@@ -1,0 +1,22 @@
+table:
+  name: attestation_cycle_audit
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: attestation_cycle_audit
+  custom_root_fields: {}
+select_permissions:
+  - role: read:audit
+    permission:
+      columns:
+        - Id
+        - Status
+        - AllowCarryForward
+        - CreatedByUser
+        - ModifiedByUser
+        - CreatedAtTimestamp
+        - ModifiedAtTimestamp
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id

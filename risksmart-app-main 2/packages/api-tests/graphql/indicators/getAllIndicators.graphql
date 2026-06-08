@@ -1,0 +1,17 @@
+query getAllIndicators {
+  indicator {
+    CreatedAtTimestamp
+    CreatedByUser
+    Description
+    Id
+    LowerToleranceNum
+    ModifiedAtTimestamp
+    ModifiedByUser
+    TargetValueTxt
+    Title
+    Type
+    Unit
+    UpperToleranceNum
+    CustomAttributeData
+  }
+}

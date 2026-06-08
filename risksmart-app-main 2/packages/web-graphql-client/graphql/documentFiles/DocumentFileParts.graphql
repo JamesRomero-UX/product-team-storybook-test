@@ -1,0 +1,38 @@
+fragment DocumentRelationFileParts on document_file {
+  CustomAttributeData
+  CreatedAtTimestamp
+  CreatedByUser
+  FileId
+  Id
+  ModifiedAtTimestamp
+  ModifiedByUser
+  NextReviewDate
+  ParentDocumentId
+  ReasonForReview
+  ReviewDate
+  ReviewedBy
+  Status
+  Summary
+  Version
+  Type
+}
+
+fragment PublicDocumentRelationFileParts on document_file {
+  CustomAttributeData
+  CreatedAtTimestamp
+  CreatedByUser
+  FileId
+  Id
+  ModifiedAtTimestamp
+  ModifiedByUser
+  NextReviewDate
+  ParentDocumentId
+  ReasonForReview
+  ReviewDate
+  ReviewedBy
+  Status
+  Summary
+  Version
+  Type
+  PublishedDate
+}

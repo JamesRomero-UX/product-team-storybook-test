@@ -1,0 +1,5 @@
+mutation deleteTagType($tagTypeId: uuid!) {
+  delete_tag_type(where: { TagTypeId: { _eq: $tagTypeId } }) {
+    affected_rows
+  }
+}

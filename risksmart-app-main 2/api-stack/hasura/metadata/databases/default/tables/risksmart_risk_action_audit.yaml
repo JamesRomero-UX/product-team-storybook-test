@@ -1,0 +1,3 @@
+table:
+  name: risk_action_audit
+  schema: risksmart

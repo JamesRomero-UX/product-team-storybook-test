@@ -1,0 +1,8 @@
+fragment QuestionnaireInviteParts on questionnaire_invite {
+  Id
+  ThirdPartyId
+  UserEmail
+  UserId
+  Message
+  QuestionnaireTemplateVersionId
+}

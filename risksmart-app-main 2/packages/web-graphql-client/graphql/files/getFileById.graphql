@@ -1,0 +1,5 @@
+query getFileById($Id: uuid!) {
+  file_by_pk(Id: $Id) {
+    ...FileParts
+  }
+}

@@ -1,0 +1,38 @@
+query getIssueAssessmentByParentId($parentIssueId: uuid!) {
+  issue_assessment(where: { ParentIssueId: { _eq: $parentIssueId } }) {
+    ...IssueAssessmentParts
+    policyOwner {
+      FriendlyName
+    }
+    certifiedIndividual {
+      FriendlyName
+    }
+    departments {
+      ...DepartmentParts
+    }
+  }
+
+  # Get ancestorContributors separately as assessment may not have been created yet.
+  issue(where: { Id: { _eq: $parentIssueId } }) {
+    owners {
+      ...OwnerParts
+    }
+    tags {
+      ...TagParts
+    }
+  }
+
+  # Get parents separately as an assessment may not have been created yet.
+  issue_parent(where: { IssueId: { _eq: $parentIssueId } }) {
+    IssueId
+    ParentId
+    obligation {
+      Id
+      Title
+    }
+    parent {
+      ObjectType
+      SequentialId
+    }
+  }
+}

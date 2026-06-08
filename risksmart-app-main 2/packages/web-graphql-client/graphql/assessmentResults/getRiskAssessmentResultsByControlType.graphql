@@ -1,0 +1,42 @@
+query getRiskAssessmentResultsByControlType {
+  controlled: risk_assessment_result(
+    where: {
+      ControlType: { _eq: Controlled }
+      RatingType: { _in: ["assessment", "rating"] }
+    }
+    order_by: [{ TestDate: desc_nulls_last }, { CreatedAtTimestamp: desc }]
+  ) {
+    ...RiskAssessmentResultParts
+    parents {
+      ParentId
+      risk {
+        Id
+        Title
+      }
+      assessment {
+        Id
+        Title
+      }
+    }
+  }
+  uncontrolled: risk_assessment_result(
+    where: {
+      ControlType: { _eq: Uncontrolled }
+      RatingType: { _in: ["assessment", "rating"] }
+    }
+    order_by: [{ TestDate: desc_nulls_last }, { CreatedAtTimestamp: desc }]
+  ) {
+    ...RiskAssessmentResultParts
+    parents {
+      ParentId
+      risk {
+        Id
+        Title
+      }
+      assessment {
+        Id
+        Title
+      }
+    }
+  }
+}

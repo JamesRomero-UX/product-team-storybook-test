@@ -1,0 +1,113 @@
+query getDocuments(
+  $where: document_bool_exp! = {}
+  $filesWhere: document_file_bool_exp = {}
+  $documentAssessmentResultsWhere: document_assessment_result_bool_exp = {}
+  $includeAssessmentResultsHistory: Boolean = false
+) {
+  document(where: $where) {
+    ...DocumentParts
+    parent {
+      Title
+    }
+    scheduleState {
+      LatestDate
+      DueDate
+      OverdueDate
+    }
+    owners {
+      ...OwnerParts
+    }
+    ownerGroups {
+      ...OwnerGroupParts
+    }
+    contributors {
+      ...ContributorParts
+    }
+    contributorGroups {
+      ...ContributorGroupParts
+    }
+    modifiedByUser {
+      FriendlyName
+    }
+    createdByUser {
+      FriendlyName
+    }
+    tags {
+      ...TagParts
+    }
+    departments {
+      ...DepartmentParts
+    }
+    documentFiles(
+      order_by: { CreatedAtTimestamp: desc }
+      limit: 1
+      where: $filesWhere
+    ) {
+      Status
+      ReviewDate
+      NextReviewDate
+      changeRequests(
+        distinct_on: [ChangeRequestStatus]
+        order_by: [{ ChangeRequestStatus: asc }, { ModifiedAtTimestamp: desc }]
+      ) {
+        ChangeRequestStatus
+        ModifiedAtTimestamp
+      }
+    }
+    latestPublishedVersion: documentFiles(
+      where: { PublishedDate: { _is_null: false } }
+      order_by: { PublishedDate: desc }
+      limit: 1
+    ) {
+      PublishedDate
+    }
+    assessmentResults(
+      where: {
+        documentAssessmentResult: {
+          _and: [
+            { RatingType: { _in: ["assessment", "rating"] } }
+            $documentAssessmentResultsWhere
+          ]
+        }
+      }
+      order_by: [
+        { documentAssessmentResult: { TestDate: desc_nulls_last } }
+        { documentAssessmentResult: { CreatedAtTimestamp: desc_nulls_last } }
+      ]
+    ) @include(if: $includeAssessmentResultsHistory) {
+      ParentId
+      documentAssessmentResult {
+        Id
+        Rating
+        TestDate
+        CreatedAtTimestamp
+      }
+    }
+  }
+  assessment_result_parent(
+    where: {
+      documentAssessmentResult: {
+        RatingType: { _in: ["assessment", "rating"] }
+      }
+    }
+    distinct_on: [ParentId]
+    order_by: [
+      { ParentId: desc }
+      {
+        documentAssessmentResult: {
+          TestDate: desc_nulls_last
+          CreatedAtTimestamp: desc_nulls_last
+        }
+      }
+    ]
+  ) {
+    documentAssessmentResult {
+      parents {
+        ParentId
+      }
+      Id
+      Rating
+      CustomAttributeData
+    }
+  }
+}

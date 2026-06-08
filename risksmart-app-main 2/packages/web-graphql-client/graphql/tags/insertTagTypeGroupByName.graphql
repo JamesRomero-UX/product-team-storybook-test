@@ -1,0 +1,12 @@
+mutation InsertTagTypeGroupByName($Name: String) {
+  insert_tag_type_group_one(
+    object: { Name: $Name }
+    on_conflict: {
+      constraint: TagTypeGroup_pkey
+      update_columns: Name
+      where: { Name: { _eq: $Name } }
+    }
+  ) {
+    Id
+  }
+}

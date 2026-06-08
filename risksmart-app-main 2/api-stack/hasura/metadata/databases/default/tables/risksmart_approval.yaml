@@ -1,0 +1,198 @@
+table:
+  name: approval
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: approval
+  custom_root_fields: {}
+object_relationships:
+  - name: createdBy
+    using:
+      manual_configuration:
+        column_mapping:
+          CreatedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: modifiedBy
+    using:
+      manual_configuration:
+        column_mapping:
+          ModifiedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: org
+    using:
+      manual_configuration:
+        column_mapping:
+          OrgKey: OrgKey
+        insertion_order: null
+        remote_table:
+          name: organisation
+          schema: auth
+  - name: parent
+    using:
+      manual_configuration:
+        column_mapping:
+          ParentId: Id
+        insertion_order: null
+        remote_table:
+          name: node
+          schema: risksmart
+array_relationships:
+  - name: levels
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ApprovalId
+        insertion_order: null
+        remote_table:
+          name: approval_level
+          schema: risksmart
+insert_permissions:
+  - role: insert:approval
+    permission:
+      check:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      set:
+        CreatedByUser: x-hasura-User-Id
+        ModifiedByUser: x-hasura-User-Id
+        OrgKey: x-hasura-org-id
+      columns:
+        - ParentId
+        - Workflow
+        - InFlightEditRule
+  - role: Standard
+    permission:
+      check:
+        _and:
+          - ParentId:
+              _is_null: false
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - parent:
+              permissions:
+                _and:
+                  - UserId:
+                      _eq: X-Hasura-User-Id
+                  - OrgKey:
+                      _eq: X-Hasura-org-Id
+                  - AccessType:
+                      _eq: update
+      set:
+        CreatedByUser: x-hasura-User-Id
+        ModifiedByUser: x-hasura-User-Id
+        OrgKey: x-hasura-org-id
+      columns:
+        - ParentId
+        - Workflow
+        - InFlightEditRule
+update_permissions:
+  - role: update:approval
+    permission:
+      check:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      set:
+        ModifiedAtTimestamp: now()
+        ModifiedByUser: X-Hasura-User-Id
+      columns:
+        - ParentId
+        - Workflow
+        - InFlightEditRule
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+  - role: Standard
+    permission:
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - parent:
+              permissions:
+                _and:
+                  - UserId:
+                      _eq: X-Hasura-User-Id
+                  - OrgKey:
+                      _eq: X-Hasura-org-Id
+                  - AccessType:
+                      _eq: update
+      check:
+        ParentId:
+          _is_null: false
+      set:
+        ModifiedAtTimestamp: now()
+        ModifiedByUser: X-Hasura-User-Id
+      columns:
+        - ParentId
+        - Workflow
+        - InFlightEditRule
+select_permissions:
+  - role: Standard
+    permission:
+      columns:
+        - CreatedByUser
+        - ModifiedByUser
+        - CreatedAtTimestamp
+        - ModifiedAtTimestamp
+        - Id
+        - ParentId
+        - Workflow
+        - InFlightEditRule
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - _or:
+            - parent:
+                permissions:
+                    _and:
+                    - UserId:
+                        _eq: X-Hasura-User-Id
+                    - OrgKey:
+                        _eq: X-Hasura-org-Id
+                    - AccessType:
+                        _eq: read
+            - ParentId:
+                _is_null: true
+  - role: read:approval
+    permission:
+      columns:
+        - CreatedByUser
+        - ModifiedByUser
+        - CreatedAtTimestamp
+        - ModifiedAtTimestamp
+        - Id
+        - ParentId
+        - Workflow
+        - InFlightEditRule
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+delete_permissions:
+  - role: Standard
+    permission:
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - parent:
+              permissions:
+                _and:
+                  - UserId:
+                      _eq: X-Hasura-User-Id
+                  - OrgKey:
+                      _eq: X-Hasura-org-Id
+                  - AccessType:
+                      _eq: update
+  - role: delete:approval
+    permission:
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id

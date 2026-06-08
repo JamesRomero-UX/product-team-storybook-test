@@ -1,0 +1,383 @@
+table:
+  name: document_file
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: document_file
+  custom_root_fields: {}
+object_relationships:
+  - name: createdByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          CreatedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: file
+    using:
+      manual_configuration:
+        column_mapping:
+          FileId: Id
+        insertion_order: null
+        remote_table:
+          name: file
+          schema: risksmart
+  - name: modifiedByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          ModifiedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: parent
+    using:
+      manual_configuration:
+        column_mapping:
+          ParentDocumentId: Id
+        insertion_order: null
+        remote_table:
+          name: document
+          schema: risksmart
+  - name: reviewedBy
+    using:
+      manual_configuration:
+        column_mapping:
+          ReviewedBy: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+array_relationships:
+  - name: permissions
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: Id
+        insertion_order: null
+        remote_table:
+          name: permission_view
+          schema: risksmart
+  - name: changeRequests
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: ParentId
+        insertion_order: null
+        remote_table:
+          name: change_request
+          schema: risksmart
+  - name: attestations
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: NodeId
+        insertion_order: null
+        remote_table:
+          name: attestation_record
+          schema: risksmart
+insert_permissions:
+  - role: Standard
+    permission:
+      check:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - parent:
+              _and:
+                - OrgKey:
+                    _eq: X-Hasura-org-id
+                - insertPermissions:
+                    _and:
+                      - UserId:
+                          _eq: X-Hasura-User-Id
+                      - OrgKey:
+                          _eq: X-Hasura-org-Id
+                      - ObjectType:
+                          _eq: document_file
+          - _or:
+              - FileId:
+                  _is_null: true
+              - file:
+                  OrgKey:
+                    _eq: X-Hasura-org-id
+      set:
+        CreatedByUser: x-hasura-user-id
+        ModifiedByUser: x-hasura-user-id
+        OrgKey: X-Hasura-org-id
+      columns:
+        - Version
+        - FileId
+        - Content
+        - Type
+        - Link
+        - Status
+        - Summary
+        - ReasonForReview
+        - ReviewedBy
+        - ReviewDate
+        - NextReviewDate
+        - ParentDocumentId
+        - CustomAttributeData
+      backend_only: true
+  - role: insert:document-file
+    permission:
+      check:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - parent:
+              OrgKey:
+                _eq: X-Hasura-org-id
+          - _or:
+              - FileId:
+                  _is_null: true
+              - file:
+                  OrgKey:
+                    _eq: X-Hasura-org-id
+      set:
+        CreatedByUser: x-hasura-user-id
+        ModifiedByUser: x-hasura-user-id
+        OrgKey: X-Hasura-org-id
+      columns:
+        - Version
+        - FileId
+        - Content
+        - Type
+        - Link
+        - Summary
+        - Status
+        - ReasonForReview
+        - ReviewedBy
+        - ReviewDate
+        - NextReviewDate
+        - ParentDocumentId
+        - CustomAttributeData
+      backend_only: true
+select_permissions:
+  - role: Standard
+    permission:
+      columns:
+        - Id
+        - Version
+        - FileId
+        - Content
+        - Type
+        - Link
+        - Status
+        - PublishedDate
+        - Summary
+        - ReasonForReview
+        - ReviewedBy
+        - ReviewDate
+        - NextReviewDate
+        - ParentDocumentId
+        - CreatedByUser
+        - ModifiedByUser
+        - ModifiedAtTimestamp
+        - CreatedAtTimestamp
+        - CustomAttributeData
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - _or:
+              - _and:
+                  - Status:
+                      _eq: published
+                  - _exists:
+                      _table:
+                        name: user_role_access
+                        schema: risksmart
+                      _where:
+                        _and:
+                          - AccessType:
+                              _eq: read
+                          - ObjectType:
+                              _eq: public_policies
+                          - UserId:
+                              _eq: X-Hasura-User-Id
+              - permissions:
+                  _and:
+                    - UserId:
+                        _eq: X-Hasura-User-Id
+                    - OrgKey:
+                        _eq: X-Hasura-org-Id
+                    - AccessType:
+                        _eq: read
+  - role: read:document-file
+    permission:
+      columns:
+        - Id
+        - Version
+        - FileId
+        - Content
+        - Type
+        - Link
+        - Summary
+        - Status
+        - PublishedDate
+        - ReasonForReview
+        - ReviewedBy
+        - ReviewDate
+        - NextReviewDate
+        - ParentDocumentId
+        - CreatedByUser
+        - ModifiedByUser
+        - ModifiedAtTimestamp
+        - CreatedAtTimestamp
+        - CustomAttributeData
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+  - role: read:public-document-file
+    permission:
+      columns:
+        - Id
+        - Version
+        - FileId
+        - Content
+        - Type
+        - Link
+        - Status
+        - PublishedDate
+        - Summary
+        - ReasonForReview
+        - ReviewedBy
+        - ReviewDate
+        - NextReviewDate
+        - ParentDocumentId
+        - CreatedByUser
+        - ModifiedByUser
+        - ModifiedAtTimestamp
+        - CreatedAtTimestamp
+        - CustomAttributeData
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+        Status:
+          _eq: published
+update_permissions:
+  - role: Standard
+    permission:
+      columns:
+        - Version
+        - FileId
+        - Content
+        - Type
+        - Link
+        - Status
+        - PublishedDate
+        - Summary
+        - ReasonForReview
+        - ReviewedBy
+        - ReviewDate
+        - NextReviewDate
+        - CustomAttributeData
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - permissions:
+              _and:
+                - UserId:
+                    _eq: X-Hasura-User-Id
+                - OrgKey:
+                    _eq: X-Hasura-org-Id
+                - AccessType:
+                    _eq: update
+      check:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - parent:
+              OrgKey:
+                _eq: X-Hasura-org-id
+          - _or:
+              - FileId:
+                  _is_null: true
+              - file:
+                  OrgKey:
+                    _eq: X-Hasura-org-id
+      set:
+        ModifiedAtTimestamp: now()
+        ModifiedByUser: x-hasura-user-id
+      backend_only: true
+  - role: update:document-file
+    permission:
+      columns:
+        - Version
+        - FileId
+        - Content
+        - Type
+        - Link
+        - Summary
+        - Status
+        - PublishedDate
+        - ReasonForReview
+        - ReviewedBy
+        - ReviewDate
+        - NextReviewDate
+        - CustomAttributeData
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      check:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - parent:
+              OrgKey:
+                _eq: X-Hasura-org-id
+          - _or:
+              - FileId:
+                  _is_null: true
+              - file:
+                  OrgKey:
+                    _eq: X-Hasura-org-id
+      set:
+        ModifiedAtTimestamp: now()
+        ModifiedByUser: x-hasura-user-id
+      backend_only: true
+delete_permissions:
+  - role: Standard
+    permission:
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - permissions:
+              _and:
+                - UserId:
+                    _eq: X-Hasura-User-Id
+                - OrgKey:
+                    _eq: X-Hasura-org-Id
+                - AccessType:
+                    _eq: delete
+  - role: delete:document-file
+    permission:
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+event_triggers:
+  - name: document-file
+    definition:
+      delete:
+        columns: '*'
+      enable_manual: false
+      insert:
+        columns: '*'
+      update:
+        columns: '*'
+    retry_conf:
+      interval_sec: 10
+      num_retries: 3
+      timeout_sec: 60
+    webhook: https://{{REST_API_DOMAIN}}/events
+    headers:
+      - name: RestApiKey
+        value_from_env: REST_API_KEY

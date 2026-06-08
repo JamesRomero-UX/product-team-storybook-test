@@ -1,0 +1,9 @@
+mutation deleteConversations($Ids: [uuid!]) {
+  delete_comment(where: { ConversationId: { _in: $Ids } }) {
+    affected_rows
+  }
+
+  delete_conversation(where: { Id: { _in: $Ids } }) {
+    affected_rows
+  }
+}

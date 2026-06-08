@@ -1,0 +1,76 @@
+.propertyFilter {
+  flex: 1;
+
+  /* Tokens/Pills */
+  [class*='awsui_tokens_'] {
+    /* And/Or dropwn */
+    [class*='awsui_button-trigger_'] {
+      @apply bg-grey150 border-grey  #{!important};
+      border-top-left-radius: 17px !important;
+      border-bottom-left-radius: 17px !important;
+      border-width: 0 !important;
+      border-right-width: 1.5px !important;
+      border-style: solid !important;
+      min-height: 32px !important;
+      span[class*='awsui_icon'] {
+        @apply text-grey600 #{!important};
+      }
+    }
+
+    /* Tokens / Pill */
+    [class*='awsui_token_'] {
+      @apply bg-grey150 border-none  #{!important};
+      border-radius: 17px !important;
+
+      [class*='awsui_inner-token'] {
+        border-color: transparent !important;
+        background: transparent !important;
+      }
+
+      &:not(:first-of-type) {
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+        padding-left: 0 !important;
+
+        [class*='awsui_token-content'] {
+          padding-left: 8px !important;
+        }
+      }
+      [class*='awsui_filtering-token-edit-button'] {
+        @apply border-grey  #{!important};
+        border-width: 1.5px !important;
+      }
+      [class*='awsui_token-content'] {
+        padding-top: 6px !important;
+        padding-bottom: 6px !important;
+        padding-left: 20px !important;
+
+        button {
+          border-width: 0 !important;
+        }
+      }
+
+      [class*='awsui_token-content-grouped'] {
+        padding-top: 0px !important;
+        padding-bottom: 0px !important;
+
+        [class*='awsui_filtering-token-inner-content'] {
+          padding-top: 5px !important;
+        }
+      }
+
+      /* no separator line between cross and text content */
+      [class*='awsui_dismiss-button'] {
+        border-left-width: 0 !important;
+        padding-right: 20px !important;
+        width: 36px;
+      }
+    }
+  }
+
+  /* Hacks to make secondary button look like a primary button */
+  [class*='awsui_remove-all'] {
+    @apply bg-teal border-none #{!important};
+    height: 32px !important;
+  }
+}

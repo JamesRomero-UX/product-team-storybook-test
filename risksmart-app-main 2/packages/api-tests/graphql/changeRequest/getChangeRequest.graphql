@@ -1,0 +1,31 @@
+query getChangeRequest($Id: uuid!) {
+  change_request_by_pk(Id: $Id) {
+    Id
+    ParentId
+    ChangeRequestStatus
+    RequestedChanges
+    ActionUserId
+    Comment
+    CreatedAtTimestamp
+    CreatedByUser
+    ModifiedAtTimestamp
+    ModifiedByUser
+    OrgKey
+    contributors {
+      UserId
+    }
+    parent {
+      ObjectType
+    }
+    responses {
+      Approved
+      ApproverId
+      approver {
+        UserId
+        LevelId
+        OwnerApprover
+      }
+      Comment
+    }
+  }
+}

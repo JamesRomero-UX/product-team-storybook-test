@@ -1,0 +1,32 @@
+query getDueSchedules($minDueDate: timestamptz!, $maxDueDate: timestamptz!) {
+  schedule_state(
+    where: {
+      DueDate: { _gt: $minDueDate, _lte: $maxDueDate }
+      schedule: { Frequency: { _is_null: false, _neq: adhoc } }
+    }
+  ) {
+    Id
+    OrgKey
+    DueDate
+    schedule {
+      Frequency
+      TimeToCompleteValue
+      TimeToCompleteUnit
+    }
+    parent {
+      Id
+      ObjectType
+      SequentialId
+      OrgKey
+      risk {
+        Title
+      }
+      control {
+        Title
+      }
+      indicator {
+        Title
+      }
+    }
+  }
+}

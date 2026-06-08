@@ -1,0 +1,31 @@
+.colourPicker {
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  margin: 5px;
+  border-radius: 8px;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Remove the inner grey square */
+input[type='color']::-webkit-color-swatch-wrapper {
+  padding: 0;
+  border: none;
+}
+
+input[type='color']::-webkit-color-swatch {
+  border: none;
+  border-radius: inherit;
+}
+
+/* Firefox specific */
+input[type='color']::-moz-color-swatch {
+  border: none;
+  border-radius: inherit;
+}

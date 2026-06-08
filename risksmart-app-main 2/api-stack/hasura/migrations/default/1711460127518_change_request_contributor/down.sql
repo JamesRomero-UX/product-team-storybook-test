@@ -1,0 +1,4 @@
+DROP TRIGGER change_request_contributor_audit_trigger ON risksmart.change_request_contributor;
+DROP FUNCTION risksmart.change_request_contributor_modified;
+DROP TABLE risksmart.change_request_contributor_audit;
+DROP TABLE risksmart.change_request_contributor;

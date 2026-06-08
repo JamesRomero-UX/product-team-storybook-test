@@ -1,0 +1,11 @@
+query getLatestIndicatorResult($IndicatorId: uuid!) {
+  indicator_result(
+    where: { IndicatorId: { _eq: $IndicatorId } }
+    order_by: { ResultDate: desc }
+    limit: 1
+  ) {
+    Id
+    IndicatorId
+    ResultDate
+  }
+}

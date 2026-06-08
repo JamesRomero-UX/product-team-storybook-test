@@ -1,0 +1,20 @@
+query getInternalAuditReportDocumentAssessmentResultsByDocumentId(
+  $ParentId: uuid!
+) {
+  document_internal_audit_result(
+    where: { parents: { ParentId: { _eq: $ParentId } } }
+  ) {
+    ...DocumentInternalAuditResultParts
+    files {
+      ...RelationFileParts
+    }
+    parents(where: { ParentType: { _eq: internal_audit_report } }) {
+      internalAuditReport {
+        ...InternalAuditReportParts
+        completedByUser {
+          FriendlyName
+        }
+      }
+    }
+  }
+}

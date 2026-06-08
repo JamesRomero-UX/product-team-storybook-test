@@ -1,0 +1,15 @@
+mutation updateRiskAssessmentResultConfigApi(
+  $Id: uuid!
+  $Config: jsonb!
+  $OriginalTimestamp: timestamptz!
+) {
+  updateRiskAssessmentResultConfigApi(
+    Id: $Id
+    Config: $Config
+    OriginalTimestamp: $OriginalTimestamp
+  ) {
+    Id
+    Version
+    IsLatest
+  }
+}

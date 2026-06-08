@@ -1,0 +1,15 @@
+query getIssues {
+  issue {
+    DateIdentified
+    DateOccurred
+    Details
+    Id
+    ImpactsCustomer
+    IsExternalIssue
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    Title
+    CreatedByUser
+    ModifiedByUser
+  }
+}

@@ -1,0 +1,7 @@
+mutation insertInternalAudits(
+  $objects: [internal_audit_entity_insert_input!]!
+) {
+  insert_internal_audit_entity(objects: $objects) {
+    affected_rows
+  }
+}

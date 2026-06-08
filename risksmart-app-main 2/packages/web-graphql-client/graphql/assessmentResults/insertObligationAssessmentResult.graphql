@@ -1,0 +1,19 @@
+mutation insertObligationAssessmentResult(
+  $Rating: Int
+  $AssessmentId: uuid
+  $ObligationIds: [uuid!]!
+  $CustomAttributeData: jsonb
+  $TestDate: timestamptz
+  $Rationale: String
+) {
+  insertChildObligationAssessmentResult(
+    Rating: $Rating
+    AssessmentId: $AssessmentId
+    ObligationIds: $ObligationIds
+    CustomAttributeData: $CustomAttributeData
+    TestDate: $TestDate
+    Rationale: $Rationale
+  ) {
+    Ids
+  }
+}

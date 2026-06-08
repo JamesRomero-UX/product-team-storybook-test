@@ -1,0 +1,18 @@
+query getSsoConfigurations {
+  sso_configuration(order_by: { CreatedAtTimestamp: desc }) {
+    Id
+    Name
+    Strategy
+    ClientId
+    ConnectionId
+    Domain
+    DomainAliases
+    IsActive
+    IsRestApiEnabled
+    IsOrganizationConnected
+    CreatedAtTimestamp
+    CreatedByUser
+    ModifiedAtTimestamp
+    ModifiedByUser
+  }
+}

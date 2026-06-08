@@ -1,0 +1,20 @@
+{
+  "name": "@risksmart-app/dlq-replay",
+  "type": "module",
+  "version": "0.0.0",
+  "scripts": {
+    "start": "ts-node ./main.ts",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix"
+  },
+  "devDependencies": {
+    "ts-node": "catalog:"
+  },
+  "dependencies": {
+    "@aws-sdk/client-lambda": "^3.971.0",
+    "@aws-sdk/client-sqs": "catalog:",
+    "@risksmart-app/eslint-config": "workspace:*",
+    "eslint": "catalog:",
+    "prettier": "catalog:"
+  }
+}

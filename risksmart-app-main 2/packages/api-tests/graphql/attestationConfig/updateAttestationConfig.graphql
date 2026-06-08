@@ -1,0 +1,17 @@
+mutation updateAttestationConfig(
+  $ParentId: uuid!
+  $Data: attestation_config_set_input!
+) {
+  update_attestation_config_by_pk(
+    pk_columns: { ParentId: $ParentId }
+    _set: $Data
+  ) {
+    ParentId
+    RequireGlobalAttestation
+    AttestationTimeLimit
+    CreatedAtTimestamp
+    CreatedByUser
+    ModifiedAtTimestamp
+    ModifiedByUser
+  }
+}

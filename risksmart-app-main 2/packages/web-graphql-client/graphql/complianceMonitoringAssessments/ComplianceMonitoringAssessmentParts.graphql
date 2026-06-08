@@ -1,0 +1,19 @@
+fragment ComplianceMonitoringAssessmentParts on compliance_monitoring_assessment {
+  ActualCompletionDate
+  CompletedByUser
+  CreatedAtTimestamp
+  CreatedByUser
+  CustomAttributeData
+  Id
+  ModifiedAtTimestamp
+  ModifiedByUser
+  NextTestDate
+  OriginatingItemId
+  SequentialId
+  StartDate
+  Summary
+  TargetCompletionDate
+  Title
+  Status
+  Outcome
+}

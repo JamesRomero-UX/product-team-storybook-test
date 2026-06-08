@@ -1,0 +1,5 @@
+mutation deleteCustomDatasource($Id: uuid!) {
+  delete_custom_datasource(where: { Id: { _eq: $Id } }) {
+    affected_rows
+  }
+}

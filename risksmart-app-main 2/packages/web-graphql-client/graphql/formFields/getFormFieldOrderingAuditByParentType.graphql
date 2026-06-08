@@ -1,0 +1,17 @@
+query getFormFieldOrderingAuditById(
+  $parentType: String!,
+  $fieldId: String!) {
+  form_field_ordering_audit(
+    where: {
+      FormConfigurationParentType: { _eq: $parentType }
+      FieldId: { _eq: $fieldId }
+    }
+  ) {
+    FieldId
+    Position
+    CreatedByUser
+    CreatedAtTimestamp
+    ModifiedByUser
+    ModifiedAtTimestamp
+  }
+}

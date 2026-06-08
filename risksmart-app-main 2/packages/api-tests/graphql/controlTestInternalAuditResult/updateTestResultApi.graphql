@@ -1,0 +1,7 @@
+mutation updateControlTestInternalAuditResultApi(
+  $object: UpdateTestResultInput
+) {
+  updateControlTestInternalAuditResultApi(object: $object) {
+    Id
+  }
+}

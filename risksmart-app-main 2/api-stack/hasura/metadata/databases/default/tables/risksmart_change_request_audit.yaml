@@ -1,0 +1,28 @@
+table:
+  name: change_request_audit
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: change_request_audit
+select_permissions:
+  - role: read:audit
+    permission:
+      columns:
+        - Id
+        - Type
+        - SequentialId
+        - ParentId
+        - ChangeRequestStatus
+        - RequestedChanges
+        - Comment
+        - CreatedByUser
+        - ModifiedByUser
+        - CreatedAtTimestamp
+        - ModifiedAtTimestamp
+        - CreatedByUser
+        - OverriddenByUser
+        - OverriddenAtTimestamp
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id

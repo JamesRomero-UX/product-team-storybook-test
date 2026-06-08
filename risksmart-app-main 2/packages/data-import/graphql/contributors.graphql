@@ -1,0 +1,5 @@
+mutation insertContributors($contributors: [contributor_insert_input!]!) {
+  insert_contributor(objects: $contributors) {
+    affected_rows
+  }
+}

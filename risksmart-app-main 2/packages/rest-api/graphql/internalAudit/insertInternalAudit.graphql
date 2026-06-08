@@ -1,0 +1,35 @@
+mutation insertInternalAudit(
+  $Title: String!
+  $Description: String
+  $BusinessArea: String!
+  $Tags: [tag_insert_input!]!
+  $Departments: [department_insert_input!]!
+  $CustomAttributeData: jsonb
+  $Owners: [owner_insert_input!]!
+  $OwnerGroups: [owner_group_insert_input!]!
+  $Contributors: [contributor_insert_input!]!
+  $ContributorGroups: [contributor_group_insert_input!]!
+) {
+  insert_internal_audit_entity_one(
+    object: {
+      Title: $Title
+      Description: $Description
+      CustomAttributeData: $CustomAttributeData
+      tags: { data: $Tags }
+      departments: { data: $Departments }
+      contributors: { data: $Contributors }
+      owners: { data: $Owners }
+      contributorGroups: { data: $ContributorGroups }
+      ownerGroups: { data: $OwnerGroups }
+      businessArea: {
+        data: { Title: $BusinessArea }
+        on_conflict: {
+          constraint: business_area_orgkey_title
+          update_columns: [Title]
+        }
+      }
+    }
+  ) {
+    Id
+  }
+}

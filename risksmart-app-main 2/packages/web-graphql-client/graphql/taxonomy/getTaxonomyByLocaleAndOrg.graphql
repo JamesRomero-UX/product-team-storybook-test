@@ -1,0 +1,23 @@
+query getTaxonomyByLocaleAndOrg($Locale: String!, $OrgKey: String!) {
+  taxonomy_org(where: { Locale: { _eq: $Locale }, OrgKey: { _eq: $OrgKey } }) {
+    Id
+    Locale
+    OrgName
+    TaxonomyId
+    taxonomy {
+      Common
+      Description
+      ModifiedAtTimestamp
+      Id
+      Library
+      Rating
+      Taxonomy
+      InternalAuditRating
+      organisations_aggregate {
+        aggregate {
+          count
+        }
+      }
+    }
+  }
+}

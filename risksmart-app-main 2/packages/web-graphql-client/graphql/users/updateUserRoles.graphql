@@ -1,0 +1,9 @@
+mutation UpdateUserRoles($userId: String!, $roleIds: [String!]!) {
+  update_user_roles(userId: $userId, roleIds: $roleIds) {
+    roles {
+      id
+      name
+      description
+    }
+  }
+}

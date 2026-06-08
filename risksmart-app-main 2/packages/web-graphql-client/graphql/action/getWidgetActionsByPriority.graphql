@@ -1,0 +1,5 @@
+query getWidgetActionsByPriority($where: action_bool_exp) {
+  action(where: $where) {
+    Priority
+  }
+}

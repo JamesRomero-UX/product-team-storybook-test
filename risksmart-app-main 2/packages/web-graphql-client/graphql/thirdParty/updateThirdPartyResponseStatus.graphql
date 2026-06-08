@@ -1,0 +1,19 @@
+mutation updateThirdPartyResponseStatus(
+  $Action: third_party_response_enum_action!
+  $ResponseIds: [uuid!]!
+  $Reason: String
+  $RequestType: String
+  $ShareWithRespondents: Boolean
+  $ThirdPartyId: uuid!
+) {
+  updateThirdPartyResponseStatusAction(
+    Action: $Action
+    ResponseIds: $ResponseIds
+    Reason: $Reason
+    RequestType: $RequestType
+    ShareWithRespondents: $ShareWithRespondents
+    ThirdPartyId: $ThirdPartyId
+  ) {
+    affected_rows
+  }
+}

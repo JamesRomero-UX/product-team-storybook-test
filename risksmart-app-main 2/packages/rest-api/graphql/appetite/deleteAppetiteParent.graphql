@@ -1,0 +1,7 @@
+mutation deleteAppetiteParent($AppetiteId: uuid, $ParentId: uuid) {
+  delete_appetite_parent(
+    where: { Id: { _eq: $AppetiteId }, ParentId: { _eq: $ParentId } }
+  ) {
+    affected_rows
+  }
+}

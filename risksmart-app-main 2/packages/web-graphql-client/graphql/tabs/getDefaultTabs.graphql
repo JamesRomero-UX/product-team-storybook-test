@@ -1,0 +1,16 @@
+query getDefaultTabs {
+  tab {
+    ParentType
+    Tabs
+  }
+
+  organisation_tab_preference {
+    ObjectType
+    Preferences
+  }
+
+  user_tab_preference {
+    ObjectType
+    Preferences
+  }
+}

@@ -1,0 +1,5 @@
+mutation insertActions($actions: [action_insert_input!]!) {
+  insert_action(objects: $actions) {
+    affected_rows
+  }
+}

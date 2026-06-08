@@ -1,0 +1,24 @@
+.hideTools {
+  aside[data-testid='side-split-panel-drawer'] {
+    visibility: hidden #{!important};
+  }
+}
+
+.rsContent {
+  [class*='awsui-context-content-header'] {
+    @apply relative;
+    @apply border-grey250  #{!important};
+    border-bottom: 1px solid;
+  }
+}
+
+.layout {
+  [class*='awsui_mobile-toolbar'] {
+    display: none #{!important};
+  }
+
+  // Prevents an extra column from being added to the layout on the right hand side
+  [class*='awsui_layout'] {
+    grid-template-columns: var(--awsui-toggles-left-width-g964ok, 0) var(--awsui-content-layout-default-horizontal-padding-g964ok, 0) 1fr minmax(0, var(--awsui-content-layout-max-content-width-g964ok)) 1fr var(--awsui-content-layout-default-horizontal-padding-g964ok, 0) #{!important};
+  }
+}

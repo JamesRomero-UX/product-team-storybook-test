@@ -1,0 +1,19 @@
+query getAppetiteParents($where: appetite_parent_bool_exp! = {}) {
+  appetite_parent(where: $where) {
+    ParentId
+    Status
+    Id
+    appetite {
+      CreatedAtTimestamp
+      ModifiedAtTimestamp
+      Id
+      LowerAppetite
+      Statement
+      UpperAppetite
+      CreatedByUser
+      ModifiedByUser
+      ImpactAppetite
+      AppetiteType
+    }
+  }
+}

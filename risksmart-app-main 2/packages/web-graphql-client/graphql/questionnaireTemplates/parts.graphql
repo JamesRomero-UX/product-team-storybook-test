@@ -1,0 +1,10 @@
+fragment QuestionnaireTemplateParts on questionnaire_template {
+  Id
+  Title
+  Description
+  CreatedByUser
+  ModifiedByUser
+  CreatedAtTimestamp
+  ModifiedAtTimestamp
+  CustomAttributeData
+}

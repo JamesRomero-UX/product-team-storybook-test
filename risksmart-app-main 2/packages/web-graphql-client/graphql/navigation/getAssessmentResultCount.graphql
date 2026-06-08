@@ -1,0 +1,19 @@
+query getAssessmentResultCount {
+  risk_assessment_result_aggregate(where: { parents: { assessment: {} } }) {
+    aggregate {
+      count
+    }
+  }
+  document_assessment_result_aggregate(where: { parents: { assessment: {} } }) {
+    aggregate {
+      count
+    }
+  }
+  obligation_assessment_result_aggregate(
+    where: { parents: { assessment: {} } }
+  ) {
+    aggregate {
+      count
+    }
+  }
+}

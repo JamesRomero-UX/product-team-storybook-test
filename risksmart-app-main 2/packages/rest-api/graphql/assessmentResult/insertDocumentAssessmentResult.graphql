@@ -1,0 +1,7 @@
+mutation insertDocumentAssessmentResults(
+  $results: [document_assessment_result_insert_input!]!
+) {
+  insert_document_assessment_result(objects: $results) {
+    affected_rows
+  }
+}

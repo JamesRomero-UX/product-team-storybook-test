@@ -1,0 +1,5 @@
+mutation deleteImpacts($Ids: [uuid!]) {
+  delete_obligation_impact(where: { Id: { _in: $Ids } }) {
+    affected_rows
+  }
+}

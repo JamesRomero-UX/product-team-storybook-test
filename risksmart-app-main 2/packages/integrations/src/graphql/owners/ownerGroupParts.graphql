@@ -1,0 +1,9 @@
+fragment OwnerGroupParts on owner_group {
+  UserGroupId
+  group {
+    Name
+    users {
+      UserId
+    }
+  }
+}

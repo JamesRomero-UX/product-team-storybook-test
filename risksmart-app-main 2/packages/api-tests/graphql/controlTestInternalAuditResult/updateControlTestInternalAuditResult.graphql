@@ -1,0 +1,8 @@
+mutation updateControlTestInternalAuditResult($Id: uuid!, $Title: String!) {
+  update_control_test_internal_audit_result(
+    where: { Id: { _eq: $Id } }
+    _set: { Title: $Title }
+  ) {
+    affected_rows
+  }
+}

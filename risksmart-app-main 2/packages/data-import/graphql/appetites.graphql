@@ -1,0 +1,5 @@
+mutation insertAppetites($appetites: [appetite_insert_input!]!) {
+  insert_appetite(objects: $appetites) {
+    affected_rows
+  }
+}

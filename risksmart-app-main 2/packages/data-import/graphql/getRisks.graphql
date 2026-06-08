@@ -1,0 +1,6 @@
+query getRisks {
+  risk {
+    Title
+    Id
+  }
+}

@@ -1,0 +1,38 @@
+query getIssues(
+  $where: issue_bool_exp
+  $limit: Int
+  $orderBy: [issue_order_by!]
+) {
+  issue(where: $where, limit: $limit, order_by: $orderBy) {
+    ...IssueParts
+  }
+}
+mutation deleteIssues($Ids: [uuid!]) {
+  delete_file(where: { relationFile: { ParentId: { _in: $Ids } } }) {
+    affected_rows
+  }
+
+  delete_relation_file(where: { ParentId: { _in: $Ids } }) {
+    affected_rows
+  }
+
+  delete_issue_update(where: { ParentIssueId: { _in: $Ids } }) {
+    affected_rows
+  }
+
+  delete_consequence(where: { ParentIssueId: { _in: $Ids } }) {
+    affected_rows
+  }
+
+  delete_cause(where: { ParentIssueId: { _in: $Ids } }) {
+    affected_rows
+  }
+
+  delete_issue_assessment(where: { ParentIssueId: { _in: $Ids } }) {
+    affected_rows
+  }
+
+  delete_issue(where: { Id: { _in: $Ids } }) {
+    affected_rows
+  }
+}

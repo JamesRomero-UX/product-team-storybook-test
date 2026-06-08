@@ -1,0 +1,9 @@
+mutation applyAcceptanceChangeRequest(
+  $Id: uuid!
+  $Changes: acceptance_set_input!
+) {
+  update_acceptance_by_pk(pk_columns: { Id: $Id }, _set: $Changes) {
+    Id
+    Status
+  }
+}

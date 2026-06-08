@@ -1,0 +1,8 @@
+table:
+  name: third_party_audit
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: third_party_audit
+  custom_root_fields: {}

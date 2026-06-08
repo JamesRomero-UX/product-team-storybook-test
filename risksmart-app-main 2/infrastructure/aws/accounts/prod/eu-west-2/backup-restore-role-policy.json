@@ -1,0 +1,233 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AWSBackupRestorePermissions",
+            "Effect": "Allow",
+            "Action": [
+                "backup:DescribeBackupVault",
+                "backup:ListRecoveryPointsByBackupVault",
+                "backup:GetRecoveryPointRestoreMetadata",
+                "backup:StartRestoreJob",
+                "backup:DescribeRestoreJob",
+                "backup:ListRestoreJobs",
+                "backup:DescribeRecoveryPoint"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "RDSRestoreFromBackup",
+            "Effect": "Allow",
+            "Action": [
+                "rds:RestoreDBInstanceFromDBSnapshot",
+                "rds:RestoreDBClusterFromSnapshot",
+                "rds:RestoreDBInstanceToPointInTime",
+                "rds:RestoreDBClusterToPointInTime"
+            ],
+            "Resource": [
+                "arn:aws:rds:*:*:db:*",
+                "arn:aws:rds:*:*:cluster:*",
+                "arn:aws:rds:*:*:snapshot:*",
+                "arn:aws:rds:*:*:cluster-snapshot:*"
+            ]
+        },
+        {
+            "Sid": "RDSCreateAndManageInstances",
+            "Effect": "Allow",
+            "Action": [
+                "rds:CreateDBInstance",
+                "rds:CreateDBCluster",
+                "rds:ModifyDBInstance",
+                "rds:ModifyDBCluster",
+                "rds:DeleteDBInstance",
+                "rds:DeleteDBCluster",
+                "rds:AddTagsToResource",
+                "rds:RemoveTagsFromResource",
+                "rds:ListTagsForResource"
+            ],
+            "Resource": [
+                "arn:aws:rds:*:*:db:*",
+                "arn:aws:rds:*:*:cluster:*"
+            ]
+        },
+        {
+            "Sid": "RDSDescribePermissions",
+            "Effect": "Allow",
+            "Action": [
+                "rds:DescribeDBInstances",
+                "rds:DescribeDBClusters",
+                "rds:DescribeDBSnapshots",
+                "rds:DescribeDBClusterSnapshots",
+                "rds:DescribeDBParameterGroups",
+                "rds:DescribeDBParameters",
+                "rds:DescribeDBSubnetGroups",
+                "rds:DescribeOptionGroups",
+                "rds:DescribeDBEngineVersions",
+                "rds:DescribeEvents",
+                "rds:ListTagsForResource"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "RDSSnapshotManagement",
+            "Effect": "Allow",
+            "Action": [
+                "rds:CreateDBSnapshot",
+                "rds:CreateDBClusterSnapshot",
+                "rds:DeleteDBSnapshot",
+                "rds:DeleteDBClusterSnapshot",
+                "rds:CopyDBSnapshot",
+                "rds:CopyDBClusterSnapshot",
+                "rds:AddTagsToResource"
+            ],
+            "Resource": [
+                "arn:aws:rds:*:*:snapshot:*",
+                "arn:aws:rds:*:*:cluster-snapshot:*"
+            ]
+        },
+        {
+            "Sid": "EC2NetworkingForRDS",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DescribeVpcs",
+                "ec2:DescribeSubnets",
+                "ec2:DescribeSecurityGroups",
+                "ec2:DescribeAvailabilityZones",
+                "ec2:DescribeAccountAttributes",
+                "ec2:DescribeInternetGateways"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "EC2SecurityGroupManagement",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:CreateSecurityGroup",
+                "ec2:DeleteSecurityGroup",
+                "ec2:AuthorizeSecurityGroupIngress",
+                "ec2:AuthorizeSecurityGroupEgress",
+                "ec2:RevokeSecurityGroupIngress",
+                "ec2:RevokeSecurityGroupEgress",
+                "ec2:CreateTags"
+            ],
+            "Resource": [
+                "arn:aws:ec2:*:*:security-group/*",
+                "arn:aws:ec2:*:*:vpc/*"
+            ]
+        },
+        {
+            "Sid": "KMSDecryptForRestore",
+            "Effect": "Allow",
+            "Action": [
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:GenerateDataKey",
+                "kms:CreateGrant",
+                "kms:ListGrants",
+                "kms:RevokeGrant",
+                "kms:RetireGrant"
+            ],
+            "Resource": "*",
+            "Condition": {
+                "StringLike": {
+                    "kms:ViaService": [
+                        "rds.*.amazonaws.com",
+                        "backup.*.amazonaws.com"
+                    ]
+                }
+            }
+        },
+        {
+            "Sid": "IAMPassRoleForRDS",
+            "Effect": "Allow",
+            "Action": [
+                "iam:PassRole"
+            ],
+            "Resource": [
+                "arn:aws:iam::*:role/aws-service-role/rds.amazonaws.com/*",
+                "arn:aws:iam::*:role/*RDS*",
+                "arn:aws:iam::*:role/*rds*"
+            ],
+            "Condition": {
+                "StringEquals": {
+                    "iam:PassedToService": [
+                        "rds.amazonaws.com",
+                        "monitoring.rds.amazonaws.com"
+                    ]
+                }
+            }
+        },
+        {
+            "Sid": "CloudWatchLogsForMonitoring",
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents",
+                "logs:DescribeLogGroups",
+                "logs:DescribeLogStreams"
+            ],
+            "Resource": "arn:aws:logs:*:*:log-group:/aws/rds/*"
+        },
+        {
+            "Sid": "CloudWatchMetricsForMonitoring",
+            "Effect": "Allow",
+            "Action": [
+                "cloudwatch:PutMetricData",
+                "cloudwatch:GetMetricData",
+                "cloudwatch:GetMetricStatistics",
+                "cloudwatch:ListMetrics"
+            ],
+            "Resource": "*",
+            "Condition": {
+                "StringEquals": {
+                    "cloudwatch:namespace": [
+                        "AWS/RDS",
+                        "AWS/Backup"
+                    ]
+                }
+            }
+        },
+        {
+            "Sid": "SNSNotifications",
+            "Effect": "Allow",
+            "Action": [
+                "sns:Publish",
+                "sns:Subscribe",
+                "sns:Unsubscribe",
+                "sns:ListSubscriptionsByTopic"
+            ],
+            "Resource": "arn:aws:sns:*:*:*DR*"
+        },
+        {
+            "Sid": "SecretsManagerForCredentials",
+            "Effect": "Allow",
+            "Action": [
+                "secretsmanager:GetSecretValue",
+                "secretsmanager:DescribeSecret",
+                "secretsmanager:CreateSecret",
+                "secretsmanager:UpdateSecret",
+                "secretsmanager:TagResource"
+            ],
+            "Resource": "arn:aws:secretsmanager:*:*:secret:rds/*"
+        },
+        {
+            "Sid": "BackupVaultAccess",
+            "Effect": "Allow",
+            "Action": [
+                "backup:GetBackupVaultAccessPolicy",
+                "backup:PutBackupVaultAccessPolicy",
+                "backup:DeleteBackupVaultAccessPolicy"
+            ],
+            "Resource": "arn:aws:backup:*:*:backup-vault:*-dr-backup-vault"
+        },
+        {
+            "Sid": "STSAssumeRole",
+            "Effect": "Allow",
+            "Action": [
+                "sts:AssumeRole"
+            ],
+            "Resource": "arn:aws:iam::*:role/BackupRestoreRole"
+        }
+    ]
+}

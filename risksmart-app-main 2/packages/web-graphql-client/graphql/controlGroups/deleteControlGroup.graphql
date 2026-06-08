@@ -1,0 +1,10 @@
+mutation deleteControlGroup($id: uuid!, $original_timestamp: timestamptz) {
+  delete_control_group(
+    where: {
+      Id: { _eq: $id }
+      ModifiedAtTimestamp: { _eq: $original_timestamp }
+    }
+  ) {
+    affected_rows
+  }
+}

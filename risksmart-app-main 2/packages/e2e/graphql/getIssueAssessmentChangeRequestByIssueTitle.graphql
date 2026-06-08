@@ -1,0 +1,12 @@
+query getIssueAssessmentChangeRequestByIssueTitle($issueTitle: String!) {
+  change_request(
+    where: {
+      parent: { issue_assessment: { parent: { Title: { _eq: $issueTitle } } } }
+    }
+  ) {
+    Id
+    parent {
+      Id
+    }
+  }
+}

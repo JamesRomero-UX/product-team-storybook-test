@@ -1,0 +1,16 @@
+export enum PromptId {
+  FixSpellingAndGrammar = 'FixSpellingAndGrammar',
+  GenerateAControlDescription = 'GenerateAControlDescription',
+  GenerateARiskDescription = 'GenerateARiskDescription',
+  ImproveWriting = 'ImproveWriting',
+  MakeLonger = 'MakeLonger',
+  MakeMoreConcise = 'MakeMoreConcise',
+  TranslateToBrazilianPortuguese = 'TranslateToBrazilianPortuguese',
+  TranslateToEnglish = 'TranslateToEnglish',
+  TranslateToFrench = 'TranslateToFrench',
+  TranslateToGerman = 'TranslateToGerman',
+  TranslateToItalian = 'TranslateToItalian',
+  TranslateToPortuguese = 'TranslateToPortuguese',
+  TranslateToSpanish = 'TranslateToSpanish',
+  UseSimplerLanguage = 'UseSimplerLanguage',
+}

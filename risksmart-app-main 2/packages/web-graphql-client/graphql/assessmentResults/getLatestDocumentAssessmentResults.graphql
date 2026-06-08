@@ -1,0 +1,17 @@
+query getLatestDocumentAssessmentResults {
+  document_assessment_result(
+    where: { RatingType: { _in: ["assessment", "rating"] } }
+    order_by: [
+      { TestDate: desc_nulls_last }
+      { CreatedAtTimestamp: desc_nulls_last }
+    ]
+  ) {
+    ...DocumentAssessmentResultParts
+    parents {
+      ParentId
+      assessment {
+        ...AssessmentParts
+      }
+    }
+  }
+}

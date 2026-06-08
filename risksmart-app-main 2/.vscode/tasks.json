@@ -1,0 +1,65 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "shell",
+      "command": "pnpm run $(if [ \"$ENABLE_AI_CHAT_AGENT\" = \"true\" ]; then echo \"api:with-ai\"; else echo \"api\"; fi)",
+      "problemMatcher": [],
+      "label": "Run Docker Compose",
+      "detail": "docker compose up (with optional AI support based on ENABLE_AI_CHAT_AGENT setting)",
+      "isBackground": true
+    },
+    {
+      "type": "npm",
+      "script": "hasura-console",
+      "problemMatcher": [],
+      "label": "Run Hasura Console",
+      "isBackground": true,
+      "detail": "cd api-stack/hasura && hasura console"
+    },
+    {
+      "type": "npm",
+      "script": "start",
+      "problemMatcher": [],
+      "label": "Run Web App",
+      "detail": "vite"
+    },
+    {
+      "type": "npm",
+      "script": "start-tpp",
+      "problemMatcher": [],
+      "label": "Run Third Party Portal",
+      "detail": "vite"
+    },
+    {
+      "type": "npm",
+      "script": "start-integrations",
+      "problemMatcher": [],
+      "label": "Run Integrations"
+    },
+    {
+      "type": "shell",
+      "command": "node scripts/dev.js",
+      "problemMatcher": [],
+      "label": "V3: Start Local Lambda Services",
+      "detail": "Build and start all Lambda HTTP servers, event router, and hot reload",
+      "isBackground": true,
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always"
+      }
+    },
+    {
+      "type": "shell",
+      "command": "node scripts/dev.js --skip-build",
+      "problemMatcher": [],
+      "label": "V3: Start Local Lambda Services (skip build)",
+      "detail": "Start Lambda HTTP servers using previously compiled handlers",
+      "isBackground": true,
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always"
+      }
+    }
+  ]
+}

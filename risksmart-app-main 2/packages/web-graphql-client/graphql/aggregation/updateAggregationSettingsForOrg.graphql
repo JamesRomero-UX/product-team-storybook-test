@@ -1,0 +1,19 @@
+mutation updateAggregationSettingsForOrg(
+  $RiskScoringModel: risk_scoring_model_enum
+  $AppetiteCascadingModel: appetite_model_enum
+  $Config: jsonb
+) {
+  insert_aggregation_org(
+    objects: {
+      RiskScoringModel: $RiskScoringModel
+      Appetite: $AppetiteCascadingModel
+      Config: $Config
+    }
+    on_conflict: {
+      constraint: aggregation_org_pkey
+      update_columns: [RiskScoringModel, Appetite, Config]
+    }
+  ) {
+    affected_rows
+  }
+}

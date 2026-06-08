@@ -1,0 +1,5 @@
+mutation insertIndicators($indicators: [indicator_insert_input!]!) {
+  insert_indicator(objects: $indicators) {
+    affected_rows
+  }
+}

@@ -1,0 +1,10 @@
+mutation publishQuestionnaireTemplateVersion(
+  $questionnaireTemplateId: uuid!
+  $questionnaireTemplateVersionId: uuid!
+) {
+  publishQuestionnaireTemplateVersion(
+    QuestionnaireTemplateId: $questionnaireTemplateId,
+    QuestionnaireTemplateVersionId: $questionnaireTemplateVersionId) {
+    affected_rows
+  }
+}

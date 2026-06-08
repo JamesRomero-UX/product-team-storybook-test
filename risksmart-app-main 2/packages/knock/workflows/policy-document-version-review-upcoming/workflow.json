@@ -1,0 +1,121 @@
+{
+  "categories": [
+    "policy"
+  ],
+  "name": "policy-document-version-review-upcoming",
+  "steps": [
+    {
+      "branches": [
+        {
+          "conditions": {
+            "all": [
+              {
+                "argument": null,
+                "operator": "empty",
+                "variable": "recipient.email"
+              }
+            ]
+          },
+          "name": "No Email then not a real notification user",
+          "steps": [],
+          "terminates": true
+        },
+        {
+          "name": "Default",
+          "steps": [],
+          "terminates": false
+        }
+      ],
+      "name": "Check User",
+      "ref": "branch_2",
+      "type": "branch"
+    },
+    {
+      "channel_key": "knock",
+      "channel_type": "in_app_feed",
+      "ref": "in_app_feed_2",
+      "template": {
+        "action_url": "{{ vars.app_url }}",
+        "markdown_body@": "in_app_feed_2/markdown_body.md"
+      },
+      "type": "channel"
+    },
+    {
+      "branches": [
+        {
+          "conditions": {
+            "any": [
+              {
+                "argument": "true",
+                "operator": "equal_to",
+                "variable": "data.digest"
+              },
+              {
+                "argument": "true",
+                "operator": "equal_to",
+                "variable": "tenant.digest"
+              }
+            ]
+          },
+          "name": "Run Digest",
+          "steps": [
+            {
+              "ref": "trigger_workflow_1",
+              "settings": {
+                "actor": "{{ actor.id }}",
+                "cancellation_key": "{{ workflow.cancellation_key }}",
+                "data": "{\"sourceData\": {{ data | json }},\n\"sourceWorkflowKey\": {{ workflow.key | json }}\n,\"sourceWorkflowCategoriesName\": {{ workflow.categories[0] | json }}\n}",
+                "recipients": "{{ recipient.id }}",
+                "tenant": "{{ tenant.id }}",
+                "workflow_key": "digest"
+              },
+              "type": "trigger_workflow"
+            }
+          ],
+          "terminates": true
+        },
+        {
+          "name": "Default",
+          "steps": [
+            {
+              "channel_key": "aws-ses-risksmart-dev-cloud",
+              "channel_type": "email",
+              "ref": "email_1",
+              "template": {
+                "is_mjml": false,
+                "settings": {
+                  "attachment_key": "attachments",
+                  "layout_key": "default"
+                },
+                "subject": "RiskSmart: A document version will soon be due for review",
+                "visual_blocks@": "email_1/visual_blocks.json"
+              },
+              "type": "channel"
+            },
+            {
+              "channel_key": "slack-poc",
+              "channel_type": "chat",
+              "ref": "chat_1",
+              "template": {
+                "json_body@": "chat_1/json_body.json"
+              },
+              "type": "channel"
+            }
+          ],
+          "terminates": false
+        }
+      ],
+      "ref": "branch_1",
+      "type": "branch"
+    }
+  ],
+  "trigger_frequency": "every_trigger",
+  "__readonly": {
+    "environment": "development",
+    "key": "policy-document-version-review-upcoming",
+    "active": true,
+    "valid": true,
+    "created_at": "2023-12-20T11:06:38.267052Z"
+  },
+  "$schema": "https://schemas.knock.app/cli/workflow.json"
+}

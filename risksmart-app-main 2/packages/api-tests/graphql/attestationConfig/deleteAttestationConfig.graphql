@@ -1,0 +1,11 @@
+mutation deleteAttestationConfig($ParentId: uuid!) {
+  delete_attestation_config_by_pk(ParentId: $ParentId) {
+    ParentId
+    RequireGlobalAttestation
+    AttestationTimeLimit
+    CreatedAtTimestamp
+    CreatedByUser
+    ModifiedAtTimestamp
+    ModifiedByUser
+  }
+}

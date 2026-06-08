@@ -1,0 +1,6 @@
+generated
+generated-db
+vite.config.ts.timestamp-*.mjs
+
+# testing
+coverage

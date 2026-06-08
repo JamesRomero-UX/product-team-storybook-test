@@ -1,0 +1,5 @@
+query getFormConfiguration($where: form_configuration_bool_exp! = {}) {
+  form_configuration(where: $where) {
+    ...FormConfigurationParts
+  }
+}

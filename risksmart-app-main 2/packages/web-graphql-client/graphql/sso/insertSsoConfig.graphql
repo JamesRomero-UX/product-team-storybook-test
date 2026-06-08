@@ -1,0 +1,14 @@
+mutation insertSsoConfig($object: InsertSsoConfigInput!) {
+  insertSsoConfig(object: $object) {
+    Id
+    Name
+    Strategy
+    Enabled
+    IsOrgConnected
+    Action
+    Options {
+        Domain
+        DomainAliases
+    }
+  }
+}

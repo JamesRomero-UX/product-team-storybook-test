@@ -1,0 +1,6 @@
+fragment RelationFileParts on relation_file {
+  ParentId
+  file {
+    ...FileParts
+  }
+}

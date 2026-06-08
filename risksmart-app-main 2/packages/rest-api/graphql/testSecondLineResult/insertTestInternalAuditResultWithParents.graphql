@@ -1,0 +1,10 @@
+mutation insertTestSecondLineResultsWithParents(
+  $results: [control_test_second_line_result_insert_input!]!
+) {
+  insert_control_test_second_line_result(objects: $results) {
+    affected_rows
+    returning {
+      Id
+    }
+  }
+}

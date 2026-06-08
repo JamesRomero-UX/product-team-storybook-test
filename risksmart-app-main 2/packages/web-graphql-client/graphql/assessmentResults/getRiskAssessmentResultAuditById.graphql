@@ -1,0 +1,18 @@
+query getRiskAssessmentResultAuditById(
+  $Id: uuid!
+) {
+  risk_assessment_result_audit(where: { Id: { _eq: $Id } }, order_by: {ModifiedAtTimestamp: desc}) {
+    Id
+    Likelihood
+    Impact
+    Rating
+    ControlType
+    CustomAttributeData
+    Rationale
+    TestDate
+    ModifiedByUser
+    ModifiedAtTimestamp
+    CreatedByUser
+    CreatedAtTimestamp
+  }
+}

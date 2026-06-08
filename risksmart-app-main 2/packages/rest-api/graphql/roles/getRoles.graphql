@@ -1,0 +1,7 @@
+query GetRoles {
+  auth_role_type {
+    RoleKey
+    Name
+    Description
+  }
+}

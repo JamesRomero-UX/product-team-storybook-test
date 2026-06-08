@@ -1,0 +1,21 @@
+mutation insertInternalAuditImpactRating(
+  $Ratings: [InsertImpactRatingPairInput!]!
+  $TestDate: timestamptz!
+  $InternalAuditReportId: uuid!
+  $RatedItemId: uuid!
+  $CustomAttributeData: jsonb
+  $CompletedBy: String
+  $Likelihood: Int
+) {
+  insertChildImpactInternalAuditRating(
+    InternalAuditReportId: $InternalAuditReportId
+    Ratings: $Ratings
+    TestDate: $TestDate
+    RatedItemId: $RatedItemId
+    CustomAttributeData: $CustomAttributeData
+    CompletedBy: $CompletedBy
+    Likelihood: $Likelihood
+  ) {
+    Ids
+  }
+}

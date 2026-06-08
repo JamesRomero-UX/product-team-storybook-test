@@ -1,0 +1,59 @@
+name: Manual / Tenant Config
+
+permissions:
+  actions: write
+  contents: read
+  id-token: write
+  packages: read
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target environment'
+        required: true
+        type: choice
+        options:
+          - dev-cloud
+          - staging
+          - prod
+
+jobs:
+  Config:
+    name: Load Environment Config
+    runs-on: ubuntu-latest
+    outputs:
+      table_name: ${{ steps.config.outputs.table_name }}
+      deployment_regions: ${{ steps.config.outputs.deployment_regions }}
+    steps:
+      - name: Set environment config
+        id: config
+        run: |
+          ENV="${{ inputs.environment }}"
+          
+          case "$ENV" in
+            dev-cloud)
+              echo "table_name=dev-cloud-risksmartApp-GlobalTenantConfig" >> "$GITHUB_OUTPUT"
+              echo 'deployment_regions=["eu-west-2"]' >> "$GITHUB_OUTPUT"
+              ;;
+            staging)
+              echo "table_name=staging-risksmartApp-GlobalTenantConfig" >> "$GITHUB_OUTPUT"
+              echo 'deployment_regions=["eu-west-2","us-east-1"]' >> "$GITHUB_OUTPUT"
+              ;;
+            prod)
+              echo "table_name=app-risksmartApp-GlobalTenantConfig" >> "$GITHUB_OUTPUT"
+              # Note: me-central-1 (UAE) may be unavailable
+              echo 'deployment_regions=["eu-west-2","us-east-1","me-central-1","ca-central-1"]' >> "$GITHUB_OUTPUT"
+              ;;
+          esac
+
+  Deploy:
+    name: Deploy Global Tenant Config
+    needs: Config
+    uses: ./.github/workflows/_template-tenant-config-deploy.yml
+    with:
+      env: ${{ inputs.environment }}
+      aws_region: 'eu-west-2'
+      table_name: ${{ needs.Config.outputs.table_name }}
+      deployment_regions: ${{ needs.Config.outputs.deployment_regions }}
+    secrets: inherit

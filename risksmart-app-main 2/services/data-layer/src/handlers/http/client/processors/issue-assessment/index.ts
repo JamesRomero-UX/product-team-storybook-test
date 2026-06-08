@@ -1,0 +1,1 @@
+export { createIssueAssessmentProcessor } from './create';

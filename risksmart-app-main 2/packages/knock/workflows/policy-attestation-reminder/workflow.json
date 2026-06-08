@@ -1,0 +1,103 @@
+{
+  "categories": [
+    "attestations"
+  ],
+  "name": "policy-attestation-reminder",
+  "settings": {
+    "is_commercial": false,
+    "override_preferences": true
+  },
+  "steps": [
+    {
+      "branches": [
+        {
+          "conditions": {
+            "all": [
+              {
+                "argument": null,
+                "operator": "empty",
+                "variable": "recipient.email"
+              }
+            ]
+          },
+          "name": "No Email then not a real notification user",
+          "steps": [],
+          "terminates": true
+        },
+        {
+          "name": "Default",
+          "steps": [],
+          "terminates": false
+        }
+      ],
+      "name": "Check User",
+      "ref": "branch_2",
+      "type": "branch"
+    },
+    {
+      "channel_key": "knock",
+      "channel_type": "in_app_feed",
+      "ref": "in_app_feed_1",
+      "template": {
+        "action_url": "{{ vars.app_url }}",
+        "markdown_body@": "in_app_feed_1/markdown_body.md"
+      },
+      "type": "channel"
+    },
+    {
+      "channel_key": "slack-poc",
+      "channel_type": "chat",
+      "ref": "chat_1",
+      "template": {
+        "json_body@": "chat_1/json_body.json"
+      },
+      "type": "channel"
+    },
+    {
+      "ref": "batch_1",
+      "settings": {
+        "batch_execution_mode": "accumulate",
+        "batch_order": "asc",
+        "batch_window": {
+          "unit": "minutes",
+          "value": 1
+        },
+        "batch_window_type": "fixed"
+      },
+      "type": "batch"
+    },
+    {
+      "channel_key": "aws-ses-risksmart-dev-cloud",
+      "channel_type": "email",
+      "conditions": {
+        "all": [
+          {
+            "argument": "tenant.id",
+            "operator": "equal_to",
+            "variable": "data.org_id"
+          }
+        ]
+      },
+      "ref": "email_1",
+      "template": {
+        "is_mjml": false,
+        "settings": {
+          "attachment_key": "attachments",
+          "layout_key": "default"
+        },
+        "subject": "RiskSmart: Attestation required for document. Please review",
+        "html_body@": "email_1/html_body.html"
+      },
+      "type": "channel"
+    }
+  ],
+  "trigger_frequency": "every_trigger",
+  "__readonly": {
+    "environment": "development",
+    "key": "policy-attestation-reminder",
+    "active": true,
+    "valid": true,
+    "created_at": "2024-08-21T11:56:24.601907Z"
+  },
+  "$schema": "https://schemas.knock.app/cli/workflow.json"
+}

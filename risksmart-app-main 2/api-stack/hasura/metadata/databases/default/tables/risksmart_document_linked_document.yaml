@@ -1,0 +1,164 @@
+table:
+  name: document_linked_document
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: document_linked_document
+  custom_root_fields: {}
+object_relationships:
+  - name: child
+    using:
+      manual_configuration:
+        column_mapping:
+          LinkedDocumentId: Id
+        insertion_order: null
+        remote_table:
+          name: document
+          schema: risksmart
+  - name: createdByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          CreatedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: modifiedByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          ModifiedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: organisation
+    using:
+      foreign_key_constraint_on: OrgKey
+  - name: parent
+    using:
+      manual_configuration:
+        column_mapping:
+          DocumentId: Id
+        insertion_order: null
+        remote_table:
+          name: document
+          schema: risksmart
+insert_permissions:
+  - role: Standard
+    permission:
+      check:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - parent:
+              OrgKey:
+                _eq: X-Hasura-org-id
+              permissions:
+                _and:
+                  - UserId:
+                      _eq: X-Hasura-User-Id
+                  - OrgKey:
+                      _eq: X-Hasura-org-Id
+                  - AccessType:
+                      _eq: update
+          - child:
+              OrgKey:
+                _eq: X-Hasura-org-id
+      set:
+        CreatedByUser: x-hasura-user-id
+        ModifiedByUser: x-hasura-user-id
+        OrgKey: X-Hasura-org-id
+      columns:
+        - DocumentId
+        - LinkedDocumentId
+  - role: insert:document-linked-document
+    permission:
+      check:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - parent:
+              OrgKey:
+                _eq: X-Hasura-org-id
+          - child:
+              OrgKey:
+                _eq: X-Hasura-org-id
+      set:
+        CreatedByUser: x-hasura-user-id
+        ModifiedByUser: x-hasura-user-id
+        OrgKey: X-Hasura-org-id
+      columns:
+        - DocumentId
+        - LinkedDocumentId
+select_permissions:
+  - role: Standard
+    permission:
+      columns:
+        - DocumentId
+        - LinkedDocumentId
+        - CreatedAtTimestamp
+        - CreatedByUser
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - parent:
+              permissions:
+                _and:
+                  - UserId:
+                      _eq: X-Hasura-User-Id
+                  - OrgKey:
+                      _eq: X-Hasura-org-Id
+                  - AccessType:
+                      _eq: read
+  - role: read:document-linked-document
+    permission:
+      columns:
+        - DocumentId
+        - LinkedDocumentId
+        - CreatedAtTimestamp
+        - CreatedByUser
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+  - role: read:public-document
+    permission:
+      columns:
+        - DocumentId
+        - LinkedDocumentId
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+        child:
+          documentFiles:
+            Status:
+              _eq: published
+      query_root_fields: []
+delete_permissions:
+  - role: Standard
+    permission:
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - parent:
+              permissions:
+                _and:
+                  - UserId:
+                      _eq: X-Hasura-User-Id
+                  - OrgKey:
+                      _eq: X-Hasura-org-Id
+                  - AccessType:
+                      _eq: update
+  - role: delete:document-linked-document
+    permission:
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id

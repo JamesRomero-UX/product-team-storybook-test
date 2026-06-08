@@ -1,0 +1,10 @@
+query getIndicatorParents {
+  indicator_parent {
+    ParentId
+    IndicatorId
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+    CreatedAtTimestamp
+  }
+}

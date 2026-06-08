@@ -1,0 +1,5 @@
+mutation deleteOwner($Id: uuid!) {
+  delete_owner(where: { ParentId: { _eq: $Id } }) {
+    affected_rows
+  }
+}

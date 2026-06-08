@@ -1,0 +1,100 @@
+query getAllAssessmentResults {
+  document_assessment_result(
+    order_by: { CreatedByUser: asc }
+    where: { parents: { assessment: {} } }
+  ) {
+    ...DocumentAssessmentResultParts
+    assessments: parents(where: { ParentType: { _eq: assessment } }) {
+      assessment {
+        Id
+        Title
+        ActualCompletionDate
+        StartDate
+        Status
+        completedByUser {
+          FriendlyName
+        }
+      }
+    }
+    documents: parents(where: { ParentType: { _eq: document } }) {
+      document {
+        Id
+        Title
+      }
+      node {
+        Id
+        SequentialId
+        ObjectType
+      }
+    }
+    files {
+      ...RelationFileParts
+    }
+  }
+
+  obligation_assessment_result(
+    order_by: { CreatedByUser: asc }
+    where: { parents: { assessment: {} } }
+  ) {
+    ...ObligationAssessmentResultParts
+    assessments: parents(where: { ParentType: { _eq: assessment } }) {
+      assessment {
+        Id
+        Title
+        ActualCompletionDate
+        StartDate
+        Status
+        completedByUser {
+          FriendlyName
+        }
+      }
+    }
+    obligations: parents(where: { ParentType: { _eq: obligation } }) {
+      obligation {
+        Id
+        Title
+      }
+      node {
+        Id
+        SequentialId
+        ObjectType
+      }
+    }
+    files {
+      ...RelationFileParts
+    }
+  }
+
+  risk_assessment_result(
+    order_by: { CreatedByUser: asc }
+    where: { parents: { assessment: {} } }
+  ) {
+    ...RiskAssessmentResultParts
+    assessments: parents(where: { ParentType: { _eq: assessment } }) {
+      assessment {
+        Id
+        Title
+        ActualCompletionDate
+        StartDate
+        Status
+        completedByUser {
+          FriendlyName
+        }
+      }
+    }
+    risks: parents(where: { ParentType: { _eq: risk } }) {
+      risk {
+        Id
+        Title
+      }
+      node {
+        Id
+        SequentialId
+        ObjectType
+      }
+    }
+    files {
+      ...RelationFileParts
+    }
+  }
+}

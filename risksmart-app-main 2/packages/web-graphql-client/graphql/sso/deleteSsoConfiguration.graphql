@@ -1,0 +1,8 @@
+mutation DeleteSsoConfigurationByConnectionId($connectionId: String!) {
+  delete_sso_configuration(where: { ConnectionId: { _eq: $connectionId } }) {
+    returning {
+      Id
+      ConnectionId
+    }
+  }
+}

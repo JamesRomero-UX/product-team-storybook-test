@@ -1,0 +1,22 @@
+query getUsers {
+  user(
+    order_by: { FriendlyName: asc }
+    where: {
+      _or: [
+        { RoleKey: { _neq: "ThirdPartyRespondent" } }
+        { RoleKey: { _is_null: true } }
+      ]
+    }
+  ) {
+    Id
+    FriendlyName
+    Status
+    RoleKey
+    Email
+    Department
+    JobTitle
+    OfficeLocation
+    LastSeen
+    IsCustomerSupport
+  }
+}

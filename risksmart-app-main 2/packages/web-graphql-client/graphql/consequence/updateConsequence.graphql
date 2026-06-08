@@ -1,0 +1,31 @@
+mutation updateConsequence(
+  $Id: uuid
+  $Title: String
+  $Description: String
+  $Criticality: Int
+  $CostType: cost_type_enum
+  $CostValue: numeric
+  $ParentIssueId: uuid
+  $OriginalTimestamp: timestamptz
+  $CustomAttributeData: jsonb
+  $Type: consequence_type_enum
+) {
+  update_consequence(
+    where: {
+      Id: { _eq: $Id }
+      ModifiedAtTimestamp: { _eq: $OriginalTimestamp }
+    }
+    _set: {
+      Title: $Title
+      Description: $Description
+      Criticality: $Criticality
+      CostType: $CostType
+      CostValue: $CostValue
+      ParentIssueId: $ParentIssueId
+      CustomAttributeData: $CustomAttributeData
+      Type: $Type
+    }
+  ) {
+    affected_rows
+  }
+}

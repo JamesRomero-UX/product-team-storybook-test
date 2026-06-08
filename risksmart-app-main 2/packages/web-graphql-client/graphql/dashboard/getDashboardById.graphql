@@ -1,0 +1,20 @@
+query getDashboardById($Id: uuid!) {
+  dashboard_by_pk(Id: $Id) {
+    ...DashboardParts
+    owners {
+      ...OwnerParts
+    }
+    ownerGroups {
+      ...OwnerGroupParts
+    }
+    contributors {
+      ...ContributorParts
+    }
+    contributorGroups {
+      ...ContributorGroupParts
+    }
+    ancestorContributors {
+      ...AncestorContributorParts
+    }
+  }
+}

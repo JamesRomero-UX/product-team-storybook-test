@@ -1,0 +1,36 @@
+table:
+  name: role_type_resource_type
+  schema: auth
+object_relationships:
+  - name: roleType
+    using:
+      foreign_key_constraint_on: RoleKey
+  - name: resourceType
+    using:
+      foreign_key_constraint_on: ResourceType
+select_permissions:
+  - role: read:auth-role
+    permission:
+      columns:
+        - RoleKey
+        - ResourceType
+      filter: {}
+    backend_only: true
+insert_permissions:
+  - role: insert:auth-role
+    permission:
+      columns:
+        - RoleKey
+        - ResourceType
+      check: {}
+      filter: {}
+    backend_only: true
+update_permissions:
+  - role: update:auth-role
+    permission:
+      columns:
+        - RoleKey
+        - ResourceType
+      check: {}
+      filter: {}
+    backend_only: true

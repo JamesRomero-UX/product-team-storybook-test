@@ -1,0 +1,6 @@
+query getIngestionConfigById($Id: uuid!) {
+  ingestion_config_by_pk(Id: $Id) {
+    Id
+    SecretArn
+  }
+}

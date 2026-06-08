@@ -1,0 +1,27 @@
+query getImpactRatingsByRatedItemId($ratedItemId: uuid!) {
+  impact_rating(
+    where: {
+      RatedItemId: { _eq: $ratedItemId }
+      RatingType: { _in: ["assessment", "rating"] }
+    }
+    order_by: { TestDate: desc, CreatedAtTimestamp: desc }
+  ) {
+    ...ImpactRatingParts
+    createdByUser {
+      FriendlyName
+    }
+    completedBy {
+      FriendlyName
+    }
+    impact {
+      Name
+      Rationale
+    }
+    ratedItem {
+      risk {
+        Title
+      }
+      ObjectType
+    }
+  }
+}

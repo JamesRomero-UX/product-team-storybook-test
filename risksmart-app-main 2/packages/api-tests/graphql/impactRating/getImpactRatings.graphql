@@ -1,0 +1,10 @@
+query getImpactRatings {
+  impact_rating {
+    CreatedAtTimestamp
+    CreatedByUser
+    Id
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CustomAttributeData
+  }
+}

@@ -1,0 +1,19 @@
+query getIndicatorResultsByIndicatorId($indicatorId: uuid!) {
+  indicator_result(
+    where: { IndicatorId: { _eq: $indicatorId } }
+    order_by: { ResultDate: asc }
+  ) {
+    Description
+    Id
+    ResultDate
+    TargetValueNum
+    TargetValueTxt
+    CustomAttributeData
+    modifiedBy {
+      FriendlyName
+    }
+    parent {
+      Type
+    }
+  }
+}

@@ -1,0 +1,42 @@
+query getIssueAssessments(
+  $where: issue_assessment_bool_exp
+  $limit: Int
+  $orderBy: [issue_assessment_order_by!]
+) {
+  issue_assessment(where: $where, limit: $limit, order_by: $orderBy) {
+    ...IssueAssessmentParts
+  }
+}
+
+mutation deleteIssueAssessments($Ids: [uuid!]) {
+  delete_file(where: { relationFile: { ParentId: { _in: $Ids } } }) {
+    affected_rows
+  }
+
+  delete_relation_file(where: { ParentId: { _in: $Ids } }) {
+    affected_rows
+  }
+
+  delete_issue_assessment(where: { Id: { _in: $Ids } }) {
+    affected_rows
+  }
+}
+
+mutation insertIssueAssessments($objects: [issue_assessment_insert_input!]!) {
+  insert_issue_assessment(objects: $objects) {
+    returning {
+      ...IssueAssessmentParts
+    }
+  }
+}
+
+mutation updateIssueAssessments(
+  $where: issue_assessment_bool_exp!
+  $set: issue_assessment_set_input!
+) {
+  update_issue_assessment(where: $where, _set: $set) {
+    returning {
+      ...IssueAssessmentParts
+    }
+  }
+}

@@ -1,0 +1,67 @@
+table:
+  name: organisationuser
+  schema: auth
+object_relationships:
+  - name: organisation
+    using:
+      foreign_key_constraint_on: OrgKey
+  - name: user
+    using:
+      foreign_key_constraint_on: User_Id
+select_permissions:
+  - role: read:organisationuser
+    permission:
+      columns:
+        - OrgKey
+        - User_Id
+        - RoleKey
+        - LastSeen
+        - External_Id
+        - AuthConnection
+        - Status
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+insert_permissions:
+  - role: insert:organisationuser
+    permission:
+      check:
+        OrgKey:
+          _eq: X-Hasura-org-id
+        RoleKey:
+          _eq: null
+      columns:
+        - User_Id
+      set:
+        OrgKey: X-Hasura-org-id
+    backend_only: true
+update_permissions:
+  - role: update:organisationuser
+    permission:
+      columns:
+        - RoleKey
+      set:
+        ModifiedByUser: x-hasura-user-id
+        ModifiedAtTimestamp: now()
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+    backend_only: true
+event_triggers:
+  - name: organisationuser
+    definition:
+      delete:
+        columns: '*'
+      enable_manual: true
+      insert:
+        columns: '*'
+      update:
+        columns: '*'
+    retry_conf:
+      interval_sec: 10
+      num_retries: 3
+      timeout_sec: 60
+    webhook: https://{{REST_API_DOMAIN}}/events
+    headers:
+      - name: RestApiKey
+        value_from_env: REST_API_KEY

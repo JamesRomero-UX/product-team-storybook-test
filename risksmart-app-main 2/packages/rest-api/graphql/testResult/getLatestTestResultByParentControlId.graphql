@@ -1,0 +1,13 @@
+query getLatestTestResultByParentControlId($Id: uuid!) {
+  test_result(
+    limit: 1
+    where: {
+      ParentControlId: { _eq: $Id }
+      RatingType: { _in: ["assessment", "rating"] }
+    }
+    order_by: { TestDate: desc }
+  ) {
+    TestDate
+    Id
+  }
+}

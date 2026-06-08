@@ -1,0 +1,22 @@
+query GetUserByEmail($email: String!) {
+  auth_user(where: { Email: { _ilike: $email } }) {
+    Id
+    FirstName
+    LastName
+    Email
+    UserName
+    Status
+    CreatedOn
+    LastSeen
+    AuthUser_Id
+    DisplayName
+    JobTitle
+    Department
+    OfficeLocation
+    organisationusers {
+      OrgKey
+      RoleKey
+      External_Id
+    }
+  }
+}

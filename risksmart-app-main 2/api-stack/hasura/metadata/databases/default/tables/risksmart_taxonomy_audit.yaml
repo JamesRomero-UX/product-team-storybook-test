@@ -1,0 +1,35 @@
+table:
+  name: taxonomy_audit
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: taxonomy_audit
+  custom_root_fields: {}
+array_relationships:
+  - name: organisations
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: TaxonomyId
+        insertion_order: null
+        remote_table:
+          name: taxonomy_org
+          schema: risksmart
+select_permissions:
+  - role: CustomerSupport
+    permission:
+      columns:
+        - Id
+        - Description
+        - Common
+        - Library
+        - Rating
+        - Taxonomy
+        - InternalAuditRating
+        - CreatedByUser
+        - ModifiedByUser
+        - ModifiedAtTimestamp
+        - CreatedAtTimestamp
+      filter: {}
+      allow_aggregations: true

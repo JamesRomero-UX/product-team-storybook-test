@@ -1,0 +1,5 @@
+query getUsers($where: user_bool_exp, $limit: Int, $orderBy: [user_order_by!]) {
+  user(where: $where, limit: $limit, order_by: $orderBy) {
+    ...UserParts
+  }
+}

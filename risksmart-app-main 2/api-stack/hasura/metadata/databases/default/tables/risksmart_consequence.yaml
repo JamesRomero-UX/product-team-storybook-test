@@ -1,0 +1,246 @@
+table:
+  name: consequence
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: consequence
+  custom_root_fields: {}
+object_relationships:
+  - name: costType
+    using:
+      foreign_key_constraint_on: CostType
+  - name: createdByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          CreatedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: issue
+    using:
+      manual_configuration:
+        column_mapping:
+          ParentIssueId: Id
+        insertion_order: null
+        remote_table:
+          name: issue
+          schema: risksmart
+  - name: modifiedByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          ModifiedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: organisation
+    using:
+      foreign_key_constraint_on: OrgKey
+array_relationships:
+  - name: permissions
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: Id
+        insertion_order: null
+        remote_table:
+          name: permission_view
+          schema: risksmart
+insert_permissions:
+  - role: Standard
+    permission:
+      check:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - issue:
+              _and:
+                - OrgKey:
+                    _eq: X-Hasura-org-id
+                - permissions:
+                    _and:
+                      - UserId:
+                          _eq: X-Hasura-User-Id
+                      - OrgKey:
+                          _eq: X-Hasura-org-Id
+                      - AccessType:
+                          _eq: insert
+      set:
+        CreatedByUser: x-hasura-user-id
+        ModifiedByUser: x-hasura-user-id
+        OrgKey: x-hasura-org-id
+      columns:
+        - CostType
+        - CostValue
+        - Criticality
+        - Description
+        - ParentIssueId
+        - Title
+        - CustomAttributeData
+        - Type
+  - role: insert:consequence
+    permission:
+      check:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - issue:
+              OrgKey:
+                _eq: X-Hasura-org-id
+      set:
+        CreatedByUser: x-hasura-user-id
+        ModifiedByUser: x-hasura-user-id
+        OrgKey: x-hasura-org-id
+      columns:
+        - CostType
+        - CostValue
+        - Criticality
+        - Description
+        - ParentIssueId
+        - Title
+        - CustomAttributeData
+        - Type
+select_permissions:
+  - role: Standard
+    permission:
+      columns:
+        - Id
+        - Title
+        - Description
+        - Criticality
+        - CostType
+        - CostValue
+        - ParentIssueId
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - CreatedByUser
+        - CreatedAtTimestamp
+        - CustomAttributeData
+        - Type
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - permissions:
+              _and:
+                - UserId:
+                    _eq: X-Hasura-User-Id
+                - OrgKey:
+                    _eq: X-Hasura-org-Id
+                - AccessType:
+                    _eq: read
+      allow_aggregations: true
+  - role: read:consequence
+    permission:
+      columns:
+        - Id
+        - Title
+        - Description
+        - Criticality
+        - CostType
+        - CostValue
+        - ParentIssueId
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - CreatedByUser
+        - CreatedAtTimestamp
+        - CustomAttributeData
+        - Type
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      allow_aggregations: true
+update_permissions:
+  - role: Standard
+    permission:
+      columns:
+        - CostType
+        - CostValue
+        - Criticality
+        - Description
+        - ParentIssueId
+        - Title
+        - CustomAttributeData
+        - Type
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - permissions:
+              _and:
+                - UserId:
+                    _eq: X-Hasura-User-Id
+                - OrgKey:
+                    _eq: X-Hasura-org-Id
+                - AccessType:
+                    _eq: update
+      check:
+        issue:
+          OrgKey:
+            _eq: X-Hasura-org-id
+      set:
+        ModifiedAtTimestamp: now()
+        ModifiedByUser: x-hasura-user-id
+  - role: update:consequence
+    permission:
+      columns:
+        - CostType
+        - CostValue
+        - Criticality
+        - Description
+        - ParentIssueId
+        - Title
+        - CustomAttributeData
+        - Type
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      check:
+        issue:
+          OrgKey:
+            _eq: X-Hasura-org-id
+      set:
+        ModifiedAtTimestamp: now()
+        ModifiedByUser: x-hasura-user-id
+delete_permissions:
+  - role: Standard
+    permission:
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - permissions:
+              _and:
+                - UserId:
+                    _eq: X-Hasura-User-Id
+                - OrgKey:
+                    _eq: X-Hasura-org-Id
+                - AccessType:
+                    _eq: delete
+  - role: delete:consequence
+    permission:
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+event_triggers:
+  - name: consequence
+    definition:
+      delete:
+        columns: '*'
+      enable_manual: true
+      insert:
+        columns: '*'
+      update:
+        columns: '*'
+    retry_conf:
+      interval_sec: 10
+      num_retries: 3
+      timeout_sec: 60
+    webhook: https://{{REST_API_DOMAIN}}/events
+    headers:
+      - name: RestApiKey
+        value_from_env: REST_API_KEY

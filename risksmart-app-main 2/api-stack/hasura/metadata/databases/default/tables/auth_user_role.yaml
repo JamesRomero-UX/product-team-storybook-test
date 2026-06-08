@@ -1,0 +1,96 @@
+table:
+  name: user_role
+  schema: auth
+object_relationships:
+  - name: user
+    using:
+      foreign_key_constraint_on: UserId
+  - name: role_type
+    using:
+      foreign_key_constraint_on: RoleKey
+select_permissions:
+  - role: read:auth-user-role
+    permission:
+      columns:
+        - Id
+        - UserId
+        - RoleKey
+        - OrgKey
+        - CreatedByUser
+        - CreatedAtTimestamp
+        - ModifiedByUser
+        - ModifiedAtTimestamp
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+  - role: app-user
+    permission:
+      columns:
+        - Id
+        - UserId
+        - RoleKey
+        - OrgKey
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+insert_permissions:
+  - role: insert:auth-user-role
+    permission:
+      columns:
+        - Id
+        - UserId
+        - RoleKey
+        - OrgKey
+      set:
+        CreatedAtTimestamp: now()
+        CreatedByUser: x-hasura-user-id
+        ModifiedByUser: x-hasura-user-id
+        ModifiedAtTimestamp: now()
+      check:
+        OrgKey:
+          _eq: X-Hasura-org-id
+    backend_only: true
+update_permissions:
+  - role: update:auth-user-role
+    permission:
+      columns:
+        - RoleKey
+      set:
+        ModifiedByUser: x-hasura-user-id
+        ModifiedAtTimestamp: now()
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      check:
+        OrgKey:
+          _eq: X-Hasura-org-id
+    backend_only: true
+delete_permissions:
+  - role: delete:auth-user-role
+    permission:
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+    backend_only: true
+event_triggers:
+  - name: user_role
+    definition:
+      delete:
+        columns: '*'
+      enable_manual: true
+      insert:
+        columns: '*'
+      update:
+        columns:
+          - Id
+          - UserId
+          - RoleKey
+          - OrgKey
+    retry_conf:
+      interval_sec: 10
+      num_retries: 3
+      timeout_sec: 60
+    webhook: https://{{REST_API_DOMAIN}}/events
+    headers:
+      - name: RestApiKey
+        value_from_env: REST_API_KEY

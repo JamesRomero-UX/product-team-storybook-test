@@ -1,0 +1,9 @@
+mutation deleteTestResults($Ids: [uuid!]) {
+  delete_relation_file(where: { ParentId: { _in: $Ids } }) {
+    affected_rows
+  }
+
+  delete_test_result(where: { Id: { _in: $Ids } }) {
+    affected_rows
+  }
+}

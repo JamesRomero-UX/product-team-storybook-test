@@ -1,0 +1,57 @@
+mutation insertAcceptance(
+  $Id: uuid!
+  $DateAcceptedFrom: timestamptz!
+  $DateAcceptedTo: timestamptz!
+  $Details: String
+  $ParentId: uuid!
+  $Status: acceptance_status_enum
+  $Title: String
+  $ApprovedByUser: String
+  $ApprovedByUserGroup: uuid
+  $RequestedByUser: String
+  $RequestedByUserGroup: uuid
+  $CustomAttributeData: jsonb
+  $OrgKey: String
+  $ModifiedByUser: String
+  $ModifiedAtTimestamp: timestamptz
+  $CreatedByUser: String
+  $CreatedAtTimestamp: timestamptz
+) {
+  insert_acceptance_one(
+    object: {
+      Id: $Id
+      DateAcceptedFrom: $DateAcceptedFrom
+      DateAcceptedTo: $DateAcceptedTo
+      Details: $Details
+      Status: $Status
+      Title: $Title
+      ApprovedByUser: $ApprovedByUser
+      ApprovedByUserGroup: $ApprovedByUserGroup
+      RequestedByUser: $RequestedByUser
+      RequestedByUserGroup: $RequestedByUserGroup
+      CustomAttributeData: $CustomAttributeData
+      OrgKey: $OrgKey
+      ModifiedByUser: $ModifiedByUser
+      ModifiedAtTimestamp: $ModifiedAtTimestamp
+      CreatedByUser: $CreatedByUser
+      CreatedAtTimestamp: $CreatedAtTimestamp
+    }
+  ) {
+    Id
+    ModifiedAtTimestamp
+  }
+
+  insert_acceptance_parent_one(
+    object: {
+      Id: $Id
+      ParentId: $ParentId
+      OrgKey: $OrgKey
+      ModifiedByUser: $ModifiedByUser
+      ModifiedAtTimestamp: $ModifiedAtTimestamp
+      CreatedByUser: $CreatedByUser
+      CreatedAtTimestamp: $CreatedAtTimestamp
+    }
+  ) {
+    Id
+  }
+}

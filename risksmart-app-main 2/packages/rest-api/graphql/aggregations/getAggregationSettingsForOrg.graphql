@@ -1,0 +1,8 @@
+query getAggregationSettingsForOrg($OrgKey: String!) {
+  aggregation_org(where: { OrgKey: { _eq: $OrgKey } }) {
+    RiskScoringModel
+    Appetite
+    OrgKey
+    Config
+  }
+}

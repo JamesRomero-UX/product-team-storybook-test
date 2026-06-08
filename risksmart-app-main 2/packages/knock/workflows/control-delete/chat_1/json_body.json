@@ -1,0 +1,28 @@
+{
+	"blocks": [
+		{
+      "type": "header",
+      "text": {
+        "type": "plain_text",
+        "text": "{{ orgName }}",
+        "emoji": true
+      }
+    },
+    {
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+        "text": "Control deleted: {{ objectTitle }}"
+			}
+    },
+    {
+      "type": "context",
+      "elements": [
+        {
+          "type": "mrkdwn",
+          "text": "Control ID: {{ objectSequenceId }} has been deleted by {{ actor.email }}\nDeleted at: {{ objectTimeStamp }} "
+        }
+      ]
+		}
+	]
+}

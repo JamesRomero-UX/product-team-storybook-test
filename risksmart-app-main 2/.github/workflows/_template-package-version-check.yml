@@ -1,0 +1,278 @@
+name: Template / Package Version Check
+
+permissions:
+  contents: read
+  packages: read
+  id-token: write
+on:
+  workflow_call:
+    inputs:
+      env:
+        required: false
+        type: string
+        default: 'ci'
+      package_path:
+        description: 'Path to the package.json file (e.g., packages/external-api/package.json)'
+        required: true
+        type: string
+      package_name:
+        description: 'Human readable package name for logging'
+        required: false
+        type: string
+        default: 'Package'
+      artifact_region:
+        description: 'AWS region that holds artifact resources'
+        type: string
+        required: false
+        default: 'eu-west-2'
+      ecr_repository:
+        description: 'ECR repository name where the image is pushed'
+        required: false
+        type: string
+        default: ''
+
+      s3_key_prefix:
+        description: 'Optional S3 key prefix before the version (e.g., "artifacts/app/")'
+        required: false
+        type: string
+        default: ''
+      s3_key_suffix:
+        description: 'Optional S3 key suffix after the version (e.g., ".zip")'
+        required: false
+        type: string
+        default: ''
+      s3_bucket:
+        description: 'S3 location where the artifact is pushed'
+        required: false
+        type: string
+        default: ''
+      run_published_check:
+        description: 'Run the build check or not'
+        required: false
+        type: boolean
+        default: false
+      not_published_fail:
+        description: 'Run fail the build check if version not published'
+        type: boolean
+        required: false
+        default: false
+      ssm_config_name:
+        description: 'Fetches ssm store config if name value given'
+        type: string
+        required: false
+        default: ''
+
+    outputs:
+      version_changed:
+        description: 'Whether the package version has changed'
+        value: ${{ jobs.check-version.outputs.version_changed }}
+      current_version:
+        description: 'Current version of the package'
+        value: ${{ jobs.check-version.outputs.current_version }}
+      package_name:
+        description: 'Package name from package.json'
+        value: ${{ jobs.check-version.outputs.package_name }}
+      build_required:
+        description: 'Whether a build is required (diff OR missing in ECR/S3)'
+        value: ${{ jobs.check-published-version.outputs.build_required }}
+      artifact_exists:
+        description: 'Whether the artifact already exists in ECR or S3'
+        value: ${{ jobs.check-published-version.outputs.artifact_exists }}
+      artifact_key:
+        description: 'The checked version string / tag or S3 key'
+        value: ${{ jobs.check-published-version.outputs.artifact_key }}
+      ssm_config_value:
+        description: 'Build config from ssm if name is provided'
+        value: ${{ jobs.fetch-ssm-config.outputs.config_value || '' }}
+
+jobs:
+  fetch-ssm-config:
+    name: Fetch SSM config
+    if: ${{ inputs.ssm_config_name != '' }}
+    runs-on: ubuntu-latest
+    outputs:
+      config_value: ${{ steps.get-config.outputs.config_value }}
+    environment: ${{ inputs.env }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4.3.1
+        with:
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE }}
+          aws-region: ${{ inputs.artifact_region }}
+
+      - name: Fetch ext-api config from SSM
+        id: get-config
+        shell: bash
+        run: |
+          set -euo pipefail
+          PARAM_NAME="${{ inputs.ssm_config_name }}"
+          VALUE=$(aws ssm get-parameter --name "$PARAM_NAME" --query 'Parameter.Value' --output text)
+          if [[ -z "$VALUE" ]]; then
+            echo "ERROR: Parameter $PARAM_NAME is empty or not found"
+            exit 1
+          fi
+          # Export for later steps
+          echo "config_value=$VALUE" >> "$GITHUB_OUTPUT"
+
+  check-version:
+    name: Check ${{ inputs.package_name }} version changes
+    runs-on: ubuntu-latest
+    outputs:
+      version_changed: ${{ steps.version-check.outputs.changed }}
+      current_version: ${{ steps.version-check.outputs.version }}
+      package_name: ${{ steps.version-check.outputs.package_name }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+        with:
+          fetch-depth: 2  # Need previous commit for comparison
+
+      - name: Check if ${{ inputs.package_name }} version changed
+        id: version-check
+        run: |
+          PACKAGE_PATH="${{ inputs.package_path }}"
+          PACKAGE_DISPLAY_NAME="${{ inputs.package_name }}"
+
+          if git diff --name-only HEAD~1 HEAD | grep -q "$PACKAGE_PATH"; then
+            # Extract version and name from package.json
+            VERSION=$(node -p "require('./$PACKAGE_PATH').version")
+            PKG_NAME=$(node -p "require('./$PACKAGE_PATH').name")
+
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+            echo "package_name=$PKG_NAME" >> "$GITHUB_OUTPUT"
+            echo "$PACKAGE_DISPLAY_NAME version updated to $VERSION - container build required"
+          else
+            # Still get current version for reference
+            VERSION=$(node -p "require('./$PACKAGE_PATH').version")
+            PKG_NAME=$(node -p "require('./$PACKAGE_PATH').name")
+
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+            echo "package_name=$PKG_NAME" >> "$GITHUB_OUTPUT"
+            echo "No $PACKAGE_DISPLAY_NAME version changes detected (current: $VERSION)"
+          fi
+
+  check-published-version:
+    name: Check if ${{ inputs.package_name }} ECR or S3 version builds are required.
+    if: ${{ inputs.run_published_check }}
+    needs: check-version
+    runs-on: ubuntu-latest
+    outputs:
+      build_required: ${{ steps.compute-build.outputs.build_required }}
+      artifact_exists: ${{ steps.compute-build.outputs.artifact_exists }}
+      artifact_key: ${{ steps.compute-build.outputs.artifact_key }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4.3.1
+        with:
+          role-to-assume: ${{ vars.CI_AWS_DEPLOY_ROLE }}
+          aws-region: ${{ inputs.artifact_region }}
+
+      - name: Check if image tag exists in ECR
+        id: ecr-check
+        if: ${{ inputs.ecr_repository != '' }}
+        shell: bash
+        env:
+          REPO: ${{ inputs.ecr_repository }}
+          VERSION: ${{ needs.check-version.outputs.current_version }}
+        run: |
+          set -euo pipefail
+          TAG="${VERSION}"
+          echo "ECR image tag to check: ${REPO}:${TAG}"
+
+          # Try ecr describe-images for the specific version tag; not-found will error, so catch it with a null.
+          COUNT=$(aws ecr describe-images \
+            --repository-name "$REPO" \
+            --image-ids imageTag="$TAG" \
+            --query 'length(imageDetails)' \
+            --output text 2>/dev/null || echo "0")
+
+          if [[ "$COUNT" == "0" || "$COUNT" == "None" ]]; then
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "ECR tag not found: ${TAG}"
+          else
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "ECR tag exists: ${TAG}"
+          fi
+
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
+      - name: Check if artifact exists in S3
+        id: s3-check
+        if: ${{ inputs.s3_bucket != '' }}
+        shell: bash
+        env:
+          BUCKET: ${{ inputs.s3_bucket }}
+          VERSION: ${{ needs.check-version.outputs.current_version }}
+          PREFIX: ${{ inputs.s3_key_prefix }}
+          SUFFIX: ${{ inputs.s3_key_suffix }}
+        run: |
+          set -euo pipefail
+          KEY="${PREFIX}${VERSION}${SUFFIX}"
+          echo "S3 key to check: s3://${BUCKET}/${KEY}"
+
+          if aws s3api head-object --bucket "$BUCKET" --key "$KEY" >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "S3 object exists: s3://${BUCKET}/${KEY}"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "S3 object not found: s3://${BUCKET}/${KEY}"
+          fi
+
+          echo "key=$KEY" >> "$GITHUB_OUTPUT"
+
+      - name: Compute build required
+        id: compute-build
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          CHANGED="${{ needs.check-version.outputs.version_changed }}"
+          # Default missing step outputs to false
+          ECR_EXISTS="${{ steps.ecr-check.outputs.exists || 'false' }}"
+          S3_EXISTS="${{ steps.s3-check.outputs.exists || 'false' }}"
+          ECR_TAG="${{ steps.ecr-check.outputs.tag || '' }}"
+          S3_KEY="${{ steps.s3-check.outputs.key || '' }}"
+
+          # Artifact considered present if it exists in either location provided
+          if [[ "$ECR_EXISTS" == "true" || "$S3_EXISTS" == "true" ]]; then
+            ARTIFACT_EXISTS="true"
+          else
+            ARTIFACT_EXISTS="false"
+          fi
+
+          # Build if version changed OR artifact missing remotely
+          if [[ "$CHANGED" == "true" || "$ARTIFACT_EXISTS" != "true" ]]; then
+            BUILD_REQUIRED="true"
+            echo "Build required (changed=$CHANGED, artifact_exists=$ARTIFACT_EXISTS)"
+          else
+            BUILD_REQUIRED="false"
+            echo "Build not required (changed=$CHANGED, artifact_exists=$ARTIFACT_EXISTS)"
+          fi
+
+          # Prefer a concrete artifact key for logging/output
+          if [[ -n "$ECR_TAG" ]]; then
+            ARTIFACT_KEY="$ECR_TAG"
+          elif [[ -n "$S3_KEY" ]]; then
+            ARTIFACT_KEY="$S3_KEY"
+          else
+            ARTIFACT_KEY="${{ needs.check-version.outputs.current_version }}"
+          fi
+
+          echo "artifact_exists=$ARTIFACT_EXISTS" >> "$GITHUB_OUTPUT"
+          echo "build_required=$BUILD_REQUIRED" >> "$GITHUB_OUTPUT"
+          echo "artifact_key=$ARTIFACT_KEY" >> "$GITHUB_OUTPUT"
+
+      - name: Fail if artifact not published
+        if: ${{ inputs.not_published_fail && steps.compute-build.outputs.artifact_exists != 'true' }}
+        shell: bash
+        run: |
+          echo "::error::Artifact for version ${{ needs.check-version.outputs.current_version }} not found in ECR/S3 and not_published_fail=true"
+          exit 1

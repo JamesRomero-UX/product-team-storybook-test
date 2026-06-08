@@ -1,0 +1,36 @@
+fragment DocumentFileParts on document_file {
+  Version
+  Type
+  Summary
+  Status
+  ReviewedBy
+  ReviewDate
+  ReasonForReview
+  ParentDocumentId
+  NextReviewDate
+  ModifiedByUser
+  ModifiedAtTimestamp
+  Link
+  Id
+  FileId
+  CreatedByUser
+  CreatedAtTimestamp
+  CustomAttributeData
+  Content
+  parent {
+    Title
+    owners {
+      UserId
+    }
+    ownerGroups {
+      group {
+        users {
+          UserId
+        }
+      }
+    }
+    documentFiles(limit: 1, order_by: { CreatedAtTimestamp: desc }) {
+      Id
+    }
+  }
+}

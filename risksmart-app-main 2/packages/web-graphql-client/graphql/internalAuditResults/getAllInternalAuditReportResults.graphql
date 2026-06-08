@@ -1,0 +1,141 @@
+query getAllInternalAuditReportResults {
+  document_internal_audit_result(
+    order_by: { CreatedByUser: asc }
+    where: { parents: { internalAuditReport: {} } }
+  ) {
+    ...DocumentInternalAuditResultParts
+    internalAuditReports: parents(
+      where: { ParentType: { _eq: internal_audit_report } }
+    ) {
+      internalAuditReport {
+        Id
+        Title
+        ActualCompletionDate
+        StartDate
+        Status
+        completedByUser {
+          FriendlyName
+        }
+      }
+    }
+    documents: parents(where: { ParentType: { _eq: document } }) {
+      document {
+        Id
+        Title
+      }
+      node {
+        Id
+        SequentialId
+        ObjectType
+      }
+    }
+    files {
+      ...RelationFileParts
+    }
+  }
+
+  obligation_internal_audit_result(
+    order_by: { CreatedByUser: asc }
+    where: { parents: { internalAuditReport: {} } }
+  ) {
+    ...ObligationInternalAuditResultParts
+    internalAuditReports: parents(
+      where: { ParentType: { _eq: internal_audit_report } }
+    ) {
+      internalAuditReport {
+        Id
+        Title
+        ActualCompletionDate
+        StartDate
+        Status
+        completedByUser {
+          FriendlyName
+        }
+      }
+    }
+    obligations: parents(where: { ParentType: { _eq: obligation } }) {
+      obligation {
+        Id
+        Title
+      }
+      node {
+        Id
+        SequentialId
+        ObjectType
+      }
+    }
+    files {
+      ...RelationFileParts
+    }
+  }
+
+  risk_uncontrolled_internal_audit_result(
+    order_by: { CreatedByUser: asc }
+    where: { parents: { internalAuditReport: {} } }
+  ) {
+    ...RiskUncontrolledInternalAuditResultParts
+    internalAuditReports: parents(
+      where: { ParentType: { _eq: internal_audit_report } }
+    ) {
+      internalAuditReport {
+        Id
+        Title
+        ActualCompletionDate
+        StartDate
+        Status
+        completedByUser {
+          FriendlyName
+        }
+      }
+    }
+    risks: parents(where: { ParentType: { _eq: risk } }) {
+      risk {
+        Id
+        Title
+      }
+      node {
+        Id
+        SequentialId
+        ObjectType
+      }
+    }
+    files {
+      ...RelationFileParts
+    }
+  }
+
+  risk_controlled_internal_audit_result(
+    order_by: { CreatedByUser: asc }
+    where: { parents: { internalAuditReport: {} } }
+  ) {
+    ...RiskControlledInternalAuditResultParts
+    internalAuditReports: parents(
+      where: { ParentType: { _eq: internal_audit_report } }
+    ) {
+      internalAuditReport {
+        Id
+        Title
+        ActualCompletionDate
+        StartDate
+        Status
+        completedByUser {
+          FriendlyName
+        }
+      }
+    }
+    risks: parents(where: { ParentType: { _eq: risk } }) {
+      risk {
+        Id
+        Title
+      }
+      node {
+        Id
+        SequentialId
+        ObjectType
+      }
+    }
+    files {
+      ...RelationFileParts
+    }
+  }
+}

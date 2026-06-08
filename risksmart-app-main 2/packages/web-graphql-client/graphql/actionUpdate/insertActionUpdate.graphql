@@ -1,0 +1,17 @@
+mutation insertActionUpdate(
+  $Description: String!
+  $ParentActionId: uuid!
+  $Title: String!
+  $CustomAttributeData: jsonb
+) {
+  insert_action_update_one(
+    object: {
+      Description: $Description
+      ParentActionId: $ParentActionId
+      Title: $Title
+      CustomAttributeData: $CustomAttributeData
+    }
+  ) {
+    Id
+  }
+}

@@ -1,0 +1,5 @@
+mutation updateIndicator($Id: uuid!, $Title: String!) {
+  update_indicator(where: { Id: { _eq: $Id } }, _set: { Title: $Title }) {
+    affected_rows
+  }
+}

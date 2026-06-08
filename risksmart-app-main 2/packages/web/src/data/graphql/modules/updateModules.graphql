@@ -1,0 +1,11 @@
+mutation updateModules($ModuleSettings: jsonb!) {
+  insert_organisation_module(
+    objects: [{ ModuleSettings: $ModuleSettings }]
+    on_conflict: {
+      constraint: organisation_module_pkey
+      update_columns: [ModuleSettings]
+    }
+  ) {
+    affected_rows
+  }
+}

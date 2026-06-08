@@ -1,0 +1,9 @@
+@use '@risk-smart/themed-design-tokens/visual-refresh' as awsui;
+
+.badgeList {
+  display: inline;
+}
+
+.badgeList span:not(:last-child) {
+  margin-right: awsui.$space-static-xxs;
+}

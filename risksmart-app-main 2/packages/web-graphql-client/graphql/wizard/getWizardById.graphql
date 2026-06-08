@@ -1,0 +1,9 @@
+query getWizardById($RiskId: uuid!) {
+  wizard(where: { RiskId: { _eq: $RiskId } }) {
+    RiskId
+    CurrentStep
+    AssessmentId
+    ActivityId
+    Status
+  }
+}

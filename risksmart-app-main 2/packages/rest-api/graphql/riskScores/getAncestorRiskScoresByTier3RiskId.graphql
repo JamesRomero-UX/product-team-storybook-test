@@ -1,0 +1,58 @@
+query getAncestorRiskScoresByTier3RiskId($RiskId: uuid!) {
+  tier2: risk(
+    where: { Tier: { _eq: 2 }, childRisks: { Id: { _eq: $RiskId } } }
+  ) {
+    Id
+    childRisks {
+      Id
+      riskScore {
+        ResidualScore
+        InherentScore
+        ResidualRating
+        InherentRating
+        ResidualImpact
+        ResidualLikelihood
+        InherentImpact
+        InherentLikelihood
+      }
+    }
+    parent {
+      Id
+      childRisks {
+        Id
+        riskScore {
+          ResidualScore
+          InherentScore
+          ResidualRating
+          InherentRating
+          ResidualImpact
+          ResidualLikelihood
+          InherentImpact
+          InherentLikelihood
+        }
+      }
+    }
+  }
+
+  tier1: risk(
+    where: {
+      Tier: { _eq: 1 }
+      childRisks: { childRisks: { Id: { _eq: $RiskId } } }
+    }
+  ) {
+    Id
+    childRisks {
+      Id
+      riskScore {
+        ResidualScore
+        InherentScore
+        ResidualRating
+        InherentRating
+        ResidualImpact
+        ResidualLikelihood
+        InherentImpact
+        InherentLikelihood
+      }
+    }
+  }
+}

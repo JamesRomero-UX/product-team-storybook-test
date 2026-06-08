@@ -1,0 +1,226 @@
+table:
+  name: file
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: file
+  custom_root_fields: {}
+object_relationships:
+  - name: createdByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          CreatedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: documentFile
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: FileId
+        insertion_order: null
+        remote_table:
+          name: document_file
+          schema: risksmart
+  - name: modifiedByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          ModifiedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: organisation
+    using:
+      foreign_key_constraint_on: OrgKey
+array_relationships:
+  - name: relationFile
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: FileId
+        insertion_order: null
+        remote_table:
+          name: relation_file
+          schema: risksmart
+insert_permissions:
+  - role: insert:file
+    permission:
+      check:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      set:
+        CreatedByUser: x-hasura-user-id
+        ModifiedByUser: x-hasura-user-id
+        OrgKey: x-hasura-org-id
+      columns:
+        - Id
+        - FileName
+        - FileSize
+        - ContentType
+        - Meta
+select_permissions:
+  - role: app-user
+    permission:
+      columns:
+        - Id
+        - FileName
+        - FileSize
+        - ContentType
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - CreatedByUser
+        - CreatedAtTimestamp
+        - Meta
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - _or:
+            - relationFile:
+                thirdPartyResponse:
+                  invitees:
+                    UserId:
+                      _eq: X-Hasura-User-Id
+            - relationFile:
+                permissions:
+                  _and:
+                    - UserId:
+                        _eq: X-Hasura-User-Id
+                    - OrgKey:
+                        _eq: X-Hasura-org-Id
+                    - AccessType:
+                        _eq: read
+  - role: Standard
+    permission:
+      columns:
+        - Id
+        - FileName
+        - FileSize
+        - ContentType
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - CreatedByUser
+        - CreatedAtTimestamp
+        - Meta
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - _or:
+              - _and:
+                  - documentFile:
+                      Status:
+                        _eq: published
+                  - _exists:
+                      _table:
+                        name: user_role_access
+                        schema: risksmart
+                      _where:
+                        _and:
+                          - AccessType:
+                              _eq: read
+                          - ObjectType:
+                              _eq: public_policies
+                          - UserId:
+                              _eq: X-Hasura-User-Id
+              - relationFile:
+                  permissions:
+                    _and:
+                      - UserId:
+                          _eq: X-Hasura-User-Id
+                      - OrgKey:
+                          _eq: X-Hasura-org-Id
+                      - AccessType:
+                          _eq: read
+      allow_aggregations: true
+  - role: read:file
+    permission:
+      columns:
+        - Id
+        - FileName
+        - FileSize
+        - ContentType
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - CreatedByUser
+        - CreatedAtTimestamp
+        - Meta
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      allow_aggregations: true
+  - role: read:published-file
+    permission:
+      columns:
+        - Id
+        - FileName
+        - FileSize
+        - ContentType
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - CreatedByUser
+        - CreatedAtTimestamp
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+        documentFile:
+          Status:
+            _eq: published
+delete_permissions:
+  - role: Standard
+    permission:
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - relationFile:
+              permissions:
+                _and:
+                  - UserId:
+                      _eq: X-Hasura-User-Id
+                  - OrgKey:
+                      _eq: X-Hasura-org-Id
+                  - AccessType:
+                      _eq: update
+  - role: delete:file
+    permission:
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+  - role: delete:third-party-file
+    permission:
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - relationFile:
+              thirdPartyResponse:
+                _and:
+                  - Status:
+                      _in: ["in_progress", "not_started"]
+                  - invitees:
+                      UserId:
+                        _eq: X-Hasura-User-Id
+event_triggers:
+  - name: file
+    definition:
+      delete:
+        columns: '*'
+      enable_manual: false
+      insert:
+        columns: '*'
+      update:
+        columns: '*'
+    retry_conf:
+      interval_sec: 10
+      num_retries: 3
+      timeout_sec: 60
+    webhook: https://{{REST_API_DOMAIN}}/events
+    headers:
+      - name: RestApiKey
+        value_from_env: REST_API_KEY

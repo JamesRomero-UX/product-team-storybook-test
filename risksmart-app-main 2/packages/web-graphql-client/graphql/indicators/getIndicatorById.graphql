@@ -1,0 +1,32 @@
+query getIndicatorById($id: uuid) {
+  indicator(where: { Id: { _eq: $id } }) {
+    ...IndicatorParts
+    tags {
+      ...TagParts
+    }
+    scheduleState {
+      LatestDate
+    }
+    departments {
+      ...DepartmentParts
+    }
+    owners {
+      ...OwnerParts
+    }
+    contributors {
+      ...ContributorParts
+    }
+    ownerGroups {
+      ...OwnerGroupParts
+    }
+    contributorGroups {
+      ...ContributorGroupParts
+    }
+    ancestorContributors {
+      ...AncestorContributorParts
+    }
+    files {
+      ...RelationFileParts
+    }
+  }
+}

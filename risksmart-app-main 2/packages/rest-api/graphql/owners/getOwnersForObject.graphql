@@ -1,0 +1,10 @@
+query getOwnersForObject($Id: uuid!) {
+  owner(where: { ParentId: { _eq: $Id }, user: { Status: { _neq: "archived" } } }) {
+    user {
+      Id
+      Email
+      UserName
+      Status
+    }
+  }
+}

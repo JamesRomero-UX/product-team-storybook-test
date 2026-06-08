@@ -1,0 +1,10 @@
+query getDataImports {
+  data_import {
+    Id
+    ModifiedAtTimestamp
+    ModifiedByUser
+    CreatedByUser
+    CreatedAtTimestamp
+    Status
+  }
+}

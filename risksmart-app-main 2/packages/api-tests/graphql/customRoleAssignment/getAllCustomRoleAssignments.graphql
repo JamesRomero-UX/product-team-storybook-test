@@ -1,0 +1,11 @@
+query getAllCustomRoleAssignments {
+  custom_role_assignment {
+    CreatedByUser
+    CreatedAtTimestamp
+    Id
+    ModifiedByUser
+    ModifiedAtTimestamp
+    CustomRoleId
+    RoleTypeKey
+  }
+}

@@ -1,0 +1,1 @@
+import{f as n}from"./format-date-BluM6Y52.js";import{p as o}from"./pad-left-zeros-DybJgYSy.js";const m=t=>{const s=o(`${t.getHours()}`,2),r=o(`${t.getMinutes()}`,2),e=o(`${t.getSeconds()}`,2);return`${s}:${r}:${e}`};function c(t){return n(t)+"T"+m(t)}export{m as a,c as f};

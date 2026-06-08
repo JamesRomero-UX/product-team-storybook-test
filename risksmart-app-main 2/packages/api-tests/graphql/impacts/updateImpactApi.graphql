@@ -1,0 +1,5 @@
+mutation updateImpactApi($object: UpdateImpactInput!) {
+  updateImpactApi(object: $object) {
+    affected_rows
+  }
+}

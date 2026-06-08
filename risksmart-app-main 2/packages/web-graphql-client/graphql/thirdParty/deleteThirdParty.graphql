@@ -1,0 +1,11 @@
+mutation deleteThirdParty($Id: uuid!) {
+  delete_questionnaire_invite(where: { ThirdPartyId: { _eq: $Id } }) {
+    affected_rows
+  }
+  delete_third_party_response(where: { ParentId: { _eq: $Id } }) {
+    affected_rows
+  }
+  delete_third_party_by_pk(Id: $Id) {
+    Id
+  }
+}

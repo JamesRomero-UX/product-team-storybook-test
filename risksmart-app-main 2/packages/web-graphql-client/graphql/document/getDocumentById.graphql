@@ -1,0 +1,57 @@
+query getDocumentById($id: uuid!) {
+  document(where: { Id: { _eq: $id } }) {
+    ...DocumentParts
+    tags {
+      ...TagParts
+    }
+    scheduleState {
+      LatestDate
+    }
+    departments {
+      ...DepartmentParts
+    }
+    linkedDocuments {
+      LinkedDocumentId
+      child {
+        Title
+      }
+    }
+    attestationConfig {
+      ...AttestationConfigParts
+    }
+    owners {
+      ...OwnerParts
+    }
+    contributors {
+      ...ContributorParts
+    }
+    ownerGroups {
+      ...OwnerGroupParts
+    }
+    contributorGroups {
+      ...ContributorGroupParts
+    }
+    ancestorContributors {
+      ...AncestorContributorParts
+    }
+    latestDraftVersion: documentFiles(
+      where: { Status: { _in: [draft, pending_approval] } }
+      order_by: { CreatedAtTimestamp: desc }
+      limit: 1
+    ) {
+      Id
+      Status
+    }
+    latestPublishedVersion: documentFiles(
+      where: { Status: { _in: [published, archived] } }
+      order_by: { CreatedAtTimestamp: desc }
+      limit: 1
+    ) {
+      Id
+      Status
+    }
+    parent {
+      Title
+    }
+  }
+}

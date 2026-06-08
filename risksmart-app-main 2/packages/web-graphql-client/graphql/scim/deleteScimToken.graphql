@@ -1,0 +1,5 @@
+mutation deleteScimToken($keyId: String!) {
+  delete_scim_token(keyId: $keyId) {
+    keyId
+  }
+}

@@ -1,0 +1,5 @@
+mutation insertImpactRating($objects: [impact_rating_insert_input!]!) {
+  insert_impact_rating(objects: $objects) {
+    affected_rows
+  }
+}

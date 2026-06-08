@@ -1,0 +1,5 @@
+mutation insertEntity($object: entity_insert_input!) {
+  insert_entity_one(object: $object) {
+    Id
+  }
+}

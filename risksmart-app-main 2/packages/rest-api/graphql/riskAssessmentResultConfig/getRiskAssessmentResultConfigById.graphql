@@ -1,0 +1,9 @@
+query getRiskAssessmentResultConfigById($Id: uuid!) {
+  risk_assessment_result_config_by_pk(Id: $Id) {
+    Id
+    Version
+    Config
+    IsLatest
+    ModifiedAtTimestamp
+  }
+}

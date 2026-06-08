@@ -1,0 +1,16 @@
+.sst
+.turbo
+*/**/*.yml
+*/**/*.yaml
+*/**/node_modules
+*/**/generated/graphql.ts
+*/**/generated/graphql.typed.ts
+*/**/playwright-report
+*/**/dev-dist
+*/**/html
+*/**/public
+*/**/knock/workflows
+*/**/coverage
+*/.vscode
+*/.idea
+*/.git

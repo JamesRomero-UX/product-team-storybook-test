@@ -1,0 +1,9 @@
+table:
+  name: assessment_activity_type
+  schema: risksmart
+is_enum: true
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: assessment_activity_type
+  custom_root_fields: {}

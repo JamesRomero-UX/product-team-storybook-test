@@ -1,0 +1,5 @@
+mutation deleteContributorGroup($Id: uuid!) {
+  delete_contributor_group(where: { ParentId: { _eq: $Id } }) {
+    affected_rows
+  }
+}

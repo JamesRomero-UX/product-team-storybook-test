@@ -1,0 +1,5 @@
+mutation updateInternalAuditReportApi($object: UpdateAssessmentInput!) {
+  updateInternalAuditReportApi(object: $object) {
+    affected_rows
+  }
+}

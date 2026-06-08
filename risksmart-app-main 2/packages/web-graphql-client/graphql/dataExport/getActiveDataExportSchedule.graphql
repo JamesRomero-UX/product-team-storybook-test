@@ -1,0 +1,13 @@
+subscription getActiveDataExportSchedule {
+  data_export_schedule(
+    where: { Status: { _eq: active } }
+    order_by: { CreatedAtTimestamp: desc }
+    limit: 1
+  ) {
+    Id
+    Frequency
+    StartTimestamp
+    EndTimestamp
+    StorageType
+  }
+}

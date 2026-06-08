@@ -1,0 +1,15 @@
+query getBusinessAreas {
+  business_area(order_by: { Title: asc }) {
+    Id
+    Title
+    SequentialId
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    createdByUser {
+      FriendlyName
+    }
+    modifiedByUser {
+      FriendlyName
+    }
+  }
+}

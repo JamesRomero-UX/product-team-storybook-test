@@ -1,0 +1,18 @@
+!vitest.config.ts
+*.d.ts
+!vitest.d.ts
+node_modules
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out
+cdk.out.*
+lib/int
+
+# All things tofu we want to ignore
+**/.terraform/*
+*.auto.tfvars
+*.tfoverride
+**/.terraformrc
+**/terraform.rc
+**/.terraform.lock.hcl

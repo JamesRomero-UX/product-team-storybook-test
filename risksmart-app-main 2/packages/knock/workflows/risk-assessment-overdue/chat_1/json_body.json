@@ -1,0 +1,42 @@
+{
+	"blocks": [
+		{
+      "type": "header",
+      "text": {
+        "type": "plain_text",
+        "text": "{{ orgName }}",
+        "emoji": true
+      }
+    },
+    {
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+		"text": "Risk due: {{ objectTitle }}"
+			}
+    },
+    {
+      "type": "context",
+      "elements": [
+        {
+          "type": "mrkdwn",
+		"text": "Risk ID: {{ objectSequenceId }}\nDue by: {{ objectTimeStamp }} "
+        }
+      ]
+		},
+		{
+			"type": "actions",
+			"elements": [
+				{
+					"type": "button",
+					"text": {
+						"type": "plain_text",
+						"text": "View risk",
+						"emoji": true
+					},
+					"url": "{{ data.deepLinkBaseUrl | default: vars.app_base_url }}/risks/{{ objectId }}?organization={{ data.deepLinkOrgId | default: data.org_id }}{% if recipient.connection %}&connection={{ recipient.connection }}{% endif %}"
+				}
+			]
+		}
+	]
+}

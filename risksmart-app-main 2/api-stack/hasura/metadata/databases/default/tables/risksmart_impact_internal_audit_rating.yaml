@@ -1,0 +1,231 @@
+table:
+  name: impact_internal_audit_rating
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: impact_internal_audit_rating
+  custom_root_fields: {}
+object_relationships:
+  - name: completedBy
+    using:
+      manual_configuration:
+        column_mapping:
+          CompletedBy: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: createdByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          CreatedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: impact
+    using:
+      foreign_key_constraint_on: ImpactId
+  - name: modifiedByUser
+    using:
+      manual_configuration:
+        column_mapping:
+          ModifiedByUser: Id
+        insertion_order: null
+        remote_table:
+          name: user_view_active
+          schema: risksmart
+  - name: organisation
+    using:
+      foreign_key_constraint_on: OrgKey
+  - name: ratedItem
+    using:
+      foreign_key_constraint_on: RatedItemId
+array_relationships:
+  - name: parentLinks
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: Source
+        insertion_order: null
+        remote_table:
+          name: linked_item
+          schema: risksmart
+  - name: permissions
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: Id
+        insertion_order: null
+        remote_table:
+          name: permission_view
+          schema: risksmart
+  - name: parents
+    using:
+      manual_configuration:
+        column_mapping:
+          Id: Id
+        insertion_order: null
+        remote_table:
+          name: internal_audit_result_parent
+          schema: risksmart
+insert_permissions:
+  - role: app-user
+    permission:
+      check:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - ratedItem:
+              OrgKey:
+                _eq: X-Hasura-org-id
+          - impact:
+              OrgKey:
+                _eq: X-Hasura-org-id
+      set:
+        CreatedByUser: x-hasura-user-id
+        ModifiedByUser: x-hasura-user-id
+        OrgKey: X-Hasura-org-id
+      columns:
+        - RatedItemId
+        - ImpactId
+        - Rating
+        - TestDate
+        - CustomAttributeData
+        - SequentialId
+        - CompletedBy
+        - Likelihood
+      backend_only: true
+select_permissions:
+  - role: app-user
+    permission:
+      columns:
+        - RatedItemId
+        - ImpactId
+        - Rating
+        - TestDate
+        - CreatedByUser
+        - CreatedAtTimestamp
+        - CustomAttributeData
+        - Id
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - SequentialId
+        - CompletedBy
+        - Likelihood
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - _or:
+              - _exists:
+                  _table:
+                    name: user_role_access
+                    schema: risksmart
+                  _where:
+                    _and:
+                      - AccessType:
+                          _eq: read
+                      - ObjectType:
+                          _eq: impact_rating
+                      - UserId:
+                          _eq: X-Hasura-User-Id
+              - permissions:
+                  _and:
+                    - UserId:
+                        _eq: X-Hasura-User-Id
+                    - OrgKey:
+                        _eq: X-Hasura-org-Id
+                    - AccessType:
+                        _eq: read
+      allow_aggregations: true
+  - role: read:impact-rating
+    permission:
+      columns:
+        - RatedItemId
+        - ImpactId
+        - Rating
+        - TestDate
+        - CreatedByUser
+        - CreatedAtTimestamp
+        - CustomAttributeData
+        - Id
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - SequentialId
+        - CompletedBy
+        - Likelihood
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - _or:
+              - _exists:
+                  _table:
+                    name: user_role_access
+                    schema: risksmart
+                  _where:
+                    _and:
+                      - AccessType:
+                          _eq: read
+                      - ObjectType:
+                          _eq: impact_rating
+                      - UserId:
+                          _eq: X-Hasura-User-Id
+              - permissions:
+                  _and:
+                    - UserId:
+                        _eq: X-Hasura-User-Id
+                    - OrgKey:
+                        _eq: X-Hasura-org-Id
+                    - AccessType:
+                        _eq: read
+      allow_aggregations: true
+delete_permissions:
+  - role: app-user
+    permission:
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id
+          - _or:
+              - _exists:
+                  _table:
+                    name: user_role_access
+                    schema: risksmart
+                  _where:
+                    _and:
+                      - AccessType:
+                          _eq: delete
+                      - ObjectType:
+                          _eq: impact_rating
+                      - UserId:
+                          _eq: X-Hasura-User-Id
+              - permissions:
+                  _and:
+                    - UserId:
+                        _eq: X-Hasura-User-Id
+                    - OrgKey:
+                        _eq: X-Hasura-org-Id
+                    - AccessType:
+                        _eq: delete
+event_triggers:
+  - name: impact_internal_audit_rating
+    definition:
+      delete:
+        columns: '*'
+      enable_manual: true
+      insert:
+        columns: '*'
+      update:
+        columns: '*'
+    retry_conf:
+      interval_sec: 10
+      num_retries: 3
+      timeout_sec: 60
+    webhook: https://{{REST_API_DOMAIN}}/events
+    headers:
+      - name: RestApiKey
+        value_from_env: REST_API_KEY

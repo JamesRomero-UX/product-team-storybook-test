@@ -1,0 +1,7 @@
+mutation insertAppetites($objects: [appetite_insert_input!]!) {
+  insert_appetite(objects: $objects) {
+    returning {
+      Id
+    }
+  }
+}

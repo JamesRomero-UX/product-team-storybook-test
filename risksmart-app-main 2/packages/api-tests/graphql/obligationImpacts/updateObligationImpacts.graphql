@@ -1,0 +1,8 @@
+mutation updateObligationImpact($Id: uuid!, $Description: String!) {
+  update_obligation_impact(
+    where: { Id: { _eq: $Id } }
+    _set: { Description: $Description }
+  ) {
+    affected_rows
+  }
+}

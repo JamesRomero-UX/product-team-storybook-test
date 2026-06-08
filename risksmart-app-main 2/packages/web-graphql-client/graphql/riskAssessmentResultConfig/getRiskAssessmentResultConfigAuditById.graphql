@@ -1,0 +1,12 @@
+query getRiskAssessmentResultConfigAuditById($id: uuid!) {
+  risk_assessment_result_config_audit(where: { Id: { _eq: $id } }) {
+    Id
+    Version
+    Config
+    IsLatest
+    CreatedByUser
+    CreatedAtTimestamp
+    ModifiedByUser
+    ModifiedAtTimestamp
+  }
+}

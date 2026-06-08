@@ -1,0 +1,8 @@
+fragment ScheduleParts on schedule {
+  Id
+  Frequency
+  ManualDueDate
+  StartDate
+  TimeToCompleteValue
+  TimeToCompleteUnit
+}

@@ -1,0 +1,9 @@
+mutation insertRiskAssessmentResultConfig(
+  $object: risk_assessment_result_config_insert_input!
+) {
+  insert_risk_assessment_result_config_one(object: $object) {
+    Id
+    Version
+    IsLatest
+  }
+}

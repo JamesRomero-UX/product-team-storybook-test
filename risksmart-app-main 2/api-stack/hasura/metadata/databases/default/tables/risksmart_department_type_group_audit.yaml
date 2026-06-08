@@ -1,0 +1,21 @@
+table:
+  name: department_type_group_audit
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: department_type_group_audit
+  custom_root_fields: {}
+select_permissions:
+  - role: read:audit
+    permission:
+      columns:
+        - Id
+        - Name
+        - CreatedByUser
+        - CreatedAtTimestamp
+        - ModifiedByUser
+        - ModifiedAtTimestamp
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id

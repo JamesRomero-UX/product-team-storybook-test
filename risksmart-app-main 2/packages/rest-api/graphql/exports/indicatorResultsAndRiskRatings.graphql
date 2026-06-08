@@ -1,0 +1,172 @@
+query indicatorResultsAndRiskRatings {
+  risk {
+    Id
+    SequentialId
+    Status
+    Title
+    Tier
+    Description
+    Treatment
+    CustomAttributeData
+    ParentRiskId
+    tags {
+      type {
+        TagTypeId
+        Name
+      }
+    }
+    departments {
+      type {
+        DepartmentTypeId
+        Name
+      }
+    }
+    assessmentResults(
+      order_by: {
+        riskAssessmentResult: { CreatedAtTimestamp: desc_nulls_last }
+      }
+    ) {
+      riskAssessmentResult {
+        Rating
+        Rationale
+        RatingType
+        Impact
+        Likelihood
+        TestDate
+        CustomAttributeData
+        parents(where: { ParentType: { _eq: assessment } }) {
+          assessment {
+            Title
+            SequentialId
+            Status
+            StartDate
+            NextTestDate
+            ActualCompletionDate
+            TargetCompletionDate
+            tags {
+              type {
+                TagTypeId
+                Name
+              }
+            }
+            departments {
+              type {
+                DepartmentTypeId
+                Name
+              }
+            }
+          }
+        }
+      }
+    }
+    indicators {
+      indicator {
+        Id
+        Title
+        Type
+        Description
+        CustomAttributeData
+        SequentialId
+        TargetValueTxt
+        Unit
+        LowerAppetiteNum
+        LowerToleranceNum
+        UpperAppetiteNum
+        UpperToleranceNum
+        results(order_by: { ResultDate: desc_nulls_last }) {
+          Id
+          TargetValueNum
+          TargetValueTxt
+          ResultDate
+          Description
+          CustomAttributeData
+        }
+        schedule {
+          StartDate
+          Frequency
+          ManualDueDate
+          TimeToCompleteUnit
+          TimeToCompleteValue
+        }
+        tags {
+          type {
+            TagTypeId
+            Name
+          }
+        }
+        departments {
+          type {
+            DepartmentTypeId
+            Name
+          }
+        }
+      }
+    }
+  }
+  issue {
+    Id
+    Title
+    RaisedAtTimestamp
+    Type
+    DateIdentified
+    DateOccurred
+    Details
+    ImpactsCustomer
+    IsExternalIssue
+    CustomAttributeData
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    SequentialId
+    issueStatus {
+      Status
+    }
+    tags {
+      type {
+        TagTypeId
+        Name
+      }
+    }
+    departments {
+      type {
+        DepartmentTypeId
+        Name
+      }
+    }
+    owners {
+      user {
+        Id
+        FriendlyName
+        Email
+      }
+    }
+    contributors {
+      user {
+        Id
+        FriendlyName
+        Email
+      }
+    }
+    ownerGroups {
+      group {
+        Id
+        Name
+      }
+    }
+    contributorGroups {
+      group {
+        Id
+        Name
+      }
+    }
+    createdByUser {
+      Id
+      FriendlyName
+      Email
+    }
+    modifiedByUser {
+      Id
+      FriendlyName
+      Email
+    }
+  }
+}

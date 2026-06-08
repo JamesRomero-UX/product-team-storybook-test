@@ -1,0 +1,35 @@
+mutation updateFormFieldPositions(
+  $parentType: parent_type_enum!
+  $fieldConfig: [form_field_ordering_insert_input!]!
+  $fieldIds: [String!]!
+) {
+  # Update the form configuration object, and change nothing, to trigger an audit log
+  update_form_configuration(
+    _set: { ParentType: $parentType }
+    where: { ParentType: { _eq: $parentType } }
+  ) {
+    affected_rows
+  }
+
+  insert_form_field_ordering(
+    objects: $fieldConfig
+    on_conflict: {
+      update_columns: [Position, FormConfigurationParentType, FieldId]
+      constraint: form_field_configuration_pkey
+    }
+  ) {
+    returning {
+      FieldId
+    }
+  }
+
+  # Delete any field configs that are no longer in the form
+  delete_form_field_ordering(
+    where: {
+      FieldId: { _nin: $fieldIds }
+      FormConfigurationParentType: { _eq: $parentType }
+    }
+  ) {
+    affected_rows
+  }
+}

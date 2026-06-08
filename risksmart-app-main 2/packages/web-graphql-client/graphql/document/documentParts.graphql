@@ -1,0 +1,16 @@
+fragment DocumentParts on document {
+  Id
+  Title
+  DocumentType
+  Purpose
+  ParentDocument
+  CreatedByUser
+  ModifiedByUser
+  CreatedAtTimestamp
+  ModifiedAtTimestamp
+  CustomAttributeData
+  SequentialId
+  schedule {
+    ...ScheduleParts
+  }
+}

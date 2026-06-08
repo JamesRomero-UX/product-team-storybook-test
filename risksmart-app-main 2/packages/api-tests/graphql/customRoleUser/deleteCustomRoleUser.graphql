@@ -1,0 +1,5 @@
+mutation deleteCustomRoleUser($filter: custom_role_user_bool_exp!) {
+  delete_custom_role_user(where: $filter) {
+    affected_rows
+  }
+}

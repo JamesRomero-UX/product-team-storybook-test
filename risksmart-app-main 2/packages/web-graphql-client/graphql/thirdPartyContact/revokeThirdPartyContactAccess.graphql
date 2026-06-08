@@ -1,0 +1,9 @@
+mutation RevokeThirdPartyContactAccess($ContactIds: [uuid!]!) {
+  revokeThirdPartyContactAccess(ContactIds: $ContactIds) {
+    results {
+      Id
+      IsRevoked
+      Message
+    }
+  }
+}

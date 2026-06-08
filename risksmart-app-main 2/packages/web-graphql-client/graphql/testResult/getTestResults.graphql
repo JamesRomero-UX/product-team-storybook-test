@@ -1,0 +1,34 @@
+query getTestResults(
+  $where: test_result_bool_exp! = {
+    RatingType: { _in: ["assessment", "rating"] }
+  }
+) {
+  test_result(where: $where) {
+    ...TestResultParts
+    submitter {
+      FriendlyName
+    }
+    parent {
+      Id
+      Title
+      SequentialId
+      tags {
+        ...TagParts
+      }
+      departments {
+        ...DepartmentParts
+      }
+      schedule {
+        ManualDueDate
+      }
+    }
+    createdByUser {
+      FriendlyName
+    }
+    files_aggregate {
+      aggregate {
+        count
+      }
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "name": "@risksmart-app/e2e",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "test:e2e": "pnpm exec playwright test --quiet --grep-invert 'visual.spec.ts'",
+    "test:e2e:ui": "pnpm exec playwright test --ui",
+    "test:e2e:update": "pnpm exec playwright test --update-snapshots",
+    "test:e2e:visual": "pnpm exec playwright test --project=visual",
+    "tsc": "tsc --noEmit",
+    "generate-graphql": "graphql-codegen --config codegen.ts",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "@cloudscape-design/board-components": "catalog:",
+    "@risksmart-app/eslint-config": "workspace:*",
+    "@risksmart-app/shared": "workspace:*",
+    "cross-fetch": "catalog:",
+    "dotenv": "catalog:",
+    "eslint": "catalog:",
+    "lodash": "catalog:",
+    "prettier": "catalog:",
+    "@aws-sdk/client-lambda": "catalog:",
+    "@aws-sdk/credential-providers": "catalog:"
+  },
+  "devDependencies": {
+    "@apollo/client": "catalog:",
+    "@risk-smart/themed-cloudscape-components": "catalog:",
+    "@risk-smart/themed-design-tokens": "catalog:",
+    "@graphql-codegen/cli": "catalog:",
+    "@graphql-codegen/introspection": "catalog:",
+    "@graphql-codegen/typescript": "catalog:",
+    "@graphql-codegen/typescript-operations": "catalog:",
+    "@graphql-typed-document-node/core": "catalog:",
+    "@playwright/test": "catalog:",
+    "typescript": "catalog:"
+  }
+}

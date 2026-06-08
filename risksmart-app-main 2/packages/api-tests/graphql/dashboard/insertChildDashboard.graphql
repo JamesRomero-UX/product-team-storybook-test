@@ -1,0 +1,19 @@
+mutation insertChildDashboard(
+  $Name: String!
+  $Description: String
+  $Sharing: dashboard_sharing_type_enum_action!
+  $Content: jsonb!
+  $ContributorUserIds: [String!]!
+  $ContributorGroupIds: [uuid!]!
+) {
+  insertChildDashboard(
+    Name: $Name
+    Description: $Description
+    Sharing: $Sharing
+    Content: $Content
+    ContributorUserIds: $ContributorUserIds
+    ContributorGroupIds: $ContributorGroupIds
+  ) {
+    Id
+  }
+}

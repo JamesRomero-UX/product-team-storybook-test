@@ -1,0 +1,7 @@
+mutation insertRiskAssessmentResultConfigApi($Config: jsonb!) {
+  insertRiskAssessmentResultConfigApi(Config: $Config) {
+    Id
+    Version
+    IsLatest
+  }
+}

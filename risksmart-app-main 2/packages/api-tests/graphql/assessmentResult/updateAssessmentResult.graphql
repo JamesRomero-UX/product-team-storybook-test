@@ -1,0 +1,26 @@
+mutation updateDocumentAssessmentResult($Id: uuid!, $Rating: Int!) {
+  update_document_assessment_result(
+    where: { Id: { _eq: $Id } }
+    _set: { Rating: $Rating }
+  ) {
+    affected_rows
+  }
+}
+
+mutation updateObligationAssessmentResult($Id: uuid!, $Rating: Int!) {
+  update_obligation_assessment_result(
+    where: { Id: { _eq: $Id } }
+    _set: { Rating: $Rating }
+  ) {
+    affected_rows
+  }
+}
+
+mutation updateRiskAssessmentResult($Id: uuid!, $Rating: Int!) {
+  update_risk_assessment_result(
+    where: { Id: { _eq: $Id } }
+    _set: { Rating: $Rating }
+  ) {
+    affected_rows
+  }
+}

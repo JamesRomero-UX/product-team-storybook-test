@@ -1,0 +1,12 @@
+[
+  {
+    "ticket": "RSP-4034",
+    "title": "Surface risk appetite posture toggle in Modules settings",
+    "storyPrefix": "prototypes-rsp-4034-posture-toggle",
+    "stories": [
+      "cs-user-posture-off",
+      "cs-user-posture-on",
+      "non-cs-user-toggle-absent"
+    ]
+  }
+]

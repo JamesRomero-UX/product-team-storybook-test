@@ -1,0 +1,9 @@
+table:
+  name: risk_scoring_model
+  schema: risksmart
+is_enum: true
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: risk_scoring_model
+  custom_root_fields: {}

@@ -1,0 +1,6 @@
+query getUserGroups {
+  user_group {
+    Name
+    Id
+  }
+}

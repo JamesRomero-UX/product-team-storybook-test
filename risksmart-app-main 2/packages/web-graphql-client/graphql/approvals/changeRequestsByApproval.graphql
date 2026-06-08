@@ -1,0 +1,10 @@
+query getChangeRequestsByApproval($approvalId: uuid!) {
+  change_request(
+    where: {
+      responses: { approver: { level: { ApprovalId: { _eq: $approvalId } } } }
+      ChangeRequestStatus: { _eq: pending }
+    }
+  ) {
+    Id
+  }
+}

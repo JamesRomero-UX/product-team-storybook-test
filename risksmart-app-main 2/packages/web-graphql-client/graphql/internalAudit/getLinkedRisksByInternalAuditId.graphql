@@ -1,0 +1,108 @@
+query getLinkedRisksByInternalAuditId($id: uuid) {
+  linked_risks: linked_item(where: { Source: { _eq: $id }, target_risk: {} }) {
+    Id
+    risk: target_risk {
+      ...RiskParts
+      createdByUser {
+        FriendlyName
+      }
+      parent {
+        Title
+      }
+      parentNode {
+        Id
+        ObjectType
+        SequentialId
+      }
+      owners {
+        ...OwnerParts
+      }
+      ownerGroups {
+        ...OwnerGroupParts
+      }
+      contributors {
+        ...ContributorParts
+      }
+      contributorGroups {
+        ...ContributorGroupParts
+      }
+      ancestorContributors {
+        ...AncestorContributorParts
+      }
+      appetites(
+        limit: 1
+        where: { appetite: { AppetiteType: { _eq: risk } } }
+        order_by: [
+          { appetite: { EffectiveDate: desc_nulls_last } }
+          { appetite: { CreatedAtTimestamp: desc_nulls_last } }
+        ]
+      ) {
+        appetite {
+          LowerAppetite
+          UpperAppetite
+        }
+      }
+      impactRatings(
+        where: { RatingType: { _in: ["assessment", "rating"] } }
+        distinct_on: [ImpactId]
+        order_by: [{ ImpactId: desc }, { TestDate: desc }]
+      ) {
+        Rating
+        ImpactId
+      }
+      impactRatingsForTrend: impactRatings(
+        where: { RatingType: { _in: ["assessment", "rating"] } }
+        order_by: [{ TestDate: desc_nulls_last }]
+        limit: 10
+      ) {
+        ImpactId
+        Rating
+        TestDate
+      }
+      assessmentResults(
+        where: {
+          riskAssessmentResult: {
+            RatingType: { _in: ["assessment", "rating"] }
+          }
+        }
+        order_by: [
+          { riskAssessmentResult: { TestDate: desc_nulls_last } }
+          { riskAssessmentResult: { CreatedAtTimestamp: desc_nulls_last } }
+        ]
+      ) {
+        ParentId
+        riskAssessmentResult {
+          Id
+          Rating
+          ControlType
+          Likelihood
+          Impact
+          CustomAttributeData
+          CreatedAtTimestamp
+          TestDate
+        }
+      }
+      controls_aggregate {
+        aggregate {
+          count
+        }
+      }
+      indicators_aggregate {
+        aggregate {
+          count
+        }
+      }
+      actions_aggregate {
+        aggregate {
+          count
+        }
+      }
+      tags {
+        ...TagParts
+      }
+      departments {
+        ...DepartmentParts
+      }
+    }
+  }
+}

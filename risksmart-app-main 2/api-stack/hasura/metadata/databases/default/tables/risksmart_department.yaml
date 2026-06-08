@@ -1,0 +1,54 @@
+table:
+  name: department
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: department
+  custom_root_fields: {}
+object_relationships:
+  - name: type
+    using:
+      manual_configuration:
+        column_mapping:
+          DepartmentTypeId: Id
+        insertion_order: null
+        remote_table:
+          name: department_type
+          schema: risksmart
+insert_permissions:
+  - role: app-user
+    permission:
+      backend_only: true
+      check:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      set:
+        CreatedByUser: X-Hasura-user-id
+        ModifiedByUser: X-Hasura-user-id
+        OrgKey: X-Hasura-org-id
+      columns:
+        - ParentId
+        - DepartmentTypeId
+select_permissions:
+  - role: app-user
+    permission:
+      columns:
+        - ParentId
+        - DepartmentTypeId
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - CreatedByUser
+        - CreatedAtTimestamp
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      query_root_fields: []
+      subscription_root_fields: []
+delete_permissions:
+  - role: app-user
+    permission:
+      backend_only: true
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id

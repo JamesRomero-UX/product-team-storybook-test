@@ -1,0 +1,31 @@
+{
+  "name": "@risksmart-app/i18n",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "test:unit": "vitest --run",
+    "test:unit:changed": "vitest --run --changed origin/main",
+    "test": "sst bind vitest",
+    "tsc": "tsc --noEmit",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix",
+    "tsc:trace": "tsc --noEmit --generateTrace tscTrace",
+    "tsc:analyze": "pnpm exec analyze-trace tscTrace --skipMillis 50 --forceMillis 50",
+    "tsc:diagnostics": "tsc --noEmit --diagnostics"
+  },
+  "devDependencies": {
+    "@eslint/json": "catalog:",
+    "@risksmart-app/eslint-config": "workspace:*",
+    "eslint": "catalog:",
+    "typescript": "catalog:",
+    "vite-tsconfig-paths": "catalog:",
+    "vitest": "catalog:"
+  },
+  "dependencies": {
+    "i18next": "catalog:",
+    "i18next-chained-backend": "catalog:",
+    "i18next-resources-to-backend": "catalog:",
+    "lodash": "catalog:",
+    "react-i18next": "catalog:"
+  }
+}

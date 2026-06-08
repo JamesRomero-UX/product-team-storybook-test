@@ -1,0 +1,44 @@
+{
+    "pk": {
+        "S": "TENANT/multitenant"
+    },
+    "sk": {
+        "S": "REGION/eu-west-2"
+    },
+    "GSI1PK": {
+        "S": "REGION/eu-west-2"
+    },
+    "GSI1SK": {
+        "S": "TENANT/multitenant"
+    },
+    "tenant": {
+        "S": "multitenant"
+    },
+    "region": {
+        "S": "eu-west-2"
+    },
+    "databases": {
+        "L": [
+            {
+                "M": {
+                    "secretArn": {
+                        "S": "arn:aws:secretsmanager:region:account:secret:MultiTenant-writer"
+                    },
+                    "type": {
+                        "S": "writer"
+                    }
+                }
+            },
+            {
+                "M": {
+                    "secretArn": {
+                        "S": "arn:aws:secretsmanager:region:account:secret:MultiTenant-reader"
+                    },
+                    "type": {
+                        "S": "reader"
+                    }
+                }
+            }
+        ]
+    }
+}

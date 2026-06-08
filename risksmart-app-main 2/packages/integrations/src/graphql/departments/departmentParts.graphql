@@ -1,0 +1,8 @@
+fragment DepartmentParts on department {
+  type {
+    Description
+    Name
+  }
+  ParentId
+  DepartmentTypeId
+}

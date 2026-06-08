@@ -1,0 +1,9 @@
+query getDepartmentAuditById($DepartmentTypeId: uuid!, $ParentId: uuid!) {
+  department_audit(where: {DepartmentTypeId: {_eq: $DepartmentTypeId}, ParentId: {_eq: $ParentId}}, order_by: {ModifiedAtTimestamp: desc}) {
+    DepartmentTypeId
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    CreatedByUser
+    ModifiedByUser
+  }
+}

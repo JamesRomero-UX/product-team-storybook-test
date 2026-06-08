@@ -1,0 +1,5 @@
+mutation dataImportStartImport($Id: uuid!) {
+  dataImportStartImport(Id: $Id) {
+    message
+  }
+}

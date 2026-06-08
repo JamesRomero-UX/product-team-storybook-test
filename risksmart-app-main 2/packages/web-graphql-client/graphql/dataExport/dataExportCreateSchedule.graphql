@@ -1,0 +1,9 @@
+mutation dataExportCreateSchedule(
+  $object: DataExportCreateScheduleInput!
+) {
+  dataExportCreateSchedule(
+    object: $object
+  ) {
+    message
+  }
+}

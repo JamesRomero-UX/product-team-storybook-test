@@ -1,0 +1,6 @@
+fragment IssueParts on issue {
+  Title
+  SequentialId
+  Id
+  Type
+}

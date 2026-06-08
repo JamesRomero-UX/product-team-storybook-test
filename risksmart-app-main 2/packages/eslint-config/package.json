@@ -1,0 +1,31 @@
+{
+  "name": "@risksmart-app/eslint-config",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "exports": {
+    "./commonJSConfig": "./configs/commonJSConfig.js",
+    "./esmConfig": "./configs/esmConfig.js",
+    "./esmConfigTyped": "./configs/esmConfigTyped.js",
+    "./reactConfig": "./configs/reactConfig.js"
+  },
+  "devDependencies": {
+    "@eslint/js": "catalog:",
+    "@typescript-eslint/eslint-plugin": "catalog:",
+    "@typescript-eslint/parser": "catalog:",
+    "@typescript-eslint/utils": "catalog:",
+    "@vitest/eslint-plugin": "catalog:",
+    "eslint": "catalog:",
+    "eslint-plugin-i18next": "catalog:",
+    "eslint-plugin-only-warn": "catalog:",
+    "eslint-plugin-perfectionist": "catalog:",
+    "eslint-plugin-react": "catalog:",
+    "eslint-plugin-react-hooks": "catalog:",
+    "eslint-plugin-react-refresh": "catalog:",
+    "eslint-plugin-simple-import-sort": "catalog:",
+    "eslint-plugin-turbo": "catalog:",
+    "globals": "catalog:",
+    "typescript-eslint": "catalog:",
+    "eslint-plugin-check-file": "catalog:"
+  }
+}

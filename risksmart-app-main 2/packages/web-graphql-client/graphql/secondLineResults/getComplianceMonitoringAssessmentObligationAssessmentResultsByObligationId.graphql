@@ -1,0 +1,20 @@
+query getComplianceMonitoringAssessmentObligationAssessmentResultsByObligationId(
+  $ObligationId: uuid!
+) {
+  obligation_second_line_result(
+    where: { parents: { ParentId: { _eq: $ObligationId } } }
+  ) {
+    ...ObligationSecondLineResultParts
+    files {
+      ...RelationFileParts
+    }
+    parents(where: { ParentType: { _eq: compliance_monitoring_assessment } }) {
+      complianceMonitoringAssessment {
+        ...ComplianceMonitoringAssessmentParts
+        completedByUser {
+          FriendlyName
+        }
+      }
+    }
+  }
+}

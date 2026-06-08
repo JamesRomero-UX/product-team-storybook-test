@@ -1,0 +1,10 @@
+query getDocumentLinkedDocument {
+  document_linked_document {
+    DocumentId
+    LinkedDocumentId
+    CreatedAtTimestamp
+    CreatedByUser
+    ModifiedAtTimestamp
+    ModifiedByUser
+  }
+}

@@ -1,0 +1,16 @@
+query getTestResults {
+  test_result {
+    Title
+    Submitter
+    Description
+    ParentControlId
+    TestType
+    DesignEffectiveness
+    PerformanceEffectiveness
+    OverallEffectiveness
+    TestDate
+    CustomAttributeData
+    SequentialId
+    ModifiedAtTimestamp
+  }
+}

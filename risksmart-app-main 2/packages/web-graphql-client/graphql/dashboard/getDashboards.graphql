@@ -1,0 +1,5 @@
+query getDashboards {
+  dashboard {
+    ...DashboardParts
+  }
+}

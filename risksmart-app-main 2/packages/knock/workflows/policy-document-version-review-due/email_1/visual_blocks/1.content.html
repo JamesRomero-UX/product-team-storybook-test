@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html dir="ltr" lang="en">
+  <table
+    align="center"
+    width="100%"
+    border="0"
+    cellpadding="0"
+    cellspacing="0"
+    role="presentation"
+    style="
+      max-width: 37.5em;
+      text-align: center;
+      display: flex;
+      padding: 0.75rem;
+      background-color: rgb(15, 15, 45);
+      justify-content: center;
+      align-items: center;
+    "
+  >
+    <tbody>
+      <tr style="width: 100%">
+        <td>
+          <img
+            alt="RiskSmart logo"
+            height="auto"
+            src="https://www.risksmart.com/logo_email.png"
+            style="
+              display: block;
+              outline: none;
+              border: none;
+              text-decoration: none;
+            "
+            width="120"
+          />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <table
+    align="center"
+    width="100%"
+    border="0"
+    cellpadding="0"
+    cellspacing="0"
+    role="presentation"
+    style="
+      max-width: 37.5em;
+      text-align: center;
+      padding: 1.25rem;
+      background-color: rgb(255, 255, 255);
+    "
+  >
+    <tbody>
+      <tr style="width: 100%">
+        <td>
+          <h2
+            class=""
+            style="
+              margin-bottom: 0.75rem;
+              font-family: Sora, sans-serif;
+              width: 83.333333%;
+              margin-left: auto;
+              margin-right: auto;
+            "
+          >
+            RiskSmart: A policy document version is due for review
+          </h2>
+          <p
+            style="
+              font-size: 14px;
+              line-height: 24px;
+              margin: 16px 0;
+              font-family: Sora, sans-serif;
+              width: 83.333333%;
+              margin-left: auto;
+              margin-right: auto;
+            "
+          >
+            Follow the link below or paste it in your address bar to to
+            view policy documents.
+          </p>
+          <p style="margin: 0;"><a
+            href="{{ data.deepLinkBaseUrl | default: vars.app_base_url }}/policy/{{ objectId }}?organization={{ data.deepLinkOrgId | default: data.org_id }}{% if recipient.connection %}&connection={{ recipient.connection }}{% endif %}">{{ data.deepLinkBaseUrl | default: vars.app_base_url }}/policy/{{ objectId }}?organization={{ data.deepLinkOrgId | default: data.org_id }}{% if recipient.connection %}&connection={{ recipient.connection }}{% endif %}</a>
+          </p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</html>

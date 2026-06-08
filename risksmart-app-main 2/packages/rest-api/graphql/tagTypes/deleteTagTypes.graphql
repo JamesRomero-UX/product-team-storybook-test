@@ -1,0 +1,8 @@
+mutation deleteTagTypes($TagTypeIds: [uuid!]) {
+  delete_tag(where: { TagTypeId: { _in: $TagTypeIds } }) {
+    affected_rows
+  }
+  delete_tag_type(where: { TagTypeId: { _in: $TagTypeIds } }) {
+    affected_rows
+  }
+}

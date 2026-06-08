@@ -1,0 +1,117 @@
+table:
+  name: custom_role
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: custom_role
+  custom_root_fields: {}
+array_relationships:
+  - name: customRoleAssignments
+    using:
+      foreign_key_constraint_on:
+        column: CustomRoleId
+        table:
+          name: custom_role_assignment
+          schema: risksmart
+  - name: customRoleUsers
+    using:
+      foreign_key_constraint_on:
+        column: CustomRoleId
+        table:
+          name: custom_role_user
+          schema: risksmart
+insert_permissions:
+  - role: insert:custom-role
+    permission:
+      check:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      set:
+        CreatedAtTimestamp: now()
+        CreatedByUser: x-hasura-user-id
+        ModifiedAtTimestamp: now()
+        ModifiedByUser: x-hasura-user-id
+        OrgKey: X-Hasura-org-id
+      columns:
+        - Id
+        - RoleName
+        - Description
+      backend_only: true
+select_permissions:
+  - role: app-user
+    permission:
+      columns:
+        - Id
+        - RoleName
+        - Description
+        - CreatedAtTimestamp
+        - ModifiedAtTimestamp
+        - CreatedByUser
+        - ModifiedByUser
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      allow_aggregations: true
+  - role: read:custom-role
+    permission:
+      columns:
+        - Id
+        - RoleName
+        - Description
+        - CreatedAtTimestamp
+        - ModifiedAtTimestamp
+        - CreatedByUser
+        - ModifiedByUser
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      allow_aggregations: true
+update_permissions:
+  - role: update:custom-role
+    permission:
+      columns:
+        - RoleName
+        - Description
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      check:
+        OrgKey:
+          _eq: X-Hasura-org-id
+      set:
+        ModifiedAtTimestamp: now()
+        ModifiedByUser: x-hasura-user-id
+      backend_only: true
+delete_permissions:
+  - role: delete:custom-role
+    permission:
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
+event_triggers:
+  - name: custom_role
+    definition:
+      delete:
+        columns: '*'
+      enable_manual: true
+      insert:
+        columns: '*'
+      update:
+        columns:
+          - Id
+          - RoleName
+          - Description
+          - CreatedAtTimestamp
+          - ModifiedAtTimestamp
+          - CreatedByUser
+          - ModifiedByUser
+          - OrgKey
+    retry_conf:
+      interval_sec: 10
+      num_retries: 3
+      timeout_sec: 60
+    webhook: https://{{REST_API_DOMAIN}}/events
+    headers:
+      - name: RestApiKey
+        value_from_env: REST_API_KEY

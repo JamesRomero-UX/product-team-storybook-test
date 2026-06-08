@@ -1,0 +1,124 @@
+query getLinkedItems($Id: uuid!) {
+  as_source: linked_item(where: { Source: { _eq: $Id } }) {
+    Id
+    Source
+    Target
+    target_control {
+      Id
+    }
+    target_control_group {
+      Id
+    }
+    target_obligation {
+      Id
+    }
+    target_document {
+      Id
+    }
+    target_risk {
+      Id
+    }
+    target_assessment_activity {
+      Id
+    }
+    target_assessment {
+      Id
+    }
+    target_internal_audit_entity {
+      Id
+    }
+    target_impact {
+      Id
+    }
+    target_obligation_impact {
+      Id
+    }
+    target_impact_rating {
+      Id
+    }
+    target_action {
+      Id
+    }
+    target_indicator {
+      Id
+    }
+    target_acceptance {
+      Id
+    }
+    target_appetite {
+      Id
+    }
+    target_issue {
+      Id
+    }
+    target_consequence {
+      Id
+    }
+    target_cause {
+      Id
+    }
+    target_test_result {
+      Id
+    }
+    target_action_update {
+      Id
+    }
+    target_issue_update {
+      Id
+    }
+  }
+
+  as_target: linked_item(where: { Target: { _eq: $Id } }) {
+    Id
+    Source
+    Target
+    source_control {
+      Id
+    }
+    source_control_group {
+      Id
+    }
+    source_obligation {
+      Id
+    }
+    source_document {
+      Id
+    }
+    source_risk {
+      Id
+    }
+    source_assessment_activity {
+      Id
+    }
+    source_assessment {
+      Id
+    }
+    source_internal_audit_entity {
+      Id
+    }
+    source_impact {
+      Id
+    }
+    source_action {
+      Id
+    }
+    source_indicator {
+      Id
+    }
+    source_acceptance {
+      Id
+    }
+    source_appetite {
+      Id
+    }
+    source_issue {
+      Id
+    }
+    source_consequence {
+      Id
+    }
+    source_cause {
+      Id
+    }
+  }
+}

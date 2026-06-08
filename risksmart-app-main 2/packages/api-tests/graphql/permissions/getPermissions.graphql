@@ -1,0 +1,10 @@
+query getPermissions($orgKey: String!) {
+  permission(
+    where: { OrgKey: { _eq: $orgKey } }
+    order_by: { AccessType: asc }
+  ) {
+    Id
+    UserId
+    AccessType
+  }
+}

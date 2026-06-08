@@ -1,0 +1,31 @@
+query getRiskControlledInternalAuditResultsByParentId($Id: uuid) {
+  risk_controlled_internal_audit_result(
+    where: {
+      parents: { ParentId: { _eq: $Id } }
+      TestDate: { _is_null: false }
+    }
+    order_by: { TestDate: desc }
+  ) {
+    Id
+    Impact
+    Likelihood
+    Rating
+    TestDate
+  }
+}
+
+query getRiskUncontrolledInternalAuditResultsByParentId($Id: uuid) {
+  risk_uncontrolled_internal_audit_result(
+    where: {
+      parents: { ParentId: { _eq: $Id } }
+      TestDate: { _is_null: false }
+    }
+    order_by: { TestDate: desc }
+  ) {
+    Id
+    Impact
+    Likelihood
+    Rating
+    TestDate
+  }
+}

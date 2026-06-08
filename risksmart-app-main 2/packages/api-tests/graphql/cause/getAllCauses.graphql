@@ -1,0 +1,13 @@
+query getAllCauses {
+  cause(order_by: { Title: asc }) {
+    ModifiedByUser
+    CreatedByUser
+    Title
+    ModifiedAtTimestamp
+    CreatedAtTimestamp
+    Significance
+    ParentIssueId
+    Id
+    Description
+  }
+}

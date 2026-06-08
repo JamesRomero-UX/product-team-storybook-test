@@ -1,0 +1,7 @@
+mutation insertRiskAssessmentResults(
+  $results: [risk_assessment_result_insert_input!]!
+) {
+  insert_risk_assessment_result(objects: $results) {
+    affected_rows
+  }
+}

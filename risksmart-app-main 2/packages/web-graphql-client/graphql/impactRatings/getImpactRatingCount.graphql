@@ -1,0 +1,9 @@
+query getImpactRatingCount {
+  impact_rating_aggregate(
+    where: { RatingType: { _in: ["assessment", "rating"] } }
+  ) {
+    aggregate {
+      count
+    }
+  }
+}

@@ -1,0 +1,22 @@
+query getFormConfiguration(
+  $where: form_configuration_bool_exp!
+  $limit: Int
+  $orderBy: [form_configuration_order_by!]
+) {
+  form_configuration(where: $where, limit: $limit, order_by: $orderBy) {
+    ParentType
+    customAttributeSchema {
+      UiSchema
+      Schema
+      Id
+    }
+    fields_config {
+      FieldId
+      Hidden
+      Required
+      ReadOnly
+      DefaultValue
+      Description
+    }
+  }
+}

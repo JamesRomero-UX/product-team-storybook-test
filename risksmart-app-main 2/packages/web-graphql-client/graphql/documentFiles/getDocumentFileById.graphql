@@ -1,0 +1,28 @@
+query getDocumentFileById($id: uuid!) {
+  document_file(where: { Id: { _eq: $id } }) {
+    ...DocumentRelationFileParts
+    Content
+    Link
+    Version
+    file {
+      ...FileParts
+    }
+    parent {
+      Id
+      Title
+      ownerGroups {
+        ...OwnerGroupParts
+      }
+      owners {
+        ...OwnerParts
+      }
+    }
+    changeRequests(
+      distinct_on: [ChangeRequestStatus]
+      order_by: [{ ChangeRequestStatus: asc }, { ModifiedAtTimestamp: desc }]
+    ) {
+      ChangeRequestStatus
+      ModifiedAtTimestamp
+    }
+  }
+}

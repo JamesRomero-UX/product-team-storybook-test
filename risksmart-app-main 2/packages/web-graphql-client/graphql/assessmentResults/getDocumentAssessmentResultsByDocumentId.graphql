@@ -1,0 +1,21 @@
+query getDocumentAssessmentResultsByParentId($ParentId: uuid!) {
+  document_assessment_result(
+    where: {
+      parents: { ParentId: { _eq: $ParentId } }
+      RatingType: { _in: ["assessment", "rating"] }
+    }
+  ) {
+    ...DocumentAssessmentResultParts
+    files {
+      ...RelationFileParts
+    }
+    parents(where: { ParentType: { _eq: assessment } }) {
+      assessment {
+        ...AssessmentParts
+        completedByUser {
+          FriendlyName
+        }
+      }
+    }
+  }
+}

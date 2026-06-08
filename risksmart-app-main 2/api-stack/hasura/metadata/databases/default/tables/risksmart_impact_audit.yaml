@@ -1,0 +1,27 @@
+table:
+  name: impact_audit
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: impact_audit
+  custom_root_fields: {}
+select_permissions:
+  - role: read:audit
+    permission:
+      columns:
+        - CreatedByUser
+        - CreatedAtTimestamp
+        - CustomAttributeData
+        - Id
+        - LikelihoodAppetite
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - Name
+        - Rationale
+        - RatingGuidance
+        - SequentialId
+      filter:
+        _and:
+          - OrgKey:
+              _eq: X-Hasura-org-id

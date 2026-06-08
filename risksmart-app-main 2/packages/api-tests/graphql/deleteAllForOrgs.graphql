@@ -1,0 +1,336 @@
+# Delete mutations need to be in correct order. Objects that reference another table using a
+# foreign key constraint need to be deleted before the table they reference
+mutation DeleteAllForOrgs($orgKeys: [String!]!) {
+  delete_node_ancestor(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_linked_item(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+
+  # Delete *_result_parent junction tables early, before ANY entity table
+  # (risk, document, obligation, assessment, etc.) whose node_delete_trigger
+  # would delete the node rows these FKs reference (no ON DELETE CASCADE).
+  delete_second_line_result_parent(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_internal_audit_result_parent(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_assessment_result_parent(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+
+  # Delete second-line and internal-audit result tables before the entities
+  # they assess (risk, document, obligation, control).
+  delete_document_second_line_result(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_obligation_second_line_result(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_risk_uncontrolled_second_line_result(
+    where: { OrgKey: { _in: $orgKeys } }
+  ) {
+    affected_rows
+  }
+  delete_risk_controlled_second_line_result(
+    where: { OrgKey: { _in: $orgKeys } }
+  ) {
+    affected_rows
+  }
+  delete_control_test_second_line_result(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_document_internal_audit_result(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_obligation_internal_audit_result(
+    where: { OrgKey: { _in: $orgKeys } }
+  ) {
+    affected_rows
+  }
+  delete_risk_uncontrolled_internal_audit_result(
+    where: { OrgKey: { _in: $orgKeys } }
+  ) {
+    affected_rows
+  }
+  delete_risk_controlled_internal_audit_result(
+    where: { OrgKey: { _in: $orgKeys } }
+  ) {
+    affected_rows
+  }
+  delete_control_test_internal_audit_result(
+    where: { OrgKey: { _in: $orgKeys } }
+  ) {
+    affected_rows
+  }
+
+  # Assessment result tables (first-line) — also before entity tables.
+  delete_document_assessment_result(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_obligation_assessment_result(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_risk_assessment_result(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+
+  delete_custom_datasource(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_data_import_error(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+
+  delete_data_import(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_enterprise_risk_instance(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_user_search_preferences(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_form_field_configuration(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_form_field_ordering(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_form_configuration(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+
+  delete_impact_rating(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_impact_internal_audit_rating(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_impact_second_line_rating(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_dashboard(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+
+  delete_approval_level(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_approver_response(where: { approver: { OrgKey: { _in: $orgKeys } } }) {
+    affected_rows
+  }
+  delete_approver(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_approval(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_change_request(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_change_request_audit(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_document_linked_document(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_relation_file(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_file(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_comment(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_conversation(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_document_file(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_document_file_audit(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_document(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_indicator_result(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_indicator_parent(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_indicator(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_user_group(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_contributor(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_owner(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_issue_parent(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_obligation_impact(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_obligation(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_control_parent(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_action_parent(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_test_result(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_department(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_department_type(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_tag(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_tag_type(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_acceptance(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_appetite(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_impact(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_action_update(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_issue_update(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_action(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_risk(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_issue_assessment(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_issue(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_cause(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_consequence(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_control(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_control_group(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_indicator(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_assessment(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_questionnaire_invite(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_third_party_response(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_questionnaire_template_version(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_questionnaire_template(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_third_party(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_enterprise_risk_instance(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_enterprise_risk(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_entity(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_wizard(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_internal_audit_report(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_assessment_activity(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_internal_audit_entity(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_business_area(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_compliance_monitoring_assessment(
+    where: { OrgKey: { _in: $orgKeys } }
+  ) {
+    affected_rows
+  }
+  delete_aggregation_org(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_taxonomy_org(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_taxonomy(where: { organisations: { OrgKey: { _in: $orgKeys } } }) {
+    affected_rows
+  }
+  delete_taxonomy_audit(
+    where: { organisations: { OrgKey: { _in: $orgKeys } } }
+  ) {
+    affected_rows
+  }
+  delete_auth_organisationuser(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_risksmart_counter(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_auth_organisation(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_issue_assessment_audit(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_custom_attribute_schema(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_custom_role_user(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_custom_role_assignment(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+  delete_custom_role(where: { OrgKey: { _in: $orgKeys } }) {
+    affected_rows
+  }
+}

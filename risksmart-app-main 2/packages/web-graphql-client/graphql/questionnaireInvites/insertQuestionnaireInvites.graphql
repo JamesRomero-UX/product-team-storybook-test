@@ -1,0 +1,15 @@
+mutation insertQuestionnaireInvites(
+  $thirdPartyId: uuid!
+  $users: [String!]!
+  $message: String
+  $questionnaires: [uuid!]!
+) {
+  insertQuestionnaireInvites(
+    ThirdPartyId: $thirdPartyId
+    UserEmails: $users
+    Message: $message
+    QuestionnaireTemplateVersionIds: $questionnaires
+  ) {
+    affected_rows
+  }
+}

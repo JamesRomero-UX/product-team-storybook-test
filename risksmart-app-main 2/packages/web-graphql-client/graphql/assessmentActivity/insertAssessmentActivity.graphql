@@ -1,0 +1,33 @@
+mutation insertAssessmentActivityWithLinkedItems(
+  $ActivityType: assessment_activity_type_enum!
+  $ParentId: uuid!
+  $Status: assessment_activity_status_enum!
+  $Summary: String
+  $Title: String!
+  $CompletionDate: timestamptz
+  $AssignedUser: String
+  $LinkedItemIds: [uuid!]!
+  $CustomAttributeData: jsonb
+  $IsRCSA: Boolean
+  $RiskId: uuid
+  $OwnerUserIds: [String!]!
+  $OwnerGroupIds: [uuid!]!
+) {
+  insertAssessmentActivityWithLinkedItems(
+    ActivityType: $ActivityType
+    ParentId: $ParentId
+    Status: $Status
+    Summary: $Summary
+    Title: $Title
+    CompletionDate: $CompletionDate
+    AssignedUser: $AssignedUser
+    LinkedItemIds: $LinkedItemIds
+    CustomAttributeData: $CustomAttributeData
+    IsRCSA: $IsRCSA
+    RiskId: $RiskId
+    OwnerUserIds: $OwnerUserIds
+    OwnerGroupIds: $OwnerGroupIds
+  ) {
+    Id
+  }
+}

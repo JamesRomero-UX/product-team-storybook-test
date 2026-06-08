@@ -1,0 +1,5 @@
+mutation deleteTaxonomyOrgByTaxonomyId($Id: uuid!) {
+  delete_taxonomy_org(where: { TaxonomyId: { _eq: $Id } }) {
+    affected_rows
+  }
+}

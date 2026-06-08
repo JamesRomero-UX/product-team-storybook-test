@@ -1,0 +1,5 @@
+mutation insertCustomDatasources($objects: [custom_datasource_insert_input!]!) {
+  insert_custom_datasource(objects: $objects) {
+    affected_rows
+  }
+}

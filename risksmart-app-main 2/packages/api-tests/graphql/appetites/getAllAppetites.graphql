@@ -1,0 +1,14 @@
+query getAllAppetites {
+  appetite {
+    CreatedAtTimestamp
+    ModifiedAtTimestamp
+    Id
+    LowerAppetite
+    Statement
+    UpperAppetite
+    CreatedByUser
+    ModifiedByUser
+    ImpactAppetite
+    AppetiteType
+  }
+}

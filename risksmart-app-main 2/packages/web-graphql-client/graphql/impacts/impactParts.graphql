@@ -1,0 +1,13 @@
+fragment ImpactParts on impact {
+  CreatedAtTimestamp
+  CreatedByUser
+  Rationale
+  RatingGuidance
+  Id
+  ModifiedAtTimestamp
+  ModifiedByUser
+  Name
+  CustomAttributeData
+  SequentialId
+  LikelihoodAppetite
+}

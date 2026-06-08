@@ -1,0 +1,18 @@
+query getRiskAssessmentResultById($Id: uuid!) {
+  risk_assessment_result(where: { Id: { _eq: $Id } }) {
+    ...RiskAssessmentResultParts
+    parents {
+      risk {
+        Id
+        Title
+      }
+      assessment {
+        Id
+        Title
+      }
+    }
+    files {
+      ...RelationFileParts
+    }
+  }
+}

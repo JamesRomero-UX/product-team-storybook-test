@@ -1,0 +1,24 @@
+table:
+  name: user_group_audit
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: user_group_audit
+  custom_root_fields: {}
+select_permissions:
+  - role: read:audit
+    permission:
+      columns:
+        - CreatedAtTimestamp
+        - CreatedByUser
+        - Id
+        - ModifiedAtTimestamp
+        - ModifiedByUser
+        - Name
+        - Email
+        - Description
+        - OwnerContributor
+      filter:
+        OrgKey:
+          _eq: x-hasura-org-id

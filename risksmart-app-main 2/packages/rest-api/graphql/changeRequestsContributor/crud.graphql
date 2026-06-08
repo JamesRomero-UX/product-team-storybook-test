@@ -1,0 +1,40 @@
+query getChangeRequestContributors(
+  $where: change_request_contributor_bool_exp
+  $limit: Int
+  $orderBy: [change_request_contributor_order_by!]
+) {
+  change_request_contributor(where: $where, limit: $limit, order_by: $orderBy) {
+    ...ChangeRequestContributorParts
+  }
+}
+
+mutation deleteChangeRequestContributors(
+  $where: change_request_contributor_bool_exp!
+) {
+  delete_change_request_contributor(where: $where) {
+    returning {
+      ...ChangeRequestContributorParts
+    }
+  }
+}
+
+mutation insertChangeRequestContributors(
+  $objects: [change_request_contributor_insert_input!]!
+) {
+  insert_change_request_contributor(objects: $objects) {
+    returning {
+      ...ChangeRequestContributorParts
+    }
+  }
+}
+
+mutation updateChangeRequestContributors(
+  $where: change_request_contributor_bool_exp!
+  $set: change_request_contributor_set_input!
+) {
+  update_change_request_contributor(where: $where, _set: $set) {
+    returning {
+      ...ChangeRequestContributorParts
+    }
+  }
+}

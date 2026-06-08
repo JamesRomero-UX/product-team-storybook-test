@@ -1,0 +1,11 @@
+.entityLabel {
+  font-size: 0.875rem; /* 14px */
+  color: var(--color-text-body-secondary);
+  line-height: 1.25rem; /* 20px */
+  margin-top: 0.125rem; /* 2px */
+  font-weight: 400;
+}
+
+.entityLabel:empty {
+  display: none;
+}

@@ -1,0 +1,5 @@
+mutation deleteBusinessArea($Id: uuid!) {
+  delete_business_area(where: { Id: { _eq: $Id } }) {
+    affected_rows
+  }
+}

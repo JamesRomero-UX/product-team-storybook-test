@@ -1,0 +1,5 @@
+mutation insertAttestationConfig($object: InsertAttestationConfigInput) {
+  insertChildAttestationConfig(object: $object) {
+    Id
+  }
+}

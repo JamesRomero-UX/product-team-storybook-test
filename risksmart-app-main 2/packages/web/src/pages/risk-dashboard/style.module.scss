@@ -1,0 +1,188 @@
+@use '@risk-smart/themed-design-tokens/visual-refresh' as awsui;
+
+.dashboard {
+  min-width: 900px !important;
+}
+
+/* Hide the radio button */
+.tier {
+  [class*='awsui_radio-control'] {
+    display: none;
+  }
+  [class*='awsui_card-inner'] {
+    cursor: pointer;
+
+    [class*='awsui_title'] {
+      width: 100% !important;
+    }
+  }
+  [class*='awsui_section_'] {
+    padding-top: 0px !important;
+  }
+
+  /* Don't take up any space when no header is present e..g unlinked risk */
+  [class*='awsui_card-header-inner'] {
+    display: inherit !important;
+  }
+}
+
+/* Make sure the actions are above the radio button */
+.tier [class*='awsui_actions'] {
+  position: relative;
+  z-index: 2 !important;
+}
+
+/* And set the cursor */
+.tier [class*='awsui_label'] {
+  cursor: pointer !important;
+}
+
+.tier [class*='awsui_card-selectable'] > [class*='awsui_card-inner'] {
+  margin-bottom: 10px !important;
+}
+.tier
+  [class*='awsui_card-selectable']:last-child
+  > [class*='awsui_card-inner'] {
+  margin-bottom: 0 !important;
+}
+
+.tier [class*='awsui_card-selectable'] > [class*='awsui_card-inner'],
+.tier [class*='awsui_card-selectable'] > [class*='awsui_card-inner']::before,
+.tier [class*='awsui_card-selectable'] > [class*='awsui_card-inner']::after {
+  border-radius: 10px !important;
+}
+
+.tier [class*='awsui_card-selectable'] > [class*='awsui_card-inner']::after {
+  box-shadow:
+    0px 0px 1px 1px #e9ebed,
+    0px 1px 8px 1px rgba(0, 7, 22, 0.05) !important;
+}
+
+.tier
+  [class*='awsui_card-selectable']
+  > [class*='awsui_card-inner']
+  > [class*='awsui_card-header'] {
+  width: 100% !important;
+}
+
+.tier [class*='awsui_card-header-inner'] > [class*='awsui_root'] {
+  flex-wrap: nowrap !important;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tier
+  [class*='awsui_card-header-inner']
+  > [class*='awsui_root']
+  > [class*='awsui_main'] {
+  flex: 1 !important;
+  max-width: calc(100% - 20px) !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.tier
+  [class*='awsui_card-header-inner']
+  > [class*='awsui_root']
+  > [class*='awsui_main']
+  > [class*='awsui_title'] {
+  vertical-align: middle;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.tier
+  [class*='awsui_card-header-inner']
+  > [class*='awsui_root']
+  > [class*='awsui_main']
+  > [class*='awsui_title']
+  > [class*='awsui_heading'] {
+  display: inline-block;
+}
+
+.tier
+  [class*='awsui_card-header-inner']
+  > [class*='awsui_root']
+  > [class*='awsui_actions'] {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.tier
+  [class*='awsui_card-header-inner']
+  > [class*='awsui_root']
+  > [class*='awsui_actions']
+  button {
+  margin: 0 2px 0 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  transform: translateX(50%) scale(1.2);
+}
+.tier
+  [class*='awsui_heading-text']
+  > [class*='awsui_horizontal']
+  [class*='_badge_'] {
+  display: block;
+}
+.tier
+  [class*='awsui_card-header-inner']
+  [class*='awsui_title']
+  h3[class*='awsui_heading'] {
+  vertical-align: middle;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  display: -webkit-box !important;
+  margin: 0 !important;
+  width: 100%;
+}
+
+.tier
+  [class*='awsui_card-header-inner']
+  [class*='awsui_title']
+  [class*='awsui_heading-text'] {
+  font-size: 16px !important;
+  line-height: 21px;
+}
+.tier
+  [class*='awsui_card-header-inner']
+  [class*='awsui_title']
+  [class*='awsui_info'] {
+  vertical-align: middle;
+  padding: 0 !important;
+}
+
+.tier [class*='awsui_card-header-inner'] [class*='awsui_title'] {
+  display: flex;
+  gap: 0.5em;
+  justify-content: space-between;
+  align-items: center;
+
+  @media screen and (max-width: 1400px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+}
+.tier [data-unlinked='true'] {
+  padding-bottom: 0 !important;
+}
+.tier [data-unlinked='true'] [class*='awsui_title'] {
+  color: #73738c !important;
+}
+
+.badgeEnterprise {
+  margin-left: 0.5rem;
+  min-width: 80px;
+  text-align: center !important;
+  background-color: rgb(0, 222, 203) !important;
+  color: rgb(45, 45, 83) !important;
+}
+
+.badgeEntity {
+  margin-left: 0.5rem;
+  min-width: 80px;
+  text-align: center !important;
+  background-color: grey !important;
+}

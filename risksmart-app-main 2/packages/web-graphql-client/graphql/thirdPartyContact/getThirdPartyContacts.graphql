@@ -1,0 +1,29 @@
+query getThirdPartyContactsByThirdPartyId($ThirdPartyId: uuid!) {
+  third_party_contact(
+    where: { ThirdPartyId: { _eq: $ThirdPartyId } }
+    order_by: { CreatedAtTimestamp: desc }
+  ) {
+    Id
+    ThirdPartyId
+    Email
+    Name
+    JobTitle
+    IsRevoked
+    PasswordSetAtTimestamp
+    user {
+      LastSeen
+    }
+  }
+}
+
+query getActiveThirdPartyContacts($ThirdPartyId: uuid!) {
+  third_party_contact(
+    where: { ThirdPartyId: { _eq: $ThirdPartyId }, IsRevoked: { _eq: false } }
+    order_by: { Name: asc_nulls_last, Email: asc }
+  ) {
+    Id
+    Email
+    Name
+    JobTitle
+  }
+}

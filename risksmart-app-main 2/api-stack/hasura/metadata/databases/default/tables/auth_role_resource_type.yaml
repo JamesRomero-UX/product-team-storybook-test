@@ -1,0 +1,29 @@
+table:
+  name: role_resource_type
+  schema: auth
+select_permissions:
+  - role: read:auth-role
+    permission:
+      columns:
+        - ResourceType
+        - IsTopLevel
+      filter: {}
+    backend_only: true
+insert_permissions:
+  - role: insert:auth-role
+    permission:
+      columns:
+        - ResourceType
+        - IsTopLevel
+      check: {}
+      filter: {}
+    backend_only: true
+update_permissions:
+  - role: update:auth-role
+    permission:
+      columns:
+        - ResourceType
+        - IsTopLevel
+      check: {}
+      filter: {}
+    backend_only: true

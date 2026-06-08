@@ -1,0 +1,29 @@
+mutation insertControlTestSecondLineResult(
+  $Description: String
+  $DesignEffectiveness: Int
+  $OverallEffectiveness: Int!
+  $ControlIds: [uuid!]!
+  $PerformanceEffectiveness: Int
+  $ComplianceMonitoringAssessmentId: uuid!
+  $Submitter: String
+  $TestDate: timestamptz
+  $TestType: String
+  $Title: String!
+  $CustomAttributeData: jsonb
+) {
+  insertChildControlTestSecondLineResult(
+    Description: $Description
+    DesignEffectiveness: $DesignEffectiveness
+    OverallEffectiveness: $OverallEffectiveness
+    ControlIds: $ControlIds
+    PerformanceEffectiveness: $PerformanceEffectiveness
+    Submitter: $Submitter
+    TestDate: $TestDate
+    TestType: $TestType
+    Title: $Title
+    ComplianceMonitoringAssessmentId: $ComplianceMonitoringAssessmentId
+    CustomAttributeData: $CustomAttributeData
+  ) {
+    Ids
+  }
+}

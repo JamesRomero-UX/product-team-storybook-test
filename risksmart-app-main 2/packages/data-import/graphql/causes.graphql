@@ -1,0 +1,5 @@
+mutation insertCauses($causes: [cause_insert_input!]!) {
+  insert_cause(objects: $causes) {
+    affected_rows
+  }
+}

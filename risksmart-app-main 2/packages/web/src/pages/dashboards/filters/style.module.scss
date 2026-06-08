@@ -1,0 +1,6 @@
+.highlightedInput {
+  [class*='awsui_button-trigger'] {
+    @apply ring-2 #{!important};
+    @apply ring-teal #{!important};
+  }
+}

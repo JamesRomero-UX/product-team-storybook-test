@@ -1,0 +1,22 @@
+table:
+  name: comment_audit
+  schema: risksmart
+configuration:
+  column_config: {}
+  custom_column_names: {}
+  custom_name: comment_audit
+  custom_root_fields: {}
+select_permissions:
+  - role: read:audit
+    permission:
+      columns:
+        - Id
+        - Content
+        - ConversationId
+        - ModifiedAtTimestamp
+        - CreatedAtTimestamp
+        - CreatedByUser
+        - ModifiedByUser
+      filter:
+        OrgKey:
+          _eq: X-Hasura-org-id
