@@ -84,6 +84,13 @@ else
 fi
 echo ""
 
+# ── Install dependencies ─────────────────────────────────────────────────────
+echo "📦 Installing dependencies (this may take a few minutes)..."
+cd "$SB_REPO_DIR"
+pnpm install
+echo "✅ Dependencies installed"
+echo ""
+
 # ── Create .env file ─────────────────────────────────────────────────────────
 ENV_FILE="$SB_REPO_DIR/.env"
 echo "RS_APP_PATH=$APP_REPO_DIR" > "$ENV_FILE"
