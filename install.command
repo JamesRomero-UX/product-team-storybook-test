@@ -84,6 +84,23 @@ else
 fi
 echo ""
 
+# ── GitHub Packages authentication ───────────────────────────────────────────
+echo "🔑 RiskSmart components are hosted on GitHub Packages."
+echo "   You need a GitHub Personal Access Token to install them."
+echo ""
+echo "   To create one:"
+echo "   1. Go to github.com → Settings → Developer settings"
+echo "   2. Personal access tokens → Tokens (classic)"
+echo "   3. Generate new token → tick 'read:packages' → copy it"
+echo ""
+read -p "   Paste your GitHub token here: " GITHUB_TOKEN
+echo ""
+
+# Set auth for GitHub Packages registry
+npm config set //npm.pkg.github.com/:_authToken "$GITHUB_TOKEN"
+echo "✅ GitHub Packages authentication configured"
+echo ""
+
 # ── Install dependencies ─────────────────────────────────────────────────────
 echo "📦 Installing dependencies (this may take a few minutes)..."
 cd "$SB_REPO_DIR"
