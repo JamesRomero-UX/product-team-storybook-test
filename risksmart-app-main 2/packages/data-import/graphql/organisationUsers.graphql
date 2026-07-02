@@ -1,7 +1,0 @@
-mutation insertOrganisationUsers(
-  $organisationUsers: [auth_organisationuser_insert_input!]!
-) {
-  insert_auth_organisationuser(objects: $organisationUsers) {
-    affected_rows
-  }
-}

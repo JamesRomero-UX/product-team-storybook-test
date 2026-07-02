@@ -1,8 +1,0 @@
-mutation updateApprovalLevel($Id: uuid!, $Description: String!) {
-  update_approval_level(
-    where: { Id: { _eq: $Id } }
-    _set: { Description: $Description }
-  ) {
-    affected_rows
-  }
-}

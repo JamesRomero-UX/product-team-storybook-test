@@ -1,5 +1,0 @@
-mutation InsertColourPalette($Name: String!, $Settings: jsonb!) {
-  insert_colour_palette_one(object: { Name: $Name, Settings: $Settings }) {
-    Id
-  }
-}

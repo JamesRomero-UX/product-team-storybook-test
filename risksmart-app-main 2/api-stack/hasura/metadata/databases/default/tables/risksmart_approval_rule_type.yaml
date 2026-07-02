@@ -1,9 +1,0 @@
-table:
-  name: approval_rule_type
-  schema: risksmart
-is_enum: true
-configuration:
-  column_config: {}
-  custom_column_names: {}
-  custom_name: approval_rule_type
-  custom_root_fields: {}

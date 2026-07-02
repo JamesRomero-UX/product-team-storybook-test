@@ -1,5 +1,0 @@
-mutation insertRestAPIInternalAudit($Input: InsertInternalAuditInput) {
-  insertInternalAudit(Input: $Input) {
-    Id
-  }
-}

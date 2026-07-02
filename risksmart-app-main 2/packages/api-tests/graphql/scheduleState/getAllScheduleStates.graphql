@@ -1,8 +1,0 @@
-query getAllScheduleStates($where: schedule_state_bool_exp! = {}) {
-  schedule_state(where: $where) {
-    Id
-    DueDate
-    OverdueDate
-    LatestDate
-  }
-}

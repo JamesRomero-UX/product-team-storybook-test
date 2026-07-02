@@ -1,5 +1,0 @@
-mutation insertTaxonomyOrg($objects: [taxonomy_org_insert_input!]!) {
-  insert_taxonomy_org(objects: $objects) {
-    affected_rows
-  }
-}

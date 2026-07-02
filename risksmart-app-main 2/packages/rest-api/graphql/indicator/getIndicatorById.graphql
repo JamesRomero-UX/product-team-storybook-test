@@ -1,5 +1,0 @@
-query getIndicatorById($Id: uuid!) {
-  indicator(where: { Id: { _eq: $Id } }) {
-    ...IndicatorParts
-  }
-}

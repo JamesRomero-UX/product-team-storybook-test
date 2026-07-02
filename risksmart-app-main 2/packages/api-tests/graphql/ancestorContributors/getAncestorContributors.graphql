@@ -1,9 +1,0 @@
-query getAncestorContributors {
-  ancestor_contributor {
-    ContributorType
-    UserId
-    Id
-    AncestorId
-    UserGroupId
-  }
-}

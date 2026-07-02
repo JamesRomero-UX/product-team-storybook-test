@@ -1,8 +1,0 @@
-mutation updateOrganisation($Meta: json!, $OrgKey: String!) {
-  update_auth_organisation(
-    where: { OrgKey: { _eq: $OrgKey } }
-    _set: { Meta: $Meta, ModifiedAtTimestamp: "now()" }
-  ) {
-    affected_rows
-  }
-}

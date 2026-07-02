@@ -1,6 +1,0 @@
-query getDocumentList {
-  document(order_by: { Title: asc }) {
-    Id
-    Title
-  }
-}

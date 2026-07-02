@@ -1,6 +1,0 @@
-query getOrgUsersByRole($orgKey: String!, $roleKey: String!) {
-  user(where: { RoleKey: { _eq: $roleKey }, OrgKey: { _eq: $orgKey }, Status: { _neq: "archived" } }) {
-    Id
-    Status
-  }
-}

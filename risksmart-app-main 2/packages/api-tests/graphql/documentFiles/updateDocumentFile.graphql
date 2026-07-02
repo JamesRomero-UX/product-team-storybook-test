@@ -1,8 +1,0 @@
-mutation updateDocumentFile($Id: uuid!, $Version: String!) {
-  update_document_file(
-    where: { Id: { _eq: $Id } }
-    _set: { Version: $Version }
-  ) {
-    affected_rows
-  }
-}

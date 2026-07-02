@@ -1,5 +1,0 @@
-mutation insertApprovalLevels($objects: [approval_level_insert_input!]!) {
-  insert_approval_level(objects: $objects) {
-    affected_rows
-  }
-}

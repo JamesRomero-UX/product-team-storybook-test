@@ -1,5 +1,0 @@
-mutation insertIssueParents($objects: [issue_parent_insert_input!]!) {
-  insert_issue_parent(objects: $objects) {
-    affected_rows
-  }
-}

@@ -1,5 +1,0 @@
-mutation updateControlTestSecondLineResultApi($object: UpdateTestResultInput) {
-  updateControlTestSecondLineResultApi(object: $object) {
-    Id
-  }
-}

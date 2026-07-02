@@ -1,7 +1,0 @@
-query getDocumentById($Id: uuid!) {
-  document(where: { Id: { _eq: $Id } }) {
-    Title
-    SequentialId
-    ModifiedAtTimestamp
-  }
-}

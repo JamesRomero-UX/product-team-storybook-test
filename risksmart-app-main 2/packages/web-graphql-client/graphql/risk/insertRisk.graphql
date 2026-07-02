@@ -1,5 +1,0 @@
-mutation insertRisk($object: InsertChildRiskInput) {
-  insertChildRisk(object: $object) {
-    Id
-  }
-}

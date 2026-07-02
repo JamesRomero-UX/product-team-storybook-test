@@ -1,7 +1,0 @@
-query GetAvailableRoles {
-  available_roles {
-    id
-    name
-    description
-  }
-}

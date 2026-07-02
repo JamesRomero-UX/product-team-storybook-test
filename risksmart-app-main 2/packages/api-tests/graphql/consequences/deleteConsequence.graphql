@@ -1,5 +1,0 @@
-mutation deleteConsequence($Id: uuid!) {
-  delete_consequence(where: { Id: { _eq: $Id } }) {
-    affected_rows
-  }
-}

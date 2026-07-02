@@ -1,5 +1,0 @@
-mutation updateCustomRole($input: CustomRoleUpdateInputData) {
-  customRoleUpdate(Input: $input) {
-    affected_rows
-  }
-}

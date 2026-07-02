@@ -1,5 +1,0 @@
-mutation insertOwners($objects: [owner_insert_input!]!) {
-  insert_owner(objects: $objects) {
-    affected_rows
-  }
-}

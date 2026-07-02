@@ -1,5 +1,0 @@
-mutation insertFormField($object: InsertFormFieldInput!) {
-  insertFormField(object: $object) {
-    Id
-  }
-}

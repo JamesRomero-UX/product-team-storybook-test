@@ -1,5 +1,0 @@
-mutation insertSchedules($objects: [schedule_insert_input!]!) {
-  insert_schedule(objects: $objects) {
-    affected_rows
-  }
-}

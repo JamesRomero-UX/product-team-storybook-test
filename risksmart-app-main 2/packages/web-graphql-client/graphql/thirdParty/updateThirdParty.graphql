@@ -1,5 +1,0 @@
-mutation updateThirdParty($object: UpdateThirdPartyInput!) {
-  updateThirdPartyApi(object: $object) {
-    Id
-  }
-}

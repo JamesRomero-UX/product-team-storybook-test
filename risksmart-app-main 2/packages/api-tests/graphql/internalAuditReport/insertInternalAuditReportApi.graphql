@@ -1,5 +1,0 @@
-mutation insertInternalAuditReportApi($object: InsertAssessmentInput!) {
-  insertInternalAuditReportApi(object: $object) {
-    Id
-  }
-}

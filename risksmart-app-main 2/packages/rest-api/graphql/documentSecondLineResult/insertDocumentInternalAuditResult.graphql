@@ -1,7 +1,0 @@
-mutation insertDocumentSecondLineResults(
-  $results: [document_second_line_result_insert_input!]!
-) {
-  insert_document_second_line_result(objects: $results) {
-    affected_rows
-  }
-}

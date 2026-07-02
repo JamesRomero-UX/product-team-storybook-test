@@ -1,5 +1,0 @@
-mutation updateImpact($Id: uuid!, $Name: String!) {
-  update_impact(where: { Id: { _eq: $Id } }, _set: { Name: $Name }) {
-    affected_rows
-  }
-}

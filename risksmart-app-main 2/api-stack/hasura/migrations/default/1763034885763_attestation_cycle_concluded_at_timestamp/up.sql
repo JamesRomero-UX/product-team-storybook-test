@@ -1,2 +1,0 @@
-ALTER TABLE risksmart.attestation_cycle
-ADD COLUMN IF NOT EXISTS "ConcludedAtTimestamp" TIMESTAMP WITH TIME ZONE DEFAULT NULL;

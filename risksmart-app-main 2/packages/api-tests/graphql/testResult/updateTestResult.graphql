@@ -1,5 +1,0 @@
-mutation updateTestResult($Id: uuid!, $Title: String!) {
-  update_test_result(where: { Id: { _eq: $Id } }, _set: { Title: $Title }) {
-    affected_rows
-  }
-}

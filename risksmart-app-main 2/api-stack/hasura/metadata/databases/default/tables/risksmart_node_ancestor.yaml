@@ -1,8 +1,0 @@
-table:
-  name: node_ancestor
-  schema: risksmart
-configuration:
-  column_config: {}
-  custom_column_names: {}
-  custom_name: node_ancestor
-  custom_root_fields: {}

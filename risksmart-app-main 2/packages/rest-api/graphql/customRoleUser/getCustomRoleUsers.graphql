@@ -1,7 +1,0 @@
-query GetUserCustomRoles($userId: String!) {
-  custom_role_user(where: { UserId: { _eq: $userId } }) {
-    Id
-    UserId
-    CustomRoleId
-  }
-}

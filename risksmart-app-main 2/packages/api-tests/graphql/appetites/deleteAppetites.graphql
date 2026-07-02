@@ -1,5 +1,0 @@
-mutation deleteAppetite($appetiteId: uuid!) {
-  delete_appetite(where: { Id: { _eq: $appetiteId } }) {
-    affected_rows
-  }
-}

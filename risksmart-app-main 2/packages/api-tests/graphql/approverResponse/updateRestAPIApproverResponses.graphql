@@ -1,9 +1,0 @@
-mutation updateRestAPIApproverResponses(
-  $input: UpdateApproverResponsesInput!
-) {
-  updateApproverResponses(
-    input: $input
-  ) {
-    Id
-  }
-}

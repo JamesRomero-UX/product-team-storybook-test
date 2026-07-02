@@ -1,8 +1,0 @@
-mutation resolveConversation($Id: uuid!) {
-  update_conversation_by_pk(
-    pk_columns: { Id: $Id }
-    _set: { IsResolved: true }
-  ) {
-    Id
-  }
-}

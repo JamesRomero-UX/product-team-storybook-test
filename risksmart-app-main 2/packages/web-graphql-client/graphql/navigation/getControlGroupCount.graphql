@@ -1,7 +1,0 @@
-query getControlGroupCount {
-  control_group_aggregate {
-    aggregate {
-      count
-    }
-  }
-}

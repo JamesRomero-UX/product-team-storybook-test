@@ -1,7 +1,0 @@
-query getIssueCount($where: issue_bool_exp! = {}) {
-  issue_aggregate(where: $where) {
-    aggregate {
-      count
-    }
-  }
-}

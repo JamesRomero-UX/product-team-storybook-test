@@ -1,1 +1,0 @@
-UPDATE auth.role_type SET "TopLevelRoleKey" = 'StandardEnhanced' WHERE "RoleKey" = 'StandardEnhanced';

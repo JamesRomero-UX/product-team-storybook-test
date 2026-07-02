@@ -1,8 +1,0 @@
-mutation updateConversation($Id: uuid!, $IsResolved: Boolean) {
-  update_conversation(
-    where: { Id: { _eq: $Id } }
-    _set: { IsResolved: $IsResolved }
-  ) {
-    affected_rows
-  }
-}

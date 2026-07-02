@@ -1,6 +1,0 @@
-query getUserTabPreferences {
-  user_tab_preference {
-    ObjectType
-    Preferences
-  }
-}

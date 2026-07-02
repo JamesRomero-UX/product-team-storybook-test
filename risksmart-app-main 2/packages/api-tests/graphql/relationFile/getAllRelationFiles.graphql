@@ -1,6 +1,0 @@
-query getAllRelationFiles {
-  relation_file {
-    FileId
-    ParentId
-  }
-}

@@ -1,1 +1,0 @@
-export { EntityLabel } from './EntityLabel';

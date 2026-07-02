@@ -1,7 +1,0 @@
-query getColourPalettes {
-  colour_palette {
-    Id
-    Name
-    Settings
-  }
-}

@@ -1,5 +1,0 @@
-mutation deleteRestAPIIngestionConfig($object: DeleteIngestionConfigInput!) {
-  deleteChildIngestionConfig(object: $object) {
-    Id
-  }
-}

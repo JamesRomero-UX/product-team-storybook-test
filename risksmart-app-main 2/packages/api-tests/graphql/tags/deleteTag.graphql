@@ -1,5 +1,0 @@
-mutation deleteTag($parentId: uuid!) {
-  delete_tag(where: { ParentId: { _eq: $parentId } }) {
-    affected_rows
-  }
-}

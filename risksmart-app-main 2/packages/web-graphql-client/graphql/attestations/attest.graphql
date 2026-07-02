@@ -1,5 +1,0 @@
-mutation attest($Id: uuid!) {
-  attestRecord(Id: $Id) {
-    affected_rows
-  }
-}

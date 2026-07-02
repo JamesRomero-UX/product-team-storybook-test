@@ -1,7 +1,0 @@
-query getApprovals {
-  approval {
-    Id
-    ParentId
-    Workflow
-  }
-}

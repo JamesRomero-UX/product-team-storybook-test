@@ -1,7 +1,0 @@
-mutation insertDocumentInternalAuditResults(
-  $results: [document_internal_audit_result_insert_input!]!
-) {
-  insert_document_internal_audit_result(objects: $results) {
-    affected_rows
-  }
-}

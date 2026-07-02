@@ -1,8 +1,0 @@
-query getTaxonomyOrg {
-  taxonomy_org {
-    Id
-    TaxonomyId
-    Locale
-    OrgName
-  }
-}

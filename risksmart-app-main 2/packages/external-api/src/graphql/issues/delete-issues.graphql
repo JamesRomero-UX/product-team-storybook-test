@@ -1,5 +1,0 @@
-mutation deleteIssues($ids: [uuid!]!) {
-  deleteIssuesById(Ids: $ids) {
-    affected_rows
-  }
-}

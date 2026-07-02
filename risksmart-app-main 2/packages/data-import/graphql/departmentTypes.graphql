@@ -1,7 +1,0 @@
-mutation insertDepartmentTypes(
-  $departmentTypes: [department_type_insert_input!]!
-) {
-  insert_department_type(objects: $departmentTypes) {
-    affected_rows
-  }
-}

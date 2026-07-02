@@ -1,6 +1,0 @@
-query getIndicatorTitlesByParentId($parentId: uuid) {
-  indicator(where: { parents: { ParentId: { _eq: $parentId } } }) {
-    Title
-    Id
-  }
-}

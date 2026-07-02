@@ -1,7 +1,0 @@
-mutation insertAppetiteParents(
-  $appetiteParents: [appetite_parent_insert_input!]!
-) {
-  insert_appetite_parent(objects: $appetiteParents) {
-    affected_rows
-  }
-}

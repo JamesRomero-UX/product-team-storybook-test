@@ -1,5 +1,0 @@
-mutation DeleteSsoConfig($object: DeleteSsoConfigInput!) {
-  deleteSsoConfig(object: $object) {
-    deletedCount
-  }
-}

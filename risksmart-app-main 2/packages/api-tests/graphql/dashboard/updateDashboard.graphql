@@ -1,5 +1,0 @@
-mutation updateDashboard($Id: uuid!, $Name: String!) {
-  update_dashboard(where: { Id: { _eq: $Id } }, _set: { Name: $Name }) {
-    affected_rows
-  }
-}

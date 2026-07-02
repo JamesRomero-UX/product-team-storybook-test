@@ -1,9 +1,0 @@
-fragment UserParts on user {
-  Id
-  UserName
-  Email
-  IsCustomerSupport
-  AuthConnection
-  Status
-  RoleKey
-}

@@ -1,6 +1,0 @@
-./scripts/check-integrations-version.sh
-pnpm exec lint-staged
-if git diff --cached --name-only | grep -q "packages/external-api/src/schemas/"; then
-  echo "📋 External API schemas modified — validating Zapier contract..."
-  pnpm exec turbo validate:api-contract --filter=@risksmart-app/zapier-app
-fi

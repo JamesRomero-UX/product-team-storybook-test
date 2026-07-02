@@ -1,3 +1,0 @@
-import ControlledInternalAuditReportSelector from './ControlledInternalAuditReportSelector';
-
-export default ControlledInternalAuditReportSelector;

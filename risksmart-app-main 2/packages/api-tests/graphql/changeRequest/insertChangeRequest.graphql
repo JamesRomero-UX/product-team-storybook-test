@@ -1,5 +1,0 @@
-mutation insertChangeRequest($objects: [change_request_insert_input!]!) {
-  insert_change_request(objects: $objects) {
-    affected_rows
-  }
-}

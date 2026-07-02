@@ -1,5 +1,0 @@
-mutation dataImportValidate($Id: uuid!) {
-  dataImportValidate(Id: $Id) {
-    message
-  }
-}

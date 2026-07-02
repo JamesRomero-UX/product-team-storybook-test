@@ -1,5 +1,0 @@
-mutation insertRelationFiles($objects: [relation_file_insert_input!]!) {
-  insert_relation_file(objects: $objects) {
-    affected_rows
-  }
-}

@@ -1,5 +1,0 @@
-mutation DeleteUserRolesByIds($ids: [String!]!) {
-  delete_auth_user_role(where: { Id: { _in: $ids } }) {
-    affected_rows
-  }
-}

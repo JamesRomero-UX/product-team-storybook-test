@@ -1,5 +1,0 @@
-mutation insertAcceptances($acceptances: [acceptance_insert_input!]!) {
-  insert_acceptance(objects: $acceptances) {
-    affected_rows
-  }
-}

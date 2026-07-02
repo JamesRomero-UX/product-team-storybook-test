@@ -1,7 +1,0 @@
-mutation insertControlTestInternalAuditResults(
-  $objects: [control_test_internal_audit_result_insert_input!]!
-) {
-  insert_control_test_internal_audit_result(objects: $objects) {
-    affected_rows
-  }
-}

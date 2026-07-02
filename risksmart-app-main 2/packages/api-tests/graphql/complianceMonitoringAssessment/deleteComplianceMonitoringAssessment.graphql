@@ -1,5 +1,0 @@
-mutation deleteComplianceMonitoringAssessment($Id: uuid!) {
-  delete_compliance_monitoring_assessment(where: { Id: { _eq: $Id } }) {
-    affected_rows
-  }
-}

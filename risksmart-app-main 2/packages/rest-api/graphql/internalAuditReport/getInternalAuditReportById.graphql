@@ -1,5 +1,0 @@
-query getInternalAuditReportById($Id: uuid!) {
-  internal_audit_report(where: { Id: { _eq: $Id } }) {
-    Id
-  }
-}

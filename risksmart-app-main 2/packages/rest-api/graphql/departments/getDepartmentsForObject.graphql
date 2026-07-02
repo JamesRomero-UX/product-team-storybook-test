@@ -1,7 +1,0 @@
-query getDepartmentsForObject($Id: uuid!) {
-  department(where: { ParentId: { _eq: $Id } }) {
-    type {
-      DepartmentTypeId
-    }
-  }
-}

@@ -1,6 +1,0 @@
-mutation insertScimDomain($domain: String!) {
-  insert_scim_domain(domain: $domain) {
-    domain
-    createdOn
-  }
-}

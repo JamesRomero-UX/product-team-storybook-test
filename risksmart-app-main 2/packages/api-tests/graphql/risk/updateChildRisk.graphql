@@ -1,5 +1,0 @@
-mutation updateChildRisk($object: UpdateChildRiskInput) {
-  updateChildRisk(object: $object) {
-    Id
-  }
-}

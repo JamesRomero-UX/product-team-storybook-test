@@ -1,7 +1,0 @@
-mutation InsertObligationChangeAttestationOne(
-  $object: InsertChildObligationChangeAttestationInput!
-) {
-  insertChildObligationChangeAttestation(object: $object) {
-    Id
-  }
-}

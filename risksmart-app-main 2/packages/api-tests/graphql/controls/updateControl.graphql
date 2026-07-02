@@ -1,5 +1,0 @@
-mutation updateControl($Id: uuid!, $Title: String!) {
-  update_control(where: { Id: { _eq: $Id } }, _set: { Title: $Title }) {
-    affected_rows
-  }
-}

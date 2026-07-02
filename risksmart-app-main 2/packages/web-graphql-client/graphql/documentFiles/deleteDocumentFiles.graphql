@@ -1,9 +1,0 @@
-mutation deleteDocumentFiles($documentFileIds: [uuid!]!) {
-  delete_file(where: { documentFile: { Id: { _in: $documentFileIds } } }) {
-    affected_rows
-  }
-
-  delete_document_file(where: { Id: { _in: $documentFileIds } }) {
-    affected_rows
-  }
-}

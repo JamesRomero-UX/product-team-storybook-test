@@ -1,8 +1,0 @@
-mutation updateCustomRoleUser(
-  $filter: custom_role_user_bool_exp!
-  $updateInput: custom_role_user_set_input!
-) {
-  update_custom_role_user(where: $filter, _set: $updateInput) {
-    affected_rows
-  }
-}

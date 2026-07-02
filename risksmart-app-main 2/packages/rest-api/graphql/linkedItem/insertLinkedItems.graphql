@@ -1,9 +1,0 @@
-mutation insertLinkedItems($insertInput: [linked_item_insert_input!]!) {
-  insert_linked_item(objects: $insertInput) {
-    returning {
-      Id
-      Source
-      Target
-    }
-  }
-}

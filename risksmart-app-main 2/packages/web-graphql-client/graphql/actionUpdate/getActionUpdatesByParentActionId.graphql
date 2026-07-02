@@ -1,8 +1,0 @@
-query getActionUpdatesByParentActionId($_eq: uuid!) {
-  action_update(where: { ParentActionId: { _eq: $_eq } }) {
-    ...ActionUpdateParts
-    createdByUser {
-      FriendlyName
-    }
-  }
-}

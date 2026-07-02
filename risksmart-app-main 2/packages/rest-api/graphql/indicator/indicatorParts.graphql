@@ -1,8 +1,0 @@
-fragment IndicatorParts on indicator {
-  Id
-  Title
-  SequentialId
-  schedule {
-    ...ScheduleParts
-  }
-}

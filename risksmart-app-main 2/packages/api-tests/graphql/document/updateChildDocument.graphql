@@ -1,5 +1,0 @@
-mutation updateChildDocument($object: UpdateChildDocumentInput) {
-  updateChildDocument(object: $object) {
-    Id
-  }
-}

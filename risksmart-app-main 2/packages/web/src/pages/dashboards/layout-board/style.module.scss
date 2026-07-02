@@ -1,9 +1,0 @@
-@use '@risk-smart/themed-design-tokens/visual-refresh' as awsui;
-
-.emptyBoard {
-  background: #f9f9fd;
-  width: 100%;
-  margin-top: awsui.$space-scaled-xxxl;
-  padding-top: awsui.$space-scaled-xxxl;
-  min-height: 50vh;
-}

@@ -1,1 +1,0 @@
-import{_ as s,u as t,a as m}from"./apply-display-name-BLkmUqWr.js";import{b as p}from"./iframe-CGUFCU7f.js";import{I as i}from"./internal-D4iCGoaF.js";function c(a){var{size:n="normal",variant:o="normal"}=a,e=s(a,["size","variant"]);const r=t("Icon",{props:{name:e.name,size:n,variant:o}});return p.createElement(i,Object.assign({size:n,variant:o},e,r))}m(c,"Icon");export{c as I};

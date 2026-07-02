@@ -1,5 +1,0 @@
-query getAllInternalAuditReportIds {
-  internal_audit_report {
-    Id
-  }
-}

@@ -1,7 +1,0 @@
-mutation insertIngestionConfig($IngestionConfig: jsonb, $SecretArn: String) {
-  insert_ingestion_config_one(
-    object: { IngestionConfig: $IngestionConfig, SecretArn: $SecretArn }
-  ) {
-    Id
-  }
-}

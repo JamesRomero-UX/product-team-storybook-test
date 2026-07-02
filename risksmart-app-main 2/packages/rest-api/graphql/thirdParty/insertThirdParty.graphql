@@ -1,5 +1,0 @@
-mutation insertThirdParty($object: third_party_insert_input!) {
-  insert_third_party_one(object: $object) {
-    Id
-  }
-}

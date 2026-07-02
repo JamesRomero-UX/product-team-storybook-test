@@ -1,9 +1,0 @@
-query getNodeAncestors($orgKey: String!) {
-  node_ancestor(
-    where: { OrgKey: { _eq: $orgKey } }
-    order_by: { Id: asc, AncestorId: asc }
-  ) {
-    Id
-    AncestorId
-  }
-}

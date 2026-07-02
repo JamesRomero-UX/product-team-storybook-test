@@ -1,5 +1,0 @@
-mutation insertCustomRoleCustomAction($input: CustomRoleInsertInputData) {
-  customRoleInsert(Input: $input) {
-    Id
-  }
-}

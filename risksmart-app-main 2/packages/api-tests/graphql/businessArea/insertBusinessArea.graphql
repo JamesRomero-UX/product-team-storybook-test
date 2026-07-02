@@ -1,5 +1,0 @@
-mutation insertBusinessAreas($objects: [business_area_insert_input!]!) {
-  insert_business_area(objects: $objects) {
-    affected_rows
-  }
-}

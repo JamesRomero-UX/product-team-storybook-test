@@ -1,1 +1,0 @@
-import{r as a}from"./iframe-CGUFCU7f.js";import{e as i}from"./chunk-EPOLDU6W-DP44Pv5b.js";import{i as l}from"./routes.utils-BNc48AXW.js";function u(r){const t=i();return{handleFollow:a.useCallback(e=>{e.detail.href&&!l(e.detail.href)||typeof e.detail.href>"u"||(e.preventDefault(),t(e.detail.href,r))},[t,r])}}export{u};

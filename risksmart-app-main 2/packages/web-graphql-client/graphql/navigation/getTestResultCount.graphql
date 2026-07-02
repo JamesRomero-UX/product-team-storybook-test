@@ -1,7 +1,0 @@
-query getTestResultCount($where: test_result_bool_exp! = {}) {
-  test_result_aggregate(where: $where) {
-    aggregate {
-      count
-    }
-  }
-}

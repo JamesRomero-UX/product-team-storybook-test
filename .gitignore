@@ -1,1 +1,16 @@
-
+node_modules/
+.pnpm-store/
+storybook-static/
+sb-addons/
+sb-manager/
+sb-common-assets/
+tmp/
+iframe.html
+index.json
+vite-inject-mocker-entry.js
+.env
+.env.*
+!.env.example
+.DS_Store
+*.log
+risksmart-app-main 2/

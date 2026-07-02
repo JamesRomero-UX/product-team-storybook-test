@@ -1,5 +1,0 @@
-mutation insertInternalAudit($Input: InsertInternalAuditInput) {
-  insertInternalAudit(Input: $Input) {
-    Id
-  }
-}

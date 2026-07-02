@@ -1,8 +1,0 @@
-query getControlGroupById($_eq: uuid!) {
-  control_group(where: { Id: { _eq: $_eq } }) {
-    ...ControlGroupParts
-    ancestorContributors {
-      ...AncestorContributorParts
-    }
-  }
-}

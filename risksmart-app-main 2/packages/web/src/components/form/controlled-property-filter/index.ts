@@ -1,1 +1,0 @@
-export { ControlledPropertyFilter } from './ControlledPropertyFilter';

@@ -1,5 +1,0 @@
-mutation insertTags($tags: [tag_insert_input!]!) {
-  insert_tag(objects: $tags) {
-    affected_rows
-  }
-}

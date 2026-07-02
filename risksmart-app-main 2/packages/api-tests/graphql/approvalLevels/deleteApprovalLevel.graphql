@@ -1,5 +1,0 @@
-mutation deleteApprovalLevel($Id: uuid!) {
-  delete_approval_level(where: { Id: { _eq: $Id } }) {
-    affected_rows
-  }
-}

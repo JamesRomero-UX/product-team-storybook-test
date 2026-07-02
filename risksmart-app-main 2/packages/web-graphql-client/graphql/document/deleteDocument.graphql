@@ -1,5 +1,0 @@
-mutation deleteDocument($id: uuid!) {
-  deleteDocumentById(Id: $id) {
-    affected_rows
-  }
-}

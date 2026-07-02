@@ -1,8 +1,0 @@
-query getObligationImpactById($id: uuid!) {
-  obligation_impact(where: { Id: { _eq: $id } }) {
-    Id
-    Description
-    ImpactRating
-    CustomAttributeData
-  }
-}

@@ -1,5 +1,0 @@
-query getUserTablePreferences($TableId: String!) {
-  user_table_preferences(where: { TableId: { _eq: $TableId } }) {
-    Preferences
-  }
-}

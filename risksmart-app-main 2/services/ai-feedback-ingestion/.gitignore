@@ -1,9 +1,0 @@
-generated
-vite.config.ts.timestamp-*.mjs
-
-# testing
-coverage
-
-# CDK compiled output
-src/**/*.js
-src/**/*.js.map

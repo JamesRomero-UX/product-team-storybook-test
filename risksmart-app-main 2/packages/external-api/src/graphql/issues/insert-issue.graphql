@@ -1,6 +1,0 @@
-mutation insertIssue($object: InsertIssueInput!) {
-  insertChildIssue(object: $object) {
-    Id
-    SequentialId
-  }
-}

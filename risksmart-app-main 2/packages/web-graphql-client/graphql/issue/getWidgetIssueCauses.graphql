@@ -1,7 +1,0 @@
-query getWidgetIssueCauses($where: issue_bool_exp!) {
-  issue(where: $where) {
-    causes {
-      Title
-    }
-  }
-}

@@ -1,6 +1,0 @@
-query getOrganisation {
-  auth_organisation {
-    Meta
-    ScimEnabled
-  }
-}

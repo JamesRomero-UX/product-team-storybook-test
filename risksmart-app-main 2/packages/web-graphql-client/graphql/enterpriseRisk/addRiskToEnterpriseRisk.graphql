@@ -1,5 +1,0 @@
-mutation addRiskToEnterpriseRisk($objects: [AddRiskToEnterpriseRiskInput!]!) {
-  addRiskToEnterpriseRisk(objects: $objects) {
-    affected_rows
-  }
-}

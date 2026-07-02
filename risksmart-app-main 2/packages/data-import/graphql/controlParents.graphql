@@ -1,7 +1,0 @@
-mutation insertControlParents(
-  $controlParents: [control_parent_insert_input!]!
-) {
-  insert_control_parent(objects: $controlParents) {
-    affected_rows
-  }
-}

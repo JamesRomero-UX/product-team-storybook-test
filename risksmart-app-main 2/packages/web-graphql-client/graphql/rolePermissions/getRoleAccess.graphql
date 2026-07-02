@@ -1,7 +1,0 @@
-query getRoleAccess {
-  role_access {
-    AccessType
-    ContributorType
-    ObjectType
-  }
-}

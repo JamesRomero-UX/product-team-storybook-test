@@ -1,5 +1,0 @@
-mutation deleteCustomDatasource($Id: uuid!) {
-  delete_custom_datasource_by_pk(Id: $Id) {
-    Id
-  }
-}

@@ -1,5 +1,0 @@
-query getAllInternalAuditIds {
-  internal_audit_entity {
-    Id
-  }
-}

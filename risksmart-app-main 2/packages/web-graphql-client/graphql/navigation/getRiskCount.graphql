@@ -1,7 +1,0 @@
-query getRiskCount($where: risk_bool_exp! = {}) {
-  risk_aggregate(where: $where) {
-    aggregate {
-      count
-    }
-  }
-}

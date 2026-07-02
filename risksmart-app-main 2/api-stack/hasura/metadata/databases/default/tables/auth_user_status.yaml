@@ -1,9 +1,0 @@
-table:
-  name: user_status
-  schema: auth
-is_enum: true
-configuration:
-  column_config: {}
-  custom_column_names: {}
-  custom_name: user_status
-  custom_root_fields: {}

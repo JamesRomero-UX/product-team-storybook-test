@@ -1,5 +1,0 @@
-mutation deleteControlTestInternalAuditResult($Id: uuid!) {
-  delete_control_test_internal_audit_result(where: { Id: { _eq: $Id } }) {
-    affected_rows
-  }
-}

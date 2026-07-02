@@ -1,5 +1,0 @@
-mutation insertImpact($object: InsertImpactInput!) {
-  insertImpactApi(object: $object) {
-    Id
-  }
-}

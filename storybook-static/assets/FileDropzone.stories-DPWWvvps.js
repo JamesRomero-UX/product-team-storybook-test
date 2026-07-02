@@ -1,5 +1,0 @@
-import{b as l,j as t,r as i}from"./iframe-CGUFCU7f.js";import{u as p,a as c}from"./apply-display-name-BLkmUqWr.js";import{I as m}from"./internal-PGFHZU9x.js";/* empty css              */import"./preload-helper-PPVm8Dsz.js";import"./clsx-B-dksMZM.js";import"./index-KL8ugYfO.js";function s(e){const o=p("FileDropzone");return l.createElement(m,Object.assign({},o,e))}c(s,"FileDropzone");const g={title:"Cloudscape Reference/FileDropzone",component:s,tags:["cloudscape-real"],parameters:{layout:"fullscreen",docs:{description:{component:"Real Cloudscape FileDropzone rendered with RiskSmart theme. 1:1 with live app."}}}},d=()=>{const[e,o]=i.useState([]);return t.jsx(s,{onChange:({detail:n})=>o(a=>[...a,...n.value]),children:e.length===0?"Drop files here":`${e.length} file(s)`})},r={render:()=>t.jsx("div",{style:{width:480},children:t.jsx(d,{})})};r.parameters={...r.parameters,docs:{...r.parameters?.docs,source:{originalSource:`{
-  render: () => <div style={{
-    width: 480
-  }}><Controlled /></div>
-}`,...r.parameters?.docs?.source}}};const j=["Default"];export{r as Default,j as __namedExportsOrder,g as default};

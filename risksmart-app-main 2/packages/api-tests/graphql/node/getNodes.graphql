@@ -1,6 +1,0 @@
-query getNodes($orgKey: String!) {
-  node(where: { OrgKey: { _eq: $orgKey } }) {
-    Id
-    ObjectType
-  }
-}

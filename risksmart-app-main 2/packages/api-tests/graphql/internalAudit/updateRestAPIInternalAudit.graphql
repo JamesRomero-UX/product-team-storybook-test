@@ -1,5 +1,0 @@
-mutation updateRestAPIInternalAudit($Input: UpdateInternalAuditInput) {
-  updateInternalAudit(Input: $Input) {
-    Id
-  }
-}

@@ -1,7 +1,0 @@
-query getComplianceMonitoringAssessmentCount {
-  compliance_monitoring_assessment_aggregate {
-    aggregate {
-      count
-    }
-  }
-}

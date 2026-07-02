@@ -1,5 +1,0 @@
-query getModuleSettings($orgKey: String!) {
-  organisation_module_by_pk(OrgKey: $orgKey) {
-    ModuleSettings
-  }
-}

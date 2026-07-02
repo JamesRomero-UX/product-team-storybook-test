@@ -1,7 +1,0 @@
-query getEnterpriseRisksByTier($Tier: Int!) {
-  enterprise_risk(where: { Tier: { _eq: $Tier } }) {
-    Id
-    SequentialId
-    Title
-  }
-}

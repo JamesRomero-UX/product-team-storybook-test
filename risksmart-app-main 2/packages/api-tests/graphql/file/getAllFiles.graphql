@@ -1,8 +1,0 @@
-query getAllFiles {
-  file {
-    Id
-    FileName
-    FileSize
-    ContentType
-  }
-}

@@ -1,6 +1,0 @@
-query getAllActiveAttestationRecords {
-  attestation_record(where: { Active: { _eq: true } }) {
-    ...AttestationParts
-    OrgKey
-  }
-}

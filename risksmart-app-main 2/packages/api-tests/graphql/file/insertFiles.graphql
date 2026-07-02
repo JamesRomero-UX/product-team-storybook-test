@@ -1,5 +1,0 @@
-mutation insertFiles($objects: [file_insert_input!]!) {
-  insert_file(objects: $objects) {
-    affected_rows
-  }
-}

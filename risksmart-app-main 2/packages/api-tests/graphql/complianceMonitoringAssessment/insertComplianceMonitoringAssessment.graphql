@@ -1,7 +1,0 @@
-mutation insertComplianceMonitoringAssessment(
-  $objects: [compliance_monitoring_assessment_insert_input!]!
-) {
-  insert_compliance_monitoring_assessment(objects: $objects) {
-    affected_rows
-  }
-}

@@ -1,5 +1,0 @@
-mutation insertApprovers($objects: [approver_insert_input!]!) {
-  insert_approver(objects: $objects) {
-    affected_rows
-  }
-}

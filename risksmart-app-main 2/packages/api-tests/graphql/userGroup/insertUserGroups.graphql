@@ -1,5 +1,0 @@
-mutation insertUserGroups($objects: [user_group_insert_input!]!) {
-  insert_user_group(objects: $objects) {
-    affected_rows
-  }
-}

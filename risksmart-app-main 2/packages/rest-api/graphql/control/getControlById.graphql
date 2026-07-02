@@ -1,7 +1,0 @@
-query getControlById($Id: uuid!) {
-  control(where: { Id: { _eq: $Id } }) {
-    Id
-    Title
-    SequentialId
-  }
-}

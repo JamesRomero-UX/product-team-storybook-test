@@ -1,2 +1,0 @@
-hasura/graphql-engine:v2.48.11
-permitio/pdp-v2:0.9.9

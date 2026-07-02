@@ -1,8 +1,0 @@
-table:
-  name: data_import_audit
-  schema: risksmart
-configuration:
-  column_config: {}
-  custom_column_names: {}
-  custom_name: data_import_audit
-  custom_root_fields: {}
