@@ -4,16 +4,21 @@ These are the real `@risk-smart/themed-cloudscape-components` — RiskSmart's th
 AWS Cloudscape. Every component is on `window.RiskSmart.*`. Build UIs by **composing these
 components and passing their props** — this is a prop-driven system, NOT a utility-class one.
 
-## Loading — REQUIRED (get this wrong and the screen is blank)
-`_ds_bundle.js` externalizes React: `window.React` and `window.ReactDOM` must be on the page
-BEFORE it loads, or it throws and **`window.RiskSmart` is never defined** — every component
-silently no-ops → blank screen. This is the #1 cause of "it's not using the components." Any
-React global satisfies it — the **standard React 18.3.1 UMD is confirmed working** (no special
-build or `copy_files` needed).
+## ⚑ READ FIRST — do this automatically for every screen (no one needs to ask)
+When you build ANY screen with this design system, do BOTH of the following on your own — it is
+the required build mode for this DS, not an option:
 
-**Build RiskSmart screens as a React prototype (the React + Babel path) — NOT as a `.dc.html`
-Design Component.** The `.dc.html` runtime keeps its own React private, so the external bundle
-can't attach and nothing renders. A React prototype is the supported path and works out of the box.
+1. **Create a plain React prototype (a `.html` file). Do NOT create a `.dc.html` Design Component.**
+2. **Load React BEFORE `_ds_bundle.js`** (React UMD → `styles.css` → `_ds_bundle.js`), then render
+   `window.RiskSmart.*` into a root with `ReactDOM.createRoot`.
+
+Why this is mandatory: `_ds_bundle.js` externalizes React — `window.React`/`window.ReactDOM` must
+already be on the page when it loads, or it throws and **`window.RiskSmart` is never defined** →
+every component silently no-ops → **blank screen** (the #1 failure). The standard React 18.3.1 UMD
+is confirmed working — no special build or `copy_files` needed. The `.dc.html` runtime keeps its own
+React private so the bundle can't attach; that is why `.dc.html` produces a blank screen here.
+(If you truly must build a `.dc.html`, at minimum load the same React UMD in the `<helmet>` before
+`_ds_bundle.js`, and verify components actually mount — otherwise switch to a React prototype.)
 
 Load in EXACTLY this order (`styles.css` + `_ds_bundle.js` come bound with the DS — reference them
 at the DS mount path):
@@ -144,6 +149,18 @@ const { TopNavigation, AppLayout, SideNavigation, BreadcrumbGroup, Table, Header
 The `AppLayout` card's three stories (Page Shell / Table Page / Form Page) and
 `components/cloudscape-reference/{AppLayout,TopNavigation,SideNavigation}/*.jsx` are the full
 reference — read them before building a screen.
+
+## Brand guidelines — follow these for on-brand output
+Beyond the components, `guidelines/*.md` in this DS carry RiskSmart's brand rules — **read them
+and apply them**, especially:
+- **Copy & voice:** sentence case everywhere; buttons start with a verb ("Add risk", not "Submit");
+  entity nouns (Risk, Control, Action, Issue, Policy, Indicator) stay capitalised; dates "12 Jun 2026";
+  column labels "Created"/"Updated" (not "…At"); honest error messages.
+- **Colour meaning:** teal = action/CTAs/active/metrics; navy = text/structure; status colours only
+  for meaning, always with a label — never colour alone.
+- **Accessibility (WCAG AA):** real text, left-aligned; teal text uses ink `#00857A` (never `#00E1D1`
+  on white); visible focus; semantic markup; keyboard-operable.
+See `guidelines/{copy,voice-and-tone,colour,accessibility,typography,iconography,visual-content,logo,styles}.md`.
 
 ## Where the truth lives (read before building)
 - `styles.css` and its `@import` closure (`_ds_bundle.css`, `tokens/*.css`, `fonts/`) — the tokens and component styles.

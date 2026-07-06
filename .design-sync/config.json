@@ -7,6 +7,7 @@
   "storybookStatic": ".design-sync/sb-reference",
   "extraFonts": ["../../../.design-sync/fonts/sora.css"],
   "runtimeFontPrefixes": ["Courier Prime"],
+  "guidelinesGlob": ["../../../.design-sync/guidelines/*.md"],
   "extraEntries": ["../../../.design-sync/preview-root.tsx"],
   "provider": { "component": "PreviewRoot" },
   "readmeHeader": ".design-sync/conventions.md",
