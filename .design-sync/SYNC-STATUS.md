@@ -9,6 +9,21 @@ _Updated 2026-07-06. Project: RiskSmart Components (Cloudscape) `41f173c8-bc0e-4
 | `cloudscape-reference` | 68 | Themed-Cloudscape primitives (the fidelity oracle) — unchanged |
 | `page-templates` | **9** | Full-page RiskSmart archetypes — NEW |
 | `production` | **39** | Real RiskSmart composite components — NEW |
+| `prototypes` | **1** | Forkable 1:1 Risk Register — NEW |
+
+## 1:1 with the live app — the app-components bundle
+`_ds_app_bundle.js` exposes the **real app composites** on `window.RiskSmartApp.*` (PageLayout,
+RealProviders, Table, DashboardItem, PropertyFilterPanel, Navigation, GlobalHeader, rating
+badges, modals, useCollection, …; 31 exports, ~2 MB + 892 KB css). A prototype loads
+`_vendor/react` → `_ds_bundle.js` (primitives) → `_ds_app_bundle.js` (composites), sets
+`<body class="atomic-ui">`, and composes screens from the REAL production components =
+**1:1 with the live app** (verified: `prototypes/risk-register.html` renders pixel-1:1).
+Built by `scripts/ds-app-bundle.mjs` from `.design-sync/manifests/app-bundle.spec.json`.
+The injected README/guide now instructs agents to build full screens this way and fork
+`prototypes/risk-register.html`.
+
+Known polish item: DashboardItem ribbon value renders a muted colour vs teal in one path — a
+single CSS-token nuance, not structural.
 
 ### page-templates (9 live, rendering 1:1)
 TablePage (register), DashboardPage (3-tier board), DetailPage (tabbed entity), CreatePage (form), LoginPage (auth), QuestionnaireTemplateRegisterPage, QuestionnaireBuilderPage, QuestionnaireResponsePage, QuestionnaireFillPage.

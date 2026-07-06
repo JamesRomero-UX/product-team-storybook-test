@@ -37,6 +37,47 @@ at the DS mount path):
 ```
 That's the whole requirement: standard React UMD first, then the bundle, on a React-prototype page.
 
+## ⚑ For a FULL RiskSmart SCREEN — use the real app components (1:1 with the live app)
+`window.RiskSmart.*` are the Cloudscape **primitives**. To build a real product screen (a register,
+a tabbed detail page, a dashboard, a create form) that is **1:1 with the live app**, do NOT
+reconstruct the shell and composites from primitives — load the **app-components bundle** and use the
+REAL production components on `window.RiskSmartApp.*`:
+
+```html
+<script src="…react@18.3.1 UMD…"></script>
+<script src="…react-dom@18.3.1 UMD…"></script>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="_ds_app_bundle.css">   <!-- app-shell + composite styles -->
+<script src="_ds_bundle.js"></script>               <!-- window.RiskSmart (primitives) -->
+<script src="_ds_app_bundle.js"></script>           <!-- window.RiskSmartApp (real composites) -->
+<body class="atomic-ui">                             <!-- REQUIRED: activates the design-token cascade -->
+<div id="root"></div>
+<script>
+  const A = window.RiskSmartApp;   // PageLayout, RealProviders, Table, DashboardItem,
+                                   // PropertyFilterPanel, Navigation, GlobalHeader, PageHeader,
+                                   // TabHeader, ControlledTabs, ActionsButton, SimpleRatingBadge,
+                                   // BadgeList, Cards, EmptyEntityCollection, NoMatchesCollection,
+                                   // ConfirmModal/DeleteModal/RemoveModal, FileItem, useCollection, …
+  const C = window.RiskSmart;      // SpaceBetween, Pagination, Button, Input, Select, …
+  // Wrap the screen in A.RealProviders and A.PageLayout — this renders the full navy app
+  // shell (nav rail + global header) exactly like production:
+  //   <A.RealProviders initialPath="/risks">
+  //     <A.PageLayout title="Risks register" counter="(6)" actions={…}>
+  //       …compose A.DashboardItem ribbon + A.Table with A.SimpleRatingBadge / A.BadgeList cells…
+  //     </A.PageLayout>
+  //   </A.RealProviders>
+</script>
+```
+
+**Two hard requirements:** `<body class="atomic-ui">` (without it the app components lose their
+design tokens and render unstyled), and load `_ds_app_bundle.js` AFTER `_ds_bundle.js`.
+
+**Canonical starting point:** fork **`prototypes/risk-register.html`** — a complete, verified 1:1
+Risk Register built this exact way. Copy it, swap the data/columns, and you have a new screen at
+production fidelity. The cards under **Page Templates** show the target for each archetype
+(register / tabbed detail / dashboard / create form / login); the cards under **Production** show
+each real composite. Prefer composing `window.RiskSmartApp.*` over rebuilding from primitives.
+
 ## Setup — no provider needed
 Components render themed straight out of the box: the theme is delivered as CSS custom
 properties at `:root` (loaded via `styles.css`), and the default RiskSmart theme applies **no
