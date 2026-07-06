@@ -14,3 +14,9 @@ vite-inject-mocker-entry.js
 .DS_Store
 *.log
 risksmart-app-main 2/
+.design-sync/sb-reference/
+.design-sync/learnings/
+.design-sync/.cache/
+.design-sync/node_modules
+.ds-sync/
+ds-bundle/
