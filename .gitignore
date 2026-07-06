@@ -20,3 +20,8 @@ risksmart-app-main 2/
 .design-sync/node_modules
 .ds-sync/
 ds-bundle/
+
+# design-sync build artifacts
+_stage/
+scratchpad-preview/
+.design-sync/sb-reference-expanded/
