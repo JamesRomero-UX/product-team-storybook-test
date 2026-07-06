@@ -1,0 +1,12 @@
+[
+  { "name": "TablePage", "story": "src/page-templates/TablePage.stories.tsx", "exports": ["Default","Empty","LoadingState"], "viewport": "1440x900" },
+  { "name": "DashboardPage", "story": "src/page-templates/DashboardPage.stories.tsx", "exports": ["Default"], "viewport": "1440x900" },
+  { "name": "DetailPage", "story": "src/page-templates/DetailPage.stories.tsx", "exports": ["Default"], "viewport": "1440x900" },
+  { "name": "CreatePage", "story": "src/page-templates/CreatePage.stories.tsx", "exports": ["Default","PartiallyFilled","WithValidationErrors","Saving","ErrorState"], "viewport": "1440x900" },
+  { "name": "SettingsPage", "story": "src/page-templates/SettingsPage.stories.tsx", "exports": ["Default","Groups","CustomRoles","Approvals","Departments","Entities","Tags","Taxonomy","Modules","Colours","Notifications","DataExport","DataImport","Authentication","SSO","ExternalApi","Audit"], "viewport": "1440x900" },
+  { "name": "LoginPage", "story": "src/page-templates/LoginPage.stories.tsx", "exports": ["Default","Filled","Submitting","ErrorState"], "viewport": "1440x900" },
+  { "name": "QuestionnaireTemplateRegisterPage", "story": "src/page-templates/QuestionnaireTemplateRegisterPage.stories.tsx", "exports": ["Default","Empty","LoadingState"], "viewport": "1440x900" },
+  { "name": "QuestionnaireBuilderPage", "story": "src/page-templates/QuestionnaireBuilderPage.stories.tsx", "exports": ["Default"], "viewport": "1440x900" },
+  { "name": "QuestionnaireResponsePage", "story": "src/page-templates/QuestionnaireResponsePage.stories.tsx", "exports": ["Default","Completed","Rejected","InProgress"], "viewport": "1440x900" },
+  { "name": "QuestionnaireFillPage", "story": "src/page-templates/QuestionnaireFillPage.stories.tsx", "exports": ["Default","InProgress","ReadyToSubmit"], "viewport": "1024x900" }
+]
