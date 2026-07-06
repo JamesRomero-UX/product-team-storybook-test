@@ -24,6 +24,12 @@ const config = {
     '../../src/cloudscape-reference/**/*.stories.@(js|jsx|mjs|ts|tsx)',
     // design-sync-authored static shell stories (AppLayout, TopNavigation)
     '../stories/**/*.stories.@(ts|tsx)',
+    // Phase 1 — full-page templates (real archetypes: register/detail/dashboard/form/settings/login).
+    '../../src/page-templates/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+    // Phase 2 — real RiskSmart production composites (Production/* namespace; no collision
+    // with Cloudscape Reference/*). These import from the app repo, so the reference build
+    // must resolve @risksmart-app/* + src/ aliases (already wired via viteConfigPath below).
+    '../../src/production/**/*.stories.@(js|jsx|mjs|ts|tsx)',
   ],
   framework: {
     name: '@storybook/react-vite',
