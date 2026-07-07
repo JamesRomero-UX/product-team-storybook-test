@@ -23,6 +23,9 @@ every time. This is the required workflow, not a suggestion.
 | create / edit form | `prototypes/risk-create.html` |
 | settings / admin hub (tabbed) | `prototypes/risk-settings.html` |
 | create/edit modal (dialog form over a page) | `prototypes/risk-modal.html` |
+| link / attach existing records modal (table + select) | `prototypes/risk-modal-link.html` |
+| submit-for-approval / change-request modal | `prototypes/risk-modal-approval.html` |
+| export / bulk options modal | `prototypes/risk-modal-export.html` |
 | delete / destructive confirmation | `prototypes/risk-confirm.html` |
 | empty / first-run (no data yet) | `prototypes/risk-empty.html` |
 | master-detail / side-panel (list + detail pane) | `prototypes/risk-split.html` |

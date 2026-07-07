@@ -1,0 +1,58 @@
+<!-- @dsCard group="prototypes" viewport="1440x900" -->
+<!doctype html>
+<html><head><meta charset="utf-8">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../_ds_bundle.css">
+  <link rel="stylesheet" href="../_ds_app_bundle.css">
+  <style>html,body{margin:0;padding:0;background:#fff}#root{min-height:100vh}.ds-err{padding:24px;font:14px/1.5 system-ui;color:#b91c1c;white-space:pre-wrap}</style>
+</head><body class="atomic-ui">
+  <div id="root"></div>
+  <script src="../_vendor/react.js"></script>
+  <script src="../_vendor/react-dom.js"></script>
+  <script src="../_ds_bundle.js"></script>
+  <script src="../_ds_app_bundle.js"></script>
+  <script>
+  (function(){
+    var h = React.createElement, A = window.RiskSmartApp, C = window.RiskSmart;
+    var CTRLS=[
+      {id:'C-001',Title:'MFA enforced on admin accounts',Type:'Preventive'},
+      {id:'C-002',Title:'Quarterly access recertification',Type:'Detective'},
+      {id:'C-003',Title:'Vendor due-diligence review',Type:'Preventive'},
+      {id:'C-005',Title:'Phishing simulation programme',Type:'Detective'},
+      {id:'C-008',Title:'AML transaction monitoring rules',Type:'Detective'}
+    ];
+    var LINK_COLS=[
+      {id:'id',header:'Reference',minWidth:110,isRowHeader:true,cell:function(i){return i.id;}},
+      {id:'Title',header:'Control',minWidth:320,cell:function(i){return i.Title;}},
+      {id:'Type',header:'Type',minWidth:130,cell:function(i){return i.Type;}}
+    ];
+    function LinkModal(props){
+      var s=React.useState([CTRLS[0],CTRLS[2]]), sel=s[0], setSel=s[1];
+      var q=React.useState(''), query=q[0], setQuery=q[1];
+      return h(C.Modal,{ visible:props.visible, onDismiss:props.onDismiss, size:'large', header:'Link controls',
+        footer:h(C.Box,{float:'right'}, h(C.SpaceBetween,{direction:'horizontal',size:'xs'},
+          h(A.Button,{variant:'link',onClick:props.onDismiss},'Cancel'),
+          h(A.Button,{variant:'primary',onClick:props.onDismiss}, 'Link '+sel.length+' control'+(sel.length===1?'':'s'))))
+      },
+        h(C.SpaceBetween,{size:'m'},
+          h(C.Box,{color:'text-body-secondary'},'Select existing controls to link to this risk. Linked controls contribute to the residual rating.'),
+          h(A.Table,{ columnDefinitions:LINK_COLS, items:CTRLS, trackBy:'id', variant:'embedded',
+            selectionType:'multi', selectedItems:sel, onSelectionChange:function(e){setSel(e.detail.selectedItems);},
+            filter:h(C.Input,{type:'search',value:query,placeholder:'Find a control',onChange:function(e){setQuery(e.detail.value);}}) })
+        )
+      );
+    }
+    function App(){
+      var v=React.useState(true), visible=v[0], setVisible=v[1];
+      return h(A.RealProviders,{initialPath:'/risks/R-001'},
+        h(A.PageLayout,{title:'Data breach via legacy S3 bucket', counter:'(R-001)',
+          actions:h(A.Button,{variant:'primary',onClick:function(){setVisible(true);}},'Link controls')},
+          h(A.TabHeader,null,'Linked controls'),
+          h(LinkModal,{visible:visible,onDismiss:function(){setVisible(false);}})
+        ));
+    }
+    try { ReactDOM.createRoot(document.getElementById('root')).render(h(App)); }
+    catch(e){ var el=document.getElementById('root'); el.className='ds-err'; el.textContent='⚠ '+((e&&e.stack)||e); }
+  })();
+  </script>
+</body></html>

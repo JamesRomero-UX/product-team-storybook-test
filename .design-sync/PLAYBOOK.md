@@ -62,6 +62,18 @@ prototype." Paste one of these verbatim:
 > the backdrop table. It shows a Cloudscape `Modal` (open by default) wrapping a form, over a
 > register — toggle `visible` from the page's primary button in a real flow.
 
+### Link / attach existing records modal
+> Duplicate `prototypes/risk-modal-link.html` and change ONLY the modal title, the selectable
+> table's columns/data, and the button label. `Modal` (size large) + multi-select `Table` + search.
+
+### Submit-for-approval / change-request modal
+> Duplicate `prototypes/risk-modal-approval.html` and change ONLY the Alert text, the approver
+> options, and the field labels.
+
+### Export / bulk options modal
+> Duplicate `prototypes/risk-modal-export.html` and change ONLY the format options, the column
+> list, and the include checkboxes.
+
 ### Delete / destructive confirmation
 > Duplicate `prototypes/risk-confirm.html` and change ONLY the modal header, the warning text,
 > and the backdrop. Uses `ConfirmModal` (open) over a register.
