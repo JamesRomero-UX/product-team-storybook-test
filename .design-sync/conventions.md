@@ -23,6 +23,9 @@ every time. This is the required workflow, not a suggestion.
 | create / edit form | `prototypes/risk-create.html` |
 | settings / admin hub (tabbed) | `prototypes/risk-settings.html` |
 | create/edit modal (dialog form over a page) | `prototypes/risk-modal.html` |
+| delete / destructive confirmation | `prototypes/risk-confirm.html` |
+| empty / first-run (no data yet) | `prototypes/risk-empty.html` |
+| master-detail / side-panel (list + detail pane) | `prototypes/risk-split.html` |
 | public intake / report form (no app shell) | `prototypes/risk-report-issue.html` |
 
 Steps: (1) copy the matching file to a new `.html`; (2) change the sample data array,

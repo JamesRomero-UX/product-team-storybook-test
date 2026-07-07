@@ -62,6 +62,18 @@ prototype." Paste one of these verbatim:
 > the backdrop table. It shows a Cloudscape `Modal` (open by default) wrapping a form, over a
 > register — toggle `visible` from the page's primary button in a real flow.
 
+### Delete / destructive confirmation
+> Duplicate `prototypes/risk-confirm.html` and change ONLY the modal header, the warning text,
+> and the backdrop. Uses `ConfirmModal` (open) over a register.
+
+### Empty / first-run state (no data yet)
+> Duplicate `prototypes/risk-empty.html` and change ONLY the `entityLabel` and the CTA text.
+> Shows a Table with `EmptyEntityCollection` in the empty slot.
+
+### Master-detail / side panel (list + detail pane)
+> Duplicate `prototypes/risk-split.html` and change ONLY the sample data, the table columns, and
+> the detail-panel fields. Left = selectable Table, right = detail Container.
+
 ### Public intake / report form (no app shell, unauthenticated)
 > Duplicate `prototypes/risk-report-issue.html` and change ONLY the heading, the tile options,
 > and the form fields. This one is a public page (primitives only, no PageLayout/RealProviders).
