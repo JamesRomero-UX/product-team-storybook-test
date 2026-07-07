@@ -4,6 +4,24 @@ These are the real `@risk-smart/themed-cloudscape-components` — RiskSmart's th
 AWS Cloudscape. Every component is on `window.RiskSmart.*`. Build UIs by **composing these
 components and passing their props** — this is a prop-driven system, NOT a utility-class one.
 
+## ⚑⚑ RULE 0 — FORK, DON'T BUILD (do this before anything else)
+If the request matches a screen we already ship a prototype for, you MUST start by **duplicating
+that prototype file verbatim** and then editing only the data — do NOT rebuild it from scratch.
+Building from scratch produces a different result every time; forking produces the same result
+every time. This is the required workflow, not a suggestion.
+
+| If the ask is a… | Duplicate this file, then edit only the data |
+|---|---|
+| register / list / table / "all X" page | `prototypes/risk-register.html` |
+| dashboard / drill-down board | `prototypes/risk-dashboard.html` |
+| entity detail (tabbed) page | `prototypes/risk-detail.html` |
+| create / edit form | `prototypes/risk-create.html` |
+
+Steps: (1) copy the matching file to a new `.html`; (2) change the sample data array,
+column/field list, and title; (3) do NOT touch the `<head>` loaders, the `window.RiskSmartApp`
+composition, or the shell structure. Only if NO prototype matches the screen type do you compose
+from scratch using the rules below.
+
 ## ⚑ READ FIRST — do this automatically for every screen (no one needs to ask)
 When you build ANY screen with this design system, do BOTH of the following on your own — it is
 the required build mode for this DS, not an option:
