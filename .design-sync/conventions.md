@@ -14,6 +14,8 @@ every time. This is the required workflow, not a suggestion.
 |---|---|
 | register / list / table / "all X" page | `prototypes/risk-register.html` |
 | issue register (or any register variant) | `prototypes/risk-issues.html` |
+| control register | `prototypes/risk-controls.html` |
+| action register / task list | `prototypes/risk-actions.html` |
 | dashboard / drill-down board | `prototypes/risk-dashboard.html` |
 | entity detail (tabbed) page | `prototypes/risk-detail.html` |
 | create / edit form | `prototypes/risk-create.html` |

@@ -74,6 +74,18 @@
           {id:'Perms',header:'Permissions',cell:function(i){return i.Perms;}},
           {id:'Users',header:'Users',cell:function(i){return i.Users;}}],
           [{id:'r1',Role:'Administrator',Perms:'All',Users:2},{id:'r2',Role:'Editor',Perms:'Create, edit',Users:8},{id:'r3',Role:'Viewer',Perms:'View only',Users:23}],'Add role') },
+      { id:'approvals', label:'Approvals', content:TableTab('Approvals',[
+          {id:'ParentType',header:'Parent type',isRowHeader:true,cell:function(i){return i.ParentType;}},
+          {id:'Workflow',header:'Workflow',cell:function(i){return h('a',{href:'#',style:{color:'#079589',textDecoration:'none'}},i.Workflow);}},
+          {id:'Levels',header:'Levels',cell:function(i){return i.Levels;}},
+          {id:'CreatedBy',header:'Created by',cell:function(i){return i.CreatedBy;}},
+          {id:'Created',header:'Created',cell:function(i){return i.Created;}}],
+          [{id:'a1',ParentType:'Risk',Workflow:'Risk acceptance — Tier 1',Levels:3,CreatedBy:'Richard Poole',Created:'12 Sep 2025'},
+           {id:'a2',ParentType:'Risk',Workflow:'Risk treatment — change request',Levels:2,CreatedBy:'Richard Poole',Created:'12 Sep 2025'},
+           {id:'a3',ParentType:'Control',Workflow:'Control change request',Levels:2,CreatedBy:'Emma Bamford',Created:'04 Oct 2025'},
+           {id:'a4',ParentType:'Obligation',Workflow:'New regulatory obligation',Levels:1,CreatedBy:'Liam Chen',Created:'22 Nov 2025'},
+           {id:'a5',ParentType:'Policy document',Workflow:'Policy publication',Levels:4,CreatedBy:'Emma Bamford',Created:'14 Jan 2026'},
+           {id:'a6',ParentType:'Third party',Workflow:'Vendor onboarding',Levels:3,CreatedBy:'James Romero',Created:'03 Feb 2026'}],'Add approval') },
       { id:'tags', label:'Tags', content:TableTab('Tags',[
           {id:'Tag',header:'Tag',isRowHeader:true,cell:function(i){return h(A.BadgeList,{badges:[i.Tag]});}},
           {id:'Used',header:'Used by',cell:function(i){return i.Used;}}],

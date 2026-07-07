@@ -43,6 +43,14 @@ prototype." Paste one of these verbatim:
 > Duplicate `prototypes/risk-settings.html` and change ONLY the tab list and each tab's table/
 > form data. Leave the loaders and composition untouched.
 
+### Control register
+> Duplicate `prototypes/risk-controls.html` and change ONLY the sample data, columns, and title.
+> Leave the loaders and composition untouched.
+
+### Action register / task list
+> Duplicate `prototypes/risk-actions.html` and change ONLY the sample data, columns, and title.
+> Leave the loaders and composition untouched.
+
 Forking these gives everyone a near-identical result because the starting bytes are identical.
 
 ---

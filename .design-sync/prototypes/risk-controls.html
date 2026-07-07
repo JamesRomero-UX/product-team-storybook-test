@@ -1,0 +1,62 @@
+<!-- @dsCard group="prototypes" viewport="1440x900" -->
+<!doctype html>
+<html><head><meta charset="utf-8">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../_ds_bundle.css">
+  <link rel="stylesheet" href="../_ds_app_bundle.css">
+  <style>html,body{margin:0;padding:0;background:#fff}#root{min-height:100vh}.ds-err{padding:24px;font:14px/1.5 system-ui;color:#b91c1c;white-space:pre-wrap}</style>
+</head><body class="atomic-ui">
+  <div id="root"></div>
+  <script src="../_vendor/react.js"></script>
+  <script src="../_vendor/react-dom.js"></script>
+  <script src="../_ds_bundle.js"></script>
+  <script src="../_ds_app_bundle.js"></script>
+  <script>
+  (function(){
+    var h = React.createElement, A = window.RiskSmartApp, C = window.RiskSmart;
+    var EFF={color:'light-green',label:'Effective'}, PART={color:'orange',label:'Partially effective'}, INEFF={color:'light-red',label:'Ineffective'}, NT={color:'light-grey',label:'Not tested'};
+
+    var CONTROLS = [
+      { id:'C-001', Title:'MFA enforced on admin accounts', Type:'Preventive', Effectiveness:EFF, Owners:[{label:'Emma Bamford'}], LastTested:'28 Jun 2026' },
+      { id:'C-002', Title:'Quarterly access recertification', Type:'Detective', Effectiveness:PART, Owners:[{label:'Liam Chen'}], LastTested:'12 Jun 2026' },
+      { id:'C-003', Title:'Vendor due-diligence review', Type:'Preventive', Effectiveness:EFF, Owners:[{label:'James Romero'}], LastTested:'02 Jun 2026' },
+      { id:'C-004', Title:'Encryption at rest for backups', Type:'Preventive', Effectiveness:INEFF, Owners:[{label:'Tom Patel'}], LastTested:'18 May 2026' },
+      { id:'C-005', Title:'Phishing simulation programme', Type:'Detective', Effectiveness:PART, Owners:[{label:'Maya Okafor'}], LastTested:'30 May 2026' },
+      { id:'C-006', Title:'Change advisory board sign-off', Type:'Preventive', Effectiveness:EFF, Owners:[{label:'Richard Poole'}], LastTested:'22 Jun 2026' },
+      { id:'C-007', Title:'DR failover test', Type:'Corrective', Effectiveness:NT, Owners:[{label:'Richard Poole'}], LastTested:'—' },
+      { id:'C-008', Title:'AML transaction monitoring rules', Type:'Detective', Effectiveness:EFF, Owners:[{label:'Liam Chen'}], LastTested:'10 Jun 2026' }
+    ];
+    var FP=[{propertyLabel:'Title',key:'Title',groupValuesLabel:'Titles',operators:[':','!:','=','!=']},{propertyLabel:'Type',key:'Type',groupValuesLabel:'Types',operators:['=','!=']}];
+    var COLUMNS=[
+      {id:'id',header:'Reference',sortingField:'id',minWidth:110,cell:function(it){return h('a',{href:'#/controls/'+it.id,style:{color:'#0972d3',textDecoration:'none',fontWeight:600}},it.id);}},
+      {id:'Title',header:'Title',sortingField:'Title',isRowHeader:true,minWidth:300,cell:function(it){return it.Title;}},
+      {id:'Type',header:'Type',sortingField:'Type',minWidth:130,cell:function(it){return it.Type;}},
+      {id:'Effectiveness',header:'Effectiveness',sortingField:'Effectiveness',minWidth:170,cell:function(it){return h(A.SimpleRatingBadge,{rating:it.Effectiveness});}},
+      {id:'Owners',header:'Owner',minWidth:180,cell:function(it){return h(A.BadgeList,{badges:it.Owners.map(function(o){return o.label;})});}},
+      {id:'LastTested',header:'Last tested',sortingField:'LastTested',minWidth:120,cell:function(it){return it.LastTested;}}
+    ];
+    function RibbonRow(props){ return h('div',{className:'flex gap-6 flex-grow overflow-x-auto rounded-md border border-solid border-grey200 bg-white px-6 py-5'},
+      props.items.map(function(it,idx){ return h('div',{key:it.id,className:'flex flex-1 justify-between'},
+        h(A.DashboardItem,{title:it.title,value:it.value,selected:it.id===props.selected,onClick:function(){props.onSelect(it.id);}}),
+        idx!==props.items.length-1?h('div',{className:'w-1 h-full bg-grey200'}):null);})); }
+    function seg(r,s){ if(s==='effective')return r.Effectiveness.label==='Effective'; if(s==='needs')return r.Effectiveness.label==='Partially effective'||r.Effectiveness.label==='Ineffective'; if(s==='nottested')return r.Effectiveness.label==='Not tested'; if(s==='mine')return r.Owners.some(function(o){return o.label==='James Romero';}); return true; }
+    function Content(){
+      var st=React.useState('all'),segment=st[0],setSegment=st[1];
+      var rows=CONTROLS.filter(function(r){return seg(r,segment);});
+      var col=A.useCollection(rows,{propertyFiltering:{filteringProperties:FP,empty:h('span',null,'No matches')},pagination:{pageSize:10},sorting:{},selection:{}});
+      var ribbon=[{id:'all',title:'All controls',value:CONTROLS.length},{id:'effective',title:'Effective',value:CONTROLS.filter(function(r){return seg(r,'effective');}).length},{id:'needs',title:'Needs improvement',value:CONTROLS.filter(function(r){return seg(r,'needs');}).length},{id:'nottested',title:'Not tested',value:CONTROLS.filter(function(r){return seg(r,'nottested');}).length},{id:'mine',title:'My controls',value:CONTROLS.filter(function(r){return seg(r,'mine');}).length}];
+      return h(C.SpaceBetween,{size:'l'},
+        h(RibbonRow,{items:ribbon,selected:segment,onSelect:setSegment}),
+        h(A.Table,Object.assign({},col.collectionProps,{columnDefinitions:COLUMNS,items:col.items,selectionType:'multi',trackBy:'id',
+          filter:h(A.PropertyFilterPanel,Object.assign({},col.propertyFilterProps,{countText:col.items.length+' matches',filteringPlaceholder:'Filter controls',virtualScroll:true})),
+          empty:h(A.NoMatchesCollection,{onClearClick:function(){col.collectionProps.actions.setPropertyFiltering({tokens:[],operation:'and'});}}),
+          pagination:h(C.Pagination,col.paginationProps)})));
+    }
+    function App(){ return h(A.RealProviders,{initialPath:'/controls'},
+      h(A.PageLayout,{title:'Controls register',counter:'('+CONTROLS.length+')',
+        actions:h(C.SpaceBetween,{direction:'horizontal',size:'xs'},h(A.Button,null,'Export'),h(A.Button,{variant:'primary'},'Create new control'))},h(Content))); }
+    try { ReactDOM.createRoot(document.getElementById('root')).render(h(App)); }
+    catch(e){ var el=document.getElementById('root'); el.className='ds-err'; el.textContent='⚠ '+((e&&e.stack)||e); }
+  })();
+  </script>
+</body></html>

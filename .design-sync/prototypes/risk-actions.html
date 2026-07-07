@@ -1,0 +1,62 @@
+<!-- @dsCard group="prototypes" viewport="1440x900" -->
+<!doctype html>
+<html><head><meta charset="utf-8">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../_ds_bundle.css">
+  <link rel="stylesheet" href="../_ds_app_bundle.css">
+  <style>html,body{margin:0;padding:0;background:#fff}#root{min-height:100vh}.ds-err{padding:24px;font:14px/1.5 system-ui;color:#b91c1c;white-space:pre-wrap}</style>
+</head><body class="atomic-ui">
+  <div id="root"></div>
+  <script src="../_vendor/react.js"></script>
+  <script src="../_vendor/react-dom.js"></script>
+  <script src="../_ds_bundle.js"></script>
+  <script src="../_ds_app_bundle.js"></script>
+  <script>
+  (function(){
+    var h = React.createElement, A = window.RiskSmartApp, C = window.RiskSmart;
+    var HIGH={color:'light-red',label:'High'}, MED={color:'orange',label:'Medium'}, LOW={color:'light-green',label:'Low'};
+
+    var ACTIONS = [
+      { id:'A-001', Title:'Rotate leaked S3 access keys', Priority:HIGH, Status:['error','Overdue'], Assignee:[{label:'Emma Bamford'}], Due:'01 Jul 2026' },
+      { id:'A-002', Title:'Add MFA to finance SaaS logins', Priority:HIGH, Status:['in-progress','In progress'], Assignee:[{label:'Tom Patel'}], Due:'09 Jul 2026' },
+      { id:'A-003', Title:'Update vendor DPA templates', Priority:MED, Status:['in-progress','In progress'], Assignee:[{label:'Liam Chen'}], Due:'14 Jul 2026' },
+      { id:'A-004', Title:'Run phishing refresher training', Priority:MED, Status:['pending','Not started'], Assignee:[{label:'Maya Okafor'}], Due:'21 Jul 2026' },
+      { id:'A-005', Title:'Document DR failover runbook', Priority:HIGH, Status:['pending','Not started'], Assignee:[{label:'Richard Poole'}], Due:'18 Jul 2026' },
+      { id:'A-006', Title:'Close out access recert exceptions', Priority:LOW, Status:['success','Complete'], Assignee:[{label:'James Romero'}], Due:'20 Jun 2026' },
+      { id:'A-007', Title:'Patch checkout dependency CVE', Priority:HIGH, Status:['error','Overdue'], Assignee:[{label:'Tom Patel'}], Due:'28 Jun 2026' },
+      { id:'A-008', Title:'Review AML monitoring thresholds', Priority:MED, Status:['success','Complete'], Assignee:[{label:'Liam Chen'}], Due:'12 Jun 2026' }
+    ];
+    var FP=[{propertyLabel:'Title',key:'Title',groupValuesLabel:'Titles',operators:[':','!:','=','!=']}];
+    var COLUMNS=[
+      {id:'id',header:'Reference',sortingField:'id',minWidth:110,cell:function(it){return h('a',{href:'#/actions/'+it.id,style:{color:'#0972d3',textDecoration:'none',fontWeight:600}},it.id);}},
+      {id:'Title',header:'Title',sortingField:'Title',isRowHeader:true,minWidth:320,cell:function(it){return it.Title;}},
+      {id:'Priority',header:'Priority',sortingField:'Priority',minWidth:120,cell:function(it){return h(A.SimpleRatingBadge,{rating:it.Priority});}},
+      {id:'Status',header:'Status',minWidth:160,cell:function(it){return h(C.StatusIndicator,{type:it.Status[0]},it.Status[1]);}},
+      {id:'Assignee',header:'Assignee',minWidth:180,cell:function(it){return h(A.BadgeList,{badges:it.Assignee.map(function(o){return o.label;})});}},
+      {id:'Due',header:'Due',sortingField:'Due',minWidth:120,cell:function(it){return it.Due;}}
+    ];
+    function RibbonRow(props){ return h('div',{className:'flex gap-6 flex-grow overflow-x-auto rounded-md border border-solid border-grey200 bg-white px-6 py-5'},
+      props.items.map(function(it,idx){ return h('div',{key:it.id,className:'flex flex-1 justify-between'},
+        h(A.DashboardItem,{title:it.title,value:it.value,selected:it.id===props.selected,onClick:function(){props.onSelect(it.id);}}),
+        idx!==props.items.length-1?h('div',{className:'w-1 h-full bg-grey200'}):null);})); }
+    function seg(r,s){ if(s==='open')return r.Status[1]!=='Complete'; if(s==='overdue')return r.Status[1]==='Overdue'; if(s==='high')return r.Priority.label==='High'; if(s==='mine')return r.Assignee.some(function(o){return o.label==='James Romero';}); return true; }
+    function Content(){
+      var st=React.useState('all'),segment=st[0],setSegment=st[1];
+      var rows=ACTIONS.filter(function(r){return seg(r,segment);});
+      var col=A.useCollection(rows,{propertyFiltering:{filteringProperties:FP,empty:h('span',null,'No matches')},pagination:{pageSize:10},sorting:{},selection:{}});
+      var ribbon=[{id:'all',title:'All actions',value:ACTIONS.length},{id:'open',title:'Open',value:ACTIONS.filter(function(r){return seg(r,'open');}).length},{id:'overdue',title:'Overdue',value:ACTIONS.filter(function(r){return seg(r,'overdue');}).length},{id:'high',title:'High priority',value:ACTIONS.filter(function(r){return seg(r,'high');}).length},{id:'mine',title:'My actions',value:ACTIONS.filter(function(r){return seg(r,'mine');}).length}];
+      return h(C.SpaceBetween,{size:'l'},
+        h(RibbonRow,{items:ribbon,selected:segment,onSelect:setSegment}),
+        h(A.Table,Object.assign({},col.collectionProps,{columnDefinitions:COLUMNS,items:col.items,selectionType:'multi',trackBy:'id',
+          filter:h(A.PropertyFilterPanel,Object.assign({},col.propertyFilterProps,{countText:col.items.length+' matches',filteringPlaceholder:'Filter actions',virtualScroll:true})),
+          empty:h(A.NoMatchesCollection,{onClearClick:function(){col.collectionProps.actions.setPropertyFiltering({tokens:[],operation:'and'});}}),
+          pagination:h(C.Pagination,col.paginationProps)})));
+    }
+    function App(){ return h(A.RealProviders,{initialPath:'/actions'},
+      h(A.PageLayout,{title:'Actions',counter:'('+ACTIONS.length+')',
+        actions:h(C.SpaceBetween,{direction:'horizontal',size:'xs'},h(A.Button,null,'Export'),h(A.Button,{variant:'primary'},'Create new action'))},h(Content))); }
+    try { ReactDOM.createRoot(document.getElementById('root')).render(h(App)); }
+    catch(e){ var el=document.getElementById('root'); el.className='ds-err'; el.textContent='⚠ '+((e&&e.stack)||e); }
+  })();
+  </script>
+</body></html>
