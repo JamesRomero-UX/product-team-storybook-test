@@ -72,11 +72,15 @@ REAL production components on `window.RiskSmartApp.*`:
 **Two hard requirements:** `<body class="atomic-ui">` (without it the app components lose their
 design tokens and render unstyled), and load `_ds_app_bundle.js` AFTER `_ds_bundle.js`.
 
-**Canonical starting point:** fork **`prototypes/risk-register.html`** — a complete, verified 1:1
-Risk Register built this exact way. Copy it, swap the data/columns, and you have a new screen at
-production fidelity. The cards under **Page Templates** show the target for each archetype
-(register / tabbed detail / dashboard / create form / login); the cards under **Production** show
-each real composite. Prefer composing `window.RiskSmartApp.*` over rebuilding from primitives.
+**Canonical starting points — fork the matching one** (all verified 1:1, built this exact way):
+- `prototypes/risk-register.html` — list / register / table page (ribbon + Table + property filter + pagination).
+- `prototypes/risk-dashboard.html` — dashboard / drill-down board (Grid of Container + Cards + rating badges).
+- `prototypes/risk-detail.html` — tabbed entity detail (ControlledTabs + 2-col form + ratings sidebar + ActionsButton).
+- `prototypes/risk-create.html` — create / edit form (ControlledTabs + Form + FormFields + Save/Cancel).
+
+Copy the closest one, swap the data/columns/fields, and you have a new screen at production fidelity.
+The cards under **Page Templates** show the target for each archetype; the cards under **Production**
+show each real composite. Prefer composing `window.RiskSmartApp.*` over rebuilding from primitives.
 
 ## Setup — no provider needed
 Components render themed straight out of the box: the theme is delivered as CSS custom

@@ -1,0 +1,75 @@
+<!-- @dsCard group="prototypes" viewport="1440x900" -->
+<!doctype html>
+<html><head><meta charset="utf-8">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../_ds_bundle.css">
+  <link rel="stylesheet" href="../_ds_app_bundle.css">
+  <style>html,body{margin:0;padding:0;background:#fff}#root{min-height:100vh}.ds-err{padding:24px;font:14px/1.5 system-ui;color:#b91c1c;white-space:pre-wrap}</style>
+</head><body class="atomic-ui">
+  <div id="root"></div>
+  <script src="../_vendor/react.js"></script>
+  <script src="../_vendor/react-dom.js"></script>
+  <script src="../_ds_bundle.js"></script>
+  <script src="../_ds_app_bundle.js"></script>
+  <script>
+  (function(){
+    var h = React.createElement, A = window.RiskSmartApp, C = window.RiskSmart;
+    var useState = React.useState;
+
+    function RatingRow(label, rating){
+      return h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center'}},
+        h(C.Box,{variant:'awsui-key-label'},label), h(A.SimpleRatingBadge,{rating:rating}));
+    }
+
+    function DetailsTab(){
+      var s1 = useState('Data breach via legacy S3 bucket'), name=s1[0], setName=s1[1];
+      var s2 = useState('Legacy S3 bucket has an open IAM policy. No MFA enforced on the admin role.'), desc=s2[0], setDesc=s2[1];
+      var s3 = useState('tier1'), tier=s3[0], setTier=s3[1];
+      return h(C.Grid,{gridDefinition:[{colspan:8},{colspan:4}]},
+        // left — form
+        h(C.SpaceBetween,{size:'l'},
+          h(C.FormField,{label:'Title'}, h(C.Input,{value:name,onChange:function(e){setName(e.detail.value);}})),
+          h(C.FormField,{label:'Description'}, h(C.Textarea,{value:desc,onChange:function(e){setDesc(e.detail.value);}})),
+          h(C.FormField,{label:'Tier'}, h(C.RadioGroup,{value:tier,onChange:function(e){setTier(e.detail.value);},items:[
+            {value:'tier1',label:'Tier 1'},{value:'tier2',label:'Tier 2'},{value:'tier3',label:'Tier 3'}]})),
+          h(C.FormField,{label:'Owners'}, h(C.Multiselect,{selectedOptions:[{label:'Emma Bamford',value:'eb'},{label:'Richard Poole',value:'rp'}],onChange:function(){},options:[{label:'Emma Bamford',value:'eb'},{label:'Richard Poole',value:'rp'},{label:'James Romero',value:'jr'}]}))
+        ),
+        // right — ratings sidebar
+        h(C.Container,{header:h(C.Header,{variant:'h2'},'Risk ratings')},
+          h(C.SpaceBetween,{size:'m'},
+            RatingRow('Inherent',{color:'dark-red',label:'Critical'}),
+            RatingRow('Residual',{color:'orange',label:'Medium'}),
+            RatingRow('Appetite',{color:'orange',label:'Within tolerance'}),
+            RatingRow('Status',{color:'light-grey',label:'Open'})
+          )
+        )
+      );
+    }
+
+    var TAB_IDS = ['details','controls','actions','indicators','assessments','acceptances','appetite','approvals','linked'];
+    var TAB_LABELS = ['Details','Controls','Actions','Indicators','Assessments','Acceptances','Appetite','Approvals','Linked items'];
+
+    function App(){
+      var st = useState('details'), activeTabId=st[0], setActiveTabId=st[1];
+      var tabs = TAB_IDS.map(function(id,i){
+        return { id:id, label:TAB_LABELS[i],
+          content: id==='details' ? h(DetailsTab) : h(C.Box,{padding:'l',color:'text-body-secondary'}, TAB_LABELS[i]+' content') };
+      });
+      return h(A.RealProviders,{initialPath:'/risks/R-001'},
+        h(A.PageLayout,{
+          title:'Data breach via legacy S3 bucket', counter:'(R-001)',
+          actions:h(A.ActionsButton,{ buttonText:'Actions', items:[
+            {id:'export',text:'Export',onItemClick:function(){}},
+            {id:'duplicate',text:'Duplicate',onItemClick:function(){}},
+            {id:'delete',text:'Delete',onItemClick:function(){}}]})
+        },
+          h(A.ControlledTabs,{ variant:'container', activeTabId:activeTabId,
+            onChange:function(e){setActiveTabId(e.detail.activeTabId);}, tabs:tabs, disableSettings:true })
+        )
+      );
+    }
+    try { ReactDOM.createRoot(document.getElementById('root')).render(h(App)); }
+    catch(e){ var el=document.getElementById('root'); el.className='ds-err'; el.textContent='⚠ '+((e&&e.stack)||e); }
+  })();
+  </script>
+</body></html>
