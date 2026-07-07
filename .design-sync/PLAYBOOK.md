@@ -51,6 +51,16 @@ prototype." Paste one of these verbatim:
 > Duplicate `prototypes/risk-actions.html` and change ONLY the sample data, columns, and title.
 > Leave the loaders and composition untouched.
 
+### Policy / document register
+> Duplicate `prototypes/risk-policy.html` and change ONLY the sample data, columns, and title.
+
+### Indicator / KRI register
+> Duplicate `prototypes/risk-indicators.html` and change ONLY the sample data, columns, and title.
+
+### Public intake / report form (no app shell, unauthenticated)
+> Duplicate `prototypes/risk-report-issue.html` and change ONLY the heading, the tile options,
+> and the form fields. This one is a public page (primitives only, no PageLayout/RealProviders).
+
 Forking these gives everyone a near-identical result because the starting bytes are identical.
 
 ---

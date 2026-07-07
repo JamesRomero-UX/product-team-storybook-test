@@ -16,10 +16,13 @@ every time. This is the required workflow, not a suggestion.
 | issue register (or any register variant) | `prototypes/risk-issues.html` |
 | control register | `prototypes/risk-controls.html` |
 | action register / task list | `prototypes/risk-actions.html` |
+| policy / document register | `prototypes/risk-policy.html` |
+| indicator / KRI register | `prototypes/risk-indicators.html` |
 | dashboard / drill-down board | `prototypes/risk-dashboard.html` |
 | entity detail (tabbed) page | `prototypes/risk-detail.html` |
 | create / edit form | `prototypes/risk-create.html` |
 | settings / admin hub (tabbed) | `prototypes/risk-settings.html` |
+| public intake / report form (no app shell) | `prototypes/risk-report-issue.html` |
 
 Steps: (1) copy the matching file to a new `.html`; (2) change the sample data array,
 column/field list, and title; (3) do NOT touch the `<head>` loaders, the `window.RiskSmartApp`

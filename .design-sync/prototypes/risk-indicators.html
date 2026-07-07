@@ -1,0 +1,61 @@
+<!-- @dsCard group="prototypes" viewport="1440x900" -->
+<!doctype html>
+<html><head><meta charset="utf-8">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../_ds_bundle.css">
+  <link rel="stylesheet" href="../_ds_app_bundle.css">
+  <style>html,body{margin:0;padding:0;background:#fff}#root{min-height:100vh}.ds-err{padding:24px;font:14px/1.5 system-ui;color:#b91c1c;white-space:pre-wrap}</style>
+</head><body class="atomic-ui">
+  <div id="root"></div>
+  <script src="../_vendor/react.js"></script>
+  <script src="../_vendor/react-dom.js"></script>
+  <script src="../_ds_bundle.js"></script>
+  <script src="../_ds_app_bundle.js"></script>
+  <script>
+  (function(){
+    var h = React.createElement, A = window.RiskSmartApp, C = window.RiskSmart;
+    var CONF={color:'light-green',label:'Conformant'}, WARN={color:'orange',label:'Warning'}, BREACH={color:'light-red',label:'Breach'};
+    var KRIS = [
+      { id:'K-001', Title:'Failed login attempts / day', Conformance:CONF, Latest:'1,240', Target:'< 2,000', Owners:[{label:'Emma Bamford'}], Updated:'Today' },
+      { id:'K-002', Title:'Mean time to patch (days)', Conformance:WARN, Latest:'11', Target:'< 7', Owners:[{label:'Tom Patel'}], Updated:'Today' },
+      { id:'K-003', Title:'Open critical vulnerabilities', Conformance:BREACH, Latest:'6', Target:'0', Owners:[{label:'Tom Patel'}], Updated:'Yesterday' },
+      { id:'K-004', Title:'Overdue attestations (%)', Conformance:WARN, Latest:'12%', Target:'< 10%', Owners:[{label:'Maya Okafor'}], Updated:'2 days ago' },
+      { id:'K-005', Title:'Vendor SLA breaches / month', Conformance:CONF, Latest:'1', Target:'< 3', Owners:[{label:'James Romero'}], Updated:'3 days ago' },
+      { id:'K-006', Title:'AML alerts unreviewed > 48h', Conformance:BREACH, Latest:'9', Target:'0', Owners:[{label:'Liam Chen'}], Updated:'Today' },
+      { id:'K-007', Title:'Backup success rate (%)', Conformance:CONF, Latest:'99.8%', Target:'> 99%', Owners:[{label:'Richard Poole'}], Updated:'Today' }
+    ];
+    var FP=[{propertyLabel:'Title',key:'Title',groupValuesLabel:'Titles',operators:[':','!:','=','!=']}];
+    var COLUMNS=[
+      {id:'id',header:'Reference',sortingField:'id',minWidth:110,cell:function(it){return h('a',{href:'#/indicator/'+it.id,style:{color:'#0972d3',textDecoration:'none',fontWeight:600}},it.id);}},
+      {id:'Title',header:'Indicator',sortingField:'Title',isRowHeader:true,minWidth:300,cell:function(it){return it.Title;}},
+      {id:'Conformance',header:'Conformance',sortingField:'Conformance',minWidth:150,cell:function(it){return h(A.SimpleRatingBadge,{rating:it.Conformance});}},
+      {id:'Latest',header:'Latest value',minWidth:120,cell:function(it){return it.Latest;}},
+      {id:'Target',header:'Target',minWidth:110,cell:function(it){return it.Target;}},
+      {id:'Owners',header:'Owner',minWidth:170,cell:function(it){return h(A.BadgeList,{badges:it.Owners.map(function(o){return o.label;})});}},
+      {id:'Updated',header:'Updated',sortingField:'Updated',minWidth:110,cell:function(it){return it.Updated;}}
+    ];
+    function RibbonRow(props){ return h('div',{className:'flex gap-6 flex-grow overflow-x-auto rounded-md border border-solid border-grey200 bg-white px-6 py-5'},
+      props.items.map(function(it,idx){ return h('div',{key:it.id,className:'flex flex-1 justify-between'},
+        h(A.DashboardItem,{title:it.title,value:it.value,selected:it.id===props.selected,onClick:function(){props.onSelect(it.id);}}),
+        idx!==props.items.length-1?h('div',{className:'w-1 h-full bg-grey200'}):null);})); }
+    function seg(r,s){ if(s==='conf')return r.Conformance.label==='Conformant'; if(s==='warn')return r.Conformance.label==='Warning'; if(s==='breach')return r.Conformance.label==='Breach'; if(s==='mine')return r.Owners.some(function(o){return o.label==='James Romero';}); return true; }
+    function Content(){
+      var st=React.useState('all'),segment=st[0],setSegment=st[1];
+      var rows=KRIS.filter(function(r){return seg(r,segment);});
+      var col=A.useCollection(rows,{propertyFiltering:{filteringProperties:FP,empty:h('span',null,'No matches')},pagination:{pageSize:10},sorting:{},selection:{}});
+      var ribbon=[{id:'all',title:'All indicators',value:KRIS.length},{id:'conf',title:'Conformant',value:KRIS.filter(function(r){return seg(r,'conf');}).length},{id:'warn',title:'Warning',value:KRIS.filter(function(r){return seg(r,'warn');}).length},{id:'breach',title:'Breach',value:KRIS.filter(function(r){return seg(r,'breach');}).length},{id:'mine',title:'My indicators',value:KRIS.filter(function(r){return seg(r,'mine');}).length}];
+      return h(C.SpaceBetween,{size:'l'},
+        h(RibbonRow,{items:ribbon,selected:segment,onSelect:setSegment}),
+        h(A.Table,Object.assign({},col.collectionProps,{columnDefinitions:COLUMNS,items:col.items,selectionType:'multi',trackBy:'id',
+          filter:h(A.PropertyFilterPanel,Object.assign({},col.propertyFilterProps,{countText:col.items.length+' matches',filteringPlaceholder:'Filter indicators',virtualScroll:true})),
+          empty:h(A.NoMatchesCollection,{onClearClick:function(){col.collectionProps.actions.setPropertyFiltering({tokens:[],operation:'and'});}}),
+          pagination:h(C.Pagination,col.paginationProps)})));
+    }
+    function App(){ return h(A.RealProviders,{initialPath:'/indicator'},
+      h(A.PageLayout,{title:'Indicators (KRIs)',counter:'('+KRIS.length+')',
+        actions:h(C.SpaceBetween,{direction:'horizontal',size:'xs'},h(A.Button,null,'Export'),h(A.Button,{variant:'primary'},'Create new indicator'))},h(Content))); }
+    try { ReactDOM.createRoot(document.getElementById('root')).render(h(App)); }
+    catch(e){ var el=document.getElementById('root'); el.className='ds-err'; el.textContent='⚠ '+((e&&e.stack)||e); }
+  })();
+  </script>
+</body></html>

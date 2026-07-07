@@ -1,0 +1,60 @@
+<!-- @dsCard group="prototypes" viewport="1024x900" -->
+<!doctype html>
+<html><head><meta charset="utf-8">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../_ds_bundle.css">
+  <link rel="stylesheet" href="../_ds_app_bundle.css">
+  <style>
+    html,body{margin:0;padding:0;background:#f4f5f7}
+    #root{min-height:100vh}
+    .rs-topbar{background:#0f1531;padding:16px 32px}
+    .rs-wordmark{color:#fff;font:700 20px Sora,system-ui;letter-spacing:-.01em}
+    .rs-wordmark b{color:#00e1d1}
+    .rs-wrap{max-width:640px;margin:40px auto;padding:0 20px}
+    .ds-err{padding:24px;font:14px/1.5 system-ui;color:#b91c1c;white-space:pre-wrap}
+  </style>
+</head><body class="atomic-ui">
+  <div id="root"></div>
+  <script src="../_vendor/react.js"></script>
+  <script src="../_vendor/react-dom.js"></script>
+  <script src="../_ds_bundle.js"></script>
+  <script src="../_ds_app_bundle.js"></script>
+  <script>
+  (function(){
+    var h = React.createElement, C = window.RiskSmart;   // public page — primitives only, no app shell
+    function App(){
+      var t=React.useState('complaint'), type=t[0], setType=t[1];
+      var ti=React.useState(''), title=ti[0], setTitle=ti[1];
+      var de=React.useState(''), desc=de[0], setDesc=de[1];
+      var em=React.useState(''), email=em[0], setEmail=em[1];
+      return h(React.Fragment,null,
+        h('div',{className:'rs-topbar'}, h('span',{className:'rs-wordmark'}, 'Risk', h('b',null,'Smart'))),
+        h('div',{className:'rs-wrap'},
+          h(C.Container,{ header:h(C.Header,{variant:'h1',description:'Anyone can raise a concern. Your report goes straight to the compliance team — no account needed.'},'Report an issue') },
+            h(C.SpaceBetween,{size:'l'},
+              h(C.FormField,{label:'What are you reporting?'},
+                h(C.Tiles,{ value:type, onChange:function(e){setType(e.detail.value);}, items:[
+                  {value:'complaint',label:'Complaint',description:'A concern about a product, service, or how you were treated'},
+                  {value:'breach',label:'Data breach',description:'Personal or confidential information may have been exposed'},
+                  {value:'fraud',label:'Fraud or misconduct',description:'Suspected dishonesty, bribery, or wrongdoing'},
+                  {value:'other',label:'Something else',description:"An issue that doesn't fit the categories above"}
+                ]})),
+              h(C.FormField,{label:'Summary',description:'A short title for your report.'},
+                h(C.Input,{value:title,placeholder:'e.g. Charged twice for the same transaction',onChange:function(e){setTitle(e.detail.value);}})),
+              h(C.FormField,{label:'What happened?',description:'Include dates, amounts, and anyone involved if you can.'},
+                h(C.Textarea,{value:desc,rows:5,onChange:function(e){setDesc(e.detail.value);}})),
+              h(C.FormField,{label:'Your email',description:'So we can update you. Leave blank to report anonymously.'},
+                h(C.Input,{value:email,type:'email',placeholder:'you@example.com',onChange:function(e){setEmail(e.detail.value);}})),
+              h(C.SpaceBetween,{direction:'horizontal',size:'xs'},
+                h(C.Button,{variant:'primary'},'Submit report'),
+                h(C.Button,{variant:'link'},'Cancel'))
+            )
+          )
+        )
+      );
+    }
+    try { ReactDOM.createRoot(document.getElementById('root')).render(h(App)); }
+    catch(e){ var el=document.getElementById('root'); el.className='ds-err'; el.textContent='⚠ '+((e&&e.stack)||e); }
+  })();
+  </script>
+</body></html>
