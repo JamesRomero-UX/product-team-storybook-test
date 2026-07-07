@@ -35,6 +35,14 @@ prototype." Paste one of these verbatim:
 > Duplicate `prototypes/risk-create.html` and change ONLY the form fields and title. Leave the
 > loaders and composition untouched.
 
+### Issue register (or any register variant)
+> Duplicate `prototypes/risk-issues.html` and change ONLY the sample data, the column list, and
+> the title. Leave the loaders and composition untouched.
+
+### Settings / admin hub (tabbed)
+> Duplicate `prototypes/risk-settings.html` and change ONLY the tab list and each tab's table/
+> form data. Leave the loaders and composition untouched.
+
 Forking these gives everyone a near-identical result because the starting bytes are identical.
 
 ---

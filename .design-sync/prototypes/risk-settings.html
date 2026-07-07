@@ -1,0 +1,96 @@
+<!-- @dsCard group="prototypes" viewport="1440x900" -->
+<!doctype html>
+<html><head><meta charset="utf-8">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../_ds_bundle.css">
+  <link rel="stylesheet" href="../_ds_app_bundle.css">
+  <style>html,body{margin:0;padding:0;background:#fff}#root{min-height:100vh}.ds-err{padding:24px;font:14px/1.5 system-ui;color:#b91c1c;white-space:pre-wrap}</style>
+</head><body class="atomic-ui">
+  <div id="root"></div>
+  <script src="../_vendor/react.js"></script>
+  <script src="../_vendor/react-dom.js"></script>
+  <script src="../_ds_bundle.js"></script>
+  <script src="../_ds_app_bundle.js"></script>
+  <script>
+  (function(){
+    var h = React.createElement, A = window.RiskSmartApp, C = window.RiskSmart;
+
+    var USERS = [
+      { id:'u1', Name:'Emma Bamford', Email:'emma.bamford@risksmart.com', Role:'Administrator', Status:['success','Active'], Last:'Today' },
+      { id:'u2', Name:'James Romero', Email:'james.romero@risksmart.com', Role:'Editor', Status:['success','Active'], Last:'Yesterday' },
+      { id:'u3', Name:'Liam Chen', Email:'liam.chen@risksmart.com', Role:'Editor', Status:['success','Active'], Last:'2 days ago' },
+      { id:'u4', Name:'Maya Okafor', Email:'maya.okafor@risksmart.com', Role:'Viewer', Status:['stopped','Invited'], Last:'—' }
+    ];
+    function UsersTab(){
+      return h(C.SpaceBetween,{size:'l'},
+        h(A.TabHeader,{ actions:h(A.Button,{variant:'primary'},'Invite user') }, 'Users'),
+        h(A.Table,{
+          columnDefinitions:[
+            { id:'Name', header:'Name', isRowHeader:true, cell:function(i){return i.Name;} },
+            { id:'Email', header:'Email', cell:function(i){return i.Email;} },
+            { id:'Role', header:'Role', cell:function(i){return i.Role;} },
+            { id:'Status', header:'Status', cell:function(i){return h(C.StatusIndicator,{type:i.Status[0]},i.Status[1]);} },
+            { id:'Last', header:'Last active', cell:function(i){return i.Last;} }
+          ],
+          items:USERS, trackBy:'id', variant:'embedded'
+        })
+      );
+    }
+    function TableTab(title, cols, rows, action){
+      return h(C.SpaceBetween,{size:'l'},
+        h(A.TabHeader, action?{actions:h(A.Button,{variant:'primary'},action)}:{}, title),
+        h(A.Table,{ columnDefinitions:cols, items:rows, trackBy:'id', variant:'embedded' })
+      );
+    }
+    function NotificationsTab(){
+      var rows=[['Risk approvals','Email when a risk needs your approval'],['Action reminders','Email before an action is due'],['Weekly digest','A Monday summary of your items'],['Mentions','When someone @mentions you']];
+      return h(C.SpaceBetween,{size:'l'},
+        h(A.TabHeader,null,'Notifications'),
+        h(C.Container,null,
+          h(C.SpaceBetween,{size:'m'},
+            rows.map(function(r,i){ return h('div',{key:i,style:{display:'flex',justifyContent:'space-between',alignItems:'center'}},
+              h(C.Box,null, h('div',{style:{fontWeight:600}},r[0]), h(C.Box,{color:'text-body-secondary',fontSize:'body-s'},r[1])),
+              h(C.Toggle,{checked:i<3,onChange:function(){}})); })
+          )
+        )
+      );
+    }
+    function DataExportTab(){
+      return h(C.SpaceBetween,{size:'l'},
+        h(A.TabHeader,{actions:h(A.Button,{variant:'primary',iconName:'download'},'Download export')},'Data export'),
+        h(C.Container,null, h(C.Box,{variant:'p'},'Export all organisation data as a single archive. Exports are prepared in the background and emailed when ready.'))
+      );
+    }
+
+    var TABS = [
+      { id:'users', label:'Users', content:h(UsersTab) },
+      { id:'groups', label:'User groups', content:TableTab('User groups',[
+          {id:'Name',header:'Group',isRowHeader:true,cell:function(i){return i.Name;}},
+          {id:'Members',header:'Members',cell:function(i){return i.Members;}},
+          {id:'Desc',header:'Description',cell:function(i){return i.Desc;}}],
+          [{id:'g1',Name:'Risk owners',Members:12,Desc:'Can edit risks they own'},{id:'g2',Name:'Compliance',Members:5,Desc:'Full access to compliance module'},{id:'g3',Name:'Read only',Members:23,Desc:'View access across the org'}],'Add group') },
+      { id:'roles', label:'Custom roles', content:TableTab('Custom roles',[
+          {id:'Role',header:'Role',isRowHeader:true,cell:function(i){return i.Role;}},
+          {id:'Perms',header:'Permissions',cell:function(i){return i.Perms;}},
+          {id:'Users',header:'Users',cell:function(i){return i.Users;}}],
+          [{id:'r1',Role:'Administrator',Perms:'All',Users:2},{id:'r2',Role:'Editor',Perms:'Create, edit',Users:8},{id:'r3',Role:'Viewer',Perms:'View only',Users:23}],'Add role') },
+      { id:'tags', label:'Tags', content:TableTab('Tags',[
+          {id:'Tag',header:'Tag',isRowHeader:true,cell:function(i){return h(A.BadgeList,{badges:[i.Tag]});}},
+          {id:'Used',header:'Used by',cell:function(i){return i.Used;}}],
+          [{id:'t1',Tag:'Cyber',Used:14},{id:'t2',Tag:'Regulatory',Used:9},{id:'t3',Tag:'Vendor',Used:6},{id:'t4',Tag:'Data loss',Used:4}],'Add tag') },
+      { id:'notifications', label:'Notifications', content:h(NotificationsTab) },
+      { id:'export', label:'Data export', content:h(DataExportTab) }
+    ];
+
+    function App(){
+      var st=React.useState('users'), active=st[0], setActive=st[1];
+      return h(A.RealProviders,{initialPath:'/settings'},
+        h(A.PageLayout,{title:'Settings'},
+          h(A.ControlledTabs,{ variant:'container', activeTabId:active, onChange:function(e){setActive(e.detail.activeTabId);}, tabs:TABS, disableSettings:true })
+        ));
+    }
+    try { ReactDOM.createRoot(document.getElementById('root')).render(h(App)); }
+    catch(e){ var el=document.getElementById('root'); el.className='ds-err'; el.textContent='⚠ '+((e&&e.stack)||e); }
+  })();
+  </script>
+</body></html>

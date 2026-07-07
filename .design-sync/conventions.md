@@ -13,9 +13,11 @@ every time. This is the required workflow, not a suggestion.
 | If the ask is a… | Duplicate this file, then edit only the data |
 |---|---|
 | register / list / table / "all X" page | `prototypes/risk-register.html` |
+| issue register (or any register variant) | `prototypes/risk-issues.html` |
 | dashboard / drill-down board | `prototypes/risk-dashboard.html` |
 | entity detail (tabbed) page | `prototypes/risk-detail.html` |
 | create / edit form | `prototypes/risk-create.html` |
+| settings / admin hub (tabbed) | `prototypes/risk-settings.html` |
 
 Steps: (1) copy the matching file to a new `.html`; (2) change the sample data array,
 column/field list, and title; (3) do NOT touch the `<head>` loaders, the `window.RiskSmartApp`
