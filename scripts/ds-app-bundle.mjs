@@ -57,6 +57,11 @@ const reactGlobals = () => {
     ['react', `const R=window.React; export default R; const {createElement,cloneElement,createContext,createRef,forwardRef,isValidElement,lazy,memo,Children,Component,PureComponent,Fragment,StrictMode,Suspense,useCallback,useContext,useDebugValue,useDeferredValue,useEffect,useId,useImperativeHandle,useInsertionEffect,useLayoutEffect,useMemo,useReducer,useRef,useState,useSyncExternalStore,useTransition,startTransition,version}=R; export {createElement,cloneElement,createContext,createRef,forwardRef,isValidElement,lazy,memo,Children,Component,PureComponent,Fragment,StrictMode,Suspense,useCallback,useContext,useDebugValue,useDeferredValue,useEffect,useId,useImperativeHandle,useInsertionEffect,useLayoutEffect,useMemo,useReducer,useRef,useState,useSyncExternalStore,useTransition,startTransition,version};`],
     ['react-dom', `const R=window.ReactDOM; export default R; const {render,hydrate,createPortal,flushSync,unmountComponentAtNode,findDOMNode,unstable_batchedUpdates,unstable_renderSubtreeIntoContainer,createRoot,hydrateRoot,version}=R; export {render,hydrate,createPortal,flushSync,unmountComponentAtNode,findDOMNode,unstable_batchedUpdates,unstable_renderSubtreeIntoContainer,createRoot,hydrateRoot,version};`],
     ['react-dom/client', `const R=window.ReactDOM; export const createRoot=R.createRoot; export const hydrateRoot=R.hydrateRoot; export default R;`],
+    // react-dom/server is NOT in the runtime UMD, and bundling it from node_modules
+    // (react-dom@19) crashes against React 18.3.1 UMD (reads v19 internals). Stub it —
+    // consumers (help content HTML conversion) degrade to empty string in previews.
+    ['react-dom/server', `function rs(){return '';} const S={renderToStaticMarkup:rs,renderToString:rs,renderToStaticNodeStream:rs,renderToNodeStream:rs,version:'18.3.1'}; export default S; export const renderToStaticMarkup=rs; export const renderToString=rs;`],
+    ['react-dom/server.browser', `function rs(){return '';} const S={renderToStaticMarkup:rs,renderToString:rs,version:'18.3.1'}; export default S; export const renderToStaticMarkup=rs; export const renderToString=rs;`],
     ['react/jsx-runtime', `const R=window.React; function j(t,p,k){ if(k!==void 0){p=Object.assign({},p,{key:k});} return R.createElement(t,p); } export const jsx=j; export const jsxs=j; export const Fragment=R.Fragment;`],
     ['react/jsx-dev-runtime', `const R=window.React; function j(t,p,k){ if(k!==void 0){p=Object.assign({},p,{key:k});} return R.createElement(t,p); } export const jsxDEV=j; export const jsx=j; export const jsxs=j; export const Fragment=R.Fragment;`],
   ]);
@@ -75,7 +80,7 @@ await build({
   define: { 'process.env.NODE_ENV': '"production"' },
   esbuild: { legalComments: 'none' },
   build: {
-    write: false, minify: 'esbuild', cssMinify: true,
+    write: false, minify: process.env.DS_MINIFY==='false' ? false : 'esbuild', cssMinify: true,
     lib: { entry: '\0ds-app-entry', name: spec.globalName, formats: ['iife'], fileName: () => 'app' },
     rollupOptions: {
       input: '\0ds-app-entry',

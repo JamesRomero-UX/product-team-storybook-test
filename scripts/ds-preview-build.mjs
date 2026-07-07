@@ -35,11 +35,29 @@ const previewEnvCss = [
   `import ${own('src/page-templates/_scheduler.css')};`,
 ].join('\n');
 
-// Generated entry: re-export each story's `.render` fn as a PascalCase export,
-// so the IIFE namespace (= global __dsPreview) has {Default: fn, ...}.
+// Generated entry: re-export each story as a PascalCase render component, with
+// Storybook decorators composed (meta.decorators outer, story.decorators inner)
+// so provider-wrapped stories (withProviders → RealProviders) render correctly.
+// Page-template stories have no meta.decorators (providers live inside render),
+// so composition is a no-op there — backward compatible.
 const importList = exportNames.map((n) => `${n} as _${n}`).join(', ');
-const reexports = exportNames.map((n) => `export const ${n} = _${n}.render;`).join('\n');
-const entryCode = `${previewEnvCss}\nimport { ${importList} } from ${JSON.stringify(storyFile)};\n${reexports}\n`;
+const reexports = exportNames
+  .map((n) => `export const ${n} = _mk(_${n});`)
+  .join('\n');
+const entryCode = `${previewEnvCss}
+import * as _React from 'react';
+import _meta, { ${importList} } from ${JSON.stringify(storyFile)};
+const _md = (_meta && _meta.decorators) || [];
+const _ctx = { args: {}, argTypes: {}, globals: {}, hooks: {}, parameters: (_meta && _meta.parameters) || {}, viewMode: 'story', title: (_meta && _meta.title) || '', component: _meta && _meta.component };
+function _mk(story) {
+  const args = Object.assign({}, (_meta && _meta.args) || {}, (story && story.args) || {});
+  const base = (story && story.render) ? () => story.render(args, _ctx)
+    : () => _React.createElement((story && story.component) || (_meta && _meta.component), args);
+  const decs = [ ..._md, ...((story && story.decorators) || []) ];
+  return decs.reduceRight((inner, dec) => () => dec(inner, Object.assign({}, _ctx, { args })), base);
+}
+${reexports}
+`;
 
 // Externalize React to window globals; supply a jsx-runtime shim (the react()
 // plugin emits automatic-runtime imports) that routes through window.React —
@@ -49,6 +67,10 @@ const reactGlobals = () => {
     ['react', `const R=window.React; export default R; const {createElement,cloneElement,createContext,createRef,forwardRef,isValidElement,lazy,memo,Children,Component,PureComponent,Fragment,StrictMode,Suspense,useCallback,useContext,useDebugValue,useDeferredValue,useEffect,useId,useImperativeHandle,useInsertionEffect,useLayoutEffect,useMemo,useReducer,useRef,useState,useSyncExternalStore,useTransition,startTransition,version}=R; export {createElement,cloneElement,createContext,createRef,forwardRef,isValidElement,lazy,memo,Children,Component,PureComponent,Fragment,StrictMode,Suspense,useCallback,useContext,useDebugValue,useDeferredValue,useEffect,useId,useImperativeHandle,useInsertionEffect,useLayoutEffect,useMemo,useReducer,useRef,useState,useSyncExternalStore,useTransition,startTransition,version};`],
     ['react-dom', `const R=window.ReactDOM; export default R; const {render,hydrate,createPortal,flushSync,unmountComponentAtNode,findDOMNode,unstable_batchedUpdates,unstable_renderSubtreeIntoContainer,createRoot,hydrateRoot,version}=R; export {render,hydrate,createPortal,flushSync,unmountComponentAtNode,findDOMNode,unstable_batchedUpdates,unstable_renderSubtreeIntoContainer,createRoot,hydrateRoot,version};`],
     ['react-dom/client', `const R=window.ReactDOM; export const createRoot=R.createRoot; export const hydrateRoot=R.hydrateRoot; export default R;`],
+    // react-dom/server: not in runtime UMD; bundling react-dom@19's server build crashes
+    // against React 18.3.1 UMD. Stub it (help-content HTML conversion → '' in previews).
+    ['react-dom/server', `function rs(){return '';} const S={renderToStaticMarkup:rs,renderToString:rs,renderToStaticNodeStream:rs,renderToNodeStream:rs,version:'18.3.1'}; export default S; export const renderToStaticMarkup=rs; export const renderToString=rs;`],
+    ['react-dom/server.browser', `function rs(){return '';} const S={renderToStaticMarkup:rs,renderToString:rs,version:'18.3.1'}; export default S; export const renderToStaticMarkup=rs; export const renderToString=rs;`],
     ['react/jsx-runtime', `const R=window.React; function j(t,p,k){ if(k!==void 0){p=Object.assign({},p,{key:k});} return R.createElement(t,p); } export const jsx=j; export const jsxs=j; export const Fragment=R.Fragment;`],
     ['react/jsx-dev-runtime', `const R=window.React; function j(t,p,k){ if(k!==void 0){p=Object.assign({},p,{key:k});} return R.createElement(t,p); } export const jsxDEV=j; export const jsx=j; export const jsxs=j; export const Fragment=R.Fragment;`],
   ]);
