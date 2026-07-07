@@ -61,5 +61,15 @@ Manifests: `.design-sync/manifests/*.manifest.json`.
 3. Push staged files via the `DesignSync` MCP tool (finalize_plan globs → write_files in ≤~15-file batches; the 12 MB/file and request-body limits require batching).
 4. Verify with `render_preview` + `scripts/ds-verify-card.mjs`.
 
+## Live end-to-end test — CONFIRMED (2026-07-07)
+A fresh agent prompted with only "Build a Risk Register" (no mention of React/bundles)
+autonomously: built a React `.html` prototype (not `.dc.html`), loaded
+`react → _ds_bundle.js → _ds_app_bundle.js` with `body.atomic-ui`, composed the real
+`window.RiskSmartApp.*` components, forked `prototypes/risk-register.html` and extended it
+(segment-filtering ribbon, Updated column, 12 rows) — and it rendered **1:1 with the live app**.
+The behavioural link (agent follows the guide automatically) is confirmed. Remaining broad item:
+make this DS the org default in the picker so every teammate's session lands on it (platform —
+see PLATFORM-ASK.md).
+
 ## Verified renders (visual, 1:1)
 Page templates: Table, Dashboard, Detail, Create, Login. Production: DashboardItem, PropertyFilterPanel, ConfirmModal (+ clean render signals across the rest).
