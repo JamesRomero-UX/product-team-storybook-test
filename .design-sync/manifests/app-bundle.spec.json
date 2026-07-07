@@ -1,36 +1,385 @@
 {
   "globalName": "RiskSmartApp",
   "exports": [
-    { "name": "PageLayout", "spec": "@ABS@/src/app-shell/Shell", "kind": "named" },
-    { "name": "RealProviders", "spec": "@ABS@/src/app-shell/Shell", "kind": "named" },
-    { "name": "useCollection", "spec": "@cloudscape-design/collection-hooks", "kind": "named" },
-    { "name": "Table", "spec": "@risksmart-app/components/src/table", "kind": "default" },
-    { "name": "Button", "spec": "@risksmart-app/components/src/button", "kind": "default" },
-    { "name": "PageHeader", "spec": "@risksmart-app/components/src/page-header/PageHeader", "kind": "default" },
-    { "name": "TabHeader", "spec": "src/components/tab-header/TabHeader", "kind": "default" },
-    { "name": "ControlledTabs", "spec": "src/components/controlled-tabs/ControlledTabs", "kind": "default" },
-    { "name": "ActionsButton", "spec": "src/components/actions-button", "kind": "default" },
-    { "name": "Navigation", "spec": "@risksmart-app/components/src/navigation/Navigation", "kind": "default" },
-    { "name": "GlobalHeader", "spec": "@risksmart-app/components/src/global-header/GlobalHeader", "kind": "named" },
-    { "name": "PropertyFilterPanel", "spec": "src/components/property-filter-panel/PropertyFilterPanel", "kind": "default" },
-    { "name": "DashboardItem", "spec": "src/components/register-dashboard/DashboardItem", "kind": "named" },
-    { "name": "FilterPropertyDashboardItem", "spec": "src/components/register-dashboard/FilterPropertyDashboardItem", "kind": "named" },
-    { "name": "TotalsRibbon", "spec": "src/components/totals-ribbon/TotalsRibbon", "kind": "default" },
-    { "name": "SimpleRatingBadge", "spec": "src/components/simple-rating-badge", "kind": "default" },
-    { "name": "RatingSwatch", "spec": "src/components/rating-swatch/RatingSwatch", "kind": "default" },
-    { "name": "ResponsiveRatingBadges", "spec": "src/components/responsive-rating-badges/ResponsiveRatingBadges", "kind": "default" },
-    { "name": "BadgeList", "spec": "src/components/badge-list/BadgeList", "kind": "default" },
-    { "name": "Tokens", "spec": "src/components/tokens/Tokens", "kind": "default" },
-    { "name": "CardTokens", "spec": "src/components/card-tokens/CardTokens", "kind": "default" },
-    { "name": "Cards", "spec": "src/components/cards/Cards", "kind": "default" },
-    { "name": "EmptyEntityCollection", "spec": "src/components/empty-collection/EmptyEntityCollection", "kind": "default" },
-    { "name": "NoMatchesCollection", "spec": "src/components/empty-collection/NoMatchesCollection", "kind": "default" },
-    { "name": "Empty", "spec": "src/components/tools/Empty", "kind": "default" },
-    { "name": "ConfirmModal", "spec": "src/components/confirm-modal/ConfirmModal", "kind": "default" },
-    { "name": "DeleteModal", "spec": "@risksmart-app/components/src/delete-modal/DeleteModal", "kind": "default" },
-    { "name": "RemoveModal", "spec": "src/components/remove-modal/RemoveModal", "kind": "default" },
-    { "name": "FileItem", "spec": "@risksmart-app/components/src/file/FileItem", "kind": "default" },
-    { "name": "WizardSteps", "spec": "src/components/wizard/WizardSteps", "kind": "named" },
-    { "name": "NotificationBanner", "spec": "@risksmart-app/components/src/notification-banner/NotificationBanner", "kind": "named" }
+    {
+      "name": "PageLayout",
+      "spec": "@ABS@/src/app-shell/Shell",
+      "kind": "named"
+    },
+    {
+      "name": "RealProviders",
+      "spec": "@ABS@/src/app-shell/Shell",
+      "kind": "named"
+    },
+    {
+      "name": "useCollection",
+      "spec": "@cloudscape-design/collection-hooks",
+      "kind": "named"
+    },
+    {
+      "name": "Table",
+      "spec": "@risksmart-app/components/src/table",
+      "kind": "default"
+    },
+    {
+      "name": "Button",
+      "spec": "@risksmart-app/components/src/button",
+      "kind": "default"
+    },
+    {
+      "name": "PageHeader",
+      "spec": "@risksmart-app/components/src/page-header/PageHeader",
+      "kind": "default"
+    },
+    {
+      "name": "TabHeader",
+      "spec": "src/components/tab-header/TabHeader",
+      "kind": "default"
+    },
+    {
+      "name": "ControlledTabs",
+      "spec": "src/components/controlled-tabs/ControlledTabs",
+      "kind": "default"
+    },
+    {
+      "name": "ActionsButton",
+      "spec": "src/components/actions-button",
+      "kind": "default"
+    },
+    {
+      "name": "Navigation",
+      "spec": "@risksmart-app/components/src/navigation/Navigation",
+      "kind": "default"
+    },
+    {
+      "name": "GlobalHeader",
+      "spec": "@risksmart-app/components/src/global-header/GlobalHeader",
+      "kind": "named"
+    },
+    {
+      "name": "PropertyFilterPanel",
+      "spec": "src/components/property-filter-panel/PropertyFilterPanel",
+      "kind": "default"
+    },
+    {
+      "name": "DashboardItem",
+      "spec": "src/components/register-dashboard/DashboardItem",
+      "kind": "named"
+    },
+    {
+      "name": "FilterPropertyDashboardItem",
+      "spec": "src/components/register-dashboard/FilterPropertyDashboardItem",
+      "kind": "named"
+    },
+    {
+      "name": "TotalsRibbon",
+      "spec": "src/components/totals-ribbon/TotalsRibbon",
+      "kind": "default"
+    },
+    {
+      "name": "SimpleRatingBadge",
+      "spec": "src/components/simple-rating-badge",
+      "kind": "default"
+    },
+    {
+      "name": "RatingSwatch",
+      "spec": "src/components/rating-swatch/RatingSwatch",
+      "kind": "default"
+    },
+    {
+      "name": "ResponsiveRatingBadges",
+      "spec": "src/components/responsive-rating-badges/ResponsiveRatingBadges",
+      "kind": "default"
+    },
+    {
+      "name": "BadgeList",
+      "spec": "src/components/badge-list/BadgeList",
+      "kind": "default"
+    },
+    {
+      "name": "Tokens",
+      "spec": "src/components/tokens/Tokens",
+      "kind": "default"
+    },
+    {
+      "name": "CardTokens",
+      "spec": "src/components/card-tokens/CardTokens",
+      "kind": "default"
+    },
+    {
+      "name": "Cards",
+      "spec": "src/components/cards/Cards",
+      "kind": "default"
+    },
+    {
+      "name": "EmptyEntityCollection",
+      "spec": "src/components/empty-collection/EmptyEntityCollection",
+      "kind": "default"
+    },
+    {
+      "name": "NoMatchesCollection",
+      "spec": "src/components/empty-collection/NoMatchesCollection",
+      "kind": "default"
+    },
+    {
+      "name": "Empty",
+      "spec": "src/components/tools/Empty",
+      "kind": "default"
+    },
+    {
+      "name": "ConfirmModal",
+      "spec": "src/components/confirm-modal/ConfirmModal",
+      "kind": "default"
+    },
+    {
+      "name": "DeleteModal",
+      "spec": "@risksmart-app/components/src/delete-modal/DeleteModal",
+      "kind": "default"
+    },
+    {
+      "name": "RemoveModal",
+      "spec": "src/components/remove-modal/RemoveModal",
+      "kind": "default"
+    },
+    {
+      "name": "FileItem",
+      "spec": "@risksmart-app/components/src/file/FileItem",
+      "kind": "default"
+    },
+    {
+      "name": "WizardSteps",
+      "spec": "src/components/wizard/WizardSteps",
+      "kind": "named"
+    },
+    {
+      "name": "NotificationBanner",
+      "spec": "@risksmart-app/components/src/notification-banner/NotificationBanner",
+      "kind": "named"
+    },
+    {
+      "name": "AuthErrorPage",
+      "spec": "@risksmart-app/components/src/error-pages/AuthErrorPage",
+      "kind": "default"
+    },
+    {
+      "name": "OrgNotFoundPage",
+      "spec": "@risksmart-app/components/src/error-pages/OrgNotFoundPage",
+      "kind": "default"
+    },
+    {
+      "name": "TokenExpiredPage",
+      "spec": "@risksmart-app/components/src/error-pages/TokenExpiredPage",
+      "kind": "default"
+    },
+    {
+      "name": "UserNotFoundPage",
+      "spec": "@risksmart-app/components/src/error-pages/UserNotFoundPage",
+      "kind": "default"
+    },
+    {
+      "name": "InvitationExpiredPage",
+      "spec": "@risksmart-app/components/src/error-pages/InvitationExpiredPage",
+      "kind": "default"
+    },
+    {
+      "name": "Login",
+      "spec": "@risksmart-app/components/src/auth-pages/Login",
+      "kind": "default"
+    },
+    {
+      "name": "Logout",
+      "spec": "@risksmart-app/components/src/auth-pages/Logout",
+      "kind": "default"
+    },
+    {
+      "name": "ProtectedAccessDeniedPage",
+      "spec": "src/pages/error/ProtectedAccessDeniedPage",
+      "kind": "default"
+    },
+    {
+      "name": "ProtectedErrorPage",
+      "spec": "src/pages/error/ProtectedErrorPage",
+      "kind": "default"
+    },
+    {
+      "name": "ErrorContent",
+      "spec": "@risksmart-app/components/src/error-pages/ErrorContent",
+      "kind": "default"
+    },
+    {
+      "name": "DiagnosticSection",
+      "spec": "@risksmart-app/components/src/error-pages/DiagnosticSection",
+      "kind": "default"
+    },
+    {
+      "name": "ViewSelector",
+      "spec": "src/components/view-selector/ViewSelector",
+      "kind": "default"
+    },
+    {
+      "name": "AttestButton",
+      "spec": "src/components/attest-button/AttestButton",
+      "kind": "named"
+    },
+    {
+      "name": "CopyLinkButton",
+      "spec": "@risksmart-app/components/src/global-header/global-breadcrumbs/CopyLinkButton",
+      "kind": "named"
+    },
+    {
+      "name": "ExpandableLinkGroup",
+      "spec": "@risksmart-app/components/src/navigation/ExpandableLinkGroup",
+      "kind": "named"
+    },
+    {
+      "name": "TagSelector",
+      "spec": "src/components/form/tag-selector/TagSelector",
+      "kind": "named"
+    },
+    {
+      "name": "DepartmentSelector",
+      "spec": "src/components/form/department-selector/DepartmentSelector",
+      "kind": "named"
+    },
+    {
+      "name": "SidePanel",
+      "spec": "src/components/side-panel/SidePanel",
+      "kind": "named"
+    },
+    {
+      "name": "HelpPanel",
+      "spec": "src/components/help-panel/HelpPanel",
+      "kind": "default"
+    },
+    {
+      "name": "HelpSection",
+      "spec": "src/components/help-panel/HelpSection",
+      "kind": "default"
+    },
+    {
+      "name": "IndicatorsPopover",
+      "spec": "src/components/indicators-popover/IndicatorsPopover",
+      "kind": "default"
+    },
+    {
+      "name": "ChangesPopover",
+      "spec": "src/components/form/form/changes-popover/ChangesPopover",
+      "kind": "named"
+    },
+    {
+      "name": "PageFilterContainer",
+      "spec": "src/components/page-filter-container/PageFilterContainer",
+      "kind": "default"
+    },
+    {
+      "name": "PopupContainer",
+      "spec": "@risksmart-app/components/src/global-header/global-actions/PopupContainer",
+      "kind": "named"
+    },
+    {
+      "name": "SourceRegulationInformation",
+      "spec": "src/components/source-regulation-information/SourceRegulationInformation",
+      "kind": "named"
+    },
+    {
+      "name": "ChangeRequestAlert",
+      "spec": "src/components/change-requests-preview/ChangeRequestAlert",
+      "kind": "named"
+    },
+    {
+      "name": "ChangeRequestAlerts",
+      "spec": "src/components/form/form/ChangeRequestAlerts",
+      "kind": "named"
+    },
+    {
+      "name": "DeleteRequestAlert",
+      "spec": "src/components/change-requests-preview/DeleteRequestAlert",
+      "kind": "named"
+    },
+    {
+      "name": "HistoricalChangeRequestAlert",
+      "spec": "src/components/change-requests-preview/HistoricalChangeRequestAlert",
+      "kind": "named"
+    },
+    {
+      "name": "PromiseNotificationBanner",
+      "spec": "@risksmart-app/components/src/notification-banner/PromiseNotificationBanner",
+      "kind": "named"
+    },
+    {
+      "name": "ConfirmChangeRequestModal",
+      "spec": "src/components/change-requests-preview/ConfirmChangeRequestModal",
+      "kind": "named"
+    },
+    {
+      "name": "ConfirmSaveDialog",
+      "spec": "src/components/tenant-notification-preferences/ConfirmSaveDialog",
+      "kind": "default"
+    },
+    {
+      "name": "FieldGroup",
+      "spec": "src/components/form/form/customisable-form/FieldGroup",
+      "kind": "default"
+    },
+    {
+      "name": "FormMenu",
+      "spec": "src/components/form/form/FormMenu",
+      "kind": "named"
+    },
+    {
+      "name": "SelectWithFormField",
+      "spec": "src/components/form/controlled-select/SelectWithFormField",
+      "kind": "named"
+    },
+    {
+      "name": "TextInputWithFormField",
+      "spec": "src/components/form/controlled-input/TextInputWithFormField",
+      "kind": "named"
+    },
+    {
+      "name": "SystemActions",
+      "spec": "@risksmart-app/components/src/global-header/global-actions/SystemActions",
+      "kind": "named"
+    },
+    {
+      "name": "GlobalActionButton",
+      "spec": "@risksmart-app/components/src/global-header/global-actions/GlobalActionButton",
+      "kind": "default"
+    },
+    {
+      "name": "OrganisationInfoRow",
+      "spec": "@risksmart-app/components/src/global-header/global-actions/user-menu/OrganisationInfoRow",
+      "kind": "named"
+    },
+    {
+      "name": "UserInfo",
+      "spec": "@risksmart-app/components/src/global-header/global-actions/user-menu/UserInfo",
+      "kind": "named"
+    },
+    {
+      "name": "BodyWithFooter",
+      "spec": "@risksmart-app/components/src/modal/BodyWithFooter",
+      "kind": "default"
+    },
+    {
+      "name": "UpdatePrompt",
+      "spec": "src/components/update-prompt/FakeUpdatePrompt",
+      "kind": "default"
+    },
+    {
+      "name": "DraggableContainer",
+      "spec": "src/components/customisable-ribbon/DraggableContainer",
+      "kind": "named"
+    },
+    {
+      "name": "EntityOption",
+      "spec": "@risksmart-app/components/src/global-header/global-actions/global-entity-picker/EntityOption",
+      "kind": "named"
+    },
+    {
+      "name": "EntityTreeNode",
+      "spec": "@risksmart-app/components/src/global-header/global-actions/global-entity-picker/EntityTreeNode",
+      "kind": "named"
+    }
   ]
 }
