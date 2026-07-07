@@ -57,6 +57,11 @@ prototype." Paste one of these verbatim:
 ### Indicator / KRI register
 > Duplicate `prototypes/risk-indicators.html` and change ONLY the sample data, columns, and title.
 
+### Create/edit modal (dialog form over a page)
+> Duplicate `prototypes/risk-modal.html` and change ONLY the modal title, the form fields, and
+> the backdrop table. It shows a Cloudscape `Modal` (open by default) wrapping a form, over a
+> register — toggle `visible` from the page's primary button in a real flow.
+
 ### Public intake / report form (no app shell, unauthenticated)
 > Duplicate `prototypes/risk-report-issue.html` and change ONLY the heading, the tile options,
 > and the form fields. This one is a public page (primitives only, no PageLayout/RealProviders).
