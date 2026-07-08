@@ -1,5 +1,0 @@
-mutation applyActionChangeRequest($Id: uuid!, $Changes: action_set_input!) {
-  update_action_by_pk(pk_columns: { Id: $Id }, _set: $Changes) {
-    Id
-  }
-}

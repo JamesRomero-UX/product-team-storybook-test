@@ -1,5 +1,0 @@
-mutation deleteApprover($Id: uuid!) {
-  delete_approver(where: { Id: { _eq: $Id } }) {
-    affected_rows
-  }
-}

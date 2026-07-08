@@ -1,7 +1,0 @@
-query getAssessmentCount {
-  assessment_aggregate {
-    aggregate {
-      count
-    }
-  }
-}

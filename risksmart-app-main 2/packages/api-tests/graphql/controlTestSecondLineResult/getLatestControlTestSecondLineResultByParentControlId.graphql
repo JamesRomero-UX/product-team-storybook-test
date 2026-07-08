@@ -1,9 +1,0 @@
-query getLatestControlTestSecondLineResultByParentControlId($Id: uuid!) {
-  control_test_second_line_result(
-    where: { ParentControlId: { _eq: $Id } }
-    order_by: { TestDate: desc }
-  ) {
-    TestDate
-    Id
-  }
-}

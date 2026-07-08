@@ -1,8 +1,0 @@
-fragment AttestationConfigParts on attestation_config {
-  RequireGlobalAttestation
-  AttestationTimeLimit
-  PromptText
-  groups {
-    ...AttestationGroupParts
-  }
-}

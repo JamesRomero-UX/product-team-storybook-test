@@ -1,9 +1,0 @@
-table:
-  name: data_export_schedule_storage_type
-  schema: risksmart
-is_enum: true
-configuration:
-  column_config: {}
-  custom_column_names: {}
-  custom_name: data_export_schedule_storage_type
-  custom_root_fields: {}

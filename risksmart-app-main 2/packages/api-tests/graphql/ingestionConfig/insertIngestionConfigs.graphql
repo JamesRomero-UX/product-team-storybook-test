@@ -1,5 +1,0 @@
-mutation insertIngestionConfigs($objects: [ingestion_config_insert_input!]!) {
-  insert_ingestion_config(objects: $objects) {
-    affected_rows
-  }
-}

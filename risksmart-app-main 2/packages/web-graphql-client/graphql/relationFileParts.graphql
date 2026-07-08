@@ -1,7 +1,0 @@
-fragment RelationFileParts on relation_file {
-  ParentId
-  ChangeRequestFileOperation
-  file {
-    ...FileParts
-  }
-}

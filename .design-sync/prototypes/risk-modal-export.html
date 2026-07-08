@@ -1,0 +1,67 @@
+<!-- @dsCard group="prototypes" viewport="1440x900" -->
+<!doctype html>
+<html><head><meta charset="utf-8">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../_ds_bundle.css">
+  <link rel="stylesheet" href="../_ds_app_bundle.css">
+  <style>html,body{margin:0;padding:0;background:#fff}#root{min-height:100vh}.ds-err{padding:24px;font:14px/1.5 system-ui;color:#b91c1c;white-space:pre-wrap}</style>
+</head><body class="atomic-ui">
+  <div id="root"></div>
+  <script src="../_vendor/react.js"></script>
+  <script src="../_vendor/react-dom.js"></script>
+  <script src="../_ds_bundle.js"></script>
+  <script src="../_ds_app_bundle.js"></script>
+  <script>
+  (function(){
+    var h = React.createElement, A = window.RiskSmartApp, C = window.RiskSmart;
+    var ROWS=[
+      {id:'R-001',Title:'Data breach via legacy S3 bucket'},
+      {id:'R-002',Title:'Vendor concentration — payment processor'},
+      {id:'R-003',Title:'GDPR — third-party processors out of scope'},
+      {id:'R-004',Title:'Phishing susceptibility — finance team'}
+    ];
+    var COLS=[
+      {id:'id',header:'Reference',minWidth:110,isRowHeader:true,cell:function(i){return i.id;}},
+      {id:'Title',header:'Title',minWidth:400,cell:function(i){return i.Title;}}
+    ];
+    function ExportModal(props){
+      var f=React.useState('xlsx'), fmt=f[0], setFmt=f[1];
+      var c=React.useState([{label:'Title',value:'title'},{label:'Owner',value:'owner'},{label:'Inherent rating',value:'inh'},{label:'Residual rating',value:'res'}]), cols=c[0], setCols=c[1];
+      var s=React.useState(['scope','history']), scope=s[0], setScope=s[1];
+      var chk=function(v){return scope.indexOf(v)>=0;};
+      var toggle=function(v){ setScope(chk(v)?scope.filter(function(x){return x!==v;}):scope.concat([v])); };
+      return h(C.Modal,{ visible:props.visible, onDismiss:props.onDismiss, size:'medium', header:'Export 4 risks',
+        footer:h(C.Box,{float:'right'}, h(C.SpaceBetween,{direction:'horizontal',size:'xs'},
+          h(A.Button,{variant:'link',onClick:props.onDismiss},'Cancel'),
+          h(A.Button,{variant:'primary',iconName:'download',onClick:props.onDismiss},'Export')))
+      },
+        h(C.SpaceBetween,{size:'l'},
+          h(C.FormField,{label:'Format'},
+            h(C.RadioGroup,{value:fmt,onChange:function(e){setFmt(e.detail.value);},items:[
+              {value:'xlsx',label:'Excel (.xlsx)'},{value:'csv',label:'CSV'},{value:'pdf',label:'PDF report'}]})),
+          h(C.FormField,{label:'Columns',description:'Choose which fields to include.'},
+            h(C.Multiselect,{selectedOptions:cols,onChange:function(e){setCols(e.detail.selectedOptions);},
+              options:[{label:'Title',value:'title'},{label:'Owner',value:'owner'},{label:'Tier',value:'tier'},{label:'Inherent rating',value:'inh'},{label:'Residual rating',value:'res'},{label:'Tags',value:'tags'}]})),
+          h(C.FormField,{label:'Include'},
+            h(C.SpaceBetween,{size:'xs'},
+              h(C.Checkbox,{checked:chk('scope'),onChange:function(){toggle('scope');}},'Only the 4 selected rows'),
+              h(C.Checkbox,{checked:chk('history'),onChange:function(){toggle('history');}},'Change history')))
+        )
+      );
+    }
+    function App(){
+      var v=React.useState(true), visible=v[0], setVisible=v[1];
+      return h(A.RealProviders,{initialPath:'/risks'},
+        h(A.PageLayout,{title:'Risks register', counter:'(4)',
+          actions:h(C.SpaceBetween,{direction:'horizontal',size:'xs'},
+            h(A.Button,{iconName:'download',onClick:function(){setVisible(true);}},'Export'),
+            h(A.Button,{variant:'primary'},'Create new risk'))},
+          h(A.Table,{columnDefinitions:COLS,items:ROWS,trackBy:'id',variant:'embedded',selectionType:'multi',selectedItems:ROWS}),
+          h(ExportModal,{visible:visible,onDismiss:function(){setVisible(false);}})
+        ));
+    }
+    try { ReactDOM.createRoot(document.getElementById('root')).render(h(App)); }
+    catch(e){ var el=document.getElementById('root'); el.className='ds-err'; el.textContent='⚠ '+((e&&e.stack)||e); }
+  })();
+  </script>
+</body></html>

@@ -1,5 +1,0 @@
-mutation insertComment($objects: [comment_insert_input!]!) {
-  insert_comment(objects: $objects) {
-    affected_rows
-  }
-}

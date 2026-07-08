@@ -1,4 +1,0 @@
-fragment ChangeRequestContributorParts on change_request_contributor {
-  Id
-  UserId
-}

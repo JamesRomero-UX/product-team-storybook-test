@@ -1,5 +1,0 @@
-mutation insertRestAPIIngestionConfig($object: InsertIngestionConfigInput!) {
-  insertChildIngestionConfig(object: $object) {
-    Id
-  }
-}

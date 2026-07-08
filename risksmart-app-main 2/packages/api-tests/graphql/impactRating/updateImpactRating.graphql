@@ -1,5 +1,0 @@
-mutation updateImpactRating($Id: uuid!, $Rating: smallint!) {
-  update_impact_rating(where: { Id: { _eq: $Id } }, _set: { Rating: $Rating }) {
-    affected_rows
-  }
-}

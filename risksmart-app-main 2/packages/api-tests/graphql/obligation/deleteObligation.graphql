@@ -1,5 +1,0 @@
-mutation deleteObligation($Id: uuid!) {
-  delete_obligation(where: { Id: { _eq: $Id } }) {
-    affected_rows
-  }
-}

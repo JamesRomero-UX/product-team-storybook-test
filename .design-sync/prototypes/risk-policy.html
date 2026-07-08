@@ -1,0 +1,60 @@
+<!-- @dsCard group="prototypes" viewport="1440x900" -->
+<!doctype html>
+<html><head><meta charset="utf-8">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../_ds_bundle.css">
+  <link rel="stylesheet" href="../_ds_app_bundle.css">
+  <style>html,body{margin:0;padding:0;background:#fff}#root{min-height:100vh}.ds-err{padding:24px;font:14px/1.5 system-ui;color:#b91c1c;white-space:pre-wrap}</style>
+</head><body class="atomic-ui">
+  <div id="root"></div>
+  <script src="../_vendor/react.js"></script>
+  <script src="../_vendor/react-dom.js"></script>
+  <script src="../_ds_bundle.js"></script>
+  <script src="../_ds_app_bundle.js"></script>
+  <script>
+  (function(){
+    var h = React.createElement, A = window.RiskSmartApp, C = window.RiskSmart;
+    var POLICIES = [
+      { id:'P-001', Title:'Information security policy', Version:'4.2', Status:['success','Published'], Owners:[{label:'Emma Bamford'}], Attestation:'96%', Updated:'18 Jun 2026' },
+      { id:'P-002', Title:'Acceptable use policy', Version:'2.0', Status:['success','Published'], Owners:[{label:'Tom Patel'}], Attestation:'88%', Updated:'02 Jun 2026' },
+      { id:'P-003', Title:'Data retention & disposal', Version:'3.1', Status:['in-progress','Under review'], Owners:[{label:'Liam Chen'}], Attestation:'—', Updated:'28 Jun 2026' },
+      { id:'P-004', Title:'Anti-money-laundering policy', Version:'5.0', Status:['success','Published'], Owners:[{label:'Liam Chen'}], Attestation:'74%', Updated:'22 May 2026' },
+      { id:'P-005', Title:'Remote working policy', Version:'1.4', Status:['pending','Draft'], Owners:[{label:'Maya Okafor'}], Attestation:'—', Updated:'30 Jun 2026' },
+      { id:'P-006', Title:'Business continuity policy', Version:'2.3', Status:['success','Published'], Owners:[{label:'Richard Poole'}], Attestation:'91%', Updated:'10 Jun 2026' },
+      { id:'P-007', Title:'Whistleblowing policy', Version:'1.1', Status:['warning','Review overdue'], Owners:[{label:'Ava Rodriguez'}], Attestation:'62%', Updated:'12 Mar 2026' }
+    ];
+    var FP=[{propertyLabel:'Title',key:'Title',groupValuesLabel:'Titles',operators:[':','!:','=','!=']}];
+    var COLUMNS=[
+      {id:'id',header:'Reference',sortingField:'id',minWidth:110,cell:function(it){return h('a',{href:'#/policy/'+it.id,style:{color:'#0972d3',textDecoration:'none',fontWeight:600}},it.id);}},
+      {id:'Title',header:'Title',sortingField:'Title',isRowHeader:true,minWidth:280,cell:function(it){return it.Title;}},
+      {id:'Version',header:'Version',sortingField:'Version',minWidth:90,cell:function(it){return 'v'+it.Version;}},
+      {id:'Status',header:'Status',minWidth:170,cell:function(it){return h(C.StatusIndicator,{type:it.Status[0]},it.Status[1]);}},
+      {id:'Attestation',header:'Attestation',minWidth:120,cell:function(it){return it.Attestation;}},
+      {id:'Owners',header:'Owner',minWidth:170,cell:function(it){return h(A.BadgeList,{badges:it.Owners.map(function(o){return o.label;})});}},
+      {id:'Updated',header:'Updated',sortingField:'Updated',minWidth:120,cell:function(it){return it.Updated;}}
+    ];
+    function RibbonRow(props){ return h('div',{className:'flex gap-6 flex-grow overflow-x-auto rounded-md border border-solid border-grey200 bg-white px-6 py-5'},
+      props.items.map(function(it,idx){ return h('div',{key:it.id,className:'flex flex-1 justify-between'},
+        h(A.DashboardItem,{title:it.title,value:it.value,selected:it.id===props.selected,onClick:function(){props.onSelect(it.id);}}),
+        idx!==props.items.length-1?h('div',{className:'w-1 h-full bg-grey200'}):null);})); }
+    function seg(r,s){ if(s==='published')return r.Status[1]==='Published'; if(s==='draft')return r.Status[1]==='Draft'||r.Status[1]==='Under review'; if(s==='overdue')return r.Status[1]==='Review overdue'; if(s==='mine')return r.Owners.some(function(o){return o.label==='James Romero';}); return true; }
+    function Content(){
+      var st=React.useState('all'),segment=st[0],setSegment=st[1];
+      var rows=POLICIES.filter(function(r){return seg(r,segment);});
+      var col=A.useCollection(rows,{propertyFiltering:{filteringProperties:FP,empty:h('span',null,'No matches')},pagination:{pageSize:10},sorting:{},selection:{}});
+      var ribbon=[{id:'all',title:'All documents',value:POLICIES.length},{id:'published',title:'Published',value:POLICIES.filter(function(r){return seg(r,'published');}).length},{id:'draft',title:'Draft / review',value:POLICIES.filter(function(r){return seg(r,'draft');}).length},{id:'overdue',title:'Review overdue',value:POLICIES.filter(function(r){return seg(r,'overdue');}).length},{id:'mine',title:'My documents',value:POLICIES.filter(function(r){return seg(r,'mine');}).length}];
+      return h(C.SpaceBetween,{size:'l'},
+        h(RibbonRow,{items:ribbon,selected:segment,onSelect:setSegment}),
+        h(A.Table,Object.assign({},col.collectionProps,{columnDefinitions:COLUMNS,items:col.items,selectionType:'multi',trackBy:'id',
+          filter:h(A.PropertyFilterPanel,Object.assign({},col.propertyFilterProps,{countText:col.items.length+' matches',filteringPlaceholder:'Filter documents',virtualScroll:true})),
+          empty:h(A.NoMatchesCollection,{onClearClick:function(){col.collectionProps.actions.setPropertyFiltering({tokens:[],operation:'and'});}}),
+          pagination:h(C.Pagination,col.paginationProps)})));
+    }
+    function App(){ return h(A.RealProviders,{initialPath:'/policy'},
+      h(A.PageLayout,{title:'Policies & documents',counter:'('+POLICIES.length+')',
+        actions:h(C.SpaceBetween,{direction:'horizontal',size:'xs'},h(A.Button,null,'Export'),h(A.Button,{variant:'primary'},'Create new document'))},h(Content))); }
+    try { ReactDOM.createRoot(document.getElementById('root')).render(h(App)); }
+    catch(e){ var el=document.getElementById('root'); el.className='ds-err'; el.textContent='⚠ '+((e&&e.stack)||e); }
+  })();
+  </script>
+</body></html>

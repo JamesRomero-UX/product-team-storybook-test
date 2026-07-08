@@ -1,5 +1,0 @@
-mutation deleteCustomRoleAssignment($filter: custom_role_assignment_bool_exp!) {
-  delete_custom_role_assignment(where: $filter) {
-    affected_rows
-  }
-}

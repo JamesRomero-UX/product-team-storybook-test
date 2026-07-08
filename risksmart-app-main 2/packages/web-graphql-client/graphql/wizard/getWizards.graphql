@@ -1,5 +1,0 @@
-query getWizards {
-  wizard {
-    RiskId
-  }
-}

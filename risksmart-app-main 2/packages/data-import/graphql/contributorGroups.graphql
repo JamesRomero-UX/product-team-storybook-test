@@ -1,7 +1,0 @@
-mutation insertContributorGroups(
-  $contributorGroups: [contributor_group_insert_input!]!
-) {
-  insert_contributor_group(objects: $contributorGroups) {
-    affected_rows
-  }
-}

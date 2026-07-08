@@ -1,0 +1,11 @@
+/* Sora — the RiskSmart base UI font (--font-family-base). Latin subset, weights 100–800.
+   Copied from @fontsource/sora so the shipped bundle carries the real brand font
+   instead of falling back to a generic sans-serif. */
+@font-face { font-family: 'Sora'; font-style: normal; font-display: swap; font-weight: 100; src: url(./sora-latin-100-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Sora'; font-style: normal; font-display: swap; font-weight: 200; src: url(./sora-latin-200-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Sora'; font-style: normal; font-display: swap; font-weight: 300; src: url(./sora-latin-300-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Sora'; font-style: normal; font-display: swap; font-weight: 400; src: url(./sora-latin-400-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Sora'; font-style: normal; font-display: swap; font-weight: 500; src: url(./sora-latin-500-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Sora'; font-style: normal; font-display: swap; font-weight: 600; src: url(./sora-latin-600-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Sora'; font-style: normal; font-display: swap; font-weight: 700; src: url(./sora-latin-700-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Sora'; font-style: normal; font-display: swap; font-weight: 800; src: url(./sora-latin-800-normal.woff2) format('woff2'); }

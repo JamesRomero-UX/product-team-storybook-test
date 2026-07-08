@@ -1,5 +1,0 @@
-mutation insertRisk($objects: [risk_insert_input!]!) {
-  insert_risk(objects: $objects) {
-    affected_rows
-  }
-}

@@ -1,8 +1,0 @@
-query getDocumentFileByDocumentTitle($title: String!) {
-  document_file(where: { parent: { Title: { _eq: $title } } }) {
-    Id
-    parent {
-      Id
-    }
-  }
-}

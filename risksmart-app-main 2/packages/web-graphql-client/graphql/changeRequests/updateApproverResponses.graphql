@@ -1,9 +1,0 @@
-mutation updateApproverResponses(
-  $input: UpdateApproverResponsesInput!
-) {
-  updateApproverResponses(
-    input: $input
-  ) {
-    Id
-  }
-}

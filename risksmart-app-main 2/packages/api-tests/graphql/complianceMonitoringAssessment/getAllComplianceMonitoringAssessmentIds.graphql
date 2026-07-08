@@ -1,6 +1,0 @@
-query getAllComplianceMonitoringAssessmentIds {
-  compliance_monitoring_assessment {
-    Id
-    Title
-  }
-}

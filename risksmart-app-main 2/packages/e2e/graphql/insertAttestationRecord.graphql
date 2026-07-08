@@ -1,7 +1,0 @@
-mutation insertAttestationRecords(
-  $objects: [attestation_record_insert_input!]!
-) {
-  insert_attestation_record(objects: $objects) {
-    affected_rows
-  }
-}

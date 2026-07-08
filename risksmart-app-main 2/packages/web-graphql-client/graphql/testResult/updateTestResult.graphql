@@ -1,5 +1,0 @@
-mutation updateTestResult($object: UpdateTestResultInput) {
-  updateTestResultApi(object: $object) {
-    Id
-  }
-}

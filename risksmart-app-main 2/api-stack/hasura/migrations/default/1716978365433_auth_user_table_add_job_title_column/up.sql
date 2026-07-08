@@ -1,2 +1,0 @@
-ALTER TABLE auth.user
-ADD COLUMN "JobTitle" TEXT;

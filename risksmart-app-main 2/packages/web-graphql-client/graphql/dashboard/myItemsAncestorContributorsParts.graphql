@@ -1,6 +1,0 @@
-fragment MyItemsAncestorContributorsParts on ancestor_contributor {
-  ContributorType
-  Id
-  AncestorId
-  UserGroupId
-}

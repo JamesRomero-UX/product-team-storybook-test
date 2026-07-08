@@ -1,5 +1,0 @@
-mutation updateQuestionnaireTemplateVersion($Id: uuid!, $object: questionnaire_template_version_set_input!) {
-  update_questionnaire_template_version_by_pk(pk_columns: { Id: $Id }, _set: $object) {
-    Id
-  }
-}

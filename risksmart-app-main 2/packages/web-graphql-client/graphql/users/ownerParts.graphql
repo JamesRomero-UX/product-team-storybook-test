@@ -1,7 +1,0 @@
-fragment OwnerParts on owner {
-  UserId
-  user {
-    FriendlyName
-    Id
-  }
-}

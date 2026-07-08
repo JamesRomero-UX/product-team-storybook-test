@@ -1,5 +1,0 @@
-mutation updateApprover($Id: uuid!, $UserId: String!) {
-  update_approver(where: { Id: { _eq: $Id } }, _set: { UserId: $UserId }) {
-    affected_rows
-  }
-}

@@ -1,5 +1,0 @@
-mutation updateAssessment($Id: uuid!, $Summary: String!) {
-  update_assessment(where: { Id: { _eq: $Id } }, _set: { Summary: $Summary }) {
-    affected_rows
-  }
-}

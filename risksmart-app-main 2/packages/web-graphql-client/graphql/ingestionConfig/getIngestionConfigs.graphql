@@ -1,8 +1,0 @@
-query getIngestionConfigs {
-  ingestion_config {
-    Id
-    IngestionConfig
-    SecretArn
-    ModifiedAtTimestamp
-  }
-}

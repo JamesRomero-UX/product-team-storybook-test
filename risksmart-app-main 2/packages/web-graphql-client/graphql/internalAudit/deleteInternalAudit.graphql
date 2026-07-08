@@ -1,5 +1,0 @@
-mutation deleteInternalAudits($Ids: [uuid!]!) {
-  delete_internal_audit_entity(where: { Id: { _in: $Ids } }) {
-    affected_rows
-  }
-}

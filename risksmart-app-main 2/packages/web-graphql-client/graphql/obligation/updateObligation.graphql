@@ -1,5 +1,0 @@
-mutation updateObligation($object: UpdateChildObligationInput) {
-  updateChildObligation(object: $object) {
-    Id
-  }
-}

@@ -1,5 +1,0 @@
-mutation insertChildDocument($object: InsertChildDocumentInput) {
-  insertChildDocument(object: $object) {
-    Id
-  }
-}

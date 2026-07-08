@@ -1,1 +1,0 @@
-export { useInsertRiskAssessmentResult } from './useInsertRiskAssessmentResult';

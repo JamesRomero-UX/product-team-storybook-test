@@ -1,5 +1,0 @@
-mutation updateAppetite($Id: uuid!, $set: appetite_set_input!) {
-  update_appetite(where: { Id: { _eq: $Id } }, _set: $set) {
-    affected_rows
-  }
-}

@@ -1,8 +1,0 @@
-mutation updateIndicatorResult($Id: uuid!, $Description: String!) {
-  update_indicator_result(
-    where: { Id: { _eq: $Id } }
-    _set: { Description: $Description }
-  ) {
-    affected_rows
-  }
-}

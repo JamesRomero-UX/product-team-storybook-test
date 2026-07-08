@@ -1,7 +1,0 @@
-mutation deleteIngestionConfig(
-  $object: DeleteIngestionConfigInput!
-) {
-  deleteChildIngestionConfig(object: $object) {
-    Id
-  }
-}

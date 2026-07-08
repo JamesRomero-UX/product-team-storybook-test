@@ -1,8 +1,0 @@
-query getAuthConnectionsForUsers($userIds: [String!]!, $orgKey: String!) {
-  auth_user(where: { Id: { _in: $userIds } }) {
-    Id
-    organisationusers(where: { OrgKey: { _eq: $orgKey } }) {
-      AuthConnection
-    }
-  }
-} 

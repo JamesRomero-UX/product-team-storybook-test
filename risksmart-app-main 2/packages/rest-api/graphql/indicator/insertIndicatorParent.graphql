@@ -1,8 +1,0 @@
-mutation insertIndicatorParent($IndicatorId: uuid!, $ParentId: uuid!) {
-  insert_indicator_parent_one(
-    object: { IndicatorId: $IndicatorId, ParentId: $ParentId }
-  ) {
-    IndicatorId
-    ParentId
-  }
-}

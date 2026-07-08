@@ -1,0 +1,77 @@
+<!-- @dsCard group="prototypes" viewport="1440x900" -->
+<!doctype html>
+<html><head><meta charset="utf-8">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../_ds_bundle.css">
+  <link rel="stylesheet" href="../_ds_app_bundle.css">
+  <style>html,body{margin:0;padding:0;background:#fff}#root{min-height:100vh}.ds-err{padding:24px;font:14px/1.5 system-ui;color:#b91c1c;white-space:pre-wrap}</style>
+</head><body class="atomic-ui">
+  <div id="root"></div>
+  <script src="../_vendor/react.js"></script>
+  <script src="../_vendor/react-dom.js"></script>
+  <script src="../_ds_bundle.js"></script>
+  <script src="../_ds_app_bundle.js"></script>
+  <script>
+  (function(){
+    var h = React.createElement, A = window.RiskSmartApp, C = window.RiskSmart;
+
+    // Backdrop — a trimmed register so the modal reads as "opened from a list".
+    var ROWS = [
+      { id:'A-001', Title:'Rotate leaked S3 access keys', Due:'01 Jul 2026' },
+      { id:'A-002', Title:'Add MFA to finance SaaS logins', Due:'09 Jul 2026' },
+      { id:'A-003', Title:'Update vendor DPA templates', Due:'14 Jul 2026' },
+      { id:'A-004', Title:'Run phishing refresher training', Due:'21 Jul 2026' }
+    ];
+    var BACKDROP_COLS = [
+      { id:'id', header:'Reference', minWidth:110, isRowHeader:true, cell:function(i){return i.id;} },
+      { id:'Title', header:'Title', minWidth:340, cell:function(i){return i.Title;} },
+      { id:'Due', header:'Due', minWidth:140, cell:function(i){return i.Due;} }
+    ];
+
+    // The create/edit modal — a Cloudscape Modal (window.RiskSmart.Modal) wrapping a
+    // form. Open by default here; in a real flow you'd toggle `visible` from the
+    // "Create new action" button's onClick.
+    function CreateActionModal(props){
+      var s1=React.useState(''), title=s1[0], setTitle=s1[1];
+      var s2=React.useState(null), pri=s2[0], setPri=s2[1];
+      var s3=React.useState([]), assignee=s3[0], setAssignee=s3[1];
+      var s4=React.useState(''), due=s4[0], setDue=s4[1];
+      var s5=React.useState(''), desc=s5[0], setDesc=s5[1];
+      return h(C.Modal,{
+        visible:props.visible, onDismiss:props.onDismiss, size:'medium',
+        header:'Create action',
+        footer:h(C.Box,{float:'right'}, h(C.SpaceBetween,{direction:'horizontal',size:'xs'},
+          h(A.Button,{variant:'link',onClick:props.onDismiss},'Cancel'),
+          h(A.Button,{variant:'primary',onClick:props.onDismiss},'Save action')))
+      },
+        h(C.SpaceBetween,{size:'l'},
+          h(C.FormField,{label:'Title',description:'What needs to be done?'},
+            h(C.Input,{value:title,placeholder:'e.g. Rotate leaked S3 access keys',onChange:function(e){setTitle(e.detail.value);}})),
+          h(C.FormField,{label:'Priority'},
+            h(C.Select,{selectedOption:pri,onChange:function(e){setPri(e.detail.selectedOption);},placeholder:'Select priority',
+              options:[{label:'High',value:'h'},{label:'Medium',value:'m'},{label:'Low',value:'l'}]})),
+          h(C.FormField,{label:'Assignee'},
+            h(C.Multiselect,{selectedOptions:assignee,onChange:function(e){setAssignee(e.detail.selectedOptions);},placeholder:'Choose people',
+              options:[{label:'Emma Bamford',value:'eb'},{label:'James Romero',value:'jr'},{label:'Tom Patel',value:'tp'}]})),
+          h(C.FormField,{label:'Due date'},
+            h(C.DatePicker,{value:due,onChange:function(e){setDue(e.detail.value);},placeholder:'YYYY/MM/DD'})),
+          h(C.FormField,{label:'Description'},
+            h(C.Textarea,{value:desc,onChange:function(e){setDesc(e.detail.value);}}))
+        )
+      );
+    }
+
+    function App(){
+      var v=React.useState(true), visible=v[0], setVisible=v[1];
+      return h(A.RealProviders,{initialPath:'/actions'},
+        h(A.PageLayout,{title:'Actions', counter:'(4)',
+          actions:h(A.Button,{variant:'primary',onClick:function(){setVisible(true);}},'Create new action')},
+          h(A.Table,{columnDefinitions:BACKDROP_COLS,items:ROWS,trackBy:'id',variant:'embedded'}),
+          h(CreateActionModal,{visible:visible,onDismiss:function(){setVisible(false);}})
+        ));
+    }
+    try { ReactDOM.createRoot(document.getElementById('root')).render(h(App)); }
+    catch(e){ var el=document.getElementById('root'); el.className='ds-err'; el.textContent='⚠ '+((e&&e.stack)||e); }
+  })();
+  </script>
+</body></html>

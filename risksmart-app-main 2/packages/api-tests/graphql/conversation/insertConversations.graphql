@@ -1,5 +1,0 @@
-mutation insertConversation($objects: [conversation_insert_input!]!) {
-  insert_conversation(objects: $objects) {
-    affected_rows
-  }
-}

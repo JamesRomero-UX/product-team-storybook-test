@@ -1,7 +1,0 @@
-mutation insertImpactRatings($inputs: [impact_rating_insert_input!]!) {
-  insert_impact_rating(objects: $inputs) {
-    returning {
-      Id
-    }
-  }
-}

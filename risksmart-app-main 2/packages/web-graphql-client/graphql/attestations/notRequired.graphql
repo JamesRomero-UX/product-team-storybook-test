@@ -1,5 +1,0 @@
-mutation attestationNotRequired($Ids: [uuid!]!) {
-  attestationNotRequired(Ids: $Ids) {
-    affected_rows
-  }
-}

@@ -1,5 +1,0 @@
-mutation deleteControls($Ids: [uuid!]!) {
-  deleteControlsById(Ids: $Ids) {
-    affected_rows
-  }
-}

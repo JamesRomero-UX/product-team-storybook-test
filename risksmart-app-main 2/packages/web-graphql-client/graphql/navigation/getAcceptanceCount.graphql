@@ -1,7 +1,0 @@
-query getAcceptanceCount($where: acceptance_bool_exp! = {}) {
-  acceptance_aggregate(where: $where) {
-    aggregate {
-      count
-    }
-  }
-}

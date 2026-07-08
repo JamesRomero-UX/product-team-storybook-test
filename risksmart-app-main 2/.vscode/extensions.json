@@ -1,9 +1,0 @@
-{
-  "recommendations": [
-    "esbenp.prettier-vscode",
-    "ms-playwright.playwright",
-    "mikestead.dotenv",
-    "graphql.vscode-graphql",
-    "mtxr.sqltools"
-  ]
-}

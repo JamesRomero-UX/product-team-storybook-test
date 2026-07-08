@@ -1,5 +1,0 @@
-mutation deleteIssueUpdate($Id: uuid!) {
-  delete_issue_update(where: { Id: { _eq: $Id } }) {
-    affected_rows
-  }
-}

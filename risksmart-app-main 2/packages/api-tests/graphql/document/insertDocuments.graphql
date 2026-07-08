@@ -1,5 +1,0 @@
-mutation insertDocument($objects: [document_insert_input!]!) {
-  insert_document(objects: $objects) {
-    affected_rows
-  }
-}

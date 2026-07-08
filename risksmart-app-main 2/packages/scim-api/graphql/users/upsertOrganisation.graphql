@@ -1,8 +1,0 @@
-mutation UpsertOrganisation($id: String!) {
-  insert_auth_organisation_one(
-    object: { OrgKey: $id, Name: "", AuthTenant: "", CreatedByUser: "SCIM" }
-    on_conflict: { constraint: organisation_pkey, update_columns: [] }
-  ) {
-    OrgKey
-  }
-}

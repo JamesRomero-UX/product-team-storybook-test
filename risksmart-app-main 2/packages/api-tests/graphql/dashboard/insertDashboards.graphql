@@ -1,5 +1,0 @@
-mutation insertDashboards($objects: [dashboard_insert_input!]!) {
-  insert_dashboard(objects: $objects) {
-    affected_rows
-  }
-}

@@ -1,5 +1,0 @@
-mutation updateWizard($object: UpdateWizardInput) {
-  updateWizardById(object: $object) {
-    affected_rows
-  }
-}

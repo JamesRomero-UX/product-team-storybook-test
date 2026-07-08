@@ -1,8 +1,0 @@
-table:
-  name: risk_assessment_audit
-  schema: risksmart
-configuration:
-  column_config: {}
-  custom_column_names: {}
-  custom_name: risk_assessment_audit
-  custom_root_fields: {}

@@ -1,5 +1,0 @@
-mutation deleteConversation($Id: uuid!) {
-  delete_conversation(where: { Id: { _eq: $Id } }) {
-    affected_rows
-  }
-}

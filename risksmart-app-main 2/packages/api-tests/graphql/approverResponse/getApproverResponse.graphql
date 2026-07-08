@@ -1,9 +1,0 @@
-query getApproverResponse {
-  approver_response {
-    Id
-    ApproverId
-    Approved
-    ChangeRequestId
-    Comment
-  }
-}

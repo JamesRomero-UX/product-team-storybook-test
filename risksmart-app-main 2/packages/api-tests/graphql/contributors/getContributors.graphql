@@ -1,6 +1,0 @@
-query getContributors {
-  contributor {
-    UserId
-    ParentId
-  }
-}

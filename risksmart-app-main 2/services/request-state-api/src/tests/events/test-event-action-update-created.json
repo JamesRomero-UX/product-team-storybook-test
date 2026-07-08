@@ -1,8 +1,0 @@
-[
-  {
-    "Source": "risksmart.app",
-    "DetailType": "ACTION_UPDATE_CREATED",
-    "EventBusName": "tech-admin-risksmartApp-CommonEventBus",
-    "Detail": "{\"type\":\"ACTION_UPDATE_CREATED\",\"data\":{\"actionId\":\"550e8400-e29b-41d4-a716-446655440001\",\"title\":\"Test Action Update\",\"description\":\"Test description for action update\",\"parentActionId\":\"92884517-4731-4446-abb8-b0cbed0e9842\",\"createdByUser\":\"auth0|644151efc3a961d2784456d9\",\"orgKey\":\"org_Qshp7tYsxxAWwhVa\"},\"metadata\":{\"eventId\":\"event-789\",\"version\":\"1.0\",\"timestamp\":\"2025-09-18T10:05:00Z\",\"domain\":\"test\",\"service\":\"test-service\",\"correlationId\":\"6cd9480d-9c26-44a2-b5ff-f4b92c636d7f\",\"userId\":\"auth0|644151efc3a961d2784456d9\",\"tenant\":\"multitenant\",\"orgKey\":\"org_Qshp7tYsxxAWwhVa\"}}"
-  }
-]

@@ -1,5 +1,0 @@
-mutation deleteOwnerGroup($Id: uuid!) {
-  delete_owner_group(where: { ParentId: { _eq: $Id } }) {
-    affected_rows
-  }
-}

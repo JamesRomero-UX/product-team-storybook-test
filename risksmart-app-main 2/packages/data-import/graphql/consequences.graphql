@@ -1,5 +1,0 @@
-mutation insertConsequences($consequences: [consequence_insert_input!]!) {
-  insert_consequence(objects: $consequences) {
-    affected_rows
-  }
-}

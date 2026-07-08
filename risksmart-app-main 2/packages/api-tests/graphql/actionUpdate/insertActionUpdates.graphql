@@ -1,5 +1,0 @@
-mutation insertActionUpdates($objects: [action_update_insert_input!]!) {
-  insert_action_update(objects: $objects) {
-    affected_rows
-  }
-}

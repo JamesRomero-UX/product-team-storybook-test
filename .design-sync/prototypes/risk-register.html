@@ -1,0 +1,97 @@
+<!-- @dsCard group="prototypes" viewport="1440x900" -->
+<!doctype html>
+<html><head><meta charset="utf-8">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../_ds_bundle.css">
+  <link rel="stylesheet" href="../_ds_app_bundle.css">
+  <style>html,body{margin:0;padding:0;background:#fff}#root{min-height:100vh}.ds-err{padding:24px;font:14px/1.5 system-ui;color:#b91c1c;white-space:pre-wrap}</style>
+</head><body class="atomic-ui">
+  <div id="root"></div>
+  <!-- React first, then the design-system bundles: primitives (window.RiskSmart)
+       then the real app composites (window.RiskSmartApp). -->
+  <script src="../_vendor/react.js"></script>
+  <script src="../_vendor/react-dom.js"></script>
+  <script src="../_ds_bundle.js"></script>
+  <script src="../_ds_app_bundle.js"></script>
+  <script>
+  (function(){
+    var h = React.createElement;
+    var A = window.RiskSmartApp;   // real RiskSmart app composites
+    var C = window.RiskSmart;       // themed-Cloudscape primitives
+
+    var RISKS = [
+      { id:'R-001', Title:'Data breach via legacy S3 bucket', ParentTitle:'Information security', TierLabelled:'Tier 1', Owners:[{label:'Emma Bamford'},{label:'Richard Poole'}], UncontrolledRatingLabelled:{color:'dark-red',label:'Critical'}, ControlledRatingLabelled:{color:'orange',label:'Medium'}, LinkedControlCount:8, tags:[{label:'Cyber'},{label:'Data loss'}] },
+      { id:'R-002', Title:'Vendor concentration — payment processor', ParentTitle:'Operational risk', TierLabelled:'Tier 1', Owners:[{label:'James Romero'}], UncontrolledRatingLabelled:{color:'light-red',label:'High'}, ControlledRatingLabelled:{color:'orange',label:'Medium'}, LinkedControlCount:5, tags:[{label:'Vendor'}] },
+      { id:'R-003', Title:'GDPR — third-party processors out of scope', ParentTitle:'Compliance', TierLabelled:'Tier 2', Owners:[{label:'Liam Chen'}], UncontrolledRatingLabelled:{color:'light-red',label:'High'}, ControlledRatingLabelled:{color:'light-green',label:'Low'}, LinkedControlCount:12, tags:[{label:'GDPR'},{label:'Regulatory'}] },
+      { id:'R-004', Title:'Phishing susceptibility — finance team', ParentTitle:'Information security', TierLabelled:'Tier 2', Owners:[{label:'Maya Okafor'}], UncontrolledRatingLabelled:{color:'orange',label:'Medium'}, ControlledRatingLabelled:{color:'light-green',label:'Low'}, LinkedControlCount:3, tags:[{label:'Cyber'}] },
+      { id:'R-005', Title:'Outdated dependency in checkout flow', ParentTitle:'Technology', TierLabelled:'Tier 3', Owners:[{label:'Tom Patel'}], UncontrolledRatingLabelled:{color:'orange',label:'Medium'}, ControlledRatingLabelled:{color:'light-green',label:'Low'}, LinkedControlCount:2, tags:[{label:'Technology'}] },
+      { id:'R-006', Title:'Badge duplication in HQ', ParentTitle:'Physical security', TierLabelled:'Tier 3', Owners:[{label:'Ava Rodriguez'}], UncontrolledRatingLabelled:{color:'light-green',label:'Low'}, ControlledRatingLabelled:{color:'light-green',label:'Low'}, LinkedControlCount:1, tags:[{label:'Physical'}] }
+    ];
+
+    var FILTERING_PROPERTIES = [
+      { propertyLabel:'Title', key:'Title', groupValuesLabel:'Titles', operators:[':','!:','=','!='] },
+      { propertyLabel:'Parent risk', key:'ParentTitle', groupValuesLabel:'Parents', operators:['=','!='] },
+      { propertyLabel:'Tier', key:'TierLabelled', groupValuesLabel:'Tiers', operators:['=','!='] }
+    ];
+
+    var COLUMNS = [
+      { id:'Title', header:'Title', sortingField:'Title', isRowHeader:true, minWidth:280, cell:function(it){ return h('a',{href:'#/risks/'+it.id,style:{color:'#0972d3',textDecoration:'none',fontWeight:600}}, it.Title); } },
+      { id:'ParentTitle', header:'Parent risk', sortingField:'ParentTitle', minWidth:160, cell:function(it){ return it.ParentTitle||'None'; } },
+      { id:'TierLabelled', header:'Tier', sortingField:'TierLabelled', minWidth:90, cell:function(it){ return it.TierLabelled; } },
+      { id:'Owners', header:'Owners', minWidth:200, cell:function(it){ return h(A.BadgeList,{badges:it.Owners.map(function(o){return o.label;})}); } },
+      { id:'UncontrolledRatingLabelled', header:'Inherent rating', sortingField:'UncontrolledRatingLabelled', minWidth:130, cell:function(it){ return h(A.SimpleRatingBadge,{rating:it.UncontrolledRatingLabelled}); } },
+      { id:'ControlledRatingLabelled', header:'Residual rating', sortingField:'ControlledRatingLabelled', minWidth:130, cell:function(it){ return h(A.SimpleRatingBadge,{rating:it.ControlledRatingLabelled}); } },
+      { id:'LinkedControlCount', header:'Linked controls', sortingField:'LinkedControlCount', minWidth:130, cell:function(it){ return it.LinkedControlCount; } },
+      { id:'tags', header:'Tags', minWidth:160, cell:function(it){ return h(A.BadgeList,{badges:it.tags.map(function(t){return t.label;})}); } }
+    ];
+
+    function RibbonRow(props){
+      var items = props.items;
+      return h('div',{className:'flex gap-6 flex-grow overflow-x-auto rounded-md border border-solid border-grey200 bg-white px-6 py-5'},
+        items.map(function(it,idx){
+          return h('div',{key:it.id,className:'flex flex-1 justify-between'},
+            h(A.DashboardItem,{title:it.title,value:it.value,selected:it.id==='all',onClick:function(){}}),
+            idx!==items.length-1 ? h('div',{className:'w-1 h-full bg-grey200'}) : null
+          );
+        })
+      );
+    }
+
+    function Content(){
+      var col = A.useCollection(RISKS,{ propertyFiltering:{ filteringProperties:FILTERING_PROPERTIES, empty:h('span',null,'No matches') }, pagination:{ pageSize:10 }, sorting:{}, selection:{} });
+      var items = col.items, propertyFilterProps = col.propertyFilterProps, paginationProps = col.paginationProps, collectionProps = col.collectionProps;
+      var ribbon = [
+        { id:'all', title:'All risks', value:RISKS.length },
+        { id:'tier1', title:'Tier 1', value:RISKS.filter(function(r){return r.TierLabelled==='Tier 1';}).length },
+        { id:'tier2', title:'Tier 2', value:RISKS.filter(function(r){return r.TierLabelled==='Tier 2';}).length },
+        { id:'high', title:'High inherent', value:RISKS.filter(function(r){return r.UncontrolledRatingLabelled.label==='High'||r.UncontrolledRatingLabelled.label==='Critical';}).length },
+        { id:'mine', title:'My risks', value:2 }
+      ];
+      return h(C.SpaceBetween,{size:'l'},
+        h(RibbonRow,{items:ribbon}),
+        h(A.Table, Object.assign({}, collectionProps, {
+          columnDefinitions:COLUMNS, items:items, selectionType:'multi', trackBy:'id',
+          filter:h(A.PropertyFilterPanel, Object.assign({}, propertyFilterProps, { countText:items.length+' matches', filteringPlaceholder:'Filter risks', virtualScroll:true })),
+          empty:h(A.NoMatchesCollection,{ onClearClick:function(){ collectionProps.actions.setPropertyFiltering({tokens:[],operation:'and'}); } }),
+          pagination:h(C.Pagination, paginationProps)
+        }))
+      );
+    }
+
+    function App(){
+      return h(A.RealProviders,{initialPath:'/risks'},
+        h(A.PageLayout,{
+          title:'Risks register', counter:'(6)',
+          actions:h(C.SpaceBetween,{direction:'horizontal',size:'xs'},
+            h(A.Button,null,'Export'),
+            h(A.Button,{variant:'primary'},'Create new risk')
+          )
+        }, h(Content))
+      );
+    }
+
+    try { ReactDOM.createRoot(document.getElementById('root')).render(h(App)); }
+    catch(e){ var el=document.getElementById('root'); el.className='ds-err'; el.textContent='⚠ '+((e&&e.stack)||e); }
+  })();
+  </script>
+</body></html>

@@ -1,8 +1,0 @@
-mutation deleteScimDomain($domain: String!) {
-  delete_scim_domain(domain: $domain) {
-    updatedDomains {
-      domain
-      createdOn
-    }
-  }
-}

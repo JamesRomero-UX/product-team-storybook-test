@@ -1,7 +1,0 @@
-mutation insertDocumentLinkedDocuments(
-  $linkedDocuments: [document_linked_document_insert_input!]!
-) {
-  insert_document_linked_document(objects: $linkedDocuments) {
-    affected_rows
-  }
-}

@@ -1,7 +1,0 @@
-mutation insertCustomDataSource(
-  $customDatasource: custom_datasource_insert_input!
-) {
-  insert_custom_datasource_one(object: $customDatasource) {
-    Id
-  }
-}

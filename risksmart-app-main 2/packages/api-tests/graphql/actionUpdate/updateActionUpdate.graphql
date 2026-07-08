@@ -1,5 +1,0 @@
-mutation updateActionUpdate($Id: uuid!, $Title: String!) {
-  update_action_update(where: { Id: { _eq: $Id } }, _set: { Title: $Title }) {
-    affected_rows
-  }
-}

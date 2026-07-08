@@ -1,5 +1,0 @@
-mutation deleteQuestionnaireTemplate($where: questionnaire_template_bool_exp!) {
-  delete_questionnaire_template(where: $where) {
-    affected_rows
-  }
-}

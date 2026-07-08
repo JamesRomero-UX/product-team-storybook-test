@@ -1,7 +1,0 @@
-mutation insertQuestionnaireTemplateApi(
-  $object: InsertQuestionnaireTemplateInput!
-) {
-  insertQuestionnaireTemplateApi(object: $object) {
-    Id
-  }
-}

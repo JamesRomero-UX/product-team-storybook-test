@@ -1,5 +1,0 @@
-query getControlParentIds($ControlId: uuid!) {
-  control_parent(where: { ControlId: { _eq: $ControlId } }) {
-    ParentId
-  }
-}

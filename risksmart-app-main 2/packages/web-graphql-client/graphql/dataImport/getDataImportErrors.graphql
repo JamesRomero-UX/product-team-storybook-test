@@ -1,8 +1,0 @@
-query getDataImportErrors($dataImportId: uuid) {
-  data_import_error(where: { DataImportId: { _eq: $dataImportId } }) {
-    RowNumber
-    ImportObject
-    DataImportId
-    Message
-  }
-}

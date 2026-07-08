@@ -1,8 +1,0 @@
-table:
-  name: user_role_access
-  schema: risksmart
-configuration:
-  column_config: {}
-  custom_column_names: {}
-  custom_name: user_role_access
-  custom_root_fields: {}

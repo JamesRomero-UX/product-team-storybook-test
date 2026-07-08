@@ -1,5 +1,0 @@
-mutation insertUsers($users: [auth_user_insert_input!]!) {
-  insert_auth_user(objects: $users) {
-    affected_rows
-  }
-}

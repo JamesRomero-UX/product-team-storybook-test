@@ -1,7 +1,0 @@
-query GetOpenIssueAssessmentCount($where: issue_assessment_bool_exp) {
-  issue_assessment_aggregate(where: $where) {
-    aggregate {
-      count
-    }
-  }
-}

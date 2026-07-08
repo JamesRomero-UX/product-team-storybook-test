@@ -1,5 +1,0 @@
-query getFormConfigurationByParentType($parentTypes: [parent_type_enum!]!) {
-  form_configuration(where: { ParentType: { _in: $parentTypes } }) {
-    ...FormConfigurationParts
-  }
-}

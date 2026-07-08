@@ -1,5 +1,0 @@
-mutation deleteImpactRating($Id: uuid!) {
-  delete_impact_rating(where: { Id: { _eq: $Id } }) {
-    affected_rows
-  }
-}

@@ -1,5 +1,0 @@
-mutation insertCustomRole($input: custom_role_insert_input!) {
-  insert_custom_role_one(object: $input) {
-    Id
-  }
-}

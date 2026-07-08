@@ -1,7 +1,0 @@
-query getOwnersAndContributors($parentId: uuid!) {
-  ancestor_contributor(where: { Id: { _eq: $parentId } }) {
-    UserId
-    UserGroupId
-    ContributorType
-  }
-}

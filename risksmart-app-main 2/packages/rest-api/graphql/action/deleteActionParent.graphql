@@ -1,7 +1,0 @@
-mutation deleteActionParent($ActionId: uuid, $ParentId: uuid) {
-  delete_action_parent(
-    where: { ActionId: { _eq: $ActionId }, ParentId: { _eq: $ParentId } }
-  ) {
-    affected_rows
-  }
-}

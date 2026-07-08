@@ -1,5 +1,0 @@
-mutation insertTagTypes($tagTypes: [tag_type_insert_input!]!) {
-  insert_tag_type(objects: $tagTypes) {
-    affected_rows
-  }
-}

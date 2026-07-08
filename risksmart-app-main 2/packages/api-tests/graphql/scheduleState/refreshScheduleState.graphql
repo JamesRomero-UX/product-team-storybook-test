@@ -1,6 +1,0 @@
-mutation refreshScheduleState($ids: [uuid!]!) {
-  refreshScheduleState(Ids: $ids) {
-    unsupportedNodeIds
-    missingNodeIds
-  }
-}

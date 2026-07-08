@@ -1,0 +1,39 @@
+<!-- @dsCard group="prototypes" viewport="1440x900" -->
+<!doctype html>
+<html><head><meta charset="utf-8">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../_ds_bundle.css">
+  <link rel="stylesheet" href="../_ds_app_bundle.css">
+  <style>html,body{margin:0;padding:0;background:#fff}#root{min-height:100vh}.ds-err{padding:24px;font:14px/1.5 system-ui;color:#b91c1c;white-space:pre-wrap}</style>
+</head><body class="atomic-ui">
+  <div id="root"></div>
+  <script src="../_vendor/react.js"></script>
+  <script src="../_vendor/react-dom.js"></script>
+  <script src="../_ds_bundle.js"></script>
+  <script src="../_ds_app_bundle.js"></script>
+  <script>
+  (function(){
+    var h = React.createElement, A = window.RiskSmartApp, C = window.RiskSmart;
+    var COLS=[
+      {id:'id',header:'Reference',minWidth:110,isRowHeader:true,cell:function(i){return i.id;}},
+      {id:'Title',header:'Title',minWidth:360,cell:function(i){return i.Title;}},
+      {id:'Owner',header:'Owner',minWidth:160,cell:function(i){return i.Owner;}}
+    ];
+    function App(){
+      return h(A.RealProviders,{initialPath:'/risks'},
+        h(A.PageLayout,{title:'Risks register', counter:'(0)',
+          actions:h(A.Button,{variant:'primary'},'Create new risk')},
+          h(A.Table,{
+            columnDefinitions:COLS, items:[], trackBy:'id',
+            empty:h(A.EmptyEntityCollection,{
+              entityLabel:'risk',
+              action:h(A.Button,{variant:'primary',iconName:'add-plus'},'Create your first risk')
+            })
+          })
+        ));
+    }
+    try { ReactDOM.createRoot(document.getElementById('root')).render(h(App)); }
+    catch(e){ var el=document.getElementById('root'); el.className='ds-err'; el.textContent='⚠ '+((e&&e.stack)||e); }
+  })();
+  </script>
+</body></html>

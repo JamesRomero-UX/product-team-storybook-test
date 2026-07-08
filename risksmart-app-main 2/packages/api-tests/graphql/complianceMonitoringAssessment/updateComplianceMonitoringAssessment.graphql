@@ -1,8 +1,0 @@
-mutation updateComplianceMonitoringAssessment($Id: uuid!, $Summary: String!) {
-  update_compliance_monitoring_assessment(
-    where: { Id: { _eq: $Id } }
-    _set: { Summary: $Summary }
-  ) {
-    affected_rows
-  }
-}

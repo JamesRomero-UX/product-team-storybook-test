@@ -1,5 +1,0 @@
-mutation insertObligationImpacts($objects: [obligation_impact_insert_input!]!) {
-  insert_obligation_impact(objects: $objects) {
-    affected_rows
-  }
-}

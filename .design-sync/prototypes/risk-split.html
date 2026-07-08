@@ -1,0 +1,65 @@
+<!-- @dsCard group="prototypes" viewport="1440x900" -->
+<!doctype html>
+<html><head><meta charset="utf-8">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../_ds_bundle.css">
+  <link rel="stylesheet" href="../_ds_app_bundle.css">
+  <style>html,body{margin:0;padding:0;background:#fff}#root{min-height:100vh}.ds-err{padding:24px;font:14px/1.5 system-ui;color:#b91c1c;white-space:pre-wrap}</style>
+</head><body class="atomic-ui">
+  <div id="root"></div>
+  <script src="../_vendor/react.js"></script>
+  <script src="../_vendor/react-dom.js"></script>
+  <script src="../_ds_bundle.js"></script>
+  <script src="../_ds_app_bundle.js"></script>
+  <script>
+  (function(){
+    var h = React.createElement, A = window.RiskSmartApp, C = window.RiskSmart;
+    var CRIT={color:'dark-red',label:'Critical'}, HIGH={color:'light-red',label:'High'}, MED={color:'orange',label:'Medium'}, LOW={color:'light-green',label:'Low'};
+    var RISKS=[
+      {id:'R-001',Title:'Data breach via legacy S3 bucket',Parent:'Information security',Tier:'Tier 1',Owner:'Emma Bamford',Inherent:CRIT,Residual:MED,Updated:'02 Jul 2026'},
+      {id:'R-002',Title:'Vendor concentration — payment processor',Parent:'Operational risk',Tier:'Tier 1',Owner:'James Romero',Inherent:HIGH,Residual:MED,Updated:'29 Jun 2026'},
+      {id:'R-003',Title:'GDPR — third-party processors out of scope',Parent:'Compliance',Tier:'Tier 2',Owner:'Liam Chen',Inherent:HIGH,Residual:LOW,Updated:'27 Jun 2026'},
+      {id:'R-004',Title:'Phishing susceptibility — finance team',Parent:'Information security',Tier:'Tier 2',Owner:'Maya Okafor',Inherent:MED,Residual:LOW,Updated:'25 Jun 2026'}
+    ];
+    var COLS=[
+      {id:'id',header:'Reference',minWidth:100,isRowHeader:true,cell:function(i){return i.id;}},
+      {id:'Title',header:'Title',minWidth:280,cell:function(i){return i.Title;}},
+      {id:'Inherent',header:'Inherent',minWidth:120,cell:function(i){return h(A.SimpleRatingBadge,{rating:i.Inherent});}}
+    ];
+    function DetailPanel(props){
+      var r=props.risk;
+      return h(C.Container,{header:h(C.Header,{variant:'h2',actions:h(A.Button,null,'Open full record')}, r.id)},
+        h(C.SpaceBetween,{size:'l'},
+          h(C.Box,{variant:'h3',padding:{top:'n'}}, r.Title),
+          h(C.KeyValuePairs,{columns:1,items:[
+            {label:'Parent risk',value:r.Parent},
+            {label:'Tier',value:r.Tier},
+            {label:'Owner',value:r.Owner},
+            {label:'Last updated',value:r.Updated}
+          ]}),
+          h(C.SpaceBetween,{size:'s'},
+            h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center'}}, h(C.Box,{variant:'awsui-key-label'},'Inherent rating'), h(A.SimpleRatingBadge,{rating:r.Inherent})),
+            h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center'}}, h(C.Box,{variant:'awsui-key-label'},'Residual rating'), h(A.SimpleRatingBadge,{rating:r.Residual}))
+          )
+        )
+      );
+    }
+    function App(){
+      var s=React.useState(RISKS[0]), sel=s[0], setSel=s[1];
+      return h(A.RealProviders,{initialPath:'/risks'},
+        h(A.PageLayout,{title:'Risks register', counter:'(4)',
+          actions:h(A.Button,{variant:'primary'},'Create new risk')},
+          h('div',{style:{display:'flex',gap:16,alignItems:'flex-start'}},
+            h('div',{style:{flex:1,minWidth:0}},
+              h(A.Table,{columnDefinitions:COLS,items:RISKS,trackBy:'id',variant:'embedded',
+                selectionType:'single', selectedItems:[sel],
+                onSelectionChange:function(e){ setSel(e.detail.selectedItems[0]); }})),
+            h('div',{style:{width:380,flexShrink:0}}, h(DetailPanel,{risk:sel}))
+          )
+        ));
+    }
+    try { ReactDOM.createRoot(document.getElementById('root')).render(h(App)); }
+    catch(e){ var el=document.getElementById('root'); el.className='ds-err'; el.textContent='⚠ '+((e&&e.stack)||e); }
+  })();
+  </script>
+</body></html>

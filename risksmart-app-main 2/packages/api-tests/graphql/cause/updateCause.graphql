@@ -1,5 +1,0 @@
-mutation updateCause($Id: uuid!, $Title: String!) {
-  update_cause(where: { Id: { _eq: $Id } }, _set: { Description: $Title }) {
-    affected_rows
-  }
-}

@@ -1,8 +1,0 @@
-fragment MyItemsOwnerGroupParts on owner_group {
-  UserGroupId
-  group {
-    users {
-      UserId
-    }
-  }
-}

@@ -1,2 +1,0 @@
-ALTER TABLE auth.user_audit
-ALTER COLUMN "CreatedOn" DROP NOT NULL;

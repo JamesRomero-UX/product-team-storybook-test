@@ -1,5 +1,0 @@
-mutation deleteDepartmentType($tagTypeId: uuid!) {
-  delete_department_type(where: { DepartmentTypeId: { _eq: $tagTypeId } }) {
-    affected_rows
-  }
-}

@@ -1,5 +1,0 @@
-mutation updateRestAPIIngestionConfig($object: UpdateIngestionConfigInput!) {
-  updateChildIngestionConfig(object: $object) {
-    Id
-  }
-}

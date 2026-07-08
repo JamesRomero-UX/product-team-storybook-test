@@ -1,1 +1,0 @@
-import{_ as s,u as n,a as p}from"./apply-display-name-BLkmUqWr.js";import{b as a}from"./iframe-CGUFCU7f.js";import{I as c}from"./internal-BFDSNP_n.js";const m=a.forwardRef((o,r)=>{var e=s(o,[]);const t=n("Checkbox",{props:{readOnly:e.readOnly}});return a.createElement(c,Object.assign({},e,t,{ref:r,__injectAnalyticsComponentMetadata:!0}))});p(m,"Checkbox");export{m as C};

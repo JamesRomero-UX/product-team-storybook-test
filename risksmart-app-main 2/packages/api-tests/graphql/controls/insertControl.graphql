@@ -1,5 +1,0 @@
-mutation insertControl($objects: [control_insert_input!]!) {
-  insert_control(objects: $objects) {
-    affected_rows
-  }
-}

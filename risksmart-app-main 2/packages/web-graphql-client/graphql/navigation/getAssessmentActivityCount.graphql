@@ -1,9 +1,0 @@
-query getAssessmentActivityCount {
-  assessment_activity_aggregate(
-    where: { parentAssessment: {} }
-  ) {
-    aggregate {
-      count
-    }
-  }
-}

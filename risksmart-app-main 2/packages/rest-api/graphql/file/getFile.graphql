@@ -1,5 +1,0 @@
-query getFileById($Id: uuid) {
-  file(where: { Id: { _eq: $Id } }) {
-    Id
-  }
-}

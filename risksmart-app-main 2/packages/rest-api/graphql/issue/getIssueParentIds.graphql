@@ -1,5 +1,0 @@
-query getIssueParentIds($IssueId: uuid!) {
-  issue_parent(where: { IssueId: { _eq: $IssueId } }) {
-    ParentId
-  }
-}

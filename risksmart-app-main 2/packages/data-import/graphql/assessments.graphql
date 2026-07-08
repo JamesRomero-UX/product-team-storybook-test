@@ -1,5 +1,0 @@
-mutation insertAssessments($assessments: [assessment_insert_input!]!) {
-  insert_assessment(objects: $assessments) {
-    affected_rows
-  }
-}

@@ -1,6 +1,0 @@
-query getDepartmentTypeGroups {
-  department_type_group(order_by: { Name: asc }) {
-    Id
-    Name
-  }
-}

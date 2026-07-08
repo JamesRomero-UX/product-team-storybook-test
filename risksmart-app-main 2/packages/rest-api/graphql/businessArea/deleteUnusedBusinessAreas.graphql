@@ -1,9 +1,0 @@
-mutation deleteUnusedBusinessAreas {
-  delete_business_area(
-    where: {
-      _not: { internalAuditEntities: {} }
-    }
-  ) {
-    affected_rows
-  }
-}

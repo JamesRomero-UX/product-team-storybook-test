@@ -1,7 +1,0 @@
-query getConsequenceCount($where: consequence_bool_exp! = {}) {
-  consequence_aggregate(where: $where) {
-    aggregate {
-      count
-    }
-  }
-}

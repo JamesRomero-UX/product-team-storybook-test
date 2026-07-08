@@ -1,5 +1,0 @@
-query getAssessmentById($Id: uuid!) {
-  assessment(where: { Id: { _eq: $Id } }) {
-    Id
-  }
-}

@@ -1,5 +1,0 @@
-mutation deleteIngestionConfig($Id: uuid!) {
-  delete_ingestion_config_by_pk(Id: $Id) {
-    Id
-  }
-}

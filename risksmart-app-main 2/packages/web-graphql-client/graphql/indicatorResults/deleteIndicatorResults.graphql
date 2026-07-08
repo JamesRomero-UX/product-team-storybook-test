@@ -1,5 +1,0 @@
-mutation deleteIndicatorResults($ids: [uuid!]) {
-  delete_indicator_result(where: { Id: { _in: $ids } }) {
-    affected_rows
-  }
-}

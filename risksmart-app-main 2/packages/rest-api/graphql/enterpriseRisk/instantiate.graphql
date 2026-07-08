@@ -1,7 +1,0 @@
-mutation instantiateEnterpriseRisk(
-  $objects: [enterprise_risk_instance_insert_input!]!
-) {
-  insert_enterprise_risk_instance(objects: $objects) {
-    affected_rows
-  }
-}

@@ -1,5 +1,0 @@
-mutation updateIndicator($object: UpdateChildIndicatorInput) {
-  updateChildIndicator(object: $object) {
-    Id
-  }
-}

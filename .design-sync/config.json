@@ -1,0 +1,27 @@
+{
+  "projectId": "41f173c8-bc0e-4dfd-90c9-a53a47cb3d99",
+  "pkg": "@risk-smart/themed-cloudscape-components",
+  "globalName": "RiskSmart",
+  "shape": "storybook",
+  "storybookConfigDir": ".design-sync/sb-config",
+  "storybookStatic": ".design-sync/sb-reference",
+  "extraFonts": ["../../../.design-sync/fonts/sora.css"],
+  "runtimeFontPrefixes": ["Courier Prime"],
+  "guidelinesGlob": ["../../../.design-sync/guidelines/*.md"],
+  "extraEntries": ["../../../.design-sync/preview-root.tsx"],
+  "provider": { "component": "PreviewRoot" },
+  "readmeHeader": ".design-sync/conventions.md",
+  "overrides": {
+    "Table": { "cardMode": "column" },
+    "Alert": { "cardMode": "column" },
+    "Badge": { "cardMode": "column" },
+    "Box": { "cardMode": "column" },
+    "RadioGroup": { "cardMode": "single", "primaryStory": "Default" },
+    "Select": { "cardMode": "single", "primaryStory": "Default" },
+    "Modal": { "cardMode": "single", "primaryStory": "Default" },
+    "HelpPanel": { "skip": ["cloudscape-reference-helppanel--closed", "cloudscape-reference-helppanel--open", "cloudscape-reference-helppanel--with-field-help"] },
+    "SideNavigation": { "skip": ["cloudscape-reference-sidenavigation--risk-smart-with-icons"] },
+    "AppLayout": { "cardMode": "column", "viewport": "1280x820" },
+    "TopNavigation": { "cardMode": "single", "primaryStory": "Default", "viewport": "1200x120" }
+  }
+}

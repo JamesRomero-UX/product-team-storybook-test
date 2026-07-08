@@ -1,0 +1,69 @@
+<!-- @dsCard group="prototypes" viewport="1440x900" -->
+<!doctype html>
+<html><head><meta charset="utf-8">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../_ds_bundle.css">
+  <link rel="stylesheet" href="../_ds_app_bundle.css">
+  <style>html,body{margin:0;padding:0;background:#fff}#root{min-height:100vh}.ds-err{padding:24px;font:14px/1.5 system-ui;color:#b91c1c;white-space:pre-wrap}</style>
+</head><body class="atomic-ui">
+  <div id="root"></div>
+  <script src="../_vendor/react.js"></script>
+  <script src="../_vendor/react-dom.js"></script>
+  <script src="../_ds_bundle.js"></script>
+  <script src="../_ds_app_bundle.js"></script>
+  <script>
+  (function(){
+    var h = React.createElement, A = window.RiskSmartApp, C = window.RiskSmart;
+    var useState = React.useState;
+
+    function DetailsTab(){
+      var s1 = useState(''), name=s1[0], setName=s1[1];
+      var s2 = useState(''), desc=s2[0], setDesc=s2[1];
+      var s3 = useState('tier2'), tier=s3[0], setTier=s3[1];
+      var s4 = useState(null), parent=s4[0], setParent=s4[1];
+      var s5 = useState(null), treat=s5[0], setTreat=s5[1];
+      return h(C.Form, {
+        header: h(A.TabHeader, null, 'Details'),
+        actions: h(C.SpaceBetween, {direction:'horizontal',size:'xs'},
+          h(A.Button,{variant:'link'},'Cancel'),
+          h(A.Button,{variant:'primary'},'Save risk'))
+      },
+        h(C.SpaceBetween,{size:'l'},
+          h(C.FormField,{label:'Title',description:'A short, distinctive name for the risk.'},
+            h(C.Input,{value:name,placeholder:'e.g. Data breach via legacy S3 bucket',onChange:function(e){setName(e.detail.value);}})),
+          h(C.FormField,{label:'Description',description:'What is the risk? What could happen?'},
+            h(C.Textarea,{value:desc,onChange:function(e){setDesc(e.detail.value);}})),
+          h(C.FormField,{label:'Tier',description:'How high in the risk hierarchy this sits.'},
+            h(C.RadioGroup,{value:tier,onChange:function(e){setTier(e.detail.value);},items:[
+              {value:'tier1',label:'Tier 1'},{value:'tier2',label:'Tier 2'},{value:'tier3',label:'Tier 3'}]})),
+          h(C.FormField,{label:'Parent risk',description:'Pick a parent at the tier above.'},
+            h(C.Select,{selectedOption:parent,onChange:function(e){setParent(e.detail.selectedOption);},placeholder:'Select',
+              options:[{label:'Information security',value:'is'},{label:'Operational risk',value:'op'},{label:'Compliance',value:'co'}]})),
+          h(C.FormField,{label:'Treatment',description:'How will this risk be handled?'},
+            h(C.Select,{selectedOption:treat,onChange:function(e){setTreat(e.detail.selectedOption);},placeholder:'Select risk treatment',
+              options:[{label:'Mitigate',value:'m'},{label:'Accept',value:'a'},{label:'Transfer',value:'t'},{label:'Avoid',value:'v'}]}))
+        )
+      );
+    }
+
+    var TAB_IDS = ['details','controls','ratings','appetite','acceptances','actions','indicators','approvals','linked'];
+    var TAB_LABELS = ['Details','Controls','Ratings','Appetite','Acceptances','Actions','Indicators','Approvals','Linked items'];
+
+    function App(){
+      var st = useState('details'), activeTabId=st[0], setActiveTabId=st[1];
+      var tabs = TAB_IDS.map(function(id,i){
+        return { id:id, label:TAB_LABELS[i], disabled:id!=='details',
+          content: id==='details' ? h(DetailsTab) : null };
+      });
+      return h(A.RealProviders,{initialPath:'/risks/create'},
+        h(A.PageLayout,{title:'Add risk'},
+          h(A.ControlledTabs,{ variant:'container', activeTabId:activeTabId,
+            onChange:function(e){setActiveTabId(e.detail.activeTabId);}, tabs:tabs, disableSettings:true })
+        )
+      );
+    }
+    try { ReactDOM.createRoot(document.getElementById('root')).render(h(App)); }
+    catch(e){ var el=document.getElementById('root'); el.className='ds-err'; el.textContent='⚠ '+((e&&e.stack)||e); }
+  })();
+  </script>
+</body></html>

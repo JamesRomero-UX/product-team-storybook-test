@@ -1,5 +1,0 @@
-mutation deleteLinkedItems($Ids: [uuid!]!) {
-  delete_linked_item(where: { Id: { _in: $Ids } }) {
-    affected_rows
-  }
-}

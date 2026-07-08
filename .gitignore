@@ -1,1 +1,27 @@
+node_modules/
+.pnpm-store/
+storybook-static/
+sb-addons/
+sb-manager/
+sb-common-assets/
+tmp/
+iframe.html
+index.json
+vite-inject-mocker-entry.js
+.env
+.env.*
+!.env.example
+.DS_Store
+*.log
+risksmart-app-main 2/
+.design-sync/sb-reference/
+.design-sync/learnings/
+.design-sync/.cache/
+.design-sync/node_modules
+.ds-sync/
+ds-bundle/
 
+# design-sync build artifacts
+_stage/
+scratchpad-preview/
+.design-sync/sb-reference-expanded/

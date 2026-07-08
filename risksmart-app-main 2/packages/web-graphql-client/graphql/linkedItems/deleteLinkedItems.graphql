@@ -1,5 +1,0 @@
-mutation deleteLinkedItems($Ids: [uuid!]!) {
-  unlinkItems(Ids: $Ids) {
-    Ids
-  }
-}

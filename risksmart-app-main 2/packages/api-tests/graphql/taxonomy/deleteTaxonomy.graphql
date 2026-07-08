@@ -1,5 +1,0 @@
-mutation deleteTaxonomy($Id: uuid!) {
-  delete_taxonomy(where: { Id: { _eq: $Id } }) {
-    affected_rows
-  }
-}

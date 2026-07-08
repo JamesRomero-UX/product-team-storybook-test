@@ -1,5 +1,0 @@
-mutation updateCustomRoleCustomAction($input: CustomRoleUpdateInputData) {
-  customRoleUpdate(Input: $input) {
-    affected_rows
-  }
-}

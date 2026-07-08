@@ -1,9 +1,0 @@
-query getImpactList {
-  impact {
-    Id
-    SequentialId
-    Name
-    Rationale
-    RatingGuidance
-  }
-}

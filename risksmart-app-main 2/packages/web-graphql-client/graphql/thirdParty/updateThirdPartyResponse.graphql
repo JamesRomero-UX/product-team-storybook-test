@@ -1,8 +1,0 @@
-mutation updateThirdPartyResponse(
-  $Id: uuid!
-  $Status: third_party_response_status_enum!
-) {
-  update_third_party_response_by_pk(pk_columns: { Id: $Id }, _set: { Status: $Status }) {
-    Id
-  }
-}

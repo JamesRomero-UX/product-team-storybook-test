@@ -1,7 +1,0 @@
-mutation removeParentControls($ParentId: uuid!, $ControlIds: [uuid!]!) {
-  delete_control_parent(
-    where: { ParentId: { _eq: $ParentId }, ControlId: { _in: $ControlIds } }
-  ) {
-    affected_rows
-  }
-}

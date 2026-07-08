@@ -1,6 +1,0 @@
-# Single account fixture
-single-account:
-  aws_account_id: "999999999999"
-  role_name: "SingleRole"
-  regions:
-    - eu-west-2

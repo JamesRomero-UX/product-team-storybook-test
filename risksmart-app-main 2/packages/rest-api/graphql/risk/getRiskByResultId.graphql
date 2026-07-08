@@ -1,7 +1,0 @@
-query getRiskByResultId($AssessmentResultId: uuid!) {
-  risk(where: { assessmentResults: { Id: { _eq: $AssessmentResultId } } }) {
-    Id
-    Title
-    SequentialId
-  }
-}

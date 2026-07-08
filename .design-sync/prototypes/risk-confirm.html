@@ -1,0 +1,48 @@
+<!-- @dsCard group="prototypes" viewport="1440x900" -->
+<!doctype html>
+<html><head><meta charset="utf-8">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../_ds_bundle.css">
+  <link rel="stylesheet" href="../_ds_app_bundle.css">
+  <style>html,body{margin:0;padding:0;background:#fff}#root{min-height:100vh}.ds-err{padding:24px;font:14px/1.5 system-ui;color:#b91c1c;white-space:pre-wrap}</style>
+</head><body class="atomic-ui">
+  <div id="root"></div>
+  <script src="../_vendor/react.js"></script>
+  <script src="../_vendor/react-dom.js"></script>
+  <script src="../_ds_bundle.js"></script>
+  <script src="../_ds_app_bundle.js"></script>
+  <script>
+  (function(){
+    var h = React.createElement, A = window.RiskSmartApp, C = window.RiskSmart;
+    var ROWS=[
+      {id:'R-001',Title:'Data breach via legacy S3 bucket',Owner:'Emma Bamford'},
+      {id:'R-002',Title:'Vendor concentration — payment processor',Owner:'James Romero'},
+      {id:'R-003',Title:'GDPR — third-party processors out of scope',Owner:'Liam Chen'}
+    ];
+    var COLS=[
+      {id:'id',header:'Reference',minWidth:110,isRowHeader:true,cell:function(i){return i.id;}},
+      {id:'Title',header:'Title',minWidth:360,cell:function(i){return i.Title;}},
+      {id:'Owner',header:'Owner',minWidth:160,cell:function(i){return i.Owner;}}
+    ];
+    function App(){
+      var v=React.useState(true), visible=v[0], setVisible=v[1];
+      return h(A.RealProviders,{initialPath:'/risks'},
+        h(A.PageLayout,{title:'Risks register', counter:'(3)',
+          actions:h(A.Button,{variant:'primary'},'Create new risk')},
+          h(A.Table,{columnDefinitions:COLS,items:ROWS,trackBy:'id',variant:'embedded'}),
+          h(A.ConfirmModal,{
+            isVisible:visible, header:'Delete this risk?', confirmVariant:'destructive',
+            confirmButtonText:'Delete risk', onConfirm:function(){setVisible(false);}, onDismiss:function(){setVisible(false);}
+          },
+            h(C.SpaceBetween,{size:'m'},
+              h(C.Alert,{type:'warning'},'Deleting R-001 “Data breach via legacy S3 bucket” also removes its ratings, linked controls, and history. This cannot be undone.'),
+              h(C.Box,null,'Type the reference to confirm, or choose Delete risk below.')
+            )
+          )
+        ));
+    }
+    try { ReactDOM.createRoot(document.getElementById('root')).render(h(App)); }
+    catch(e){ var el=document.getElementById('root'); el.className='ds-err'; el.textContent='⚠ '+((e&&e.stack)||e); }
+  })();
+  </script>
+</body></html>

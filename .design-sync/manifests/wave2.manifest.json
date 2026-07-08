@@ -1,0 +1,407 @@
+[
+  {
+    "name": "AuthErrorPage",
+    "story": "src/production/AuthErrorPage.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "1100x640",
+    "layout": "component"
+  },
+  {
+    "name": "OrgNotFoundPage",
+    "story": "src/production/OrgNotFoundPage.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "1100x640",
+    "layout": "component"
+  },
+  {
+    "name": "TokenExpiredPage",
+    "story": "src/production/TokenExpiredPage.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "1100x640",
+    "layout": "component"
+  },
+  {
+    "name": "UserNotFoundPage",
+    "story": "src/production/UserNotFoundPage.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "1100x640",
+    "layout": "component"
+  },
+  {
+    "name": "InvitationExpiredPage",
+    "story": "src/production/InvitationExpiredPage.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "1100x640",
+    "layout": "component"
+  },
+  {
+    "name": "Login",
+    "story": "src/production/Login.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "1100x640",
+    "layout": "component"
+  },
+  {
+    "name": "Logout",
+    "story": "src/production/Logout.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "1100x640",
+    "layout": "component"
+  },
+  {
+    "name": "ProtectedAccessDeniedPage",
+    "story": "src/production/ProtectedAccessDeniedPage.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "1100x640",
+    "layout": "component"
+  },
+  {
+    "name": "ProtectedErrorPage",
+    "story": "src/production/ProtectedErrorPage.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "1100x640",
+    "layout": "component"
+  },
+  {
+    "name": "ErrorContent",
+    "story": "src/production/ErrorContent.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "760x420",
+    "layout": "component"
+  },
+  {
+    "name": "DiagnosticSection",
+    "story": "src/production/DiagnosticSection.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "760x420",
+    "layout": "component"
+  },
+  {
+    "name": "ViewSelector",
+    "story": "src/production/ViewSelector.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "520x260",
+    "layout": "component"
+  },
+  {
+    "name": "AttestButton",
+    "story": "src/production/AttestButton.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "440x220",
+    "layout": "component"
+  },
+  {
+    "name": "CopyLinkButton",
+    "story": "src/production/CopyLinkButton.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "440x220",
+    "layout": "component"
+  },
+  {
+    "name": "ExpandableLinkGroup",
+    "story": "src/production/ExpandableLinkGroup.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "520x300",
+    "layout": "component"
+  },
+  {
+    "name": "TagSelector",
+    "story": "src/production/TagSelector.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "560x300",
+    "layout": "component"
+  },
+  {
+    "name": "DepartmentSelector",
+    "story": "src/production/DepartmentSelector.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "560x300",
+    "layout": "component"
+  },
+  {
+    "name": "SidePanel",
+    "story": "src/production/SidePanel.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "440x620",
+    "layout": "component"
+  },
+  {
+    "name": "HelpPanel",
+    "story": "src/production/HelpPanel.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "440x620",
+    "layout": "component"
+  },
+  {
+    "name": "HelpSection",
+    "story": "src/production/HelpSection.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "520x320",
+    "layout": "component"
+  },
+  {
+    "name": "IndicatorsPopover",
+    "story": "src/production/IndicatorsPopover.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "560x380",
+    "layout": "component"
+  },
+  {
+    "name": "ChangesPopover",
+    "story": "src/production/ChangesPopover.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "560x380",
+    "layout": "component"
+  },
+  {
+    "name": "PageFilterContainer",
+    "story": "src/production/PageFilterContainer.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "960x260",
+    "layout": "component"
+  },
+  {
+    "name": "PopupContainer",
+    "story": "src/production/PopupContainer.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "520x360",
+    "layout": "component"
+  },
+  {
+    "name": "SourceRegulationInformation",
+    "story": "src/production/SourceRegulationInformation.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "760x420",
+    "layout": "component"
+  },
+  {
+    "name": "ChangeRequestAlert",
+    "story": "src/production/ChangeRequestAlert.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "840x220",
+    "layout": "component"
+  },
+  {
+    "name": "ChangeRequestAlerts",
+    "story": "src/production/ChangeRequestAlerts.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "840x300",
+    "layout": "component"
+  },
+  {
+    "name": "DeleteRequestAlert",
+    "story": "src/production/DeleteRequestAlert.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "840x220",
+    "layout": "component"
+  },
+  {
+    "name": "HistoricalChangeRequestAlert",
+    "story": "src/production/HistoricalChangeRequestAlert.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "840x220",
+    "layout": "component"
+  },
+  {
+    "name": "PromiseNotificationBanner",
+    "story": "src/production/PromiseNotificationBanner.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "840x220",
+    "layout": "component"
+  },
+  {
+    "name": "ConfirmChangeRequestModal",
+    "story": "src/production/ConfirmChangeRequestModal.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "760x480",
+    "layout": "component"
+  },
+  {
+    "name": "ConfirmSaveDialog",
+    "story": "src/production/ConfirmSaveDialog.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "760x460",
+    "layout": "component"
+  },
+  {
+    "name": "FieldGroup",
+    "story": "src/production/FieldGroup.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "560x320",
+    "layout": "component"
+  },
+  {
+    "name": "FormMenu",
+    "story": "src/production/FormMenu.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "520x300",
+    "layout": "component"
+  },
+  {
+    "name": "SelectWithFormField",
+    "story": "src/production/SelectWithFormField.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "520x260",
+    "layout": "component"
+  },
+  {
+    "name": "TextInputWithFormField",
+    "story": "src/production/TextInputWithFormField.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "520x260",
+    "layout": "component"
+  },
+  {
+    "name": "SystemActions",
+    "story": "src/production/SystemActions.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "440x220",
+    "layout": "component"
+  },
+  {
+    "name": "GlobalActionButton",
+    "story": "src/production/GlobalActionButton.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "360x200",
+    "layout": "component"
+  },
+  {
+    "name": "OrganisationInfoRow",
+    "story": "src/production/OrganisationInfoRow.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "440x220",
+    "layout": "component"
+  },
+  {
+    "name": "UserInfo",
+    "story": "src/production/UserInfo.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "420x200",
+    "layout": "component"
+  },
+  {
+    "name": "BodyWithFooter",
+    "story": "src/production/BodyWithFooter.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "600x440",
+    "layout": "component"
+  },
+  {
+    "name": "UpdatePrompt",
+    "story": "src/production/UpdatePrompt.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "600x220",
+    "layout": "component"
+  },
+  {
+    "name": "DraggableContainer",
+    "story": "src/production/DraggableContainer.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "600x380",
+    "layout": "component"
+  },
+  {
+    "name": "EntityOption",
+    "story": "src/production/EntityOption.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "520x220",
+    "layout": "component"
+  },
+  {
+    "name": "EntityTreeNode",
+    "story": "src/production/EntityTreeNode.stories.tsx",
+    "exports": [
+      "Default"
+    ],
+    "viewport": "520x260",
+    "layout": "component"
+  }
+]

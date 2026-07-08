@@ -1,5 +1,0 @@
-subscription getDataImportStatus($id: uuid!) {
-  data_import(where: { Id: { _eq: $id } }) {
-    Status
-  }
-}

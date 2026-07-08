@@ -1,5 +1,0 @@
-mutation deleteRelationFile($ParentId: uuid!) {
-  delete_relation_file(where: { ParentId: { _eq: $ParentId } }) {
-    affected_rows
-  }
-}

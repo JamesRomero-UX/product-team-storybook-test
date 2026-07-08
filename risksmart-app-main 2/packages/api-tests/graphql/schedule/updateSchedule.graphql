@@ -1,5 +1,0 @@
-mutation updateSchedule($where: schedule_bool_exp!, $set: schedule_set_input!) {
-  update_schedule(where: $where, _set: $set) {
-    affected_rows
-  }
-}

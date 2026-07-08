@@ -1,7 +1,0 @@
-query getAllDepartmentTypes {
-  department_type(order_by: { Name: asc }) {
-    DepartmentTypeId
-    Description
-    Name
-  }
-}

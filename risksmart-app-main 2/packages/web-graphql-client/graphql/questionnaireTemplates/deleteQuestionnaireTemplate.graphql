@@ -1,9 +1,0 @@
-mutation deleteQuestionnaireTemplate($Id: uuid!) {
-  delete_questionnaire_template_version(where: { ParentId: { _eq: $Id } }) {
-    affected_rows
-  }
-
-  delete_questionnaire_template_by_pk(Id: $Id) {
-    Id
-  }
-}

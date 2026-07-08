@@ -1,5 +1,0 @@
-mutation deleteAcceptance($Id: uuid!) {
-  deleteAcceptancesById(Ids: [$Id]) {
-    affected_rows
-  }
-}

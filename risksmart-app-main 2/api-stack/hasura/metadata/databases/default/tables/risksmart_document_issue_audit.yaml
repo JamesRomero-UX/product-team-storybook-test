@@ -1,8 +1,0 @@
-table:
-  name: document_issue_audit
-  schema: risksmart
-configuration:
-  column_config: {}
-  custom_column_names: {}
-  custom_name: document_issue_audit
-  custom_root_fields: {}

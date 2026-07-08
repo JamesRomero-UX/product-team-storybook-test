@@ -1,9 +1,0 @@
-table:
-  name: risk_assessment_result_control_type
-  schema: risksmart
-is_enum: true
-configuration:
-  column_config: {}
-  custom_column_names: {}
-  custom_name: risk_assessment_result_control_type
-  custom_root_fields: {}

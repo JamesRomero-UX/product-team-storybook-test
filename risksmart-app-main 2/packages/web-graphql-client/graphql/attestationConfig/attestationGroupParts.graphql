@@ -1,9 +1,0 @@
-fragment AttestationGroupParts on attestation_group {
-  GroupId
-  group {
-    Name
-    users {
-      UserId
-    }
-  }
-}

@@ -1,7 +1,0 @@
-mutation deleteIssueParent($IssueId: uuid, $ParentId: uuid) {
-  delete_issue_parent(
-    where: { IssueId: { _eq: $IssueId }, ParentId: { _eq: $ParentId } }
-  ) {
-    affected_rows
-  }
-}

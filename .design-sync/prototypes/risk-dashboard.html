@@ -1,0 +1,89 @@
+<!-- @dsCard group="prototypes" viewport="1440x900" -->
+<!doctype html>
+<html><head><meta charset="utf-8">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../_ds_bundle.css">
+  <link rel="stylesheet" href="../_ds_app_bundle.css">
+  <style>html,body{margin:0;padding:0;background:#fff}#root{min-height:100vh}.ds-err{padding:24px;font:14px/1.5 system-ui;color:#b91c1c;white-space:pre-wrap}</style>
+</head><body class="atomic-ui">
+  <div id="root"></div>
+  <script src="../_vendor/react.js"></script>
+  <script src="../_vendor/react-dom.js"></script>
+  <script src="../_ds_bundle.js"></script>
+  <script src="../_ds_app_bundle.js"></script>
+  <script>
+  (function(){
+    var h = React.createElement, A = window.RiskSmartApp, C = window.RiskSmart;
+
+    // Tier data (a real dashboard drills down parent→child; this starter shows
+    // one representative column per tier — extend with selection state as needed).
+    var TIERS = {
+      1: [
+        { id:'r-001', fid:'R-001', title:'Information security', rating:{color:'orange',label:'Medium'} },
+        { id:'r-002', fid:'R-002', title:'Operational risk', rating:{color:'orange',label:'Medium'} },
+        { id:'r-003', fid:'R-003', title:'Compliance & regulatory', rating:{color:'light-green',label:'Low'} }
+      ],
+      2: [
+        { id:'r-101', fid:'R-101', title:'Data breach via legacy S3 bucket', rating:{color:'orange',label:'Medium'} },
+        { id:'r-102', fid:'R-102', title:'Phishing — finance team', rating:{color:'light-green',label:'Low'} }
+      ],
+      3: [
+        { id:'r-1101', fid:'R-1101', title:'Outdated dependency in checkout flow', rating:{color:'light-green',label:'Low'} },
+        { id:'r-1102', fid:'R-1102', title:'Logging retention misconfigured', rating:{color:'orange',label:'Medium'} }
+      ]
+    };
+
+    function TierColumn(props){
+      var tier = props.tier, items = TIERS[tier];
+      return h(C.Container, { fitHeight:true, variant:'stacked' },
+        h('div', { 'data-rs-tier-card':'true' },
+          h(C.SpaceBetween, { direction:'vertical', size:'m' },
+            h(C.Header, { variant:'h2', actions:h(A.Button, { variant:'primary', iconName:'add-plus' }, 'Add') }, 'Tier '+tier),
+            h(C.Cards, {
+              entireCardClickable:true,
+              cardsPerRow:[{cards:1}],
+              items:items,
+              trackBy:function(i){return i.id;},
+              selectionType:'single',
+              visibleSections:['title'],
+              cardDefinition:{
+                header:function(item){
+                  return h('div',{className:'flex',style:{alignItems:'center'}},
+                    h('div',{style:{color:'#828297',fontSize:12,flexGrow:1}}, item.fid),
+                    h(A.SimpleRatingBadge,{rating:item.rating})
+                  );
+                },
+                sections:[{ id:'title', content:function(item){
+                  return h('a',{href:'#/risks/'+item.id,style:{color:'#5C5C79',textDecoration:'none'}},
+                    h('span',{style:{fontSize:16,fontWeight:600,lineHeight:'21px'}}, item.title));
+                }}]
+              }
+            })
+          )
+        )
+      );
+    }
+
+    function App(){
+      return h(A.RealProviders,{initialPath:'/risks/dashboard'},
+        h(A.PageLayout,{
+          title:'Risk dashboard',
+          actions:h(A.Button,{variant:'primary',iconName:'add-plus'},'Create new risk')
+        },
+          h(C.SpaceBetween,{size:'l'},
+            h('div',{style:{display:'flex',gap:16,alignItems:'flex-start'}},
+              h('div',{style:{flexGrow:1}}, h(A.PropertyFilterPanel,{ query:{tokens:[],operation:'and'}, filteringProperties:[], onChange:function(){}, countText:'7 matches', filteringPlaceholder:'Filter risks', virtualScroll:true })),
+              h('div',{style:{width:220}}, h(C.Select,{ selectedOption:{label:'Residual rating',value:'res'}, onChange:function(){}, options:[{label:'Residual rating',value:'res'},{label:'Inherent rating',value:'inh'},{label:'Appetite',value:'app'}] }))
+            ),
+            h(C.Grid,{ gridDefinition:[{colspan:4},{colspan:4},{colspan:4}] },
+              h(TierColumn,{tier:1}), h(TierColumn,{tier:2}), h(TierColumn,{tier:3})
+            )
+          )
+        )
+      );
+    }
+    try { ReactDOM.createRoot(document.getElementById('root')).render(h(App)); }
+    catch(e){ var el=document.getElementById('root'); el.className='ds-err'; el.textContent='⚠ '+((e&&e.stack)||e); }
+  })();
+  </script>
+</body></html>

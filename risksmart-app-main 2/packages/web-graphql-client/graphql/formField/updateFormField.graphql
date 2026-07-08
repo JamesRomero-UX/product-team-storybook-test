@@ -1,5 +1,0 @@
-mutation updateFormField($object: UpdateFormFieldInput!) {
-  updateFormField(object: $object) {
-    Id
-  }
-}
