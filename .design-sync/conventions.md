@@ -114,6 +114,16 @@ Copy the closest one, swap the data/columns/fields, and you have a new screen at
 The cards under **Page Templates** show the target for each archetype; the cards under **Production**
 show each real composite. Prefer composing `window.RiskSmartApp.*` over rebuilding from primitives.
 
+## Two component kits — don't mix them in one screen
+- **Cloudscape (`window.RiskSmart.*`) + real composites (`window.RiskSmartApp.*`)** — this is what the
+  live RiskSmart app is built from. Use this for any real product screen (and it's what every
+  prototype uses). This is the default.
+- **atomic-ui** (`components/atomic-ui/*` cards) — a newer base-ui/Tailwind kit RiskSmart is
+  gradually migrating toward. Available as reference cards (Button, Field, Dialog, Card, Badge,
+  patterns like RatingsMatrix/ObjectLevelHeader, …). Use it only if a task specifically calls for
+  atomic-ui; **do not mix atomic-ui and Cloudscape components in the same screen** — they have
+  separate styling systems.
+
 ## Setup — no provider needed
 Components render themed straight out of the box: the theme is delivered as CSS custom
 properties at `:root` (loaded via `styles.css`), and the default RiskSmart theme applies **no
